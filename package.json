@@ -18,8 +18,13 @@
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "postinstall": "husky install",
-    "commit": "cz"
+    "commit": "cz",
+    "seed": "esbuild prisma/seed.ts --outfile=node_modules/tmp-seed.cjs --bundle --format=cjs --external:prisma --external:@prisma/client && node node_modules/tmp-seed.cjs --preview-feature"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
+  "type": "module",
   "lint-staged": {
     "./src/**/*.{ts,js,jsx,tsx}": [
       "eslint --ignore-path .gitignore --fix",
@@ -27,6 +32,11 @@
     ]
   },
   "dependencies": {
+    "@prisma/client": "3.14.0",
+    "apollo-server-micro": "3.8.2",
+    "esbuild": "0.14.42",
+    "graphql": "16.5.0",
+    "micro-cors": "0.1.1",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0"
@@ -34,14 +44,14 @@
   "devDependencies": {
     "@commitlint/cli": "17.0.2",
     "@commitlint/config-conventional": "17.0.2",
-    "@types/node": "16.11.36",
-    "@types/react": "18.0.9",
+    "@types/node": "17.0.40",
+    "@types/react": "18.0.12",
     "@types/react-dom": "18.0.5",
     "@typescript-eslint/eslint-plugin": "5.27.0",
     "@typescript-eslint/parser": "5.27.0",
     "commitizen": "4.2.4",
     "cz-conventional-changelog": "3.3.0",
-    "eslint": "8.16.0",
+    "eslint": "8.17.0",
     "eslint-config-next": "12.1.6",
     "eslint-config-prettier": "8.5.0",
     "eslint-import-resolver-typescript": "2.7.1",
@@ -49,7 +59,9 @@
     "husky": "8.0.1",
     "lint-staged": "13.0.0",
     "prettier": "2.6.2",
-    "typescript": "4.7.2"
+    "prisma": "3.14.0",
+    "ts-node": "10.8.1",
+    "typescript": "4.7.3"
   },
   "config": {
     "commitizen": {
