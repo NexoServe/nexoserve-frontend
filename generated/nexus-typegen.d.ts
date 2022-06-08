@@ -17,6 +17,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  Role: "ADMIN" | "USER"
 }
 
 export interface NexusGenScalars {
@@ -28,7 +29,22 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Link: { // root type
+    category?: string | null; // String
+    description?: string | null; // String
+    id?: string | null; // String
+    imageUrl?: string | null; // String
+    title?: string | null; // String
+    url?: string | null; // String
+  }
   Query: {};
+  User: { // root type
+    email?: string | null; // String
+    id?: string | null; // String
+    image?: string | null; // String
+    name?: string | null; // String
+    role?: NexusGenEnums['Role'] | null; // Role
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -39,17 +55,55 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  Link: { // field return type
+    category: string | null; // String
+    description: string | null; // String
+    id: string | null; // String
+    imageUrl: string | null; // String
+    title: string | null; // String
+    url: string | null; // String
+    users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+  }
   Query: { // field return type
+    links: Array<NexusGenRootTypes['Link'] | null>; // [Link]!
     test: boolean | null; // Boolean
+    users: Array<NexusGenRootTypes['User'] | null>; // [User]!
+  }
+  User: { // field return type
+    bookmarks: Array<NexusGenRootTypes['Link'] | null> | null; // [Link]
+    email: string | null; // String
+    id: string | null; // String
+    image: string | null; // String
+    name: string | null; // String
+    role: NexusGenEnums['Role'] | null; // Role
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Link: { // field return type name
+    category: 'String'
+    description: 'String'
+    id: 'String'
+    imageUrl: 'String'
+    title: 'String'
+    url: 'String'
+    users: 'User'
+  }
   Query: { // field return type name
+    links: 'Link'
     test: 'Boolean'
+    users: 'User'
+  }
+  User: { // field return type name
+    bookmarks: 'Link'
+    email: 'String'
+    id: 'String'
+    image: 'String'
+    name: 'String'
+    role: 'Role'
   }
 }
 
@@ -71,7 +125,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 
