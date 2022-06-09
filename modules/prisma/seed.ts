@@ -1,8 +1,13 @@
-import prisma from 'lib/prisma';
+import { data } from '../../data/links';
+import prisma from '../../lib/prisma';
 
 async function main() {
-  await prisma.user.deleteMany({});
+  // await prisma.user.deleteMany({});
   await prisma.link.deleteMany({});
+
+  await prisma.link.createMany({
+    data,
+  });
 }
 
 main()

@@ -1,0 +1,12 @@
+overwrite: true
+schema:
+  - 'modules/graphql/schema.ts'
+documents: src/graphql/**/*.graphql
+generates:
+  generated/graphql.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+require:
+  - 'ts-node/register/transpile-only'
