@@ -37,6 +37,7 @@ export interface NexusGenObjects {
     title?: string | null; // String
     url?: string | null; // String
   }
+  Mutation: {};
   Query: {};
   User: { // root type
     email?: string | null; // String
@@ -67,6 +68,9 @@ export interface NexusGenFieldTypes {
     url: string | null; // String
     users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
+  Mutation: { // field return type
+    createLink: NexusGenRootTypes['Link']; // Link!
+  }
   Query: { // field return type
     links: Array<NexusGenRootTypes['Link'] | null>; // [Link]!
     test: boolean | null; // Boolean
@@ -92,6 +96,9 @@ export interface NexusGenFieldTypeNames {
     url: 'String'
     users: 'User'
   }
+  Mutation: { // field return type name
+    createLink: 'Link'
+  }
   Query: { // field return type name
     links: 'Link'
     test: 'Boolean'
@@ -108,6 +115,15 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    createLink: { // args
+      category: string; // String!
+      description: string; // String!
+      imageUrl: string; // String!
+      title: string; // String!
+      url: string; // String!
+    }
+  }
   Query: {
     test: { // args
       bool: boolean; // Boolean!

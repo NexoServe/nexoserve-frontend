@@ -1,9 +1,72 @@
+import { gql, useMutation, useQuery } from '@apollo/client';
+import { GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
-
 import styles from '@/styles/Home.module.css';
+import { addApolloState, initializeApollo } from 'lib/apolloClient';
 
-export default function Home() {
+const linksQuery = gql`
+  {
+    links {
+      id
+      title
+      url
+      imageUrl
+    }
+  }
+`;
+const createLinkMutation = gql`
+  mutation CreateLink(
+    $title: String!
+    $url: String!
+    $imageUrl: String!
+    $category: String!
+    $description: String!
+  ) {
+    createLink(
+      title: $title
+      url: $url
+      imageUrl: $imageUrl
+      category: $category
+      description: $description
+    ) {
+      id
+      title
+      url
+      imageUrl
+    }
+  }
+`;
+
+const Home: NextPage = () => {
+  const { data } = useQuery(linksQuery, {
+    notifyOnNetworkStatusChange: true,
+  });
+
+  const [createLink, { data1, loading, error }] = useMutation(
+    createLinkMutation,
+    {
+      variables: {
+        title: `hey`,
+        url: `hey`,
+        imageUrl: `hey`,
+        category: `hey`,
+        description: `hey`,
+      },
+      update(cache, { data }) {
+        const { links } = cache.readQuery({
+          query: linksQuery,
+        });
+
+        cache.writeQuery({
+          query: linksQuery,
+          data: {
+            links: [...links, data.createLink],
+          },
+        });
+      },
+    },
+  );
+
   return (
     <div className={styles.container}>
       <Head>
@@ -14,60 +77,27 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <button onClick={() => createLink()}>Add</button>
 
-        <p className={styles.description}>
-          Get started by editing{` `}
-          <code className={styles.code}>src/pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=typescript-nextjs-starter"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        {data?.links.map((link, id) => (
+          <h1 key={id}>{link?.title}</h1>
+        ))}
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=typescript-nextjs-starter"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{` `}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
     </div>
   );
-}
+};
+
+export const getServerSideProps = async ({
+  req,
+}: GetServerSidePropsContext) => {
+  const apolloClient = initializeApollo({ ctx: { req, prisma } });
+
+  await apolloClient.query({ query: linksQuery });
+
+  return addApolloState(apolloClient, {
+    props: {},
+  });
+};
+
+export default Home;

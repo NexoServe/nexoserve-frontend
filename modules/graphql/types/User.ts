@@ -2,6 +2,11 @@
 import { enumType, extendType, objectType } from 'nexus';
 import { Link } from './Link';
 
+const Role = enumType({
+  name: `Role`,
+  members: [`USER`, `ADMIN`],
+});
+
 export const User = objectType({
   name: `User`,
   definition(t) {
@@ -35,9 +40,4 @@ export const UsersQuery = extendType({
       },
     });
   },
-});
-
-const Role = enumType({
-  name: `Role`,
-  members: [`USER`, `ADMIN`],
 });
