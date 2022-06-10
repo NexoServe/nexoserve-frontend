@@ -15,152 +15,88 @@ export type Scalars = {
   Float: number;
 };
 
-export type Link = {
-  __typename?: 'Link';
-  category?: Maybe<Scalars['String']>;
+export type AddOn = {
+  __typename?: 'AddOn';
+  foods?: Maybe<Array<Maybe<Food>>>;
+  id?: Maybe<Scalars['String']>;
+  isRequired?: Maybe<Scalars['Boolean']>;
+  items?: Maybe<Array<Maybe<Item>>>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type Food = {
+  __typename?: 'Food';
+  addOns?: Maybe<Array<Maybe<AddOn>>>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
-  imageUrl?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
-  users?: Maybe<Array<Maybe<User>>>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
 };
 
-export type Mutation = {
-  __typename?: 'Mutation';
-  createLink: Link;
-};
-
-
-export type MutationCreateLinkArgs = {
-  category: Scalars['String'];
-  description: Scalars['String'];
-  imageUrl: Scalars['String'];
-  title: Scalars['String'];
-  url: Scalars['String'];
+export type Item = {
+  __typename?: 'Item';
+  addOns?: Maybe<Array<Maybe<AddOn>>>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  links: Array<Maybe<Link>>;
-  test?: Maybe<Scalars['Boolean']>;
-  users: Array<Maybe<User>>;
+  addOns: Array<Maybe<AddOn>>;
+  foods: Array<Maybe<Food>>;
+  items: Array<Maybe<Item>>;
 };
 
-
-export type QueryTestArgs = {
-  bool: Scalars['Boolean'];
-};
-
-export enum Role {
-  Admin = 'ADMIN',
-  User = 'USER'
-}
-
-export type User = {
-  __typename?: 'User';
-  bookmarks?: Maybe<Array<Maybe<Link>>>;
-  email?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  role?: Maybe<Role>;
-};
-
-export type CreateLinkMutationVariables = Exact<{
-  title: Scalars['String'];
-  url: Scalars['String'];
-  imageUrl: Scalars['String'];
-  category: Scalars['String'];
-  description: Scalars['String'];
-}>;
+export type FoodsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CreateLinkMutation = { __typename?: 'Mutation', createLink: { __typename?: 'Link', title?: string | null } };
-
-export type LinksQueryVariables = Exact<{ [key: string]: never; }>;
+export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null } | null> | null } | null> | null } | null> };
 
 
-export type LinksQuery = { __typename?: 'Query', links: Array<{ __typename?: 'Link', id?: string | null, title?: string | null, url?: string | null, imageUrl?: string | null } | null> };
-
-
-export const CreateLinkDocument = gql`
-    mutation CreateLink($title: String!, $url: String!, $imageUrl: String!, $category: String!, $description: String!) {
-  createLink(
-    title: $title
-    url: $url
-    imageUrl: $imageUrl
-    category: $category
-    description: $description
-  ) {
-    title
-  }
-}
-    `;
-export type CreateLinkMutationFn = Apollo.MutationFunction<CreateLinkMutation, CreateLinkMutationVariables>;
-
-/**
- * __useCreateLinkMutation__
- *
- * To run a mutation, you first call `useCreateLinkMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateLinkMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createLinkMutation, { data, loading, error }] = useCreateLinkMutation({
- *   variables: {
- *      title: // value for 'title'
- *      url: // value for 'url'
- *      imageUrl: // value for 'imageUrl'
- *      category: // value for 'category'
- *      description: // value for 'description'
- *   },
- * });
- */
-export function useCreateLinkMutation(baseOptions?: Apollo.MutationHookOptions<CreateLinkMutation, CreateLinkMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateLinkMutation, CreateLinkMutationVariables>(CreateLinkDocument, options);
-      }
-export type CreateLinkMutationHookResult = ReturnType<typeof useCreateLinkMutation>;
-export type CreateLinkMutationResult = Apollo.MutationResult<CreateLinkMutation>;
-export type CreateLinkMutationOptions = Apollo.BaseMutationOptions<CreateLinkMutation, CreateLinkMutationVariables>;
-export const LinksDocument = gql`
-    query Links {
-  links {
+export const FoodsDocument = gql`
+    query Foods {
+  foods {
     id
-    title
-    url
-    imageUrl
+    name
+    price
+    addOns {
+      id
+      name
+      isRequired
+      items {
+        id
+        name
+        price
+      }
+    }
   }
 }
     `;
 
 /**
- * __useLinksQuery__
+ * __useFoodsQuery__
  *
- * To run a query within a React component, call `useLinksQuery` and pass it any options that fit your needs.
- * When your component renders, `useLinksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useFoodsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFoodsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useLinksQuery({
+ * const { data, loading, error } = useFoodsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useLinksQuery(baseOptions?: Apollo.QueryHookOptions<LinksQuery, LinksQueryVariables>) {
+export function useFoodsQuery(baseOptions?: Apollo.QueryHookOptions<FoodsQuery, FoodsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<LinksQuery, LinksQueryVariables>(LinksDocument, options);
+        return Apollo.useQuery<FoodsQuery, FoodsQueryVariables>(FoodsDocument, options);
       }
-export function useLinksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LinksQuery, LinksQueryVariables>) {
+export function useFoodsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FoodsQuery, FoodsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<LinksQuery, LinksQueryVariables>(LinksDocument, options);
+          return Apollo.useLazyQuery<FoodsQuery, FoodsQueryVariables>(FoodsDocument, options);
         }
-export type LinksQueryHookResult = ReturnType<typeof useLinksQuery>;
-export type LinksLazyQueryHookResult = ReturnType<typeof useLinksLazyQuery>;
-export type LinksQueryResult = Apollo.QueryResult<LinksQuery, LinksQueryVariables>;
+export type FoodsQueryHookResult = ReturnType<typeof useFoodsQuery>;
+export type FoodsLazyQueryHookResult = ReturnType<typeof useFoodsLazyQuery>;
+export type FoodsQueryResult = Apollo.QueryResult<FoodsQuery, FoodsQueryVariables>;

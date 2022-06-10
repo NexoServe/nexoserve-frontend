@@ -1,0 +1,17 @@
+query Foods {
+  foods {
+    id
+    name
+    price
+    addOns {
+      id
+      name
+      isRequired
+      items {
+        id
+        name
+        price
+      }
+    }
+  }
+}

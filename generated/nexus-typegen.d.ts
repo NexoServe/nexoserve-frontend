@@ -17,7 +17,6 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
-  Role: "ADMIN" | "USER"
 }
 
 export interface NexusGenScalars {
@@ -29,23 +28,27 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  Link: { // root type
-    category?: string | null; // String
+  AddOn: { // root type
+    foods?: Array<NexusGenRootTypes['Food'] | null> | null; // [Food]
+    id?: string | null; // String
+    isRequired?: boolean | null; // Boolean
+    items?: Array<NexusGenRootTypes['Item'] | null> | null; // [Item]
+    name?: string | null; // String
+  }
+  Food: { // root type
+    addOns?: Array<NexusGenRootTypes['AddOn'] | null> | null; // [AddOn]
     description?: string | null; // String
     id?: string | null; // String
-    imageUrl?: string | null; // String
-    title?: string | null; // String
-    url?: string | null; // String
-  }
-  Mutation: {};
-  Query: {};
-  User: { // root type
-    email?: string | null; // String
-    id?: string | null; // String
-    image?: string | null; // String
     name?: string | null; // String
-    role?: NexusGenEnums['Role'] | null; // Role
+    price?: number | null; // Float
   }
+  Item: { // root type
+    addOns?: Array<NexusGenRootTypes['AddOn'] | null> | null; // [AddOn]
+    id?: string | null; // String
+    name?: string | null; // String
+    price?: number | null; // Float
+  }
+  Query: {};
 }
 
 export interface NexusGenInterfaces {
@@ -56,79 +59,65 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
-  Link: { // field return type
-    category: string | null; // String
+  AddOn: { // field return type
+    foods: Array<NexusGenRootTypes['Food'] | null> | null; // [Food]
+    id: string | null; // String
+    isRequired: boolean | null; // Boolean
+    items: Array<NexusGenRootTypes['Item'] | null> | null; // [Item]
+    name: string | null; // String
+  }
+  Food: { // field return type
+    addOns: Array<NexusGenRootTypes['AddOn'] | null> | null; // [AddOn]
     description: string | null; // String
     id: string | null; // String
-    imageUrl: string | null; // String
-    title: string | null; // String
-    url: string | null; // String
-    users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    name: string | null; // String
+    price: number | null; // Float
   }
-  Mutation: { // field return type
-    createLink: NexusGenRootTypes['Link']; // Link!
+  Item: { // field return type
+    addOns: Array<NexusGenRootTypes['AddOn'] | null> | null; // [AddOn]
+    id: string | null; // String
+    name: string | null; // String
+    price: number | null; // Float
   }
   Query: { // field return type
-    links: Array<NexusGenRootTypes['Link'] | null>; // [Link]!
-    test: boolean | null; // Boolean
-    users: Array<NexusGenRootTypes['User'] | null>; // [User]!
-  }
-  User: { // field return type
-    bookmarks: Array<NexusGenRootTypes['Link'] | null> | null; // [Link]
-    email: string | null; // String
-    id: string | null; // String
-    image: string | null; // String
-    name: string | null; // String
-    role: NexusGenEnums['Role'] | null; // Role
+    addOns: Array<NexusGenRootTypes['AddOn'] | null>; // [AddOn]!
+    foods: Array<NexusGenRootTypes['Food'] | null>; // [Food]!
+    items: Array<NexusGenRootTypes['Item'] | null>; // [Item]!
   }
 }
 
 export interface NexusGenFieldTypeNames {
-  Link: { // field return type name
-    category: 'String'
+  AddOn: { // field return type name
+    foods: 'Food'
+    id: 'String'
+    isRequired: 'Boolean'
+    items: 'Item'
+    name: 'String'
+  }
+  Food: { // field return type name
+    addOns: 'AddOn'
     description: 'String'
     id: 'String'
-    imageUrl: 'String'
-    title: 'String'
-    url: 'String'
-    users: 'User'
+    name: 'String'
+    price: 'Float'
   }
-  Mutation: { // field return type name
-    createLink: 'Link'
+  Item: { // field return type name
+    addOns: 'AddOn'
+    id: 'String'
+    name: 'String'
+    price: 'Float'
   }
   Query: { // field return type name
-    links: 'Link'
-    test: 'Boolean'
-    users: 'User'
-  }
-  User: { // field return type name
-    bookmarks: 'Link'
-    email: 'String'
-    id: 'String'
-    image: 'String'
-    name: 'String'
-    role: 'Role'
+    addOns: 'AddOn'
+    foods: 'Food'
+    items: 'Item'
   }
 }
 
 export interface NexusGenArgTypes {
-  Mutation: {
-    createLink: { // args
-      category: string; // String!
-      description: string; // String!
-      imageUrl: string; // String!
-      title: string; // String!
-      url: string; // String!
-    }
-  }
-  Query: {
-    test: { // args
-      bool: boolean; // Boolean!
-    }
-  }
 }
 
 export interface NexusGenAbstractTypeMembers {
@@ -141,7 +130,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = keyof NexusGenEnums;
+export type NexusGenEnumNames = never;
 
 export type NexusGenInterfaceNames = never;
 

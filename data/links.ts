@@ -1,36 +1,86 @@
 export const data = [
   {
-    category: 'Open Source',
-    description: 'Fullstack React framework',
-    id: '8a9020b2-363b-4a4f-ad26-d6d55b51bqes',
-    imageUrl: 'https://nextjs.org/static/twitter-cards/home.jpg',
-    title: 'Next.js',
-    url: 'https://nextjs.org',
+    id: '8a9020b2-363b-4a1f-ad26-d6d55b51bqes',
+    name: 'Wings',
+    description: 'wings description',
+    price: 10.99,
+    addOns: [
+      {
+        id: '2a3121b2-363b-4a4f-ad26-d6c35b41ba1e',
+        name: 'Dipping sauce',
+        isRequired: true,
+        items: [
+          {
+            id: '6a9112b2-363b-4a4f-ad26-d6c55b51baed',
+            name: 'Blue Cheese',
+            price: 2.0,
+          },
+          {
+            id: '6a9122b2-363b-4a4f-ad26-d6c15b51baed',
+            name: 'Ranch',
+            price: 3.0,
+          },
+        ],
+      },
+      {
+        id: '1a3121b2-323b-4a4f-ad26-d6c35b41bade',
+        name: 'Veggies',
+        isRequired: true,
+        items: [
+          {
+            id: '6a912222-363b-4a4f-ad26-d1c55b51baed',
+            name: 'One bag',
+            price: 2.0,
+          },
+          {
+            id: '6a9112b2-323b-4a4f-ad26-d6c55b51baed',
+            name: 'Two bags',
+            price: 3.0,
+          },
+        ],
+      },
+    ],
   },
   {
-    category: 'Open Source',
-    description: 'Next Generation ORM for TypeScript and JavaScript',
-    id: '2a3121b2-363b-4a4f-ad26-d6c35b41bade',
-    imageUrl: 'https://www.prisma.io/images/og-image.png',
-
-    title: 'Prisma',
-    url: 'https://prisma.io',
-  },
-  {
-    category: 'Open Source',
-    description: 'Utility-fist css framework',
-    id: '6a9122b2-363b-4a4f-ad26-d6c55b51baed',
-    imageUrl:
-      'https://tailwindcss.com/_next/static/media/twitter-large-card.85c0ff9e455da585949ff0aa50981857.jpg',
-    title: 'TailwindCSS',
-    url: 'https://tailwindcss.com',
-  },
-  {
-    category: 'Open Source',
-    description: 'GraphQL implementation ',
-    id: '2ea8cfb0-44a3-4c07-bdc2-31ffa135ea78',
-    imageUrl: 'https://www.apollographql.com/apollo-home.jpg',
-    title: 'Apollo GraphQL',
-    url: 'https://apollographql.com',
+    id: '1a9020b2-363b-4a4f-ad26-d6d51b51bqes',
+    name: 'Pizza',
+    description: 'wings description',
+    price: 14.0,
+    addOns: [
+      {
+        id: '1a1121b2-363b-4a4f-ad26-d6c35b41bade',
+        name: 'Toppings',
+        isRequired: true,
+        items: [
+          {
+            id: '119122b2-363b-4a4f-ad26-d6c55b51baed',
+            name: 'Pepperoni',
+            price: 1.0,
+          },
+          {
+            id: '619122b2-363b-4a4f-ad26-d6c55b51b1ed',
+            name: 'Bacon',
+            price: 3.0,
+          },
+        ],
+      },
+      {
+        id: '2a1121b2-323b-4a4f-ad26-d6c35b41ba1e',
+        name: 'Veggies',
+        isRequired: true,
+        items: [
+          {
+            id: '6a112221-363b-4a4f-ad26-d6c55b51baed',
+            name: 'Olives',
+            price: 2.0,
+          },
+          {
+            id: '6a9122b2-323b-414f-ad26-d6c15b51baed',
+            name: 'Tomato',
+            price: 1.0,
+          },
+        ],
+      },
+    ],
   },
 ];

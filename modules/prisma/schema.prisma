@@ -10,29 +10,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email     String?  @unique
-  image     String?
-  role      Role     @default(USER)
-  bookmarks Link[]
-}
-
-enum Role {
-  USER
-  ADMIN
-}
-
-model Link {
+model Food {
   id          String   @id @default(uuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  title       String
+  name        String?
   description String
-  url         String
-  imageUrl    String
-  category    String
-  users       User[]
+  price       Float?
+  addOns      AddOn[]
+}
+
+model AddOn {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  name       String
+  isRequired Boolean
+  foods      Food[]
+  items      Item[]
+}
+
+model Item {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  price     Float
+  addOns    AddOn[]
 }
