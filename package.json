@@ -13,10 +13,12 @@
   "scripts": {
     "predev": "yarn run generate",
     "dev": "next",
+    "dev:ts": "yarn dev & yarn ts:watch",
+    "ts": "tsc --noEmit --incremental",
+    "ts:watch": "yarn ts --watch",
     "prebuild": "yarn run generate",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc",
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "postinstall": "husky install",

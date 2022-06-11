@@ -7,42 +7,42 @@ async function main() {
   await prisma.addOn.deleteMany({});
   await prisma.item.deleteMany({});
 
-  await Promise.all(
-    data.map((food) =>
-      prisma.food.create({
-        data: {
-          id: uuidv4(),
-          name: food.name,
-          description: food.description,
-          price: food.price,
-          addOns: {
-            connectOrCreate: food.addOns?.map((addOn) => ({
-              where: {
-                id: addOn.id,
-              },
-              create: {
-                id: uuidv4(),
-                name: addOn.name,
-                isRequired: addOn.isRequired,
-                items: {
-                  connectOrCreate: addOn.items.map((item) => ({
-                    where: {
-                      id: item.id,
-                    },
-                    create: {
-                      id: uuidv4(),
-                      name: item.name,
-                      price: item.price,
-                    },
-                  })),
-                },
-              },
-            })),
-          },
-        },
-      }),
-    ),
-  );
+  // await Promise.all(
+  //   data.map((food) =>
+  //     prisma.food.create({
+  //       data: {
+  //         id: uuidv4(),
+  //         name: food.name,
+  //         description: food.description,
+  //         price: food.price,
+  //         addOns: {
+  //           connectOrCreate: food.addOns?.map((addOn) => ({
+  //             where: {
+  //               id: addOn.id,
+  //             },
+  //             create: {
+  //               id: uuidv4(),
+  //               name: addOn.name,
+  //               isRequired: addOn.isRequired,
+  //               items: {
+  //                 connectOrCreate: addOn.items.map((item) => ({
+  //                   where: {
+  //                     id: item.id,
+  //                   },
+  //                   create: {
+  //                     id: uuidv4(),
+  //                     name: item.name,
+  //                     price: item.price,
+  //                   },
+  //                 })),
+  //               },
+  //             },
+  //           })),
+  //         },
+  //       },
+  //     }),
+  //   ),
+  // );
 }
 
 main()

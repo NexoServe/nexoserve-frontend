@@ -14,9 +14,9 @@ model Food {
   id          String   @id @default(uuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  name        String?
-  description String
-  price       Float?
+  name        String
+  description String?
+  price       Float
   addOns      AddOn[]
 }
 

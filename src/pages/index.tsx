@@ -2,39 +2,39 @@ import { GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import styles from '@/styles/Home.module.css';
 import {
-  LinksDocument,
-  useCreateLinkMutation,
-  useLinksQuery,
+  FoodsDocument,
+  FoodsQuery,
+  useFoodsQuery,
 } from '../../generated/graphql';
 import { addApolloState, initializeApollo } from '../../lib/apolloClient';
 import prisma from '../../lib/prisma';
 
 const Home: NextPage = () => {
-  const { data } = useLinksQuery({
+  const { data } = useFoodsQuery({
     notifyOnNetworkStatusChange: true,
   });
 
-  const [createLink, {}] = useCreateLinkMutation({
-    variables: {
-      title: `hey`,
-      url: `hey`,
-      imageUrl: `hey`,
-      category: `hey`,
-      description: `hey`,
-    },
-    update(cache, { data }) {
-      const { links }: any = cache.readQuery({
-        query: LinksDocument,
-      });
+  // const [createLink, {}] = useCreateLinkMutation({
+  //   variables: {
+  //     title: `hey`,
+  //     url: `hey`,
+  //     imageUrl: `hey`,
+  //     category: `hey`,
+  //     description: `hey`,
+  //   },
+  //   update(cache, { data }) {
+  //     const { links }: any = cache.readQuery({
+  //       query: LinksDocument,
+  //     });
 
-      cache.writeQuery({
-        query: LinksDocument,
-        data: {
-          links: [...links, data?.createLink],
-        },
-      });
-    },
-  });
+  //     cache.writeQuery({
+  //       query: LinksDocument,
+  //       data: {
+  //         links: [...links, data?.createLink],
+  //       },
+  //     });
+  //   },
+  // });
 
   return (
     <div className={styles.container}>
@@ -47,10 +47,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <button onClick={() => createLink()}>Add</button>
+        {/* <button onClick={() => createLink()}>Add</button> */}
 
-        {data?.links.map((link) => (
-          <h1 key={link?.id}>{link?.title}</h1>
+        {data?.foods.map((food) => (
+          <h1 key={food?.id}>{food?.name}</h1>
         ))}
       </main>
     </div>
@@ -62,7 +62,7 @@ export const getServerSideProps = async ({
 }: GetServerSidePropsContext) => {
   const apolloClient = initializeApollo({ ctx: { req, prisma } });
 
-  await apolloClient.query({ query: LinksDocument });
+  await apolloClient.query({ query: FoodsDocument });
 
   return addApolloState(apolloClient, {
     props: {},

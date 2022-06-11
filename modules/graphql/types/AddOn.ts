@@ -1,5 +1,11 @@
 // /graphql/types/User.ts
-import { enumType, extendType, objectType } from 'nexus';
+import {
+  enumType,
+  extendType,
+  inputObjectType,
+  nonNull,
+  objectType,
+} from 'nexus';
 import { Food } from './Food';
 import { Item } from './Item';
 
@@ -14,6 +20,18 @@ export const AddOn = objectType({
     });
     t.list.field(`items`, {
       type: 'Item',
+    });
+  },
+});
+
+export const CreateAddOnInput = inputObjectType({
+  name: 'CreateAddOnInput',
+  definition(t) {
+    t.string('id');
+    t.nonNull.string(`name`);
+    t.nonNull.boolean('isRequired');
+    t.nonNull.list.nonNull.field('items', {
+      type: 'CreateItemInput',
     });
   },
 });

@@ -14,6 +14,24 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  CreateAddOnInput: { // input type
+    id?: string | null; // String
+    isRequired: boolean; // Boolean!
+    items: NexusGenInputs['CreateItemInput'][]; // [CreateItemInput!]!
+    name: string; // String!
+  }
+  CreateFoodInput: { // input type
+    addOns: NexusGenInputs['CreateAddOnInput'][]; // [CreateAddOnInput!]!
+    description?: string | null; // String
+    id?: string | null; // String
+    name: string; // String!
+    price: number; // Float!
+  }
+  CreateItemInput: { // input type
+    id?: string | null; // String
+    name: string; // String!
+    price: number; // Float!
+  }
 }
 
 export interface NexusGenEnums {
@@ -48,6 +66,7 @@ export interface NexusGenObjects {
     name?: string | null; // String
     price?: number | null; // Float
   }
+  Mutation: {};
   Query: {};
 }
 
@@ -82,6 +101,9 @@ export interface NexusGenFieldTypes {
     name: string | null; // String
     price: number | null; // Float
   }
+  Mutation: { // field return type
+    createLink: NexusGenRootTypes['Food']; // Food!
+  }
   Query: { // field return type
     addOns: Array<NexusGenRootTypes['AddOn'] | null>; // [AddOn]!
     foods: Array<NexusGenRootTypes['Food'] | null>; // [Food]!
@@ -110,6 +132,9 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
     price: 'Float'
   }
+  Mutation: { // field return type name
+    createLink: 'Food'
+  }
   Query: { // field return type name
     addOns: 'AddOn'
     foods: 'Food'
@@ -118,6 +143,11 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    createLink: { // args
+      input: NexusGenInputs['CreateFoodInput']; // CreateFoodInput!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
@@ -128,7 +158,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = never;
 

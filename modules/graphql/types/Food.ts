@@ -1,6 +1,16 @@
 // /graphql/types/Link.ts
-import { booleanArg, extendType, nonNull, objectType, stringArg } from 'nexus';
-import { AddOn } from './AddOn';
+import {
+  booleanArg,
+  extendInputType,
+  extendType,
+  floatArg,
+  inputObjectType,
+  list,
+  nonNull,
+  objectType,
+  stringArg,
+} from 'nexus';
+import { v4 as uuidv4 } from 'uuid';
 
 export const Food = objectType({
   name: `Food`,
@@ -11,6 +21,19 @@ export const Food = objectType({
     t.float(`price`);
     t.list.field(`addOns`, {
       type: 'AddOn',
+    });
+  },
+});
+
+export const CreateFoodInput = inputObjectType({
+  name: 'CreateFoodInput',
+  definition(t) {
+    t.string('id');
+    t.nonNull.string(`name`);
+    t.string('description');
+    t.nonNull.float(`price`);
+    t.nonNull.list.nonNull.field('addOns', {
+      type: 'CreateAddOnInput',
     });
   },
 });
@@ -35,31 +58,54 @@ export const FoodsQuery = extendType({
   },
 });
 
-// export const CreateLinkMutation = extendType({
-//   type: `Mutation`,
-//   definition(t) {
-//     t.nonNull.field(`createLink`, {
-//       type: Link,
-//       args: {
-//         title: nonNull(stringArg()),
-//         url: nonNull(stringArg()),
-//         imageUrl: nonNull(stringArg()),
-//         category: nonNull(stringArg()),
-//         description: nonNull(stringArg()),
-//       },
-//       async resolve(_parent, args, ctx) {
-//         const newLink = {
-//           title: args.title,
-//           url: args.url,
-//           imageUrl: args.imageUrl,
-//           category: args.category,
-//           description: args.description,
-//         };
-
-//         return await ctx.prisma.link.create({
-//           data: newLink,
-//         });
-//       },
-//     });
-//   },
-// });
+export const CreateLinkMutation = extendType({
+  type: `Mutation`,
+  definition(t) {
+    t.nonNull.field(`createLink`, {
+      type: 'Food',
+      args: {
+        input: nonNull(CreateFoodInput),
+      },
+      async resolve(_parent, args, ctx) {
+        return await ctx.prisma.food.create({
+          include: {
+            addOns: {
+              include: {
+                items: true,
+              },
+            },
+          },
+          data: {
+            name: args.input?.name,
+            description: args.input?.description,
+            price: args.input.price,
+            addOns: {
+              connectOrCreate: args.input.addOns?.map((addOn) => ({
+                where: {
+                  id: addOn.id || undefined,
+                },
+                create: {
+                  id: uuidv4(),
+                  name: addOn?.name,
+                  isRequired: addOn.isRequired,
+                  items: {
+                    connectOrCreate: addOn.items.map((item) => ({
+                      where: {
+                        id: item?.id || '',
+                      },
+                      create: {
+                        id: uuidv4(),
+                        name: item?.name,
+                        price: item?.price,
+                      },
+                    })),
+                  },
+                },
+              })),
+            },
+          },
+        });
+      },
+    });
+  },
+});

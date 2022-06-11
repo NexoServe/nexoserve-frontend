@@ -1,4 +1,4 @@
-import { extendType, objectType } from 'nexus';
+import { extendType, inputObjectType, objectType } from 'nexus';
 
 export const Item = objectType({
   name: `Item`,
@@ -9,6 +9,15 @@ export const Item = objectType({
     t.list.field('addOns', {
       type: 'AddOn',
     });
+  },
+});
+
+export const CreateItemInput = inputObjectType({
+  name: 'CreateItemInput',
+  definition(t) {
+    t.string(`id`);
+    t.nonNull.string(`name`);
+    t.nonNull.float(`price`);
   },
 });
 

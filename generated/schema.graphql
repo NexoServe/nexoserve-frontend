@@ -10,6 +10,27 @@ type AddOn {
   name: String
 }
 
+input CreateAddOnInput {
+  id: String
+  isRequired: Boolean!
+  items: [CreateItemInput!]!
+  name: String!
+}
+
+input CreateFoodInput {
+  addOns: [CreateAddOnInput!]!
+  description: String
+  id: String
+  name: String!
+  price: Float!
+}
+
+input CreateItemInput {
+  id: String
+  name: String!
+  price: Float!
+}
+
 type Food {
   addOns: [AddOn]
   description: String
@@ -23,6 +44,10 @@ type Item {
   id: String
   name: String
   price: Float
+}
+
+type Mutation {
+  createLink(input: CreateFoodInput!): Food!
 }
 
 type Query {
