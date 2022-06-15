@@ -1,6 +1,5 @@
 import { GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
-import styles from '@/styles/Home.module.css';
 import { useFoodsQuery } from '../../generated/graphql';
 import { addApolloState, initializeApollo } from '../../lib/apolloClient';
 import prisma from '../../lib/prisma';
@@ -33,7 +32,7 @@ const Home: NextPage = () => {
   // });
 
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>TypeScript starter for Next.js</title>
         <meta
@@ -42,7 +41,7 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
+      <main>
         {/* <button onClick={() => createLink()}>Add</button> */}
 
         {data?.foods.map((food) => (
