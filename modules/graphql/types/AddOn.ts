@@ -1,13 +1,5 @@
 // /graphql/types/User.ts
-import {
-  enumType,
-  extendType,
-  inputObjectType,
-  nonNull,
-  objectType,
-} from 'nexus';
-import { Food } from './Food';
-import { Item } from './Item';
+import { extendType, inputObjectType, objectType } from 'nexus';
 
 export const AddOn = objectType({
   name: `AddOn`,

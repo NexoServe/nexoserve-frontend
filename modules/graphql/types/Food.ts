@@ -1,15 +1,5 @@
 // /graphql/types/Link.ts
-import {
-  booleanArg,
-  extendInputType,
-  extendType,
-  floatArg,
-  inputObjectType,
-  list,
-  nonNull,
-  objectType,
-  stringArg,
-} from 'nexus';
+import { extendType, inputObjectType, nonNull, objectType } from 'nexus';
 import { v4 as uuidv4 } from 'uuid';
 
 export const Food = objectType({

@@ -1,11 +1,7 @@
 import { GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import styles from '@/styles/Home.module.css';
-import {
-  FoodsDocument,
-  FoodsQuery,
-  useFoodsQuery,
-} from '../../generated/graphql';
+import { useFoodsQuery } from '../../generated/graphql';
 import { addApolloState, initializeApollo } from '../../lib/apolloClient';
 import prisma from '../../lib/prisma';
 
@@ -62,7 +58,8 @@ export const getServerSideProps = async ({
 }: GetServerSidePropsContext) => {
   const apolloClient = initializeApollo({ ctx: { req, prisma } });
 
-  await apolloClient.query({ query: FoodsDocument });
+  //TODO: add ssr
+  // await apolloClient.query({ query: FoodsDocument });
 
   return addApolloState(apolloClient, {
     props: {},
