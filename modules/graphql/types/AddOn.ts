@@ -1,4 +1,3 @@
-// /graphql/types/User.ts
 import { extendType, inputObjectType, objectType } from 'nexus';
 
 export const AddOn = objectType({

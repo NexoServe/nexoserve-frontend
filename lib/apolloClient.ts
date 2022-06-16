@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import {
   ApolloClient,
   from,
@@ -8,7 +10,6 @@ import {
 import { SchemaLink } from '@apollo/client/link/schema';
 import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
-import { useMemo } from 'react';
 
 export const APOLLO_STATE_PROP_NAME = `__APOLLO_STATE__`;
 

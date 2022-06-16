@@ -1,8 +1,10 @@
 import { GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
+
 import { useFoodsQuery } from '../../generated/graphql';
 import { addApolloState, initializeApollo } from '../../lib/apolloClient';
 import prisma from '../../lib/prisma';
+import FoodList from '../components/FoodList/FoodList';
 
 const Home: NextPage = () => {
   const { data } = useFoodsQuery({
@@ -41,12 +43,9 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        {/* <button onClick={() => createLink()}>Add</button> */}
 
-        {data?.foods.map((food) => (
-          <h1 key={food?.id}>{food?.name}</h1>
-        ))}
+      <main>
+        <FoodList foods={data?.foods} />
       </main>
     </div>
   );

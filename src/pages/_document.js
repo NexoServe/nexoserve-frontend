@@ -1,6 +1,7 @@
+import React from 'react';
+
 import globalPlugin from 'jss-global';
 import Document from 'next/document';
-import React from 'react';
 import { createGenerateId, jss, JssProvider, SheetsRegistry } from 'react-jss';
 
 // eslint-disable-next-line import/no-default-export

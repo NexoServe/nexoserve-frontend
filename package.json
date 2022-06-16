@@ -38,6 +38,7 @@
   "dependencies": {
     "@apollo/client": "3.6.6",
     "@graphql-codegen/cli": "2.6.2",
+    "@graphql-codegen/introspection": "2.1.1",
     "@prisma/client": "3.14.0",
     "apollo-server-micro": "3.8.2",
     "deepmerge": "4.2.2",

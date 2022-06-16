@@ -1,5 +1,6 @@
 import Cors from 'micro-cors';
-import { apolloServer } from 'lib/apolloServer';
+
+import { apolloServer } from '../../../lib/apolloServer';
 
 const cors = Cors();
 

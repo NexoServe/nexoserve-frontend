@@ -1,4 +1,5 @@
 import { createUseStyles } from 'react-jss';
+
 import { base, baselinePX, htmlFontSize } from './base';
 import colors from './colors';
 import queries from './queries';
@@ -8,7 +9,7 @@ export default createUseStyles({
   '@global': {
     'html, body': {
       margin: 0,
-      color: colors.gray,
+      color: colors.black,
     },
     '*': {
       boxSizing: 'border-box',

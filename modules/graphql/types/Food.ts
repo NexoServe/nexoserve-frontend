@@ -1,4 +1,3 @@
-// /graphql/types/Link.ts
 import { extendType, inputObjectType, nonNull, objectType } from 'nexus';
 import { v4 as uuidv4 } from 'uuid';
 
