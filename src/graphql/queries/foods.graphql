@@ -3,6 +3,7 @@ query Foods {
     id
     name
     price
+    description
     addOns {
       id
       name

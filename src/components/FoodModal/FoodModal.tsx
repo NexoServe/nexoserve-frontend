@@ -6,17 +6,23 @@ import { IFoodModal } from './types';
 
 const FoodModal = ({ food }: IFoodModal) => {
   // const classes = useStyles();
-  return (
-    <div>
-      <h2>{food?.name}</h2>
-      <span>Price: {food?.price}</span>
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('e', e.currentTarget);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h2>{food?.name}</h2>
+      <span>Price: ${food?.price}</span>
+      <p>{food?.description}</p>
       {food?.addOns?.map((addOn) => (
-        <>
-          <FoodAddOn addOn={addOn} />
-        </>
+        <FoodAddOn key={addOn?.id} addOn={addOn} />
       ))}
-    </div>
+
+      <button>Add</button>
+    </form>
   );
 };
 

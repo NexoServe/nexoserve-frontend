@@ -52,20 +52,13 @@ export const Modal = ({ showModal, setShowModal, children }: IModal) => {
     ? createPortal(
         <>
           {showModal ? (
-            <div
-              className={classes.modalBackground}
-              onClick={closeModal}
-              ref={modalRef}
-            >
-              {showModal && (
-                <div className={classes.modalWrapper}>
-                  {children}
-                  <button
-                    aria-label="Close modal"
-                    onClick={() => setShowModal((prev) => !prev)}
-                  />
-                </div>
-              )}
+            <div className={classes.modal}>
+              <div
+                className={classes.modalClose}
+                onClick={closeModal}
+                ref={modalRef}
+              ></div>
+              <div className={classes.modalInner}>{children}</div>
             </div>
           ) : null}
         </>,

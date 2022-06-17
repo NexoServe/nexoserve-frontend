@@ -82,7 +82,7 @@ export type Query = {
 export type FoodsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null } | null> | null } | null> | null } | null> };
+export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, price?: number | null, description?: string | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null } | null> | null } | null> | null } | null> };
 
 
 export const FoodsDocument = gql`
@@ -91,6 +91,7 @@ export const FoodsDocument = gql`
     id
     name
     price
+    description
     addOns {
       id
       name

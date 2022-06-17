@@ -11,13 +11,14 @@ datasource db {
 }
 
 model Food {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          String      @id @default(uuid())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
   name        String
   description String?
   price       Float
   addOns      AddOn[]
+  orderItems  OrderItem[]
 }
 
 model AddOn {
@@ -31,10 +32,30 @@ model AddOn {
 }
 
 model Item {
+  id         String      @id @default(uuid())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  name       String
+  price      Float
+  addOns     AddOn[]
+  orderItems OrderItem[]
+}
+
+model OrderItem {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  name      String
-  price     Float
-  addOns    AddOn[]
+  food      Food?    @relation(fields: [foodId], references: [id])
+  foodId    String?
+  items     Item[]
+  Order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   String?
+}
+
+model Order {
+  id         String      @id @default(uuid())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  orderItems OrderItem[]
+  total      Float
 }

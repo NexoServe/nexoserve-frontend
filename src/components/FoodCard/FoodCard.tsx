@@ -12,7 +12,7 @@ const FoodCard = ({ food, activeFoodClick }: IFoodCard) => {
   //   const classes = useStyles();
   return (
     <button onClick={() => activeFoodClick(food)}>
-      <h2>{food?.price}</h2>
+      <h2>{food?.name}</h2>
     </button>
   );
 };

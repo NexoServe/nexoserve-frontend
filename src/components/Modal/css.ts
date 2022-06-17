@@ -4,48 +4,41 @@ import colors from '../../../css/colors';
 import zIndex from '../../../css/zIndex';
 
 const useStyles = createUseStyles({
-  modalBackground: {
+  modal: {
+    position: 'fixed',
     width: '100%',
     height: '100%',
-    background: colors.black,
-    position: 'fixed',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     top: 0,
     left: 0,
-  },
-
-  modalWrapper: {
-    width: '800px',
-    height: '500px',
-    boxShadow: '0 5px 16px rgba(0, 0, 0, 0.2)',
-    background: colors.white,
-    color: colors.black,
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    position: 'relative',
-    zIndex: zIndex.modal,
-    borderRadius: '10px',
-  },
-
-  modalContent: {
+    bottom: 0,
+    right: 0,
     display: 'flex',
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    color: '#141414',
+  },
 
-    p: {
-      marginBottom: '1rem',
-    },
+  modalClose: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    backgroundColor: colors.black,
+    zIndex: zIndex.modal,
+    cursor: 'pointer',
+  },
 
-    button: {
-      padding: '10px 24px',
-      background: '#141414',
-      color: '#fff',
-      border: 'none',
-    },
+  modalInner: {
+    borderRadius: '5px',
+    padding: '3rem',
+    position: 'relative',
+    zIndex: zIndex.modal + 1,
+    backgroundColor: colors.white,
+    height: 'auto',
+    transition: 'height 250ms ease-in-out',
+    minWidth: '300px',
   },
 });
 
