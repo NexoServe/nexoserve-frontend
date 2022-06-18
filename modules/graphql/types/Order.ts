@@ -17,6 +17,7 @@ export const CreateOrderInput = inputObjectType({
   definition(t) {
     t.string('id');
     t.float(`total`);
+    t.nonNull.string('foodId');
     t.nonNull.list.string('itemIds');
   },
 });

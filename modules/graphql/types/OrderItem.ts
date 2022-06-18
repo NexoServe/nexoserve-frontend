@@ -5,7 +5,6 @@ export const OrderItem = objectType({
   name: `OrderItem`,
   definition(t) {
     t.string(`id`);
-    t.float(`total`);
     t.field(`food`, {
       type: 'Food',
     });

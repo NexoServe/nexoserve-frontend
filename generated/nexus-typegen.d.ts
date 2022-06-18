@@ -33,8 +33,9 @@ export interface NexusGenInputs {
     price: number; // Float!
   }
   CreateOrderInput: { // input type
+    foodId: string; // String!
     id?: string | null; // String
-    orderItems: NexusGenInputs['CreateOrderItemInput'][]; // [CreateOrderItemInput!]!
+    itemIds: Array<string | null>; // [String]!
     total?: number | null; // Float
   }
   CreateOrderItemInput: { // input type
@@ -86,7 +87,6 @@ export interface NexusGenObjects {
     food?: NexusGenRootTypes['Food'] | null; // Food
     id?: string | null; // String
     items?: Array<NexusGenRootTypes['Item'] | null> | null; // [Item]
-    total?: number | null; // Float
   }
   Query: {};
 }
@@ -135,7 +135,6 @@ export interface NexusGenFieldTypes {
     food: NexusGenRootTypes['Food'] | null; // Food
     id: string | null; // String
     items: Array<NexusGenRootTypes['Item'] | null> | null; // [Item]
-    total: number | null; // Float
   }
   Query: { // field return type
     addOns: Array<NexusGenRootTypes['AddOn'] | null>; // [AddOn]!
@@ -178,7 +177,6 @@ export interface NexusGenFieldTypeNames {
     food: 'Food'
     id: 'String'
     items: 'Item'
-    total: 'Float'
   }
   Query: { // field return type name
     addOns: 'AddOn'

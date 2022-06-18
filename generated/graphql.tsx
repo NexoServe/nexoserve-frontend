@@ -46,8 +46,9 @@ export type CreateItemInput = {
 };
 
 export type CreateOrderInput = {
+  foodId: Scalars['String'];
   id?: InputMaybe<Scalars['String']>;
-  orderItems: Array<CreateOrderItemInput>;
+  itemIds: Array<InputMaybe<Scalars['String']>>;
   total?: InputMaybe<Scalars['Float']>;
 };
 
@@ -102,7 +103,6 @@ export type OrderItem = {
   food?: Maybe<Food>;
   id?: Maybe<Scalars['String']>;
   items?: Maybe<Array<Maybe<Item>>>;
-  total?: Maybe<Scalars['Float']>;
 };
 
 export type Query = {

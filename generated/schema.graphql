@@ -32,8 +32,9 @@ input CreateItemInput {
 }
 
 input CreateOrderInput {
+  foodId: String!
   id: String
-  orderItems: [CreateOrderItemInput!]!
+  itemIds: [String]!
   total: Float
 }
 
@@ -73,7 +74,6 @@ type OrderItem {
   food: Food
   id: String
   items: [Item]
-  total: Float
 }
 
 type Query {
