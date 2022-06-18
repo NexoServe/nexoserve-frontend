@@ -48,7 +48,7 @@ model OrderItem {
   food      Food?    @relation(fields: [foodId], references: [id])
   foodId    String?
   items     Item[]
-  Order     Order?   @relation(fields: [orderId], references: [id])
+  order     Order?   @relation(fields: [orderId], references: [id])
   orderId   String?
 }
 
@@ -56,6 +56,6 @@ model Order {
   id         String      @id @default(uuid())
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
-  orderItems OrderItem[]
   total      Float
+  orderItems OrderItem[]
 }

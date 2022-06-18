@@ -32,6 +32,16 @@ export interface NexusGenInputs {
     name: string; // String!
     price: number; // Float!
   }
+  CreateOrderInput: { // input type
+    id?: string | null; // String
+    orderItems: NexusGenInputs['CreateOrderItemInput'][]; // [CreateOrderItemInput!]!
+    total?: number | null; // Float
+  }
+  CreateOrderItemInput: { // input type
+    foodId: string; // String!
+    id?: string | null; // String
+    items: string[]; // [String!]!
+  }
 }
 
 export interface NexusGenEnums {
@@ -67,6 +77,17 @@ export interface NexusGenObjects {
     price?: number | null; // Float
   }
   Mutation: {};
+  Order: { // root type
+    id?: string | null; // String
+    orderItems?: Array<NexusGenRootTypes['OrderItem'] | null> | null; // [OrderItem]
+    total?: number | null; // Float
+  }
+  OrderItem: { // root type
+    food?: NexusGenRootTypes['Food'] | null; // Food
+    id?: string | null; // String
+    items?: Array<NexusGenRootTypes['Item'] | null> | null; // [Item]
+    total?: number | null; // Float
+  }
   Query: {};
 }
 
@@ -102,7 +123,19 @@ export interface NexusGenFieldTypes {
     price: number | null; // Float
   }
   Mutation: { // field return type
-    createLink: NexusGenRootTypes['Food']; // Food!
+    createFood: NexusGenRootTypes['Food']; // Food!
+    createOrder: NexusGenRootTypes['Order']; // Order!
+  }
+  Order: { // field return type
+    id: string | null; // String
+    orderItems: Array<NexusGenRootTypes['OrderItem'] | null> | null; // [OrderItem]
+    total: number | null; // Float
+  }
+  OrderItem: { // field return type
+    food: NexusGenRootTypes['Food'] | null; // Food
+    id: string | null; // String
+    items: Array<NexusGenRootTypes['Item'] | null> | null; // [Item]
+    total: number | null; // Float
   }
   Query: { // field return type
     addOns: Array<NexusGenRootTypes['AddOn'] | null>; // [AddOn]!
@@ -133,7 +166,19 @@ export interface NexusGenFieldTypeNames {
     price: 'Float'
   }
   Mutation: { // field return type name
-    createLink: 'Food'
+    createFood: 'Food'
+    createOrder: 'Order'
+  }
+  Order: { // field return type name
+    id: 'String'
+    orderItems: 'OrderItem'
+    total: 'Float'
+  }
+  OrderItem: { // field return type name
+    food: 'Food'
+    id: 'String'
+    items: 'Item'
+    total: 'Float'
   }
   Query: { // field return type name
     addOns: 'AddOn'
@@ -144,8 +189,11 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
-    createLink: { // args
+    createFood: { // args
       input: NexusGenInputs['CreateFoodInput']; // CreateFoodInput!
+    }
+    createOrder: { // args
+      input: NexusGenInputs['CreateOrderInput']; // CreateOrderInput!
     }
   }
 }

@@ -45,6 +45,18 @@ export type CreateItemInput = {
   price: Scalars['Float'];
 };
 
+export type CreateOrderInput = {
+  id?: InputMaybe<Scalars['String']>;
+  orderItems: Array<CreateOrderItemInput>;
+  total?: InputMaybe<Scalars['Float']>;
+};
+
+export type CreateOrderItemInput = {
+  foodId: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  items: Array<Scalars['String']>;
+};
+
 export type Food = {
   __typename?: 'Food';
   addOns?: Maybe<Array<Maybe<AddOn>>>;
@@ -64,12 +76,33 @@ export type Item = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createLink: Food;
+  createFood: Food;
+  createOrder: Order;
 };
 
 
-export type MutationCreateLinkArgs = {
+export type MutationCreateFoodArgs = {
   input: CreateFoodInput;
+};
+
+
+export type MutationCreateOrderArgs = {
+  input: CreateOrderInput;
+};
+
+export type Order = {
+  __typename?: 'Order';
+  id?: Maybe<Scalars['String']>;
+  orderItems?: Maybe<Array<Maybe<OrderItem>>>;
+  total?: Maybe<Scalars['Float']>;
+};
+
+export type OrderItem = {
+  __typename?: 'OrderItem';
+  food?: Maybe<Food>;
+  id?: Maybe<Scalars['String']>;
+  items?: Maybe<Array<Maybe<Item>>>;
+  total?: Maybe<Scalars['Float']>;
 };
 
 export type Query = {

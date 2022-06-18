@@ -47,10 +47,10 @@ export const FoodsQuery = extendType({
   },
 });
 
-export const CreateLinkMutation = extendType({
+export const CreateFoodMutation = extendType({
   type: `Mutation`,
   definition(t) {
-    t.nonNull.field(`createLink`, {
+    t.nonNull.field(`createFood`, {
       type: 'Food',
       args: {
         input: nonNull(CreateFoodInput),

@@ -31,6 +31,18 @@ input CreateItemInput {
   price: Float!
 }
 
+input CreateOrderInput {
+  id: String
+  orderItems: [CreateOrderItemInput!]!
+  total: Float
+}
+
+input CreateOrderItemInput {
+  foodId: String!
+  id: String
+  items: [String!]!
+}
+
 type Food {
   addOns: [AddOn]
   description: String
@@ -47,7 +59,21 @@ type Item {
 }
 
 type Mutation {
-  createLink(input: CreateFoodInput!): Food!
+  createFood(input: CreateFoodInput!): Food!
+  createOrder(input: CreateOrderInput!): Order!
+}
+
+type Order {
+  id: String
+  orderItems: [OrderItem]
+  total: Float
+}
+
+type OrderItem {
+  food: Food
+  id: String
+  items: [Item]
+  total: Float
 }
 
 type Query {
