@@ -1,0 +1,10 @@
+mutation CreateOrder($createOrderInput: CreateOrderInput!) {
+  createOrder(input: $createOrderInput) {
+    id
+    total
+    orderItems {
+      id
+      __typename
+    }
+  }
+}

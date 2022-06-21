@@ -1,10 +1,14 @@
+import { useEffect } from 'react';
+
 import { ApolloProvider } from '@apollo/client';
 import { AppProps } from 'next/app';
-import { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+
 import useStyles from '../../css/app';
 import { useApollo } from '../../lib/apolloClient';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const methods = useForm();
   const classes = useStyles();
 
   useEffect(() => {
@@ -18,9 +22,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps);
   return (
     <ApolloProvider client={apolloClient}>
-      <div className={classes.app}>
-        <Component {...pageProps} />
-      </div>
+      <FormProvider {...methods}>
+        <div className={classes.app}>
+          <Component {...pageProps} />
+        </div>
+      </FormProvider>
     </ApolloProvider>
   );
 }

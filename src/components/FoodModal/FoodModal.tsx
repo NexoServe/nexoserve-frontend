@@ -1,26 +1,49 @@
 import React from 'react';
 
+import { SubmitHandler, useForm, useFormContext } from 'react-hook-form';
+
+import {
+  CreateOrderInput,
+  useCreateOrderMutation,
+} from '../../../generated/graphql';
+// import { useCreateOrderMutation } from '../../../generated/graphql';
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
 // import useStyles from './css';
-import { IFoodModal } from './types';
+import { FoodFormType, IFoodModal } from './types';
 
 const FoodModal = ({ food }: IFoodModal) => {
   // const classes = useStyles();
+  const [createOrder, { data }] = useCreateOrderMutation();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('e', e.currentTarget);
+  console.log('datadata', data);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useFormContext<FoodFormType>();
+
+  const onSubmit: SubmitHandler<FoodFormType> = (data) => {
+    console.log('data.foodItems', data.foodItems);
+    createOrder({
+      variables: {
+        createOrderInput: {
+          foodId: food?.id as string,
+          itemIds: data.foodItems,
+        },
+      },
+    });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <h2>{food?.name}</h2>
       <span>Price: ${food?.price}</span>
       <p>{food?.description}</p>
       {food?.addOns?.map((addOn) => (
         <FoodAddOn key={addOn?.id} addOn={addOn} />
       ))}
-
       <button>Add</button>
     </form>
   );
