@@ -1,51 +1,125 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { SubmitHandler, useForm, useFormContext } from 'react-hook-form';
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  useFormContext,
+} from 'react-hook-form';
+import { useRecoilState } from 'recoil';
+import { v4 } from 'uuid';
 
 import {
   CreateOrderInput,
   useCreateOrderMutation,
 } from '../../../generated/graphql';
+import { OrderAtom, ShoppingCartAtom } from '../../state/ShoppingCartState';
 // import { useCreateOrderMutation } from '../../../generated/graphql';
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
-// import useStyles from './css';
+import { IFoodItem } from '../FoodItem/types';
+import useStyles from './css';
 import { FoodFormType, IFoodModal } from './types';
 
 const FoodModal = ({ food }: IFoodModal) => {
-  // const classes = useStyles();
-  const [createOrder, { data }] = useCreateOrderMutation();
+  const classes = useStyles();
+  // const [createOrder, { data }] = useCreateOrderMutation();
+  const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
+  const [order, setOrder] = useRecoilState(OrderAtom);
 
-  console.log('datadata', data);
+  console.log('rerender');
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useFormContext<FoodFormType>();
+  const methods = useForm<FoodFormType>({
+    defaultValues: {
+      foodItems: [],
+      orderItemQuantity: 1,
+    },
+  });
 
   const onSubmit: SubmitHandler<FoodFormType> = (data) => {
-    console.log('data.foodItems', data.foodItems);
-    createOrder({
-      variables: {
-        createOrderInput: {
-          foodId: food?.id as string,
-          itemIds: data.foodItems,
-        },
+    const items: IFoodItem[] = [];
+
+    console.log('data', data);
+
+    setOrder([
+      ...order,
+      {
+        foodId: food?.id,
+        itemIds: data.foodItems,
+        quantity: data.orderItemQuantity,
       },
+    ]);
+
+    food?.addOns?.map((addOn) => {
+      addOn?.items?.map((item) => {
+        if (data.foodItems.includes(item?.id as string)) {
+          items.push(item as IFoodItem);
+        }
+      });
     });
+
+    setShoppingCart([
+      ...shoppingCart,
+      {
+        orderItemId: v4(),
+        food: food,
+        foodItems: items,
+        foodIds: data.foodItems,
+        orderItemQuantity: data?.orderItemQuantity,
+      },
+    ]);
+
+    console.log('items', items);
+
+    // createOrder({
+    //   variables: {
+    //     createOrderInput: {
+    //       foodId: food?.id as string,
+    //       itemIds: data.foodItems,
+    //     },
+    //   },
+    // });
+  };
+
+  const orderItemQuantity = methods.watch('orderItemQuantity');
+
+  const decreaseQuantity = () => {
+    if (orderItemQuantity > 1) {
+      methods.setValue('orderItemQuantity', orderItemQuantity - 1);
+    }
+  };
+
+  const increaseQuantity = () => {
+    methods.setValue('orderItemQuantity', orderItemQuantity + 1);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>{food?.name}</h2>
-      <span>Price: ${food?.price}</span>
-      <p>{food?.description}</p>
-      {food?.addOns?.map((addOn) => (
-        <FoodAddOn key={addOn?.id} addOn={addOn} />
-      ))}
-      <button>Add</button>
-    </form>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <h2>{food?.name}</h2>
+        <span>Price: ${food?.price}</span>
+        <p>{food?.description}</p>
+        {food?.addOns?.map((addOn) => (
+          <FoodAddOn key={addOn?.id} addOn={addOn} />
+        ))}
+
+        <div>
+          <button onClick={() => decreaseQuantity()} type="button">
+            -
+          </button>
+          <input
+            className={classes.foodModalQuantity}
+            type="number"
+            {...methods.register('orderItemQuantity')}
+            value={orderItemQuantity}
+          />
+          <button onClick={() => increaseQuantity()} type="button">
+            +
+          </button>
+        </div>
+
+        <button>Add</button>
+      </form>
+    </FormProvider>
   );
 };
 

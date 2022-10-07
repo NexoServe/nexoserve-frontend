@@ -1,0 +1,9 @@
+mutation CheckoutCalculateMut(
+  $checkoutCalculateMutInput2: CheckoutCalculateInput!
+) {
+  CheckoutCalculateMut(input: $checkoutCalculateMutInput2) {
+    id
+    total
+    clientSecret
+  }
+}

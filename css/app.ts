@@ -11,6 +11,7 @@ export default createUseStyles({
       margin: 0,
       color: colors.black,
     },
+
     '*': {
       boxSizing: 'border-box',
     },
@@ -43,6 +44,7 @@ export default createUseStyles({
       ...body,
     },
   },
+
   app: {
     height: '100%',
   },

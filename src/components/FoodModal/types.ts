@@ -6,4 +6,5 @@ export interface IFoodModal {
 
 export type FoodFormType = {
   foodItems: [string];
+  orderItemQuantity: number;
 };

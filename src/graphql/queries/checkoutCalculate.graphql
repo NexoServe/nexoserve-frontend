@@ -1,0 +1,6 @@
+query CheckoutCalculate($input: CheckoutCalculateInput!) {
+  checkoutCalculate(input: $input) {
+    id
+    total
+  }
+}

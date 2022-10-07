@@ -10,6 +10,17 @@ type AddOn {
   name: String
 }
 
+type Checkout {
+  clientSecret: String
+  id: String
+  total: Float
+}
+
+input CheckoutCalculateInput {
+  id: String
+  orders: [CreateOrderInput!]
+}
+
 input CreateAddOnInput {
   id: String
   isRequired: Boolean!
@@ -35,7 +46,7 @@ input CreateOrderInput {
   foodId: String!
   id: String
   itemIds: [String]!
-  total: Float
+  quantity: Int!
 }
 
 input CreateOrderItemInput {
@@ -60,6 +71,7 @@ type Item {
 }
 
 type Mutation {
+  CheckoutCalculateMut(input: CheckoutCalculateInput!): Checkout!
   createFood(input: CreateFoodInput!): Food!
   createOrder(input: CreateOrderInput!): Order!
 }
@@ -78,6 +90,7 @@ type OrderItem {
 
 type Query {
   addOns: [AddOn]!
+  checkoutCalculate(input: CheckoutCalculateInput!): Checkout!
   foods: [Food]!
   items: [Item]!
 }

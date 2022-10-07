@@ -14,6 +14,10 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  CheckoutCalculateInput: { // input type
+    id?: string | null; // String
+    orders?: NexusGenInputs['CreateOrderInput'][] | null; // [CreateOrderInput!]
+  }
   CreateAddOnInput: { // input type
     id?: string | null; // String
     isRequired: boolean; // Boolean!
@@ -36,7 +40,7 @@ export interface NexusGenInputs {
     foodId: string; // String!
     id?: string | null; // String
     itemIds: Array<string | null>; // [String]!
-    total?: number | null; // Float
+    quantity: number; // Int!
   }
   CreateOrderItemInput: { // input type
     foodId: string; // String!
@@ -63,6 +67,11 @@ export interface NexusGenObjects {
     isRequired?: boolean | null; // Boolean
     items?: Array<NexusGenRootTypes['Item'] | null> | null; // [Item]
     name?: string | null; // String
+  }
+  Checkout: { // root type
+    clientSecret?: string | null; // String
+    id?: string | null; // String
+    total?: number | null; // Float
   }
   Food: { // root type
     addOns?: Array<NexusGenRootTypes['AddOn'] | null> | null; // [AddOn]
@@ -109,6 +118,11 @@ export interface NexusGenFieldTypes {
     items: Array<NexusGenRootTypes['Item'] | null> | null; // [Item]
     name: string | null; // String
   }
+  Checkout: { // field return type
+    clientSecret: string | null; // String
+    id: string | null; // String
+    total: number | null; // Float
+  }
   Food: { // field return type
     addOns: Array<NexusGenRootTypes['AddOn'] | null> | null; // [AddOn]
     description: string | null; // String
@@ -123,6 +137,7 @@ export interface NexusGenFieldTypes {
     price: number | null; // Float
   }
   Mutation: { // field return type
+    CheckoutCalculateMut: NexusGenRootTypes['Checkout']; // Checkout!
     createFood: NexusGenRootTypes['Food']; // Food!
     createOrder: NexusGenRootTypes['Order']; // Order!
   }
@@ -138,6 +153,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     addOns: Array<NexusGenRootTypes['AddOn'] | null>; // [AddOn]!
+    checkoutCalculate: NexusGenRootTypes['Checkout']; // Checkout!
     foods: Array<NexusGenRootTypes['Food'] | null>; // [Food]!
     items: Array<NexusGenRootTypes['Item'] | null>; // [Item]!
   }
@@ -150,6 +166,11 @@ export interface NexusGenFieldTypeNames {
     isRequired: 'Boolean'
     items: 'Item'
     name: 'String'
+  }
+  Checkout: { // field return type name
+    clientSecret: 'String'
+    id: 'String'
+    total: 'Float'
   }
   Food: { // field return type name
     addOns: 'AddOn'
@@ -165,6 +186,7 @@ export interface NexusGenFieldTypeNames {
     price: 'Float'
   }
   Mutation: { // field return type name
+    CheckoutCalculateMut: 'Checkout'
     createFood: 'Food'
     createOrder: 'Order'
   }
@@ -180,6 +202,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     addOns: 'AddOn'
+    checkoutCalculate: 'Checkout'
     foods: 'Food'
     items: 'Item'
   }
@@ -187,11 +210,19 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    CheckoutCalculateMut: { // args
+      input: NexusGenInputs['CheckoutCalculateInput']; // CheckoutCalculateInput!
+    }
     createFood: { // args
       input: NexusGenInputs['CreateFoodInput']; // CreateFoodInput!
     }
     createOrder: { // args
       input: NexusGenInputs['CreateOrderInput']; // CreateOrderInput!
+    }
+  }
+  Query: {
+    checkoutCalculate: { // args
+      input: NexusGenInputs['CheckoutCalculateInput']; // CheckoutCalculateInput!
     }
   }
 }

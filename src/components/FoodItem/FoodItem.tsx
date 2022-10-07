@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useForm, useFormContext } from 'react-hook-form';
 
@@ -7,12 +7,15 @@ import useStyles from './css';
 import { IFoodItem } from './types';
 
 const FoodItem = ({ item }: IFoodItem) => {
+  const [val, setVal] = useState(false);
+
   const classes = useStyles();
 
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useFormContext<FoodFormType>();
 
@@ -23,7 +26,6 @@ const FoodItem = ({ item }: IFoodItem) => {
           {...register('foodItems')}
           type="checkbox"
           value={item?.id || undefined}
-          onChange={() => console.log('first')}
         />
         {item?.name}
       </label>

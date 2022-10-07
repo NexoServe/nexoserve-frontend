@@ -22,7 +22,7 @@ const FoodList = ({ foods }: IFoodList) => {
   // };
 
   return (
-    <>
+    <div>
       {foods?.map((food) => (
         <FoodCard
           key={food?.id}
@@ -34,7 +34,7 @@ const FoodList = ({ foods }: IFoodList) => {
       <Modal showModal={showModal} setShowModal={setShowModal}>
         <FoodModal food={activeFood} />
       </Modal>
-    </>
+    </div>
   );
 };
 
