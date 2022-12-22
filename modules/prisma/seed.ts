@@ -7,33 +7,70 @@ async function main() {
   await prisma.food.deleteMany({});
   await prisma.addOn.deleteMany({});
   await prisma.item.deleteMany({});
+  await prisma.foodSize.deleteMany({});
 
   await Promise.all(
-    data.map((food) =>
+    data.map((input) =>
       prisma.food.create({
         data: {
           id: uuidv4(),
-          name: food.name,
-          description: food.description,
-          price: food.price,
-          addOns: {
-            connectOrCreate: food.addOns?.map((addOn) => ({
+          name: input?.name,
+          description: input?.description,
+          price: input.price,
+          sizes: {
+            connectOrCreate: input.sizes?.map((size) => ({
               where: {
-                id: addOn.id,
+                id: uuidv4(),
               },
               create: {
                 id: uuidv4(),
-                name: addOn.name,
-                isRequired: addOn.isRequired,
-                items: {
-                  connectOrCreate: addOn.items.map((item) => ({
+                name: size?.name || '',
+                price: size?.price || 0,
+                addOns: {
+                  connectOrCreate: size?.addOns?.map((addOn) => ({
                     where: {
-                      id: item.id,
+                      id: addOn.id || undefined,
                     },
                     create: {
                       id: uuidv4(),
-                      name: item.name,
-                      price: item.price,
+                      name: addOn?.name,
+                      isRequired: addOn.isRequired,
+                      items: {
+                        connectOrCreate: addOn.items.map((item) => ({
+                          where: {
+                            id: item?.id || '',
+                          },
+                          create: {
+                            id: uuidv4(),
+                            name: item?.name,
+                            price: item?.price,
+                          },
+                        })),
+                      },
+                    },
+                  })),
+                },
+              },
+            })),
+          },
+          addOns: {
+            connectOrCreate: input.addOns?.map((addOn) => ({
+              where: {
+                id: addOn?.id || undefined,
+              },
+              create: {
+                id: uuidv4(),
+                name: addOn?.name || '',
+                isRequired: addOn?.isRequired || false,
+                items: {
+                  connectOrCreate: addOn?.items.map((item) => ({
+                    where: {
+                      id: item?.id || '',
+                    },
+                    create: {
+                      id: uuidv4(),
+                      name: item?.name,
+                      price: item?.price,
                     },
                   })),
                 },

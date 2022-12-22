@@ -25,8 +25,15 @@ export interface NexusGenInputs {
     name: string; // String!
   }
   CreateFoodInput: { // input type
-    addOns: NexusGenInputs['CreateAddOnInput'][]; // [CreateAddOnInput!]!
+    addOns?: NexusGenInputs['CreateAddOnInput'][] | null; // [CreateAddOnInput!]
     description?: string | null; // String
+    id?: string | null; // String
+    name: string; // String!
+    price?: number | null; // Float
+    sizes?: NexusGenInputs['CreateFoodSizeInput'][] | null; // [CreateFoodSizeInput!]
+  }
+  CreateFoodSizeInput: { // input type
+    addOns: NexusGenInputs['CreateAddOnInput'][]; // [CreateAddOnInput!]!
     id?: string | null; // String
     name: string; // String!
     price: number; // Float!
@@ -76,6 +83,13 @@ export interface NexusGenObjects {
   Food: { // root type
     addOns?: Array<NexusGenRootTypes['AddOn'] | null> | null; // [AddOn]
     description?: string | null; // String
+    id?: string | null; // String
+    name?: string | null; // String
+    price?: number | null; // Float
+    sizes?: Array<NexusGenRootTypes['FoodSize'] | null> | null; // [FoodSize]
+  }
+  FoodSize: { // root type
+    addOns?: Array<NexusGenRootTypes['AddOn'] | null> | null; // [AddOn]
     id?: string | null; // String
     name?: string | null; // String
     price?: number | null; // Float
@@ -129,6 +143,13 @@ export interface NexusGenFieldTypes {
     id: string | null; // String
     name: string | null; // String
     price: number | null; // Float
+    sizes: Array<NexusGenRootTypes['FoodSize'] | null> | null; // [FoodSize]
+  }
+  FoodSize: { // field return type
+    addOns: Array<NexusGenRootTypes['AddOn'] | null> | null; // [AddOn]
+    id: string | null; // String
+    name: string | null; // String
+    price: number | null; // Float
   }
   Item: { // field return type
     addOns: Array<NexusGenRootTypes['AddOn'] | null> | null; // [AddOn]
@@ -175,6 +196,13 @@ export interface NexusGenFieldTypeNames {
   Food: { // field return type name
     addOns: 'AddOn'
     description: 'String'
+    id: 'String'
+    name: 'String'
+    price: 'Float'
+    sizes: 'FoodSize'
+  }
+  FoodSize: { // field return type name
+    addOns: 'AddOn'
     id: 'String'
     name: 'String'
     price: 'Float'

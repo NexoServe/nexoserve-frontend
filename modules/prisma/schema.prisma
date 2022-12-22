@@ -16,9 +16,21 @@ model Food {
   updatedAt   DateTime    @updatedAt
   name        String
   description String?
-  price       Float
+  image       String?
+  sizes       FoodSize[]
+  price       Float?
   addOns      AddOn[]
-  orderItems  OrderItem[]
+  // orderItems  OrderItem[]
+}
+
+model FoodSize {
+  id          String      @id @default(uuid())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  name        String
+  price       Float
+  foods       Food[]
+  addOns      AddOn[]
 }
 
 model AddOn {
@@ -29,6 +41,7 @@ model AddOn {
   isRequired Boolean
   foods      Food[]
   items      Item[]
+  foodSizes  FoodSize[]
 }
 
 model Item {
@@ -38,24 +51,34 @@ model Item {
   name       String
   price      Float
   addOns     AddOn[]
-  orderItems OrderItem[]
+  // orderItems OrderItem[]
+  itemSizes  ItemSize[]
 }
 
-model OrderItem {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  food      Food?    @relation(fields: [foodId], references: [id])
-  foodId    String?
-  items     Item[]
-  order     Order?   @relation(fields: [orderId], references: [id])
-  orderId   String?
-}
-
-model Order {
+model ItemSize {
   id         String      @id @default(uuid())
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
-  total      Float
-  orderItems OrderItem[]
+  name       String
+  price      Float
+  items      Item[]
 }
+
+// model OrderItem {
+//   id        String   @id @default(uuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   food      Food?    @relation(fields: [foodId], references: [id])
+//   foodId    String?
+//   items     Item[]
+//   order     Order?   @relation(fields: [orderId], references: [id])
+//   orderId   String?
+// }
+
+// model Order {
+//   id         String      @id @default(uuid())
+//   createdAt  DateTime    @default(now())
+//   updatedAt  DateTime    @updatedAt
+//   total      Float
+//   orderItems OrderItem[]
+// }

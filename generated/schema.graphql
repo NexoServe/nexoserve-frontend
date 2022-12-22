@@ -29,8 +29,16 @@ input CreateAddOnInput {
 }
 
 input CreateFoodInput {
-  addOns: [CreateAddOnInput!]!
+  addOns: [CreateAddOnInput!]
   description: String
+  id: String
+  name: String!
+  price: Float
+  sizes: [CreateFoodSizeInput!]
+}
+
+input CreateFoodSizeInput {
+  addOns: [CreateAddOnInput!]!
   id: String
   name: String!
   price: Float!
@@ -58,6 +66,14 @@ input CreateOrderItemInput {
 type Food {
   addOns: [AddOn]
   description: String
+  id: String
+  name: String
+  price: Float
+  sizes: [FoodSize]
+}
+
+type FoodSize {
+  addOns: [AddOn]
   id: String
   name: String
   price: Float

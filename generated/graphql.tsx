@@ -44,8 +44,16 @@ export type CreateAddOnInput = {
 };
 
 export type CreateFoodInput = {
-  addOns: Array<CreateAddOnInput>;
+  addOns?: InputMaybe<Array<CreateAddOnInput>>;
   description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  price?: InputMaybe<Scalars['Float']>;
+  sizes?: InputMaybe<Array<CreateFoodSizeInput>>;
+};
+
+export type CreateFoodSizeInput = {
+  addOns: Array<CreateAddOnInput>;
   id?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   price: Scalars['Float'];
@@ -74,6 +82,15 @@ export type Food = {
   __typename?: 'Food';
   addOns?: Maybe<Array<Maybe<AddOn>>>;
   description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+  sizes?: Maybe<Array<Maybe<FoodSize>>>;
+};
+
+export type FoodSize = {
+  __typename?: 'FoodSize';
+  addOns?: Maybe<Array<Maybe<AddOn>>>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
