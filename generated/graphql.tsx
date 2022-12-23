@@ -61,6 +61,7 @@ export type CreateFoodSizeInput = {
 
 export type CreateItemInput = {
   id?: InputMaybe<Scalars['String']>;
+  itemSizes?: InputMaybe<Array<ItemSizeInput>>;
   name: Scalars['String'];
   price: Scalars['Float'];
 };
@@ -100,8 +101,41 @@ export type Item = {
   __typename?: 'Item';
   addOns?: Maybe<Array<Maybe<AddOn>>>;
   id?: Maybe<Scalars['String']>;
+  itemSizes?: Maybe<Array<Maybe<ItemSize>>>;
   name?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
+};
+
+export type ItemSize = {
+  __typename?: 'ItemSize';
+  default?: Maybe<Scalars['Boolean']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  portions?: Maybe<Array<Maybe<ItemSizePortion>>>;
+  price?: Maybe<Scalars['Float']>;
+};
+
+export type ItemSizeInput = {
+  default?: InputMaybe<Scalars['Boolean']>;
+  id?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  portions?: InputMaybe<Array<ItemSizePortionInput>>;
+  price: Scalars['Float'];
+};
+
+export type ItemSizePortion = {
+  __typename?: 'ItemSizePortion';
+  default?: Maybe<Scalars['Boolean']>;
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+};
+
+export type ItemSizePortionInput = {
+  default?: InputMaybe<Scalars['Boolean']>;
+  id?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  price: Scalars['Float'];
 };
 
 export type Mutation = {

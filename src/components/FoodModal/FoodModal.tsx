@@ -1,30 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import {
-  FormProvider,
-  SubmitHandler,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
-import { useRecoilState } from 'recoil';
-import { v4 } from 'uuid';
+import { FormProvider, useForm } from 'react-hook-form';
 
-import {
-  CreateOrderInput,
-  useCreateOrderMutation,
-} from '../../../generated/graphql';
-import { OrderAtom, ShoppingCartAtom } from '../../state/ShoppingCartState';
-// import { useCreateOrderMutation } from '../../../generated/graphql';
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
-import { IFoodItem } from '../FoodItem/types';
 import useStyles from './css';
 import { FoodFormType, IFoodModal } from './types';
 
 const FoodModal = ({ food }: IFoodModal) => {
   const classes = useStyles();
+  //TODO
   // const [createOrder, { data }] = useCreateOrderMutation();
-  const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
-  const [order, setOrder] = useRecoilState(OrderAtom);
+  // const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
+  // const [order, setOrder] = useRecoilState(OrderAtom);
 
   console.log('rerender');
 
@@ -34,51 +21,51 @@ const FoodModal = ({ food }: IFoodModal) => {
       orderItemQuantity: 1,
     },
   });
+  //TODO
+  // const onSubmit: SubmitHandler<FoodFormType> = (data) => {
+  //   const items: IFoodItem[] = [];
 
-  const onSubmit: SubmitHandler<FoodFormType> = (data) => {
-    const items: IFoodItem[] = [];
+  //   console.log('data', data);
 
-    console.log('data', data);
+  //   setOrder([
+  //     ...order,
+  //     {
+  //       foodId: food?.id,
+  //       itemIds: data.foodItems,
+  //       quantity: data.orderItemQuantity,
+  //     },
+  //   ]);
 
-    setOrder([
-      ...order,
-      {
-        foodId: food?.id,
-        itemIds: data.foodItems,
-        quantity: data.orderItemQuantity,
-      },
-    ]);
+  //   food?.addOns?.map((addOn) => {
+  //     addOn?.items?.map((item) => {
+  //       if (data.foodItems.includes(item?.id as string)) {
+  //         items.push(item as IFoodItem);
+  //       }
+  //     });
+  //   });
 
-    food?.addOns?.map((addOn) => {
-      addOn?.items?.map((item) => {
-        if (data.foodItems.includes(item?.id as string)) {
-          items.push(item as IFoodItem);
-        }
-      });
-    });
+  //   setShoppingCart([
+  //     ...shoppingCart,
+  //     {
+  //       orderItemId: v4(),
+  //       food: food,
+  //       foodItems: items,
+  //       foodIds: data.foodItems,
+  //       orderItemQuantity: data?.orderItemQuantity,
+  //     },
+  //   ]);
 
-    setShoppingCart([
-      ...shoppingCart,
-      {
-        orderItemId: v4(),
-        food: food,
-        foodItems: items,
-        foodIds: data.foodItems,
-        orderItemQuantity: data?.orderItemQuantity,
-      },
-    ]);
+  //   console.log('items', items);
 
-    console.log('items', items);
-
-    // createOrder({
-    //   variables: {
-    //     createOrderInput: {
-    //       foodId: food?.id as string,
-    //       itemIds: data.foodItems,
-    //     },
-    //   },
-    // });
-  };
+  //   // createOrder({
+  //   //   variables: {
+  //   //     createOrderInput: {
+  //   //       foodId: food?.id as string,
+  //   //       itemIds: data.foodItems,
+  //   //     },
+  //   //   },
+  //   // });
+  // };
 
   const orderItemQuantity = methods.watch('orderItemQuantity');
 
@@ -94,7 +81,9 @@ const FoodModal = ({ food }: IFoodModal) => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <form
+      //onSubmit={methods.handleSubmit(onSubmit)}
+      >
         <h2>{food?.name}</h2>
         <span>Price: ${food?.price}</span>
         <p>{food?.description}</p>

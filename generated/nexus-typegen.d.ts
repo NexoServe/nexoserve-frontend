@@ -40,6 +40,7 @@ export interface NexusGenInputs {
   }
   CreateItemInput: { // input type
     id?: string | null; // String
+    itemSizes?: NexusGenInputs['ItemSizeInput'][] | null; // [ItemSizeInput!]
     name: string; // String!
     price: number; // Float!
   }
@@ -53,6 +54,19 @@ export interface NexusGenInputs {
     foodId: string; // String!
     id?: string | null; // String
     items: string[]; // [String!]!
+  }
+  ItemSizeInput: { // input type
+    default?: boolean | null; // Boolean
+    id?: string | null; // String
+    name: string; // String!
+    portions?: NexusGenInputs['ItemSizePortionInput'][] | null; // [ItemSizePortionInput!]
+    price: number; // Float!
+  }
+  ItemSizePortionInput: { // input type
+    default?: boolean | null; // Boolean
+    id?: string | null; // String
+    name: string; // String!
+    price: number; // Float!
   }
 }
 
@@ -96,6 +110,20 @@ export interface NexusGenObjects {
   }
   Item: { // root type
     addOns?: Array<NexusGenRootTypes['AddOn'] | null> | null; // [AddOn]
+    id?: string | null; // String
+    itemSizes?: Array<NexusGenRootTypes['ItemSize'] | null> | null; // [ItemSize]
+    name?: string | null; // String
+    price?: number | null; // Float
+  }
+  ItemSize: { // root type
+    default?: boolean | null; // Boolean
+    id?: string | null; // String
+    name?: string | null; // String
+    portions?: Array<NexusGenRootTypes['ItemSizePortion'] | null> | null; // [ItemSizePortion]
+    price?: number | null; // Float
+  }
+  ItemSizePortion: { // root type
+    default?: boolean | null; // Boolean
     id?: string | null; // String
     name?: string | null; // String
     price?: number | null; // Float
@@ -154,6 +182,20 @@ export interface NexusGenFieldTypes {
   Item: { // field return type
     addOns: Array<NexusGenRootTypes['AddOn'] | null> | null; // [AddOn]
     id: string | null; // String
+    itemSizes: Array<NexusGenRootTypes['ItemSize'] | null> | null; // [ItemSize]
+    name: string | null; // String
+    price: number | null; // Float
+  }
+  ItemSize: { // field return type
+    default: boolean | null; // Boolean
+    id: string | null; // String
+    name: string | null; // String
+    portions: Array<NexusGenRootTypes['ItemSizePortion'] | null> | null; // [ItemSizePortion]
+    price: number | null; // Float
+  }
+  ItemSizePortion: { // field return type
+    default: boolean | null; // Boolean
+    id: string | null; // String
     name: string | null; // String
     price: number | null; // Float
   }
@@ -209,6 +251,20 @@ export interface NexusGenFieldTypeNames {
   }
   Item: { // field return type name
     addOns: 'AddOn'
+    id: 'String'
+    itemSizes: 'ItemSize'
+    name: 'String'
+    price: 'Float'
+  }
+  ItemSize: { // field return type name
+    default: 'Boolean'
+    id: 'String'
+    name: 'String'
+    portions: 'ItemSizePortion'
+    price: 'Float'
+  }
+  ItemSizePortion: { // field return type name
+    default: 'Boolean'
     id: 'String'
     name: 'String'
     price: 'Float'

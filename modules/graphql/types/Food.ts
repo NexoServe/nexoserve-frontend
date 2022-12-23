@@ -45,7 +45,15 @@ export const FoodsQuery = extendType({
               include: {
                 addOns: {
                   include: {
-                    items: true,
+                    items: {
+                      include: {
+                        itemSizes: {
+                          include: {
+                            portions: true,
+                          },
+                        },
+                      },
+                    },
                   },
                 },
               },
@@ -70,7 +78,7 @@ export const CreateFoodMutation = extendType({
       args: {
         input: nonNull(CreateFoodInput),
       },
-      async resolve(_parent, args, ctx) {
+      async resolve(_parent, { input }, ctx) {
         return await ctx.prisma.food.create({
           include: {
             addOns: {
@@ -80,11 +88,11 @@ export const CreateFoodMutation = extendType({
             },
           },
           data: {
-            name: args.input?.name,
-            description: args.input?.description,
-            price: args.input.price,
+            name: input?.name,
+            description: input?.description,
+            price: input.price,
             sizes: {
-              connectOrCreate: args.input.sizes?.map((size) => ({
+              connectOrCreate: input.sizes?.map((size) => ({
                 where: {
                   id: size.id || undefined,
                 },
@@ -110,6 +118,36 @@ export const CreateFoodMutation = extendType({
                               id: uuidv4(),
                               name: item?.name,
                               price: item?.price,
+                              itemSizes: {
+                                connectOrCreate: item.itemSizes?.map(
+                                  (itemSize) => ({
+                                    where: {
+                                      id: itemSize?.id || '',
+                                    },
+                                    create: {
+                                      id: uuidv4(),
+                                      name: itemSize?.name,
+                                      price: itemSize?.price,
+                                      default: itemSize.default,
+                                      portions: {
+                                        connectOrCreate: itemSize.portions?.map(
+                                          (portion) => ({
+                                            where: {
+                                              id: portion?.id || '',
+                                            },
+                                            create: {
+                                              id: uuidv4(),
+                                              name: portion?.name,
+                                              price: portion?.price,
+                                              default: portion.default,
+                                            },
+                                          }),
+                                        ),
+                                      },
+                                    },
+                                  }),
+                                ),
+                              },
                             },
                           })),
                         },
@@ -120,7 +158,7 @@ export const CreateFoodMutation = extendType({
               })),
             },
             addOns: {
-              connectOrCreate: args.input.addOns?.map((addOn) => ({
+              connectOrCreate: input.addOns?.map((addOn) => ({
                 where: {
                   id: addOn.id || undefined,
                 },
@@ -137,6 +175,34 @@ export const CreateFoodMutation = extendType({
                         id: uuidv4(),
                         name: item?.name,
                         price: item?.price,
+                        sizes: {
+                          connectOrCreate: item.itemSizes?.map((itemSize) => ({
+                            where: {
+                              id: itemSize?.id || '',
+                            },
+                            create: {
+                              id: uuidv4(),
+                              name: itemSize?.name,
+                              price: itemSize?.price,
+                              default: itemSize.default,
+                              portions: {
+                                connectOrCreate: itemSize.portions?.map(
+                                  (portion) => ({
+                                    where: {
+                                      id: portion?.id || '',
+                                    },
+                                    create: {
+                                      id: uuidv4(),
+                                      name: portion?.name,
+                                      price: portion?.price,
+                                      default: portion.default,
+                                    },
+                                  }),
+                                ),
+                              },
+                            },
+                          })),
+                        },
                       },
                     })),
                   },

@@ -46,6 +46,7 @@ input CreateFoodSizeInput {
 
 input CreateItemInput {
   id: String
+  itemSizes: [ItemSizeInput!]
   name: String!
   price: Float!
 }
@@ -82,8 +83,39 @@ type FoodSize {
 type Item {
   addOns: [AddOn]
   id: String
+  itemSizes: [ItemSize]
   name: String
   price: Float
+}
+
+type ItemSize {
+  default: Boolean
+  id: String
+  name: String
+  portions: [ItemSizePortion]
+  price: Float
+}
+
+input ItemSizeInput {
+  default: Boolean
+  id: String
+  name: String!
+  portions: [ItemSizePortionInput!]
+  price: Float!
+}
+
+type ItemSizePortion {
+  default: Boolean
+  id: String
+  name: String
+  price: Float
+}
+
+input ItemSizePortionInput {
+  default: Boolean
+  id: String
+  name: String!
+  price: Float!
 }
 
 type Mutation {

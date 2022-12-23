@@ -1,5 +1,4 @@
-import { extendType, inputObjectType, nonNull, objectType } from 'nexus';
-import { v4 as uuidv4 } from 'uuid';
+import { inputObjectType, objectType } from 'nexus';
 
 export const FoodSize = objectType({
   name: `FoodSize`,

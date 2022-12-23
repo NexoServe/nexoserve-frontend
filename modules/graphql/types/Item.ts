@@ -6,6 +6,9 @@ export const Item = objectType({
     t.string(`id`);
     t.string(`name`);
     t.float(`price`);
+    t.list.field('itemSizes', {
+      type: 'ItemSize',
+    });
     t.list.field('addOns', {
       type: 'AddOn',
     });
@@ -18,6 +21,9 @@ export const CreateItemInput = inputObjectType({
     t.string(`id`);
     t.nonNull.string(`name`);
     t.nonNull.float(`price`);
+    t.list.nonNull.field('itemSizes', {
+      type: 'ItemSizeInput',
+    });
   },
 });
 

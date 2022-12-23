@@ -24,10 +24,10 @@ async function main() {
               },
               create: {
                 id: uuidv4(),
-                name: size?.name || '',
-                price: size?.price || 0,
+                name: size.name,
+                price: size.price,
                 addOns: {
-                  connectOrCreate: size?.addOns?.map((addOn) => ({
+                  connectOrCreate: size.addOns?.map((addOn) => ({
                     where: {
                       id: addOn.id || undefined,
                     },
@@ -38,12 +38,42 @@ async function main() {
                       items: {
                         connectOrCreate: addOn.items.map((item) => ({
                           where: {
-                            id: item?.id || '',
+                            id: uuidv4(),
                           },
                           create: {
                             id: uuidv4(),
                             name: item?.name,
                             price: item?.price,
+                            itemSizes: {
+                              connectOrCreate: item.itemSizes?.map(
+                                (itemSize) => ({
+                                  where: {
+                                    id: uuidv4(),
+                                  },
+                                  create: {
+                                    id: uuidv4(),
+                                    name: itemSize?.name,
+                                    price: itemSize?.price,
+                                    default: itemSize.default,
+                                    portions: {
+                                      connectOrCreate: itemSize.portions?.map(
+                                        (portion) => ({
+                                          where: {
+                                            id: uuidv4(),
+                                          },
+                                          create: {
+                                            id: uuidv4(),
+                                            name: portion?.name,
+                                            price: portion?.price,
+                                            default: portion.default,
+                                          },
+                                        }),
+                                      ),
+                                    },
+                                  },
+                                }),
+                              ),
+                            },
                           },
                         })),
                       },
@@ -56,14 +86,14 @@ async function main() {
           addOns: {
             connectOrCreate: input.addOns?.map((addOn) => ({
               where: {
-                id: addOn?.id || undefined,
+                id: uuidv4(),
               },
               create: {
                 id: uuidv4(),
-                name: addOn?.name || '',
-                isRequired: addOn?.isRequired || false,
+                name: addOn?.name,
+                isRequired: addOn.isRequired,
                 items: {
-                  connectOrCreate: addOn?.items.map((item) => ({
+                  connectOrCreate: addOn.items.map((item) => ({
                     where: {
                       id: item?.id || '',
                     },
@@ -71,6 +101,34 @@ async function main() {
                       id: uuidv4(),
                       name: item?.name,
                       price: item?.price,
+                      itemSizes: {
+                        connectOrCreate: item.itemSizes?.map((itemSize) => ({
+                          where: {
+                            id: itemSize?.id || '',
+                          },
+                          create: {
+                            id: uuidv4(),
+                            name: itemSize?.name,
+                            price: itemSize?.price,
+                            default: itemSize.default,
+                            portions: {
+                              connectOrCreate: itemSize.portions?.map(
+                                (portion) => ({
+                                  where: {
+                                    id: portion?.id || '',
+                                  },
+                                  create: {
+                                    id: uuidv4(),
+                                    name: portion?.name,
+                                    price: portion?.price,
+                                    default: portion.default,
+                                  },
+                                }),
+                              ),
+                            },
+                          },
+                        })),
+                      },
                     },
                   })),
                 },

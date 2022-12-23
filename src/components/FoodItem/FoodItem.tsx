@@ -1,23 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { useForm, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 import { FoodFormType } from '../FoodModal/types';
 import useStyles from './css';
 import { IFoodItem } from './types';
 
 const FoodItem = ({ item }: IFoodItem) => {
-  const [val, setVal] = useState(false);
-
   const classes = useStyles();
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useFormContext<FoodFormType>();
+  const { register } = useFormContext<FoodFormType>();
 
   return (
     <div className={classes.foodItem}>

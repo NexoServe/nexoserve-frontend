@@ -18,17 +18,185 @@ export const data: CreateFoodInput[] = [
               {
                 id: '119122b2-363b-4a4f-ad26-d6c55b51b5ed',
                 name: 'Pepperoni',
-                price: 1.25,
+                price: 0,
+                itemSizes: [
+                  {
+                    name: 'Left Half',
+                    price: 0.75,
+                    portions: [
+                      {
+                        name: 'Light',
+                        price: 0,
+                      },
+                      {
+                        name: 'Regular',
+                        price: 0,
+                      },
+                      {
+                        name: 'Extra',
+                        price: 0.25,
+                      },
+                    ],
+                  },
+                  {
+                    name: 'Whole',
+                    price: 1.0,
+                    portions: [
+                      {
+                        name: 'Light',
+                        price: 0,
+                      },
+                      {
+                        name: 'Regular',
+                        price: 0,
+                      },
+                      {
+                        name: 'Extra',
+                        price: 0.5,
+                      },
+                    ],
+                  },
+                  {
+                    name: 'Right Half',
+                    price: 0.75,
+                    portions: [
+                      {
+                        name: 'Light',
+                        price: 0,
+                      },
+                      {
+                        name: 'Regular',
+                        price: 0,
+                      },
+                      {
+                        name: 'Extra',
+                        price: 0.25,
+                      },
+                    ],
+                  },
+                ],
               },
               {
                 id: '619122b2-3j3b-4a4f-ad26-d6c55b51b1ed',
                 name: 'Bacon',
-                price: 2.0,
+                price: 0,
+                itemSizes: [
+                  {
+                    name: 'Left Half',
+                    price: 1.75,
+                    portions: [
+                      {
+                        name: 'Light',
+                        price: 0,
+                      },
+                      {
+                        name: 'Regular',
+                        price: 0,
+                      },
+                      {
+                        name: 'Extra',
+                        price: 0.25,
+                      },
+                    ],
+                  },
+                  {
+                    name: 'Whole',
+                    price: 2.0,
+                    portions: [
+                      {
+                        name: 'Light',
+                        price: 0,
+                      },
+                      {
+                        name: 'Regular',
+                        price: 0,
+                      },
+                      {
+                        name: 'Extra',
+                        price: 0.5,
+                      },
+                    ],
+                  },
+                  {
+                    name: 'Right Half',
+                    price: 1.75,
+                    portions: [
+                      {
+                        name: 'Light',
+                        price: 0,
+                      },
+                      {
+                        name: 'Regular',
+                        price: 0,
+                      },
+                      {
+                        name: 'Extra',
+                        price: 0.25,
+                      },
+                    ],
+                  },
+                ],
               },
               {
                 id: '639172b2-363b-4alf-as26-d6c55b51b1ed',
                 name: 'Mushrooms',
-                price: 1.35,
+                price: 0,
+                itemSizes: [
+                  {
+                    name: 'Left Half',
+                    price: 1.0,
+                    portions: [
+                      {
+                        name: 'Light',
+                        price: 0,
+                      },
+                      {
+                        name: 'Regular',
+                        price: 0,
+                      },
+                      {
+                        name: 'Extra',
+                        price: 0.25,
+                      },
+                    ],
+                  },
+                  {
+                    name: 'Whole',
+                    price: 1.25,
+                    portions: [
+                      {
+                        name: 'Light',
+                        price: 0,
+                      },
+                      {
+                        name: 'Regular',
+                        price: 0,
+                      },
+                      {
+                        name: 'Extra',
+                        price: 0.5,
+                      },
+                    ],
+                  },
+                  {
+                    name: 'Right Half',
+                    price: 1.0,
+                    portions: [
+                      {
+                        name: 'Light',
+                        price: 0,
+                      },
+                      {
+                        name: 'Regular',
+                        price: 0,
+                      },
+                      {
+                        name: 'Extra',
+                        price: 0.25,
+                      },
+                    ],
+                  },
+                ],
               },
             ],
           },
