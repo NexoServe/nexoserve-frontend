@@ -1,8 +1,7 @@
-import React from 'react';
-
 import { useFormContext } from 'react-hook-form';
 
 import { FoodFormType } from '../FoodModal/types';
+
 import useStyles from './css';
 import { IFoodItem } from './types';
 

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import FoodCard from '../FoodCard/FoodCard';
 import FoodModal from '../FoodModal/FoodModal';
 import { Modal } from '../Modal/Modal';
+
 import { FoodType, IFoodList } from './types';
 // import useStyles from './css';
 

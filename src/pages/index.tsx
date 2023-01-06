@@ -6,7 +6,7 @@ import { addApolloState, initializeApollo } from '../../lib/apolloClient';
 import prisma from '../../lib/prisma';
 import FoodList from '../components/FoodList/FoodList';
 import Navbar from '../components/Navbar/Navbar';
-import ShoppingCart from '../components/ShoppingCart/ShoppingCart';
+// import ShoppingCart from '../components/ShoppingCart/ShoppingCart';
 
 const Home: NextPage = () => {
   const { data } = useFoodsQuery({
@@ -50,7 +50,7 @@ const Home: NextPage = () => {
         <Navbar />
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <FoodList foods={data?.foods} />
-          <ShoppingCart />
+          {/* <ShoppingCart /> */}
         </div>
       </main>
     </div>

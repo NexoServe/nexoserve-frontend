@@ -27,7 +27,6 @@ export default function CheckoutForm() {
     }
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      console.log('paymentIntent', paymentIntent);
       switch (paymentIntent?.status) {
         case 'succeeded':
           setMessage('Payment succeeded!');
@@ -45,7 +44,7 @@ export default function CheckoutForm() {
     });
   }, [stripe]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -70,7 +69,7 @@ export default function CheckoutForm() {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error.message);
+      setMessage(error.message as string);
     } else {
       setMessage('An unexpected error occurred.');
     }

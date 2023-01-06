@@ -1,8 +1,7 @@
-import React from 'react';
-
 import { FormProvider, useForm } from 'react-hook-form';
 
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
+
 import useStyles from './css';
 import { FoodFormType, IFoodModal } from './types';
 
@@ -12,8 +11,6 @@ const FoodModal = ({ food }: IFoodModal) => {
   // const [createOrder, { data }] = useCreateOrderMutation();
   // const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
   // const [order, setOrder] = useRecoilState(OrderAtom);
-
-  console.log('rerender');
 
   const methods = useForm<FoodFormType>({
     defaultValues: {

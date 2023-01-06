@@ -4,11 +4,9 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useRecoilValue } from 'recoil';
 
-import {
-  useCheckoutCalculateMutMutation,
-  useCheckoutCalculateQuery,
-} from '../../../generated/graphql';
+import { useCheckoutCalculateMutMutation } from '../../../generated/graphql';
 import { OrderAtom } from '../../state/ShoppingCartState';
+
 import CheckoutForm from './components/CheckoutForm';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
@@ -22,9 +20,6 @@ const stripePromise = loadStripe(
 const Checkout = () => {
   const cart = useRecoilValue(OrderAtom);
   const [checkoutCalculateMut, { data }] = useCheckoutCalculateMutMutation();
-  const [clientSecret, setClientSecret] = React.useState('');
-
-  console.log('cart', cart);
 
   React.useEffect(() => {
     if (cart) {
@@ -41,18 +36,18 @@ const Checkout = () => {
     }
   }, [cart, checkoutCalculateMut]);
 
-  const appearance = {
-    theme: 'stripe',
-  };
-  const options = {
-    clientSecret: data?.CheckoutCalculateMut?.clientSecret,
-    appearance,
-  };
-
   return (
     <div className="App">
       {data?.CheckoutCalculateMut?.clientSecret && (
-        <Elements options={options} stripe={stripePromise}>
+        <Elements
+          options={{
+            clientSecret: data?.CheckoutCalculateMut?.clientSecret,
+            appearance: {
+              theme: 'stripe',
+            },
+          }}
+          stripe={stripePromise}
+        >
           <CheckoutForm />
         </Elements>
       )}

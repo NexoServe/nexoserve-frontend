@@ -1,10 +1,4 @@
-import React, {
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 import { createPortal } from 'react-dom';
 
@@ -37,7 +31,6 @@ export const Modal = ({ showModal, setShowModal, children }: IModal) => {
     (e: KeyboardEvent) => {
       if (e.key === 'Escape' && showModal) {
         setShowModal(false);
-        console.log('I pressed');
       }
     },
     [setShowModal, showModal],

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FoodItem from '../FoodItem/FoodItem';
+
 import useStyles from './css';
 import { IFoodAddOn } from './types';
 

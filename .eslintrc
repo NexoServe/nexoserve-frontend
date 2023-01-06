@@ -12,7 +12,7 @@
     "import/order": [
       "error",
       {
-        "groups": ["builtin", "external", "internal"],
+        "groups": ["builtin", "external", "internal", "parent", "sibling"],
         "pathGroups": [
           {
             "pattern": "react+(|-native)",
@@ -28,7 +28,7 @@
         }
       }
     ],
-
+    "no-console": "warn",
     "prettier/prettier": "error",
     "camelcase": "off",
     "import/prefer-default-export": "off",
