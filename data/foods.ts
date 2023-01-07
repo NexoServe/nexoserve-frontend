@@ -1,74 +1,90 @@
+import { v4 as uuid } from 'uuid';
+
 import { CreateFoodInput } from '../generated/graphql';
 
 export const data: CreateFoodInput[] = [
   {
+    id: uuid(),
     name: 'Pizza',
     description: 'Preimum Pizza',
     price: null,
     sizes: [
       {
+        id: uuid(),
         name: `Small 12" (8 Slices)`,
         price: 7.99,
         addOns: [
           {
-            id: '1a1121b2-363b-4a4f-ad26-d6c35b41b2de',
+            id: uuid(),
             name: 'Toppings',
             isRequired: true,
             items: [
               {
-                id: '119122b2-363b-4a4f-ad26-d6c55b51b5ed',
+                id: uuid(),
                 name: 'Pepperoni',
                 price: 0,
                 itemSizes: [
                   {
+                    id: uuid(),
                     name: 'Left Half',
                     price: 0.75,
                     portions: [
                       {
+                        id: uuid(),
                         name: 'Light',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Regular',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Extra',
                         price: 0.25,
                       },
                     ],
                   },
                   {
+                    id: uuid(),
                     name: 'Whole',
                     price: 1.0,
                     portions: [
                       {
+                        id: uuid(),
                         name: 'Light',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Regular',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Extra',
                         price: 0.5,
                       },
                     ],
                   },
                   {
+                    id: uuid(),
                     name: 'Right Half',
                     price: 0.75,
                     portions: [
                       {
+                        id: uuid(),
                         name: 'Light',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Regular',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Extra',
                         price: 0.25,
                       },
@@ -77,41 +93,49 @@ export const data: CreateFoodInput[] = [
                 ],
               },
               {
-                id: '619122b2-3j3b-4a4f-ad26-d6c55b51b1ed',
+                id: uuid(),
                 name: 'Bacon',
                 price: 0,
                 itemSizes: [
                   {
+                    id: uuid(),
                     name: 'Left Half',
                     price: 1.75,
                     portions: [
                       {
+                        id: uuid(),
                         name: 'Light',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Regular',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Extra',
                         price: 0.25,
                       },
                     ],
                   },
                   {
+                    id: uuid(),
                     name: 'Whole',
                     price: 2.0,
                     portions: [
                       {
+                        id: uuid(),
                         name: 'Light',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Regular',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Extra',
                         price: 0.5,
                       },
@@ -122,14 +146,17 @@ export const data: CreateFoodInput[] = [
                     price: 1.75,
                     portions: [
                       {
+                        id: uuid(),
                         name: 'Light',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Regular',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Extra',
                         price: 0.25,
                       },
@@ -138,59 +165,71 @@ export const data: CreateFoodInput[] = [
                 ],
               },
               {
-                id: '639172b2-363b-4alf-as26-d6c55b51b1ed',
+                id: uuid(),
                 name: 'Mushrooms',
                 price: 0,
                 itemSizes: [
                   {
+                    id: uuid(),
                     name: 'Left Half',
                     price: 1.0,
                     portions: [
                       {
+                        id: uuid(),
                         name: 'Light',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Regular',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Extra',
                         price: 0.25,
                       },
                     ],
                   },
                   {
+                    id: uuid(),
                     name: 'Whole',
                     price: 1.25,
                     portions: [
                       {
+                        id: uuid(),
                         name: 'Light',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Regular',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Extra',
                         price: 0.5,
                       },
                     ],
                   },
                   {
+                    id: uuid(),
                     name: 'Right Half',
                     price: 1.0,
                     portions: [
                       {
+                        id: uuid(),
                         name: 'Light',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Regular',
                         price: 0,
                       },
                       {
+                        id: uuid(),
                         name: 'Extra',
                         price: 0.25,
                       },
@@ -200,59 +239,97 @@ export const data: CreateFoodInput[] = [
               },
             ],
           },
+          {
+            id: uuid(),
+            name: 'Side Sauces',
+            isRequired: false,
+            items: [
+              {
+                id: uuid(),
+                name: 'Blue Cheese',
+                price: 1.25,
+              },
+            ],
+          },
         ],
       },
       {
+        id: uuid(),
         name: `Medium 16" (12 Slices)`,
         price: 14.99,
         addOns: [
           {
-            id: '2',
+            id: uuid(),
             name: 'Toppings',
             isRequired: true,
             items: [
               {
-                id: '119122b2-363b-4a4f-ad26-d6c51b51baed',
+                id: uuid(),
                 name: 'Pepperoni',
                 price: 1.5,
               },
               {
-                id: '619122b2-363b-4a4f-ad26-d6c55b51h1ed',
+                id: uuid(),
                 name: 'Bacon',
                 price: 2.25,
               },
               {
-                id: '639172b2-363b-4a4f-as2l-d6c55b51b1ed',
+                id: uuid(),
                 name: 'Mushrooms',
                 price: 1.65,
               },
             ],
           },
+          {
+            id: uuid(),
+            name: 'Side Sauces',
+            isRequired: false,
+            items: [
+              {
+                id: uuid(),
+                name: 'Blue Cheese',
+                price: 1.25,
+              },
+            ],
+          },
         ],
       },
       {
+        id: uuid(),
         name: `Large 24" (24 Slices)`,
         price: 20.99,
         addOns: [
           {
-            id: '2',
+            id: uuid(),
             name: 'Toppings',
             isRequired: true,
             items: [
               {
-                id: '119122b2-363b-4a4f-ad26-d6c55b5tbaed',
+                id: uuid(),
                 name: 'Pepperoni',
                 price: 1.75,
               },
               {
-                id: '619122b2-36ob-4a4f-ad26-d6c55b51b1ed',
+                id: uuid(),
                 name: 'Bacon',
                 price: 2.5,
               },
               {
-                id: '639172b2-363b-4a4f-as26-d6c55b51b16d',
+                id: uuid(),
                 name: 'Mushrooms',
                 price: 1.95,
+              },
+            ],
+          },
+          {
+            id: uuid(),
+            name: 'Side Sauces',
+            isRequired: false,
+            items: [
+              {
+                id: uuid(),
+                name: 'Blue Cheese',
+                price: 1.25,
               },
             ],
           },

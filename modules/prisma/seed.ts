@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { data } from '../../data/links';
+import { data } from '../../data/foods';
 import prisma from '../../lib/prisma';
 
 async function main() {
