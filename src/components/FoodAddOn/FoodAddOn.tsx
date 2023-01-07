@@ -1,11 +1,9 @@
-import React from 'react';
-
 import FoodItem from '../FoodItem/FoodItem';
 
 import useStyles from './css';
 import { IFoodAddOn } from './types';
 
-const FoodAddOn = ({ addOn }: IFoodAddOn) => {
+const FoodAddOn = ({ addOn, setSelectedItems, selectedItems }: IFoodAddOn) => {
   const classes = useStyles();
 
   return (
@@ -16,7 +14,12 @@ const FoodAddOn = ({ addOn }: IFoodAddOn) => {
       </div>
       <ul>
         {addOn?.items?.map((item) => (
-          <FoodItem key={item?.id} item={item} />
+          <FoodItem
+            key={item?.id}
+            item={item}
+            setSelectedItems={setSelectedItems}
+            selectedItems={selectedItems}
+          />
         ))}
       </ul>
     </div>

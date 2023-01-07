@@ -211,7 +211,7 @@ export type CheckoutCalculateQuery = { __typename?: 'Query', checkoutCalculate: 
 export type FoodsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, price?: number | null, description?: string | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null } | null> | null } | null> | null } | null> };
+export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null, portions?: Array<{ __typename?: 'ItemSizePortion', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null } | null> | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null, portions?: Array<{ __typename?: 'ItemSizePortion', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null } | null> | null } | null> | null } | null> | null } | null> | null } | null> };
 
 
 export const CheckoutCalculateMutDocument = gql`
@@ -328,8 +328,35 @@ export const FoodsDocument = gql`
   foods {
     id
     name
-    price
     description
+    sizes {
+      id
+      name
+      price
+      addOns {
+        id
+        name
+        isRequired
+        items {
+          id
+          name
+          price
+          itemSizes {
+            id
+            name
+            default
+            price
+            portions {
+              id
+              name
+              default
+              price
+            }
+          }
+        }
+      }
+    }
+    price
     addOns {
       id
       name
@@ -338,6 +365,18 @@ export const FoodsDocument = gql`
         id
         name
         price
+        itemSizes {
+          id
+          name
+          default
+          price
+          portions {
+            id
+            name
+            default
+            price
+          }
+        }
       }
     }
   }

@@ -1,11 +1,24 @@
+import { useMemo, useState } from 'react';
+
 import { FormProvider, useForm } from 'react-hook-form';
 
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
+import { ItemType } from '../FoodItem/types';
+import FoodSize from '../FoodSize/FoodSizes';
+import { SizeType } from '../FoodSize/types';
 
 import useStyles from './css';
 import { FoodFormType, IFoodModal } from './types';
 
 const FoodModal = ({ food }: IFoodModal) => {
+  const [selectedItems, setSelectedItems] = useState<ItemType[]>([]);
+  const [selectedSize, setSelectedSize] = useState<SizeType | undefined>(
+    food?.sizes?.[0],
+  );
+
+  console.log('selectedSize', selectedSize);
+  console.log('selectedItems', selectedItems);
+
   const classes = useStyles();
   //TODO
   // const [createOrder, { data }] = useCreateOrderMutation();
@@ -18,6 +31,39 @@ const FoodModal = ({ food }: IFoodModal) => {
       orderItemQuantity: 1,
     },
   });
+
+  const price = useMemo(() => {
+    if (food?.sizes) {
+      return food?.sizes?.[0]?.price;
+    } else {
+      return food?.price;
+    }
+  }, [food]);
+
+  const addOns = useMemo(() => {
+    if (food?.sizes) {
+      return selectedSize?.addOns;
+    } else {
+      return food?.addOns;
+    }
+  }, [food, selectedSize]);
+
+  useMemo(() => {
+    if (selectedSize) {
+      const items = selectedSize.addOns?.map((addOn) => addOn?.items).flat();
+
+      const arr = items?.filter((item) => {
+        return selectedItems.some(
+          (selectedItem) => selectedItem?.name === item?.name,
+        );
+      });
+
+      setSelectedItems(arr as ItemType[]);
+
+      console.log('arr', arr);
+    }
+  }, [selectedSize]);
+
   //TODO
   // const onSubmit: SubmitHandler<FoodFormType> = (data) => {
   //   const items: IFoodItem[] = [];
@@ -82,10 +128,25 @@ const FoodModal = ({ food }: IFoodModal) => {
       //onSubmit={methods.handleSubmit(onSubmit)}
       >
         <h2>{food?.name}</h2>
-        <span>Price: ${food?.price}</span>
+        <span>Price: ${price}</span>
         <p>{food?.description}</p>
-        {food?.addOns?.map((addOn) => (
-          <FoodAddOn key={addOn?.id} addOn={addOn} />
+
+        {food?.sizes?.map((size) => (
+          <FoodSize
+            key={size?.id}
+            size={size}
+            setSelectedSize={setSelectedSize}
+            selectedSize={selectedSize}
+          />
+        ))}
+
+        {addOns?.map((addOn) => (
+          <FoodAddOn
+            key={addOn?.id}
+            addOn={addOn}
+            setSelectedItems={setSelectedItems}
+            selectedItems={selectedItems}
+          />
         ))}
 
         <div>

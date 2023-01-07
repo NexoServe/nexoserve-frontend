@@ -2,8 +2,35 @@ query Foods {
   foods {
     id
     name
-    price
     description
+    sizes {
+      id
+      name
+      price
+      addOns {
+        id
+        name
+        isRequired
+        items {
+          id
+          name
+          price
+          itemSizes {
+            id
+            name
+            default
+            price
+            portions {
+              id
+              name
+              default
+              price
+            }
+          }
+        }
+      }
+    }
+    price
     addOns {
       id
       name
@@ -12,6 +39,18 @@ query Foods {
         id
         name
         price
+        itemSizes {
+          id
+          name
+          default
+          price
+          portions {
+            id
+            name
+            default
+            price
+          }
+        }
       }
     }
   }
