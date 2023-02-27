@@ -338,4 +338,46 @@ export const data: CreateFoodInput[] = [
     ],
     addOns: null,
   },
+  {
+    id: uuid(),
+    name: 'Boneless Wings',
+    description: 'Served with celery or blue cheese and some other stuff',
+    price: 8.99,
+    addOns: [
+      {
+        id: uuid(),
+        name: 'Dressing',
+        isRequired: true,
+        items: [
+          {
+            id: uuid(),
+            name: 'Blue Cheese',
+            price: 1.25,
+          },
+          {
+            id: uuid(),
+            name: 'Ranch',
+            price: 1.25,
+          },
+        ],
+      },
+      {
+        id: uuid(),
+        name: 'Veggies',
+        isRequired: true,
+        items: [
+          {
+            id: uuid(),
+            name: 'Celery',
+            price: 0.25,
+          },
+          {
+            id: uuid(),
+            name: 'Carrots',
+            price: 0.25,
+          },
+        ],
+      },
+    ],
+  },
 ];

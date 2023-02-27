@@ -1,7 +1,7 @@
 const zIndex = {
   page: 10,
-  modal: 20,
-  header: 30,
+  header: 20,
+  modal: 30,
 };
 
 export default zIndex;

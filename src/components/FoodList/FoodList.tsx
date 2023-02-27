@@ -4,11 +4,11 @@ import FoodCard from '../FoodCard/FoodCard';
 import FoodModal from '../FoodModal/FoodModal';
 import { Modal } from '../Modal/Modal';
 
+import useStyles from './css';
 import { FoodType, IFoodList } from './types';
-// import useStyles from './css';
 
 const FoodList = ({ foods }: IFoodList) => {
-  //   const classes = useStyles();
+  const classes = useStyles();
 
   const [showModal, setShowModal] = useState(false);
   const [activeFood, setActiveFood] = useState<FoodType>(null);
@@ -23,7 +23,7 @@ const FoodList = ({ foods }: IFoodList) => {
   // };
 
   return (
-    <div>
+    <div className={classes.foodList}>
       {foods?.map((food) => (
         <FoodCard
           key={food?.id}

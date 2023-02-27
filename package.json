@@ -23,11 +23,11 @@
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "postinstall": "husky install",
     "commit": "cz",
-    "generate": "graphql-codegen --config codegen.yml"
+    "generate": "graphql-codegen --config codegen.yml",
+    "seed": "ts-node ./modules/prisma/seed.ts"
   },
   "prisma": {
-    "schema": "modules/prisma/schema.prisma",
-    "seed": "ts-node ./modules/prisma/seed.ts"
+    "schema": "modules/prisma/schema.prisma"
   },
   "lint-staged": {
     "./src/**/*.{ts,js,jsx,tsx}": [

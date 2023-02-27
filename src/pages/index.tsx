@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { useFoodsQuery } from '../../generated/graphql';
 import { addApolloState, initializeApollo } from '../../lib/apolloClient';
 import prisma from '../../lib/prisma';
+import Container from '../components/Container/Container';
 import FoodList from '../components/FoodList/FoodList';
 import Navbar from '../components/Navbar/Navbar';
 // import ShoppingCart from '../components/ShoppingCart/ShoppingCart';
@@ -48,10 +49,12 @@ const Home: NextPage = () => {
 
       <main>
         <Navbar />
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <FoodList foods={data?.foods} />
-          {/* <ShoppingCart /> */}
-        </div>
+        <Container>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <FoodList foods={data?.foods} />
+            {/* <ShoppingCart /> */}
+          </div>
+        </Container>
       </main>
     </div>
   );
