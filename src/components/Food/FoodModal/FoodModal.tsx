@@ -125,7 +125,8 @@ const FoodModal = ({ food }: IFoodModal) => {
   return (
     <FormProvider {...methods}>
       <form
-      //onSubmit={methods.handleSubmit(onSubmit)}
+        //onSubmit={methods.handleSubmit(onSubmit)}
+        style={{ background: '#fff' }}
       >
         <h2>{food?.name}</h2>
         <span>Price: ${price}</span>

@@ -31,14 +31,8 @@ const useStyles = createUseStyles({
   },
 
   modalInner: {
-    borderRadius: '5px',
-    padding: '3rem',
     position: 'relative',
     zIndex: zIndex.modal + 1,
-    backgroundColor: colors.white,
-    height: 'auto',
-    transition: 'height 250ms ease-in-out',
-    minWidth: '300px',
   },
 });
 

@@ -1,6 +1,6 @@
 import { createUseStyles } from 'react-jss';
 
-import { base } from '../../../css/base';
+import { base } from '../../../../css/base';
 
 const useStyles = createUseStyles({
   foodItem: {

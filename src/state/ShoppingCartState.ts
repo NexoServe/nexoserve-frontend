@@ -1,11 +1,11 @@
 import { atom } from 'recoil';
 
-export const ShoppingCartAtom = atom({
-  key: 'ShoppingCartAtom',
-  default: [],
+export const ShowShoppingCartAtom = atom({
+  key: 'ShowShoppingCartAtom',
+  default: false,
 });
 
-export const OrderAtom = atom({
-  key: 'OrderAtom',
-  default: [],
-});
+// export const OrderAtom = atom({
+//   key: 'OrderAtom',
+//   default: [],
+// });

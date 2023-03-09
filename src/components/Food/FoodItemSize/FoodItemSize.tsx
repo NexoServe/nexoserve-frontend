@@ -1,6 +1,5 @@
 import { useFormContext } from 'react-hook-form';
 
-import FoodItemSizePortion from '../FoodItemSizePortion/FoodItemSizePortion';
 import { FoodFormType } from '../FoodModal/types';
 
 import { IFoodItemSize } from './types';
@@ -21,11 +20,11 @@ const FoodItemSize = ({ itemSize }: IFoodItemSize) => {
       </label>
       <span>${itemSize?.price}</span>
 
-      <div>
+      {/* <div>
         {itemSize?.portions?.map((portion) => (
           <FoodItemSizePortion key={itemSize?.id} itemSizePortion={portion} />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

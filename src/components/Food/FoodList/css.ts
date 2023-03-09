@@ -1,7 +1,7 @@
 import { createUseStyles } from 'react-jss';
 
-import { base } from '../../../css/base';
-import queries from '../../../css/queries';
+import { base } from '../../../../css/base';
+import queries from '../../../../css/queries';
 
 const useStyles = createUseStyles({
   foodList: {

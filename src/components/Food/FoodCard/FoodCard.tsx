@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 
 import Image from 'next/image';
 
-import { base } from '../../../css/base';
-import Pizza from '../../assets/pizza.png';
+import { base } from '../../../../css/base';
+import Pizza from '../../../assets/pizza.png';
 
 import useStyles from './css';
 import { IFoodCard } from './types';

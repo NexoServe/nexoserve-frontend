@@ -1,4 +1,4 @@
-import { FoodsQuery } from '../../../generated/graphql';
+import { FoodsQuery } from '../../../../generated/graphql';
 
 export interface IFoodList {
   foods: FoodsQuery['foods'] | undefined;
