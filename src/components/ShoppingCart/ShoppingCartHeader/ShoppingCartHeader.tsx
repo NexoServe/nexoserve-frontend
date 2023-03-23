@@ -2,6 +2,7 @@ import { useRecoilState } from 'recoil';
 
 import { ShowShoppingCartAtom } from '../../../state/ShoppingCartState';
 import Divider from '../../Divider/Divider';
+import SvgIcons from '../../SvgIcons';
 
 import useStyles from './css';
 
@@ -13,7 +14,12 @@ const ShoppingCartHeader = () => {
     <>
       <div className={styles.shoppingCartHeader}>
         <h3 className={styles.shoppingCartHeaderTitle}>Your Order</h3>
-        <button onClick={() => setShowShoppingCart(false)}>exit</button>
+        <button
+          className={styles.shoppingCartHeaderButton}
+          onClick={() => setShowShoppingCart(false)}
+        >
+          <SvgIcons name="close" />
+        </button>
       </div>
       <Divider />
     </>

@@ -5,17 +5,17 @@ import Button from '../../Button/Button';
 
 import useStyles from './css';
 
-const ShoppingCartButton = () => {
+const ShoppingCarCheckoutButton = () => {
   const [, setShowShoppingCart] = useRecoilState(ShowShoppingCartAtom);
   const styles = useStyles();
 
   return (
-    <div className={styles.shoppingCartButtonBox}>
+    <div className={styles.shoppingCartModalButtonBox}>
       <Button onClick={() => setShowShoppingCart(true)}>
-        View Order (2 Items)
+        Checkout ($54.52)
       </Button>
     </div>
   );
 };
 
-export default ShoppingCartButton;
+export default ShoppingCarCheckoutButton;

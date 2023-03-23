@@ -4,7 +4,7 @@ import { base } from '../../../../css/base';
 import colors from '../../../../css/colors';
 
 const useStyles = createUseStyles({
-  shoppingCartButtonBox: {
+  shoppingCartModalButtonBox: {
     background: colors.white,
     position: 'fixed',
     bottom: 0,
@@ -12,6 +12,10 @@ const useStyles = createUseStyles({
     width: '100%',
     height: base(8),
     padding: base(1),
+  },
+
+  hey: {
+    background: 'red',
   },
 });
 

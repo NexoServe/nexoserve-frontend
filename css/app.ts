@@ -51,6 +51,11 @@ export default createUseStyles({
     },
     button: {
       fontFamily: 'Montserrat, sans-serif',
+      border: 0,
+      margin: 0,
+      padding: 0,
+      outline: 0,
+      backgroundColor: 'transparent',
     },
   },
 

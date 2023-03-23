@@ -21,6 +21,9 @@ const useStyles = createUseStyles({
     fontSize: '20px',
     fontWeight: '500',
   },
+  shoppingCartHeaderButton: {
+    padding: base(1),
+  },
 });
 
 export default useStyles;
