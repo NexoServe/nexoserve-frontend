@@ -14,10 +14,6 @@ const useStyles = createUseStyles({
     borderRadius: base(2),
     background: 'transparent',
 
-    [queries.xs]: {
-      height: base(14),
-    },
-
     [queries.m]: {
       height: base(12),
     },
@@ -28,11 +24,6 @@ const useStyles = createUseStyles({
     borderRadius: base(2),
     minWidth: base(12),
     height: base(12),
-
-    [queries.xs]: {
-      minWidth: base(14),
-      height: base(14),
-    },
 
     [queries.m]: {
       minWidth: base(12),
@@ -52,10 +43,6 @@ const useStyles = createUseStyles({
     width: '100%',
     height: '100%',
 
-    [queries.xs]: {
-      padding: base(2),
-    },
-
     [queries.m]: {
       padding: base(1.5),
     },
@@ -72,11 +59,6 @@ const useStyles = createUseStyles({
     display: '-webkit-box',
     '-webkit-line-clamp': 1,
     '-webkit-box-orient': 'vertical',
-
-    [queries.xs]: {
-      fontSize: '18px',
-      lineHeight: '20px',
-    },
 
     [queries.m]: {
       fontSize: '16px',
@@ -98,11 +80,6 @@ const useStyles = createUseStyles({
     '-webkit-line-clamp': 2,
     '-webkit-box-orient': 'vertical',
 
-    [queries.xs]: {
-      fontSize: '16px',
-      lineHeight: '18px',
-    },
-
     [queries.m]: {
       fontSize: '14px',
       lineHeight: '16px',
@@ -116,11 +93,6 @@ const useStyles = createUseStyles({
     fontSize: '14px',
     lineHeight: '16px',
     marginTop: 'auto',
-
-    [queries.xs]: {
-      fontSize: '16px',
-      lineHeight: '18px',
-    },
 
     [queries.xs]: {
       fontSize: '14px',

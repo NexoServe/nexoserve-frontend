@@ -1,10 +1,11 @@
 import Arrow from './Arrow';
 import Close from './Close';
 import CloseFilled from './CloseFilled';
+import EmptyCart from './EmptyCart';
 import { SvgIconsType } from './types';
 
 interface SvgProps extends SvgIconsType {
-  name: 'close' | 'closeFilled' | 'arrow';
+  name: 'close' | 'closeFilled' | 'arrow' | 'emptyCart';
 }
 
 const SvgIcons = (props: SvgProps) => {
@@ -15,6 +16,8 @@ const SvgIcons = (props: SvgProps) => {
       return <CloseFilled {...props} />;
     case 'arrow':
       return <Arrow {...props} />;
+    case 'emptyCart':
+      return <EmptyCart {...props} />;
     default:
       return null;
   }

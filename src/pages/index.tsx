@@ -7,11 +7,15 @@ import prisma from '../../lib/prisma';
 import Container from '../components/Container/Container';
 import FoodList from '../components/Food/FoodList/FoodList';
 import Navbar from '../components/Navbar/Navbar';
+import ShoppingCart from '../components/ShoppingCart/ShoppingCart/ShoppingCart';
 import ShoppingCartButton from '../components/ShoppingCart/ShoppingCartButton/ShoppingCartButton';
 import ShoppingCartModal from '../components/ShoppingCart/ShoppingCartModal/ShoppingCartModal';
-// import ShoppingCart from '../components/ShoppingCart/ShoppingCart';
+
+import useStyles from './index/css';
 
 const Home: NextPage = () => {
+  const classes = useStyles();
+
   const { data } = useFoodsQuery({
     notifyOnNetworkStatusChange: true,
   });
@@ -52,11 +56,10 @@ const Home: NextPage = () => {
       <main>
         <Navbar />
         <Container>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div className={classes.indexConatiner}>
             <FoodList foods={data?.foods} />
-
+            <ShoppingCart styleClass={classes.indexShoppingCartDesktop} />
             <ShoppingCartModal />
-
             <ShoppingCartButton />
           </div>
         </Container>

@@ -1,17 +1,19 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
 
 import { base } from '../../../../css/base';
+import { ShowShoppingCartDetailsAtom } from '../../../state/ShoppingCartState';
 import SvgIcons from '../../SvgIcons';
 
 import useStyles from './css';
-import { IShoppingCartItem } from './types';
 
-const ShoppingCartItem = ({ showDetails }: IShoppingCartItem) => {
+const ShoppingCartItem = () => {
+  const showShoppingCartDetails = useRecoilValue(ShowShoppingCartDetailsAtom);
   const classes = useStyles();
 
   return (
     <motion.button
-      animate={{ rowGap: showDetails ? base(1) : 0 }}
+      animate={{ rowGap: showShoppingCartDetails ? base(1) : 0 }}
       className={classes.shoppingCartItem}
       onClick={() => console.log('HERE')}
     >
@@ -26,9 +28,9 @@ const ShoppingCartItem = ({ showDetails }: IShoppingCartItem) => {
         <motion.div
           initial={{ opacity: 1, height: '100%' }}
           animate={{
-            height: showDetails ? '100%' : '0px',
-            opacity: showDetails ? 1 : 0,
-            pointerEvents: showDetails ? 'all' : 'none',
+            height: showShoppingCartDetails ? '100%' : '0px',
+            opacity: showShoppingCartDetails ? 1 : 0,
+            pointerEvents: showShoppingCartDetails ? 'all' : 'none',
           }}
           exit={{ opacity: 0, height: '0px' }}
           className={classes.shoppingCartItemDetails}

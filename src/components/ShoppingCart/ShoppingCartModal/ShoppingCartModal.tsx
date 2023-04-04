@@ -10,11 +10,15 @@ import useStyles from './css';
 const ShoppingCartModal = () => {
   const [showShoppingCart, setShowShoppingCart] =
     useRecoilState(ShowShoppingCartAtom);
-  const styles = useStyles();
+  const classes = useStyles();
   const controls = useDragControls();
 
   return (
-    <Modal showModal={showShoppingCart} setShowModal={setShowShoppingCart}>
+    <Modal
+      styleClass={classes.shoppingCartModalConatiner}
+      showModal={showShoppingCart}
+      setShowModal={setShowShoppingCart}
+    >
       <motion.div
         drag="y"
         dragConstraints={{ top: 0, bottom: 0 }}
@@ -28,7 +32,7 @@ const ShoppingCartModal = () => {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: '100%', opacity: 0 }}
         transition={{ stiffness: 100 }}
-        className={styles.shoppingCartModal}
+        className={classes.shoppingCartModal}
       >
         <ShoppingCart />
       </motion.div>

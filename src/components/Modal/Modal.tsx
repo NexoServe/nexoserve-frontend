@@ -1,12 +1,18 @@
 import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 
+import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 import { createPortal } from 'react-dom';
 
 import useStyles from './css';
 import { IModal } from './types';
 
-export const Modal = ({ showModal, setShowModal, children }: IModal) => {
+export const Modal = ({
+  showModal,
+  setShowModal,
+  children,
+  styleClass,
+}: IModal) => {
   const classes = useStyles();
   const [mounted, setMounted] = useState(false);
 
@@ -46,7 +52,7 @@ export const Modal = ({ showModal, setShowModal, children }: IModal) => {
     ? createPortal(
         <AnimatePresence mode="wait">
           {showModal ? (
-            <div className={classes.modal}>
+            <div className={classNames(classes.modal, styleClass)}>
               <motion.div
                 key="modal"
                 initial={{ opacity: 0, filter: 'blur(0px)' }}

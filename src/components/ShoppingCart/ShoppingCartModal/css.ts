@@ -2,11 +2,19 @@ import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
 import colors from '../../../../css/colors';
+import queries from '../../../../css/queries';
 
 const useStyles = createUseStyles({
+  shoppingCartModalConatiner: {
+    display: 'flex',
+
+    [queries.m]: {
+      display: 'none',
+    },
+  },
+
   shoppingCartModal: {
     width: '100%',
-    maxWidth: '400px',
     height: 'calc(100vh - 30px)',
     position: 'fixed',
     bottom: 0,

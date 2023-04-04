@@ -5,6 +5,11 @@ export const ShowShoppingCartAtom = atom({
   default: false,
 });
 
+export const ShowShoppingCartDetailsAtom = atom({
+  key: 'ShowShoppingCartDetailsAtom',
+  default: true,
+});
+
 // export const OrderAtom = atom({
 //   key: 'OrderAtom',
 //   default: [],
