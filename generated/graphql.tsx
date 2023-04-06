@@ -45,8 +45,10 @@ export type CreateAddOnInput = {
 
 export type CreateFoodInput = {
   addOns?: InputMaybe<Array<CreateAddOnInput>>;
+  category: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   price?: InputMaybe<Scalars['Float']>;
   sizes?: InputMaybe<Array<CreateFoodSizeInput>>;
@@ -84,6 +86,7 @@ export type Food = {
   addOns?: Maybe<Array<Maybe<AddOn>>>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
   sizes?: Maybe<Array<Maybe<FoodSize>>>;
@@ -95,6 +98,12 @@ export type FoodSize = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
+};
+
+export type FoodsByCategory = {
+  __typename?: 'FoodsByCategory';
+  category: Scalars['String'];
+  foods?: Maybe<Array<SimpleFood>>;
 };
 
 export type Item = {
@@ -111,27 +120,10 @@ export type ItemSize = {
   default?: Maybe<Scalars['Boolean']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  portions?: Maybe<Array<Maybe<ItemSizePortion>>>;
   price?: Maybe<Scalars['Float']>;
 };
 
 export type ItemSizeInput = {
-  default?: InputMaybe<Scalars['Boolean']>;
-  id?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-  portions?: InputMaybe<Array<ItemSizePortionInput>>;
-  price: Scalars['Float'];
-};
-
-export type ItemSizePortion = {
-  __typename?: 'ItemSizePortion';
-  default?: Maybe<Scalars['Boolean']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Float']>;
-};
-
-export type ItemSizePortionInput = {
   default?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
@@ -179,12 +171,22 @@ export type Query = {
   addOns: Array<Maybe<AddOn>>;
   checkoutCalculate: Checkout;
   foods: Array<Maybe<Food>>;
+  foodsByCategory: Array<Maybe<FoodsByCategory>>;
   items: Array<Maybe<Item>>;
 };
 
 
 export type QueryCheckoutCalculateArgs = {
   input: CheckoutCalculateInput;
+};
+
+export type SimpleFood = {
+  __typename?: 'SimpleFood';
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
 };
 
 export type CheckoutCalculateMutMutationVariables = Exact<{
@@ -211,7 +213,7 @@ export type CheckoutCalculateQuery = { __typename?: 'Query', checkoutCalculate: 
 export type FoodsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null, portions?: Array<{ __typename?: 'ItemSizePortion', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null } | null> | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null, portions?: Array<{ __typename?: 'ItemSizePortion', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null } | null> | null } | null> | null } | null> | null } | null> | null } | null> };
+export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null } | null> | null } | null> | null } | null> | null } | null> };
 
 
 export const CheckoutCalculateMutDocument = gql`
@@ -329,6 +331,7 @@ export const FoodsDocument = gql`
     id
     name
     description
+    image
     sizes {
       id
       name
@@ -346,12 +349,6 @@ export const FoodsDocument = gql`
             name
             default
             price
-            portions {
-              id
-              name
-              default
-              price
-            }
           }
         }
       }
@@ -370,12 +367,6 @@ export const FoodsDocument = gql`
           name
           default
           price
-          portions {
-            id
-            name
-            default
-            price
-          }
         }
       }
     }

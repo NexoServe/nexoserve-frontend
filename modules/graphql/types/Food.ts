@@ -7,6 +7,7 @@ export const Food = objectType({
     t.string(`id`);
     t.string(`name`);
     t.string(`description`);
+    t.string(`image`);
     t.list.field('sizes', {
       type: 'FoodSize',
     });
@@ -17,12 +18,33 @@ export const Food = objectType({
   },
 });
 
+export const SimpleFood = objectType({
+  name: `SimpleFood`,
+  definition(t) {
+    t.string(`id`);
+    t.string(`name`);
+    t.string(`description`);
+    t.string(`image`);
+    t.float(`price`);
+  },
+});
+
+export const FoodsByCategory = objectType({
+  name: `FoodsByCategory`,
+  definition(t) {
+    t.nonNull.string(`category`);
+    t.list.nonNull.field('foods', { type: 'SimpleFood' });
+  },
+});
+
 export const CreateFoodInput = inputObjectType({
   name: 'CreateFoodInput',
   definition(t) {
     t.string('id');
     t.nonNull.string(`name`);
     t.string('description');
+    t.string('image');
+    t.nonNull.string('category');
     t.list.nonNull.field('sizes', {
       type: 'CreateFoodSizeInput',
     });
@@ -33,25 +55,43 @@ export const CreateFoodInput = inputObjectType({
   },
 });
 
+export const FoodsByCategoryQuery = extendType({
+  type: `Query`,
+  definition(t) {
+    t.nonNull.list.field(`foodsByCategory`, {
+      type: 'FoodsByCategory',
+      async resolve(_parent, _args, ctx) {
+        const foodsByCategory = await ctx.prisma.foodCategory.findMany({
+          include: {
+            foods: true,
+          },
+        });
+
+        return foodsByCategory.map((foodByCategory) => ({
+          category: foodByCategory.name,
+          foods: foodByCategory.foods,
+        }));
+      },
+    });
+  },
+});
+
 export const FoodsQuery = extendType({
   type: `Query`,
   definition(t) {
     t.nonNull.list.field(`foods`, {
       type: 'Food',
-      resolve(_parent, _args, ctx) {
-        return ctx.prisma.food.findMany({
+      async resolve(_parent, _args, ctx) {
+        return await ctx.prisma.food.findMany({
           include: {
+            category: true,
             sizes: {
               include: {
                 addOns: {
                   include: {
                     items: {
                       include: {
-                        itemSizes: {
-                          include: {
-                            portions: true,
-                          },
-                        },
+                        itemSizes: true,
                       },
                     },
                   },
@@ -60,7 +100,11 @@ export const FoodsQuery = extendType({
             },
             addOns: {
               include: {
-                items: true,
+                items: {
+                  include: {
+                    itemSizes: true,
+                  },
+                },
               },
             },
           },
@@ -79,8 +123,31 @@ export const CreateFoodMutation = extendType({
         input: nonNull(CreateFoodInput),
       },
       async resolve(_parent, { input }, ctx) {
+        const category = await ctx.prisma.foodCategory.findFirst({
+          where: { name: input.category },
+        });
+
+        let newCategory;
+
+        if (!category) {
+          newCategory = await ctx.prisma.foodCategory.create({
+            data: {
+              name: input.category,
+            },
+          });
+        }
+
         return await ctx.prisma.food.create({
           include: {
+            sizes: {
+              include: {
+                addOns: {
+                  include: {
+                    items: true,
+                  },
+                },
+              },
+            },
             addOns: {
               include: {
                 items: true,
@@ -91,10 +158,12 @@ export const CreateFoodMutation = extendType({
             name: input?.name,
             description: input?.description,
             price: input.price,
+            categoryId: category?.id || newCategory?.id,
+            image: input.image,
             sizes: {
               connectOrCreate: input.sizes?.map((size) => ({
                 where: {
-                  id: size.id || undefined,
+                  id: size?.id || undefined,
                 },
                 create: {
                   id: uuidv4(),
@@ -106,44 +175,27 @@ export const CreateFoodMutation = extendType({
                         id: addOn.id || undefined,
                       },
                       create: {
-                        id: uuidv4(),
                         name: addOn?.name,
                         isRequired: addOn.isRequired,
                         items: {
                           connectOrCreate: addOn.items.map((item) => ({
                             where: {
-                              id: item?.id || '',
+                              id: item?.id || undefined,
                             },
                             create: {
-                              id: uuidv4(),
                               name: item?.name,
                               price: item?.price,
                               itemSizes: {
                                 connectOrCreate: item.itemSizes?.map(
                                   (itemSize) => ({
                                     where: {
-                                      id: itemSize?.id || '',
+                                      id: itemSize?.id || undefined,
                                     },
                                     create: {
                                       id: uuidv4(),
                                       name: itemSize?.name,
                                       price: itemSize?.price,
                                       default: itemSize.default,
-                                      portions: {
-                                        connectOrCreate: itemSize.portions?.map(
-                                          (portion) => ({
-                                            where: {
-                                              id: portion?.id || '',
-                                            },
-                                            create: {
-                                              id: uuidv4(),
-                                              name: portion?.name,
-                                              price: portion?.price,
-                                              default: portion.default,
-                                            },
-                                          }),
-                                        ),
-                                      },
                                     },
                                   }),
                                 ),
@@ -169,7 +221,7 @@ export const CreateFoodMutation = extendType({
                   items: {
                     connectOrCreate: addOn.items.map((item) => ({
                       where: {
-                        id: item?.id || '',
+                        id: item?.id || undefined,
                       },
                       create: {
                         id: uuidv4(),
@@ -178,28 +230,13 @@ export const CreateFoodMutation = extendType({
                         sizes: {
                           connectOrCreate: item.itemSizes?.map((itemSize) => ({
                             where: {
-                              id: itemSize?.id || '',
+                              id: itemSize?.id || undefined,
                             },
                             create: {
                               id: uuidv4(),
                               name: itemSize?.name,
                               price: itemSize?.price,
                               default: itemSize.default,
-                              portions: {
-                                connectOrCreate: itemSize.portions?.map(
-                                  (portion) => ({
-                                    where: {
-                                      id: portion?.id || '',
-                                    },
-                                    create: {
-                                      id: uuidv4(),
-                                      name: portion?.name,
-                                      price: portion?.price,
-                                      default: portion.default,
-                                    },
-                                  }),
-                                ),
-                              },
                             },
                           })),
                         },

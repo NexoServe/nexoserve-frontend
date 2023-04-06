@@ -7,9 +7,6 @@ export const ItemSize = objectType({
     t.string(`name`);
     t.float(`price`);
     t.boolean('default');
-    t.list.field('portions', {
-      type: 'ItemSizePortion',
-    });
   },
 });
 
@@ -20,8 +17,5 @@ export const ItemSizeInput = inputObjectType({
     t.nonNull.string(`name`);
     t.nonNull.float(`price`);
     t.boolean('default');
-    t.list.nonNull.field('portions', {
-      type: 'ItemSizePortionInput',
-    });
   },
 });

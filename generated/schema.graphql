@@ -30,8 +30,10 @@ input CreateAddOnInput {
 
 input CreateFoodInput {
   addOns: [CreateAddOnInput!]
+  category: String!
   description: String
   id: String
+  image: String
   name: String!
   price: Float
   sizes: [CreateFoodSizeInput!]
@@ -68,6 +70,7 @@ type Food {
   addOns: [AddOn]
   description: String
   id: String
+  image: String
   name: String
   price: Float
   sizes: [FoodSize]
@@ -78,6 +81,11 @@ type FoodSize {
   id: String
   name: String
   price: Float
+}
+
+type FoodsByCategory {
+  category: String!
+  foods: [SimpleFood!]
 }
 
 type Item {
@@ -92,26 +100,10 @@ type ItemSize {
   default: Boolean
   id: String
   name: String
-  portions: [ItemSizePortion]
   price: Float
 }
 
 input ItemSizeInput {
-  default: Boolean
-  id: String
-  name: String!
-  portions: [ItemSizePortionInput!]
-  price: Float!
-}
-
-type ItemSizePortion {
-  default: Boolean
-  id: String
-  name: String
-  price: Float
-}
-
-input ItemSizePortionInput {
   default: Boolean
   id: String
   name: String!
@@ -140,5 +132,14 @@ type Query {
   addOns: [AddOn]!
   checkoutCalculate(input: CheckoutCalculateInput!): Checkout!
   foods: [Food]!
+  foodsByCategory: [FoodsByCategory]!
   items: [Item]!
+}
+
+type SimpleFood {
+  description: String
+  id: String
+  image: String
+  name: String
+  price: Float
 }

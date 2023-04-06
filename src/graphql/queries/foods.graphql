@@ -3,6 +3,7 @@ query Foods {
     id
     name
     description
+    image
     sizes {
       id
       name
@@ -20,12 +21,6 @@ query Foods {
             name
             default
             price
-            portions {
-              id
-              name
-              default
-              price
-            }
           }
         }
       }
@@ -44,12 +39,6 @@ query Foods {
           name
           default
           price
-          portions {
-            id
-            name
-            default
-            price
-          }
         }
       }
     }

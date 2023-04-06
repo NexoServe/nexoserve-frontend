@@ -17,10 +17,21 @@ model Food {
   name        String
   description String?
   image       String?
+  categoryId  String?
+  category    FoodCategory? @relation(fields: [categoryId], references: [id])
   sizes       FoodSize[]
   price       Float?
   addOns      AddOn[]
   // orderItems  OrderItem[]
+}
+
+model FoodCategory {
+  id          String      @id @default(uuid())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  name        String      @unique
+  order       Int         @default(autoincrement())
+  foods       Food[]
 }
 
 model FoodSize {
@@ -62,19 +73,10 @@ model ItemSize {
   name       String
   price      Float
   default    Boolean?     @default(false)
-  portions   ItemSizePortion[]
   items      Item[]
 }
 
-model ItemSizePortion {
-  id         String      @id @default(uuid())
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  name       String
-  price      Float
-  default    Boolean?     @default(false)
-  itemSizes  ItemSize[]
-}
+
 
 // model OrderItem {
 //   id        String   @id @default(uuid())
