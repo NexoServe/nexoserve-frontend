@@ -8,11 +8,13 @@ const useStyles = createUseStyles({
     padding: `0 ${base(2)}`,
     overflowY: 'auto',
     flexGrow: 1,
+    maxHeight: '100%',
+    height: '100%',
 
-    [queries.m]: {
-      height: '60vh',
-      maxHeight: base(60),
-    },
+    // [queries.m]: {
+    //   height: '60vh',
+    //   maxHeight: base(60),
+    // },
   },
 
   shoppingCartItemListShowDetails: {
@@ -31,6 +33,7 @@ const useStyles = createUseStyles({
     justifyContent: 'center',
     alignItems: 'center',
     opacity: 0.5,
+    padding: `${base(3)} 0`,
 
     '& p': {
       fontSize: '20px',

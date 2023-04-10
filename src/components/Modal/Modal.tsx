@@ -52,7 +52,7 @@ export const Modal = ({
     ? createPortal(
         <AnimatePresence mode="wait">
           {showModal ? (
-            <div className={classNames(classes.modal, styleClass)}>
+            <div className={classNames(styleClass, classes.modal)}>
               <motion.div
                 key="modal"
                 initial={{ opacity: 0, filter: 'blur(0px)' }}

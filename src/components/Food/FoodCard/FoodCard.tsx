@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import Image from 'next/image';
 
 import { base } from '../../../../css/base';
@@ -10,14 +8,6 @@ import { IFoodCard } from './types';
 
 const FoodCard = ({ food, activeFoodClick }: IFoodCard) => {
   const classes = useStyles();
-
-  const foodCardPrice = useMemo(() => {
-    if (food?.sizes?.length !== 0) {
-      return food?.sizes?.[0]?.price;
-    }
-
-    return food?.price;
-  }, [food]);
 
   return (
     <button className={classes.foodCard} onClick={() => activeFoodClick(food)}>
@@ -38,7 +28,7 @@ const FoodCard = ({ food, activeFoodClick }: IFoodCard) => {
         <p className={classes.foodCardContentDescription}>
           {food?.description}
         </p>
-        <div className={classes.foodCardContentPrice}>${foodCardPrice}</div>
+        <div className={classes.foodCardContentPrice}>${food.price}</div>
       </div>
     </button>
   );

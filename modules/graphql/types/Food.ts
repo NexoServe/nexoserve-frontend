@@ -63,13 +63,24 @@ export const FoodsByCategoryQuery = extendType({
       async resolve(_parent, _args, ctx) {
         const foodsByCategory = await ctx.prisma.foodCategory.findMany({
           include: {
-            foods: true,
+            foods: {
+              include: {
+                sizes: true,
+              },
+            },
           },
+          where: { foods: { some: {} } },
         });
 
         return foodsByCategory.map((foodByCategory) => ({
           category: foodByCategory.name,
-          foods: foodByCategory.foods,
+          foods: foodByCategory.foods.map((food) => ({
+            id: food.id,
+            name: food.name,
+            description: food.description,
+            image: food.image,
+            price: food?.price ? food?.price : food?.sizes?.[0]?.price,
+          })),
         }));
       },
     });
@@ -123,19 +134,19 @@ export const CreateFoodMutation = extendType({
         input: nonNull(CreateFoodInput),
       },
       async resolve(_parent, { input }, ctx) {
-        const category = await ctx.prisma.foodCategory.findFirst({
+        const existingCategory = await ctx.prisma.foodCategory.findUnique({
           where: { name: input.category },
         });
 
-        let newCategory;
+        const categoryId = existingCategory ? existingCategory.id : undefined;
 
-        if (!category) {
-          newCategory = await ctx.prisma.foodCategory.create({
-            data: {
-              name: input.category,
-            },
-          });
-        }
+        const newCategory = !existingCategory
+          ? await ctx.prisma.foodCategory.create({
+              data: {
+                name: input.category,
+              },
+            })
+          : undefined;
 
         return await ctx.prisma.food.create({
           include: {
@@ -158,7 +169,7 @@ export const CreateFoodMutation = extendType({
             name: input?.name,
             description: input?.description,
             price: input.price,
-            categoryId: category?.id || newCategory?.id,
+            categoryId: categoryId || newCategory?.id,
             image: input.image,
             sizes: {
               connectOrCreate: input.sizes?.map((size) => ({

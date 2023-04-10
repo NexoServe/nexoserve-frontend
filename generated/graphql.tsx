@@ -215,6 +215,11 @@ export type FoodsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null } | null> | null } | null> | null } | null> | null } | null> };
 
+export type FoodsByCategoryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FoodsByCategoryQuery = { __typename?: 'Query', foodsByCategory: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null }> | null } | null> };
+
 
 export const CheckoutCalculateMutDocument = gql`
     mutation CheckoutCalculateMut($checkoutCalculateMutInput2: CheckoutCalculateInput!) {
@@ -400,3 +405,44 @@ export function useFoodsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Food
 export type FoodsQueryHookResult = ReturnType<typeof useFoodsQuery>;
 export type FoodsLazyQueryHookResult = ReturnType<typeof useFoodsLazyQuery>;
 export type FoodsQueryResult = Apollo.QueryResult<FoodsQuery, FoodsQueryVariables>;
+export const FoodsByCategoryDocument = gql`
+    query FoodsByCategory {
+  foodsByCategory {
+    category
+    foods {
+      id
+      description
+      image
+      name
+      price
+    }
+  }
+}
+    `;
+
+/**
+ * __useFoodsByCategoryQuery__
+ *
+ * To run a query within a React component, call `useFoodsByCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFoodsByCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFoodsByCategoryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFoodsByCategoryQuery(baseOptions?: Apollo.QueryHookOptions<FoodsByCategoryQuery, FoodsByCategoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FoodsByCategoryQuery, FoodsByCategoryQueryVariables>(FoodsByCategoryDocument, options);
+      }
+export function useFoodsByCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FoodsByCategoryQuery, FoodsByCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FoodsByCategoryQuery, FoodsByCategoryQueryVariables>(FoodsByCategoryDocument, options);
+        }
+export type FoodsByCategoryQueryHookResult = ReturnType<typeof useFoodsByCategoryQuery>;
+export type FoodsByCategoryLazyQueryHookResult = ReturnType<typeof useFoodsByCategoryLazyQuery>;
+export type FoodsByCategoryQueryResult = Apollo.QueryResult<FoodsByCategoryQuery, FoodsByCategoryQueryVariables>;

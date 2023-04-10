@@ -1,12 +1,12 @@
-# query FoodsByCategory {
-#   foodsByCategory {
-#     category
-#     foods {
-#       id
-#       description
-#       image
-#       name
-#       price
-#     }
-#   }
-# }
+query FoodsByCategory {
+  foodsByCategory {
+    category
+    foods {
+      id
+      description
+      image
+      name
+      price
+    }
+  }
+}

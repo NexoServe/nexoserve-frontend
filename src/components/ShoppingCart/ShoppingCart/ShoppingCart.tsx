@@ -8,14 +8,16 @@ import useStyles from './css';
 import { IShoppingCart } from './types';
 
 const ShoppingCart = ({ styleClass }: IShoppingCart) => {
-  const styles = useStyles();
+  const classes = useStyles();
   // const controls = useDragControls();
 
   return (
-    <div className={classNames(styles.shoppingCart, styleClass)}>
-      <ShoppingCartHeader />
-      <ShoppingCartItemList />
-      <ShoppingCarCheckoutButton />
+    <div className={classNames(styleClass, classes.shoppingCart)}>
+      <div className={classes.shoppingCartInner}>
+        <ShoppingCartHeader />
+        <ShoppingCartItemList />
+        <ShoppingCarCheckoutButton />
+      </div>
     </div>
   );
 };

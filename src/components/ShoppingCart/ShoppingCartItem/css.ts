@@ -9,7 +9,6 @@ const useStyles = createUseStyles({
     gridTemplateColumns: `${base(3)} 1fr ${base(3)}`,
     gridTemplateRows: `auto auto`,
     columnGap: base(2),
-    rowGap: base(1),
     padding: `${base(2)} 0`,
     maxWidth: '100%',
     width: '100%',

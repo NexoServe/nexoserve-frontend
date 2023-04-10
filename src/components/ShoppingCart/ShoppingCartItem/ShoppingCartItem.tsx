@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
 import { base } from '../../../../css/base';
@@ -24,33 +24,30 @@ const ShoppingCartItem = () => {
         <h3 className={classes.shoppingCartItemTitle}>Buffalo Wings</h3>
         <div className={classes.shoppingCartItemPrice}>$22.99</div>
       </div>
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          initial={{ opacity: 1, height: '100%' }}
-          animate={{
-            height: showShoppingCartDetails ? '100%' : '0px',
-            opacity: showShoppingCartDetails ? 1 : 0,
-            pointerEvents: showShoppingCartDetails ? 'all' : 'none',
-          }}
-          exit={{ opacity: 0, height: '0px' }}
-          className={classes.shoppingCartItemDetails}
-        >
-          <div className={classes.shoppingCartItemDetailsInner}>
-            <div className={classes.shoppingCartItemDetailsItem}>6 Wings</div>
-            <div className={classes.shoppingCartItemDetailsItem}>
-              <span>2</span>Extra Blue Cheese
-            </div>
+
+      <motion.div
+        animate={{
+          height: showShoppingCartDetails ? '100%' : '0',
+          opacity: showShoppingCartDetails ? 1 : 0,
+          pointerEvents: showShoppingCartDetails ? 'all' : 'none',
+        }}
+        className={classes.shoppingCartItemDetails}
+      >
+        <div className={classes.shoppingCartItemDetailsInner}>
+          <div className={classes.shoppingCartItemDetailsItem}>6 Wings</div>
+          <div className={classes.shoppingCartItemDetailsItem}>
+            <span>2</span>Extra Blue Cheese
           </div>
-          <div className={classes.shoppingCartItemDeleteButton}>
-            <button>
-              <SvgIcons name="closeFilled" />
-            </button>
-          </div>
-          <div className={classes.shoppingCartItemEditButton}>
-            <button>Edit Item</button>
-          </div>
-        </motion.div>
-      </AnimatePresence>
+        </div>
+        <div className={classes.shoppingCartItemDeleteButton}>
+          <button>
+            <SvgIcons name="closeFilled" />
+          </button>
+        </div>
+        <div className={classes.shoppingCartItemEditButton}>
+          <button>Edit Item</button>
+        </div>
+      </motion.div>
     </motion.button>
   );
 };

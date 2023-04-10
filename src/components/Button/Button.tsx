@@ -9,7 +9,7 @@ const Button = (props: ButtonType) => {
 
   return (
     <button
-      className={classNames(styles.button, styleClass)}
+      className={classNames(styleClass, styles.button)}
       onClick={onClick}
       {...props}
     >

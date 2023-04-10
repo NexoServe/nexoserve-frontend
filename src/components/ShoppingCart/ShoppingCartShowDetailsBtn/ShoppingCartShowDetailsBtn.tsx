@@ -18,7 +18,7 @@ const ShoppingCartShowDetailsBtn = ({
   );
 
   return (
-    <div className={classNames(classes.shoppingCartShowDetailsBtn, styleClass)}>
+    <div className={classNames(styleClass, classes.shoppingCartShowDetailsBtn)}>
       <button
         onClick={() => setShowShoppingCartDetails(!showShoppingCartDetails)}
       >

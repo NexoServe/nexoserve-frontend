@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { useFoodsByCategoryQuery } from '../../../../generated/graphql';
 import { Modal } from '../../Modal/Modal';
 import FoodCard from '../FoodCard/FoodCard';
 import FoodModal from '../FoodModal/FoodModal';
@@ -8,10 +9,16 @@ import useStyles from './css';
 import { FoodType, IFoodList } from './types';
 
 const FoodList = ({ foods }: IFoodList) => {
+  const { data } = useFoodsByCategoryQuery({
+    notifyOnNetworkStatusChange: true,
+  });
+
+  console.log('data', data);
+
   const classes = useStyles();
 
   const [showModal, setShowModal] = useState(false);
-  const [activeFood, setActiveFood] = useState<FoodType>(null);
+  const [activeFood, setActiveFood] = useState<FoodType | null>(null);
 
   const activeFoodClick = (food: FoodType) => {
     setActiveFood(food);
@@ -23,13 +30,22 @@ const FoodList = ({ foods }: IFoodList) => {
   // };
 
   return (
-    <div className={classes.foodList}>
-      {foods?.map((food) => (
-        <FoodCard
-          key={food?.id}
-          food={food}
-          activeFoodClick={activeFoodClick}
-        />
+    <div>
+      {data?.foodsByCategory?.map((foodByCategory) => (
+        <div key={foodByCategory?.category} className={classes.foodList}>
+          <h2 className={classes.foodListCategory}>
+            {foodByCategory?.category}
+          </h2>
+          <div className={classes.foodListInner}>
+            {foodByCategory?.foods?.map((food) => (
+              <FoodCard
+                key={food?.id}
+                food={food}
+                activeFoodClick={activeFoodClick}
+              />
+            ))}
+          </div>
+        </div>
       ))}
 
       <Modal showModal={showModal} setShowModal={setShowModal}>
