@@ -215,6 +215,7 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     addOns: Array<NexusGenRootTypes['AddOn'] | null>; // [AddOn]!
     checkoutCalculate: NexusGenRootTypes['Checkout']; // Checkout!
+    foodById: NexusGenRootTypes['Food'] | null; // Food
     foods: Array<NexusGenRootTypes['Food'] | null>; // [Food]!
     foodsByCategory: Array<NexusGenRootTypes['FoodsByCategory'] | null>; // [FoodsByCategory]!
   }
@@ -290,6 +291,7 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     addOns: 'AddOn'
     checkoutCalculate: 'Checkout'
+    foodById: 'Food'
     foods: 'Food'
     foodsByCategory: 'FoodsByCategory'
   }
@@ -317,6 +319,9 @@ export interface NexusGenArgTypes {
   Query: {
     checkoutCalculate: { // args
       input: NexusGenInputs['CheckoutCalculateInput']; // CheckoutCalculateInput!
+    }
+    foodById: { // args
+      id: string; // String!
     }
   }
 }

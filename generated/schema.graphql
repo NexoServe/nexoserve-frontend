@@ -131,6 +131,7 @@ type OrderItem {
 type Query {
   addOns: [AddOn]!
   checkoutCalculate(input: CheckoutCalculateInput!): Checkout!
+  foodById(id: String!): Food
   foods: [Food]!
   foodsByCategory: [FoodsByCategory]!
 }

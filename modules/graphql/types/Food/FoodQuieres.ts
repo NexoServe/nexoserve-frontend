@@ -1,4 +1,4 @@
-import { extendType } from 'nexus';
+import { extendType, nonNull, queryType, stringArg } from 'nexus';
 
 export const FoodsQuery = extendType({
   type: `Query`,
@@ -33,6 +33,55 @@ export const FoodsQuery = extendType({
             },
           },
         });
+      },
+    });
+  },
+});
+
+export const FoodById = queryType({
+  definition(t) {
+    t.field('foodById', {
+      type: 'Food',
+      args: {
+        id: nonNull(stringArg()),
+      },
+      resolve: async (_parent, { id }, ctx) => {
+        const food = await ctx.prisma.food.findUnique({
+          where: {
+            id,
+          },
+          include: {
+            category: true,
+            sizes: {
+              include: {
+                addOns: {
+                  include: {
+                    items: {
+                      include: {
+                        itemSizes: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            addOns: {
+              include: {
+                items: {
+                  include: {
+                    itemSizes: true,
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        if (!food) {
+          throw new Error(`Food item with id ${id} not found`);
+        }
+
+        return food;
       },
     });
   },

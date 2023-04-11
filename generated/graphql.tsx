@@ -103,7 +103,7 @@ export type FoodSize = {
 export type FoodsByCategory = {
   __typename?: 'FoodsByCategory';
   category: Scalars['String'];
-  foods?: Maybe<Array<SimpleFood>>;
+  foods?: Maybe<Array<Food>>;
 };
 
 export type Item = {
@@ -170,6 +170,7 @@ export type Query = {
   __typename?: 'Query';
   addOns: Array<Maybe<AddOn>>;
   checkoutCalculate: Checkout;
+  foodById?: Maybe<Food>;
   foods: Array<Maybe<Food>>;
   foodsByCategory: Array<Maybe<FoodsByCategory>>;
 };
@@ -177,6 +178,11 @@ export type Query = {
 
 export type QueryCheckoutCalculateArgs = {
   input: CheckoutCalculateInput;
+};
+
+
+export type QueryFoodByIdArgs = {
+  id: Scalars['String'];
 };
 
 export type SimpleFood = {
@@ -217,7 +223,7 @@ export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Fo
 export type FoodsByCategoryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FoodsByCategoryQuery = { __typename?: 'Query', foodsByCategory: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null }> | null } | null> };
+export type FoodsByCategoryQuery = { __typename?: 'Query', foodsByCategory: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'Food', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null }> | null } | null> };
 
 
 export const CheckoutCalculateMutDocument = gql`
