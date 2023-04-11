@@ -1,129 +1,6 @@
-import { extendType, inputObjectType, nonNull, objectType } from 'nexus';
-import { v4 as uuidv4 } from 'uuid';
+import { extendType, nonNull } from 'nexus';
 
-export const Food = objectType({
-  name: `Food`,
-  definition(t) {
-    t.string(`id`);
-    t.string(`name`);
-    t.string(`description`);
-    t.string(`image`);
-    t.list.field('sizes', {
-      type: 'FoodSize',
-    });
-    t.float(`price`);
-    t.list.field(`addOns`, {
-      type: 'AddOn',
-    });
-  },
-});
-
-export const SimpleFood = objectType({
-  name: `SimpleFood`,
-  definition(t) {
-    t.string(`id`);
-    t.string(`name`);
-    t.string(`description`);
-    t.string(`image`);
-    t.float(`price`);
-  },
-});
-
-export const FoodsByCategory = objectType({
-  name: `FoodsByCategory`,
-  definition(t) {
-    t.nonNull.string(`category`);
-    t.list.nonNull.field('foods', { type: 'SimpleFood' });
-  },
-});
-
-export const CreateFoodInput = inputObjectType({
-  name: 'CreateFoodInput',
-  definition(t) {
-    t.string('id');
-    t.nonNull.string(`name`);
-    t.string('description');
-    t.string('image');
-    t.nonNull.string('category');
-    t.list.nonNull.field('sizes', {
-      type: 'CreateFoodSizeInput',
-    });
-    t.float(`price`);
-    t.list.nonNull.field('addOns', {
-      type: 'CreateAddOnInput',
-    });
-  },
-});
-
-export const FoodsByCategoryQuery = extendType({
-  type: `Query`,
-  definition(t) {
-    t.nonNull.list.field(`foodsByCategory`, {
-      type: 'FoodsByCategory',
-      async resolve(_parent, _args, ctx) {
-        const foodsByCategory = await ctx.prisma.foodCategory.findMany({
-          include: {
-            foods: {
-              include: {
-                sizes: true,
-              },
-            },
-          },
-          where: { foods: { some: {} } },
-        });
-
-        return foodsByCategory.map((foodByCategory) => ({
-          category: foodByCategory.name,
-          foods: foodByCategory.foods.map((food) => ({
-            id: food.id,
-            name: food.name,
-            description: food.description,
-            image: food.image,
-            price: food?.price ? food?.price : food?.sizes?.[0]?.price,
-          })),
-        }));
-      },
-    });
-  },
-});
-
-export const FoodsQuery = extendType({
-  type: `Query`,
-  definition(t) {
-    t.nonNull.list.field(`foods`, {
-      type: 'Food',
-      async resolve(_parent, _args, ctx) {
-        return await ctx.prisma.food.findMany({
-          include: {
-            category: true,
-            sizes: {
-              include: {
-                addOns: {
-                  include: {
-                    items: {
-                      include: {
-                        itemSizes: true,
-                      },
-                    },
-                  },
-                },
-              },
-            },
-            addOns: {
-              include: {
-                items: {
-                  include: {
-                    itemSizes: true,
-                  },
-                },
-              },
-            },
-          },
-        });
-      },
-    });
-  },
-});
+import { CreateFoodInput } from '.';
 
 export const CreateFoodMutation = extendType({
   type: `Mutation`,
@@ -177,7 +54,6 @@ export const CreateFoodMutation = extendType({
                   id: size?.id || undefined,
                 },
                 create: {
-                  id: uuidv4(),
                   name: size.name,
                   price: size.price,
                   addOns: {
@@ -203,7 +79,6 @@ export const CreateFoodMutation = extendType({
                                       id: itemSize?.id || undefined,
                                     },
                                     create: {
-                                      id: uuidv4(),
                                       name: itemSize?.name,
                                       price: itemSize?.price,
                                       default: itemSize.default,
@@ -226,7 +101,6 @@ export const CreateFoodMutation = extendType({
                   id: addOn.id || undefined,
                 },
                 create: {
-                  id: uuidv4(),
                   name: addOn?.name,
                   isRequired: addOn.isRequired,
                   items: {
@@ -235,7 +109,6 @@ export const CreateFoodMutation = extendType({
                         id: item?.id || undefined,
                       },
                       create: {
-                        id: uuidv4(),
                         name: item?.name,
                         price: item?.price,
                         sizes: {
@@ -244,7 +117,6 @@ export const CreateFoodMutation = extendType({
                               id: itemSize?.id || undefined,
                             },
                             create: {
-                              id: uuidv4(),
                               name: itemSize?.name,
                               price: itemSize?.price,
                               default: itemSize.default,

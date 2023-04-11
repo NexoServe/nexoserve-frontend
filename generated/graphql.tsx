@@ -172,7 +172,6 @@ export type Query = {
   checkoutCalculate: Checkout;
   foods: Array<Maybe<Food>>;
   foodsByCategory: Array<Maybe<FoodsByCategory>>;
-  items: Array<Maybe<Item>>;
 };
 
 

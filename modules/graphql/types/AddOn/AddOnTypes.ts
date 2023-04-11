@@ -1,4 +1,4 @@
-import { extendType, inputObjectType, objectType } from 'nexus';
+import { inputObjectType, objectType } from 'nexus';
 
 export const AddOn = objectType({
   name: `AddOn`,
@@ -23,23 +23,6 @@ export const CreateAddOnInput = inputObjectType({
     t.nonNull.boolean('isRequired');
     t.nonNull.list.nonNull.field('items', {
       type: 'CreateItemInput',
-    });
-  },
-});
-
-export const AddOnsQuery = extendType({
-  type: `Query`,
-  definition(t) {
-    t.nonNull.list.field(`addOns`, {
-      type: `AddOn`,
-      resolve(_parent, _args, ctx) {
-        return ctx.prisma.addOn.findMany({
-          include: {
-            foods: true,
-            items: true,
-          },
-        });
-      },
     });
   },
 });

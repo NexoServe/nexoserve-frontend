@@ -217,7 +217,6 @@ export interface NexusGenFieldTypes {
     checkoutCalculate: NexusGenRootTypes['Checkout']; // Checkout!
     foods: Array<NexusGenRootTypes['Food'] | null>; // [Food]!
     foodsByCategory: Array<NexusGenRootTypes['FoodsByCategory'] | null>; // [FoodsByCategory]!
-    items: Array<NexusGenRootTypes['Item'] | null>; // [Item]!
   }
   SimpleFood: { // field return type
     description: string | null; // String
@@ -293,7 +292,6 @@ export interface NexusGenFieldTypeNames {
     checkoutCalculate: 'Checkout'
     foods: 'Food'
     foodsByCategory: 'FoodsByCategory'
-    items: 'Item'
   }
   SimpleFood: { // field return type name
     description: 'String'

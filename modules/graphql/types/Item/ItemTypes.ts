@@ -1,4 +1,4 @@
-import { extendType, inputObjectType, objectType } from 'nexus';
+import { inputObjectType, objectType } from 'nexus';
 
 export const Item = objectType({
   name: `Item`,
@@ -23,22 +23,6 @@ export const CreateItemInput = inputObjectType({
     t.nonNull.float(`price`);
     t.list.nonNull.field('itemSizes', {
       type: 'ItemSizeInput',
-    });
-  },
-});
-
-export const ItemQuery = extendType({
-  type: `Query`,
-  definition(t) {
-    t.nonNull.list.field(`items`, {
-      type: `Item`,
-      resolve(_parent, _args, ctx) {
-        return ctx.prisma.item.findMany({
-          include: {
-            addOns: true,
-          },
-        });
-      },
     });
   },
 });

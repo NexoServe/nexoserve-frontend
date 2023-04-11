@@ -133,7 +133,6 @@ type Query {
   checkoutCalculate(input: CheckoutCalculateInput!): Checkout!
   foods: [Food]!
   foodsByCategory: [FoodsByCategory]!
-  items: [Item]!
 }
 
 type SimpleFood {
