@@ -2,12 +2,12 @@ import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
-import { createPortal } from 'react-dom';
+import Modal from 'react-modal';
 
 import useStyles from './css';
 import { IModal } from './types';
 
-export const Modal = ({
+export const ModalPopUp = ({
   showModal,
   setShowModal,
   children,
@@ -15,6 +15,7 @@ export const Modal = ({
 }: IModal) => {
   const classes = useStyles();
   const [mounted, setMounted] = useState(false);
+  Modal.setAppElement('#__next');
 
   useEffect(() => {
     setMounted(true);
@@ -48,27 +49,25 @@ export const Modal = ({
     return () => document.removeEventListener('keydown', keyPress);
   }, [keyPress]);
 
-  return mounted
-    ? createPortal(
-        <AnimatePresence mode="wait">
-          {showModal ? (
-            <div className={classNames(styleClass, classes.modal)}>
-              <motion.div
-                key="modal"
-                initial={{ opacity: 0, filter: 'blur(0px)' }}
-                animate={{ opacity: 0.5, filter: 'blur(10px)' }}
-                exit={{ opacity: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.25 }}
-                className={classes.modalClose}
-                onClick={closeModal}
-                ref={modalRef}
-              ></motion.div>
-              <div className={classes.modalInner}>{children}</div>
-            </div>
-          ) : null}
-        </AnimatePresence>,
-
-        document.getElementById('__next') as HTMLElement,
-      )
-    : null;
+  return (
+    <AnimatePresence mode="wait">
+      <Modal
+        isOpen={showModal}
+        onRequestClose={() => setShowModal(false)}
+        className={classNames(styleClass, classes.modal)}
+      >
+        <motion.div
+          key="modal"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.75 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
+          className={classes.modalClose}
+          onClick={closeModal}
+          ref={modalRef}
+        ></motion.div>
+        <div className={classes.modalInner}>{children}</div>
+      </Modal>
+    </AnimatePresence>
+  );
 };

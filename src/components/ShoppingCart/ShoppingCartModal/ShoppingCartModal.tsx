@@ -2,7 +2,7 @@ import { motion, useDragControls } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 
 import { ShowShoppingCartAtom } from '../../../state/ShoppingCartState';
-import { Modal } from '../../Modal/Modal';
+import { ModalPopUp } from '../../Modal/Modal';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 import useStyles from './css';
@@ -14,7 +14,7 @@ const ShoppingCartModal = () => {
   const controls = useDragControls();
 
   return (
-    <Modal
+    <ModalPopUp
       styleClass={classes.shoppingCartModalConatiner}
       showModal={showShoppingCart}
       setShowModal={setShowShoppingCart}
@@ -36,7 +36,7 @@ const ShoppingCartModal = () => {
       >
         <ShoppingCart />
       </motion.div>
-    </Modal>
+    </ModalPopUp>
   );
 };
 

@@ -1,6 +1,5 @@
 import { createUseStyles } from 'react-jss';
 
-import colors from '../../../css/colors';
 import zIndex from '../../../css/zIndex';
 
 const useStyles = createUseStyles({
@@ -25,7 +24,12 @@ const useStyles = createUseStyles({
     left: 0,
     bottom: 0,
     right: 0,
-    backgroundColor: colors.black,
+    //TODO: pick one of these
+    // backgroundImage:
+    //   'linear-gradient(to bottom, #000000, #000000 50%, #010101)',
+    // backgroundBlendMode: 'overlay',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backdropFilter: 'blur(10px)',
     zIndex: zIndex.modal,
     cursor: 'pointer',
   },

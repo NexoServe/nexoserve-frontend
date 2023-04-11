@@ -49,12 +49,15 @@ export default createUseStyles({
     li: {
       ...body,
     },
+    '.focus-visible': {
+      outline: `2px solid blue`,
+    },
+
     button: {
       fontFamily: 'Montserrat, sans-serif',
       border: 0,
       margin: 0,
       padding: 0,
-      outline: 0,
       backgroundColor: 'transparent',
     },
   },

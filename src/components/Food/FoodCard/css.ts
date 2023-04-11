@@ -9,7 +9,6 @@ const useStyles = createUseStyles({
     padding: 0,
     width: '100%',
     height: base(12),
-    outline: 'none',
     border: `1px solid rgba(0, 0, 0, 0.1)`,
     borderRadius: base(2),
     background: 'transparent',
