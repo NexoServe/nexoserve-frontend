@@ -1,19 +1,22 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRecoilState } from 'recoil';
 
 import { useFoodByIdQuery } from '../../../../generated/graphql';
+import {
+  SelectedItemsAtom,
+  SelectedSizeAtom,
+} from '../../../state/FoodModalState';
+import { ModalPopUp } from '../../Modal/Modal';
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
-import { ItemType } from '../FoodItem/types';
+import { AddOnType } from '../FoodAddOn/types';
 import FoodSize from '../FoodSize/FoodSizes';
-import { SizeType } from '../FoodSize/types';
 
 import useStyles from './css';
 import { FoodFormType, IFoodModal } from './types';
 
-const FoodModal = ({ foodId }: IFoodModal) => {
-  const classes = useStyles();
-
+const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
   const { data } = useFoodByIdQuery({
     variables: {
       id: foodId,
@@ -21,21 +24,21 @@ const FoodModal = ({ foodId }: IFoodModal) => {
     notifyOnNetworkStatusChange: true,
   });
 
-  const food = data?.foodById;
+  const classes = useStyles();
 
-  console.log('food', food);
-
-  const [selectedItems, setSelectedItems] = useState<ItemType[]>([]);
-  const [selectedSize, setSelectedSize] = useState<SizeType | undefined>(
-    food?.sizes?.[0],
+  const [selectedSize, setSelectedSize] = useRecoilState(SelectedSizeAtom);
+  const [selectedItems, setSelectedItems] = useRecoilState(SelectedItemsAtom);
+  const [addOns, setAddOns] = useState<AddOnType[] | undefined | null>(
+    undefined,
   );
 
   useEffect(() => {
-    setSelectedSize(food?.sizes?.[0]);
-  }, [food]);
+    setSelectedSize(data?.foodById?.sizes?.[0]);
+  }, [data, setSelectedSize, showModal]);
 
-  console.log('selectedSize', selectedSize);
-  console.log('selectedItems', selectedItems);
+  useEffect(() => {
+    setAddOns(selectedSize?.addOns || data?.foodById?.addOns);
+  }, [selectedSize, data]);
 
   //TODO
   // const [createOrder, { data }] = useCreateOrderMutation();
@@ -49,35 +52,35 @@ const FoodModal = ({ foodId }: IFoodModal) => {
     },
   });
 
-  const price = useMemo(() => {
-    if (food?.sizes) {
-      return food?.sizes?.[0]?.price;
-    } else {
-      return food?.price;
-    }
-  }, [food]);
+  // const price = useMemo(() => {
+  //   if (data?.foodById?.sizes) {
+  //     return data?.foodById?.sizes?.[0]?.price;
+  //   } else {
+  //     return data?.foodById?.price;
+  //   }
+  // }, [data?.foodById]);
 
-  const addOns = useMemo(() => {
-    if (food?.sizes) {
-      return selectedSize?.addOns;
-    } else {
-      return food?.addOns;
-    }
-  }, [food, selectedSize]);
+  // const addOns = useMemo(() => {
+  //   if (data?.foodById?.sizes) {
+  //     return selectedSize?.addOns;
+  //   } else {
+  //     return data?.foodById?.addOns;
+  //   }
+  // }, [data?.foodById, selectedSize]);
 
-  useMemo(() => {
-    if (selectedSize) {
-      const items = selectedSize.addOns?.map((addOn) => addOn?.items).flat();
+  // useMemo(() => {
+  //   if (selectedSize) {
+  //     const items = selectedSize.addOns?.map((addOn) => addOn?.items).flat();
 
-      const arr = items?.filter((item) => {
-        return selectedItems.some(
-          (selectedItem) => selectedItem?.name === item?.name,
-        );
-      });
+  //     const arr = items?.filter((item) => {
+  //       return selectedItems.some(
+  //         (selectedItem) => selectedItem?.name === item?.name,
+  //       );
+  //     });
 
-      setSelectedItems(arr as ItemType[]);
-    }
-  }, [selectedSize]);
+  //     setSelectedItems(arr as ItemType[]);
+  //   }
+  // }, [selectedSize]);
 
   const orderItemQuantity = methods.watch('orderItemQuantity');
 
@@ -92,51 +95,58 @@ const FoodModal = ({ foodId }: IFoodModal) => {
   };
 
   return (
-    <FormProvider {...methods}>
-      <form
-        //onSubmit={methods.handleSubmit(onSubmit)}
-        style={{ background: '#fff', overflow: 'auto', maxHeight: '500px' }}
-      >
-        <h2>{food?.name}</h2>
-        <span>Price: ${price}</span>
-        <p>{food?.description}</p>
+    <ModalPopUp
+      showModal={showModal}
+      setShowModal={setShowModal}
+      onClose={() => {
+        setSelectedSize(undefined);
+        setAddOns(undefined);
+        setSelectedItems([]);
+      }}
+    >
+      <FormProvider {...methods}>
+        <form
+          //onSubmit={methods.handleSubmit(onSubmit)}
+          style={{ background: '#fff', overflow: 'auto', maxHeight: '500px' }}
+        >
+          <h2>{data?.foodById?.name}</h2>
+          {/* <span>Price: ${price}</span> */}
+          <p>{data?.foodById?.description}</p>
 
-        {food?.sizes?.map((size) => (
-          <FoodSize
-            key={size?.id}
-            size={size}
-            setSelectedSize={setSelectedSize}
-            selectedSize={selectedSize}
-          />
-        ))}
+          <div>
+            {selectedSize &&
+              data?.foodById?.sizes?.map((size) => (
+                <FoodSize
+                  key={size?.id}
+                  size={size}
+                  setSelectedSize={setSelectedSize}
+                  selectedSize={selectedSize}
+                />
+              ))}
+          </div>
 
-        {addOns?.map((addOn) => (
-          <FoodAddOn
-            key={addOn?.id}
-            addOn={addOn}
-            setSelectedItems={setSelectedItems}
-            selectedItems={selectedItems}
-          />
-        ))}
+          {addOns &&
+            addOns?.map((addOn) => <FoodAddOn key={addOn?.id} addOn={addOn} />)}
 
-        <div>
-          <button onClick={() => decreaseQuantity()} type="button">
-            -
-          </button>
-          <input
-            className={classes.foodModalQuantity}
-            type="number"
-            {...methods.register('orderItemQuantity')}
-            value={orderItemQuantity}
-          />
-          <button onClick={() => increaseQuantity()} type="button">
-            +
-          </button>
-        </div>
+          <div>
+            <button onClick={() => decreaseQuantity()} type="button">
+              -
+            </button>
+            <input
+              className={classes.foodModalQuantity}
+              type="number"
+              {...methods.register('orderItemQuantity')}
+              value={orderItemQuantity}
+            />
+            <button onClick={() => increaseQuantity()} type="button">
+              +
+            </button>
+          </div>
 
-        <button>Add</button>
-      </form>
-    </FormProvider>
+          <button>Add</button>
+        </form>
+      </FormProvider>
+    </ModalPopUp>
   );
 };
 

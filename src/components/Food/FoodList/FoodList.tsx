@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { useFoodsByCategoryQuery } from '../../../../generated/graphql';
-import { ModalPopUp } from '../../Modal/Modal';
 import FoodCard from '../FoodCard/FoodCard';
 import FoodModal from '../FoodModal/FoodModal';
 
@@ -42,9 +41,11 @@ const FoodList = () => {
         </div>
       ))}
 
-      <ModalPopUp showModal={showModal} setShowModal={setShowModal}>
-        <FoodModal foodId={activeFood?.id as string} />
-      </ModalPopUp>
+      <FoodModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        foodId={activeFood?.id as string}
+      />
     </div>
   );
 };

@@ -1,11 +1,16 @@
 import { useFormContext } from 'react-hook-form';
+import { useRecoilState } from 'recoil';
 
+import { SelectedSizeAtom } from '../../../state/FoodModalState';
 import { FoodFormType } from '../FoodModal/types';
 
 import { IFoodSize } from './types';
 
-const FoodSize = ({ size, setSelectedSize, selectedSize }: IFoodSize) => {
+const FoodSize = ({ size }: IFoodSize) => {
   // const classes = useStyles();
+  const [selectedSize, setSelectedSize] = useRecoilState(SelectedSizeAtom);
+
+  console.log('selectedSize', selectedSize);
 
   const { register } = useFormContext<FoodFormType>();
 
@@ -16,10 +21,13 @@ const FoodSize = ({ size, setSelectedSize, selectedSize }: IFoodSize) => {
           style={{
             display: 'flex',
           }}
+          htmlFor={size?.id || ''}
         >
           <input
-            {...register('foodItems')}
+            {...register('foodSize')}
             type="radio"
+            name="foodSize"
+            id={size?.id || ''}
             value={size?.id || undefined}
             defaultChecked={size?.id === selectedSize?.id ? true : false}
             onClick={() => setSelectedSize(size)}
@@ -28,11 +36,6 @@ const FoodSize = ({ size, setSelectedSize, selectedSize }: IFoodSize) => {
           <p>${size?.price}</p>
         </label>
       </div>
-      {/* <ul>
-        {size?.addOns?.map((addOn) => (
-          <FoodAddOn key={addOn?.id} addOn={addOn} />
-        ))}
-      </ul> */}
     </div>
   );
 };

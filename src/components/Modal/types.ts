@@ -5,4 +5,5 @@ export interface IModal {
   setShowModal: (value: React.SetStateAction<boolean>) => void;
   children: ReactNode;
   styleClass?: string;
+  onClose?: () => void;
 }

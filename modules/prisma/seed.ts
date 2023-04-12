@@ -89,7 +89,7 @@ async function main() {
                                     id: uuidv4(),
                                     name: itemSize?.name,
                                     price: itemSize?.price,
-                                    default: itemSize.default,
+                                    default: itemSize?.default,
                                   },
                                 }),
                               ),

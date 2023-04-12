@@ -12,6 +12,7 @@ export const ModalPopUp = ({
   setShowModal,
   children,
   styleClass,
+  onClose,
 }: IModal) => {
   const classes = useStyles();
   Modal.setAppElement('#__next');
@@ -42,7 +43,10 @@ export const ModalPopUp = ({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
           className={classes.modalClose}
-          onClick={closeModal}
+          onClick={(e) => {
+            closeModal(e);
+            onClose ? onClose() : null;
+          }}
           ref={modalRef}
         ></motion.div>
         <div className={classes.modalInner}>{children}</div>

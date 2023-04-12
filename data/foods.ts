@@ -38,6 +38,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -60,6 +61,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -82,6 +84,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -104,6 +107,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -126,6 +130,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -148,6 +153,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -170,6 +176,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -192,6 +199,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -213,6 +221,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -234,6 +243,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -255,6 +265,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -276,6 +287,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -297,6 +309,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -318,6 +331,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -339,6 +353,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -360,6 +375,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -422,6 +438,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -444,6 +461,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -466,6 +484,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -488,6 +507,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -510,6 +530,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -532,6 +553,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -554,6 +576,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -576,6 +599,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -597,6 +621,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -618,6 +643,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -639,6 +665,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -660,6 +687,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -681,6 +709,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -702,6 +731,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -723,6 +753,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -744,6 +775,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -806,6 +838,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -828,6 +861,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -850,6 +884,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -872,6 +907,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -894,6 +930,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -916,6 +953,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -938,6 +976,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -960,6 +999,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -981,6 +1021,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -1002,6 +1043,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1023,6 +1065,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1044,6 +1087,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1065,6 +1109,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1086,6 +1131,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1107,6 +1153,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1128,6 +1175,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -1201,6 +1249,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1223,6 +1272,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -1245,6 +1295,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -1267,6 +1318,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -1289,6 +1341,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -1311,6 +1364,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -1333,6 +1387,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -1355,6 +1410,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -1376,6 +1432,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -1397,6 +1454,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1418,6 +1476,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1439,6 +1498,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1460,6 +1520,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1481,6 +1542,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1502,6 +1564,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1523,6 +1586,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -1585,6 +1649,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1607,6 +1672,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -1629,6 +1695,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -1651,6 +1718,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -1673,6 +1741,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -1695,6 +1764,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -1717,6 +1787,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -1739,6 +1810,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -1760,6 +1832,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -1781,6 +1854,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1802,6 +1876,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1823,6 +1898,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1844,6 +1920,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1865,6 +1942,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1886,6 +1964,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1907,6 +1986,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -1969,6 +2049,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -1991,6 +2072,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -2013,6 +2095,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -2035,6 +2118,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -2057,6 +2141,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -2079,6 +2164,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -2101,6 +2187,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -2123,6 +2210,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -2144,6 +2232,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -2165,6 +2254,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2186,6 +2276,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2207,6 +2298,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2228,6 +2320,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2249,6 +2342,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2270,6 +2364,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2291,6 +2386,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -2364,6 +2460,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2386,6 +2483,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -2408,6 +2506,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -2430,6 +2529,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -2452,6 +2552,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -2474,6 +2575,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -2496,6 +2598,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -2518,6 +2621,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -2539,6 +2643,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -2560,6 +2665,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2581,6 +2687,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2602,6 +2709,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2623,6 +2731,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2644,6 +2753,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2665,6 +2775,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2686,6 +2797,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -2748,6 +2860,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2770,6 +2883,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -2792,6 +2906,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -2814,6 +2929,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -2836,6 +2952,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -2858,6 +2975,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -2880,6 +2998,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -2902,6 +3021,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -2923,6 +3043,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -2944,6 +3065,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2965,6 +3087,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -2986,6 +3109,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3007,6 +3131,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3028,6 +3153,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3049,6 +3175,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3070,6 +3197,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -3132,6 +3260,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3154,6 +3283,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -3176,6 +3306,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -3198,6 +3329,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -3220,6 +3352,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -3242,6 +3375,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -3264,6 +3398,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -3286,6 +3421,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -3307,6 +3443,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -3328,6 +3465,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3349,6 +3487,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3370,6 +3509,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3391,6 +3531,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3412,6 +3553,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3433,6 +3575,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3454,6 +3597,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -3527,6 +3671,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3549,6 +3694,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -3571,6 +3717,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -3593,6 +3740,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -3615,6 +3763,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -3637,6 +3786,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -3659,6 +3809,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -3681,6 +3832,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -3702,6 +3854,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -3723,6 +3876,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3744,6 +3898,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3765,6 +3920,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3786,6 +3942,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3807,6 +3964,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3828,6 +3986,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3849,6 +4008,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -3911,6 +4071,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -3933,6 +4094,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -3955,6 +4117,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -3977,6 +4140,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -3999,6 +4163,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -4021,6 +4186,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -4043,6 +4209,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -4065,6 +4232,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -4086,6 +4254,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -4107,6 +4276,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4128,6 +4298,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4149,6 +4320,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4170,6 +4342,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4191,6 +4364,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4212,6 +4386,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4233,6 +4408,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -4295,6 +4471,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4317,6 +4494,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -4339,6 +4517,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -4361,6 +4540,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -4383,6 +4563,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -4405,6 +4586,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -4427,6 +4609,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -4449,6 +4632,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -4470,6 +4654,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -4491,6 +4676,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4512,6 +4698,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4533,6 +4720,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4554,6 +4742,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4575,6 +4764,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4596,6 +4786,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4617,6 +4808,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -4690,6 +4882,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4712,6 +4905,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -4734,6 +4928,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -4756,6 +4951,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -4778,6 +4974,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -4800,6 +4997,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -4822,6 +5020,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -4844,6 +5043,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -4865,6 +5065,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -4886,6 +5087,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4907,6 +5109,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4928,6 +5131,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4949,6 +5153,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4970,6 +5175,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -4991,6 +5197,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5012,6 +5219,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -5074,6 +5282,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5096,6 +5305,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -5118,6 +5328,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -5140,6 +5351,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -5162,6 +5374,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -5184,6 +5397,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -5206,6 +5420,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -5228,6 +5443,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -5249,6 +5465,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -5270,6 +5487,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5291,6 +5509,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5312,6 +5531,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5333,6 +5553,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5354,6 +5575,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5375,6 +5597,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5396,6 +5619,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -5458,6 +5682,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5480,6 +5705,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -5502,6 +5728,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -5524,6 +5751,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -5546,6 +5774,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -5568,6 +5797,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -5590,6 +5820,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -5612,6 +5843,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -5633,6 +5865,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -5654,6 +5887,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5675,6 +5909,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5696,6 +5931,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5717,6 +5953,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5738,6 +5975,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5759,6 +5997,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5780,6 +6019,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -5853,6 +6093,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -5875,6 +6116,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -5897,6 +6139,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -5919,6 +6162,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -5941,6 +6185,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -5963,6 +6208,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -5985,6 +6231,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -6007,6 +6254,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -6028,6 +6276,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -6049,6 +6298,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6070,6 +6320,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6091,6 +6342,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6112,6 +6364,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6133,6 +6386,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6154,6 +6408,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6175,6 +6430,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -6237,6 +6493,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6259,6 +6516,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -6281,6 +6539,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -6303,6 +6562,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -6325,6 +6585,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -6347,6 +6608,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -6369,6 +6631,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -6391,6 +6654,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -6412,6 +6676,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -6433,6 +6698,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6454,6 +6720,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6475,6 +6742,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6496,6 +6764,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6517,6 +6786,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6538,6 +6808,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6559,6 +6830,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -6621,6 +6893,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6643,6 +6916,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -6665,6 +6939,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -6687,6 +6962,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -6709,6 +6985,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -6731,6 +7008,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -6753,6 +7031,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -6775,6 +7054,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -6796,6 +7076,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -6817,6 +7098,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6838,6 +7120,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6859,6 +7142,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6880,6 +7164,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6901,6 +7186,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6922,6 +7208,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -6943,6 +7230,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -7017,6 +7305,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7039,6 +7328,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -7061,6 +7351,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -7083,6 +7374,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -7105,6 +7397,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -7127,6 +7420,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -7149,6 +7443,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -7171,6 +7466,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -7192,6 +7488,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -7213,6 +7510,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7234,6 +7532,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7255,6 +7554,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7276,6 +7576,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7297,6 +7598,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7318,6 +7620,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7339,6 +7642,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -7401,6 +7705,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7423,6 +7728,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -7445,6 +7751,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -7467,6 +7774,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -7489,6 +7797,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -7511,6 +7820,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -7533,6 +7843,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -7555,6 +7866,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -7576,6 +7888,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -7597,6 +7910,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7618,6 +7932,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7639,6 +7954,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7660,6 +7976,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7681,6 +7998,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7702,6 +8020,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7723,6 +8042,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -7785,6 +8105,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -7807,6 +8128,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -7829,6 +8151,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -7851,6 +8174,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -7873,6 +8197,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -7895,6 +8220,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -7917,6 +8243,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -7939,6 +8266,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -7960,6 +8288,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -7981,6 +8310,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8002,6 +8332,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8023,6 +8354,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8044,6 +8376,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8065,6 +8398,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8086,6 +8420,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8107,6 +8442,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -8180,6 +8516,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8202,6 +8539,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -8224,6 +8562,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -8246,6 +8585,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -8268,6 +8608,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -8290,6 +8631,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -8312,6 +8654,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -8334,6 +8677,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -8355,6 +8699,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -8376,6 +8721,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8397,6 +8743,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8418,6 +8765,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8439,6 +8787,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8460,6 +8809,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8481,6 +8831,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8502,6 +8853,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -8564,6 +8916,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8586,6 +8939,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -8608,6 +8962,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -8630,6 +8985,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -8652,6 +9008,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -8674,6 +9031,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -8696,6 +9054,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -8718,6 +9077,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -8739,6 +9099,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -8760,6 +9121,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8781,6 +9143,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8802,6 +9165,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8823,6 +9187,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8844,6 +9209,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8865,6 +9231,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8886,6 +9253,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -8948,6 +9316,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -8970,6 +9339,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -8992,6 +9362,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -9014,6 +9385,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -9036,6 +9408,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -9058,6 +9431,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -9080,6 +9454,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -9102,6 +9477,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -9123,6 +9499,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -9144,6 +9521,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9165,6 +9543,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9186,6 +9565,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9207,6 +9587,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9228,6 +9609,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9249,6 +9631,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9270,6 +9653,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -9344,6 +9728,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9366,6 +9751,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -9388,6 +9774,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -9410,6 +9797,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -9432,6 +9820,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -9454,6 +9843,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -9476,6 +9866,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -9498,6 +9889,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -9519,6 +9911,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -9540,6 +9933,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9561,6 +9955,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9582,6 +9977,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9603,6 +9999,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9624,6 +10021,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9645,6 +10043,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9666,6 +10065,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -9728,6 +10128,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9750,6 +10151,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -9772,6 +10174,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -9794,6 +10197,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -9816,6 +10220,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -9838,6 +10243,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -9860,6 +10266,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -9882,6 +10289,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -9903,6 +10311,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -9924,6 +10333,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9945,6 +10355,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9966,6 +10377,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -9987,6 +10399,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10008,6 +10421,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10029,6 +10443,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10050,6 +10465,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -10112,6 +10528,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10134,6 +10551,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -10156,6 +10574,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -10178,6 +10597,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -10200,6 +10620,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -10222,6 +10643,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -10244,6 +10666,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -10266,6 +10689,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -10287,6 +10711,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -10308,6 +10733,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10329,6 +10755,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10350,6 +10777,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10371,6 +10799,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10392,6 +10821,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10413,6 +10843,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10434,6 +10865,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -10507,6 +10939,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10529,6 +10962,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -10551,6 +10985,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -10573,6 +11008,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -10595,6 +11031,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -10617,6 +11054,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -10639,6 +11077,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -10661,6 +11100,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -10682,6 +11122,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -10703,6 +11144,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10724,6 +11166,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10745,6 +11188,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10766,6 +11210,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10787,6 +11232,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10808,6 +11254,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10829,6 +11276,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -10891,6 +11339,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -10913,6 +11362,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -10935,6 +11385,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -10957,6 +11408,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -10979,6 +11431,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -11001,6 +11454,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -11023,6 +11477,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -11045,6 +11500,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -11066,6 +11522,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -11087,6 +11544,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11108,6 +11566,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11129,6 +11588,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11150,6 +11610,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11171,6 +11632,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11192,6 +11654,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11213,6 +11676,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -11275,6 +11739,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11297,6 +11762,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -11319,6 +11785,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -11341,6 +11808,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -11363,6 +11831,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -11385,6 +11854,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -11407,6 +11877,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -11429,6 +11900,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -11450,6 +11922,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -11471,6 +11944,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11492,6 +11966,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11513,6 +11988,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11534,6 +12010,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11555,6 +12032,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11576,6 +12054,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11597,6 +12076,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -11670,6 +12150,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11692,6 +12173,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -11714,6 +12196,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -11736,6 +12219,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -11758,6 +12242,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -11780,6 +12265,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -11802,6 +12288,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -11824,6 +12311,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -11845,6 +12333,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -11866,6 +12355,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11887,6 +12377,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11908,6 +12399,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11929,6 +12421,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11950,6 +12443,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11971,6 +12465,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -11992,6 +12487,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -12054,6 +12550,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12076,6 +12573,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -12098,6 +12596,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -12120,6 +12619,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -12142,6 +12642,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -12164,6 +12665,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -12186,6 +12688,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -12208,6 +12711,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -12229,6 +12733,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -12250,6 +12755,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12271,6 +12777,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12292,6 +12799,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12313,6 +12821,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12334,6 +12843,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12355,6 +12865,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12376,6 +12887,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
@@ -12438,6 +12950,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12460,6 +12973,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -12482,6 +12996,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -12504,6 +13019,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -12526,6 +13042,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.75,
                   },
                   {
@@ -12548,6 +13065,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.25,
                   },
                   {
@@ -12570,6 +13088,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.0,
                   },
                   {
@@ -12592,6 +13111,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -12613,6 +13133,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.0,
                   },
                   {
@@ -12634,6 +13155,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12655,6 +13177,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12676,6 +13199,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12697,6 +13221,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12718,6 +13243,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12739,6 +13265,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 1.5,
                   },
                   {
@@ -12760,6 +13287,7 @@ export const data: CreateFoodInput[] = [
                   {
                     id: uuid(),
                     name: 'Whole',
+                    default: true,
                     price: 2.5,
                   },
                   {
