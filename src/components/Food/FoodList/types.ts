@@ -1,13 +1,6 @@
-import {
-  FoodsByCategoryQuery,
-  FoodsQuery,
-} from '../../../../generated/graphql';
+import { FoodsByCategoryQuery } from '../../../../generated/graphql';
 
-export interface IFoodList {
-  foods: FoodsQuery['foods'] | undefined;
-}
-
-export type FoodType = NonNullable<
+export type SimpleFoodType = NonNullable<
   NonNullable<
     NonNullable<
       NonNullable<FoodsByCategoryQuery['foodsByCategory']>[number]

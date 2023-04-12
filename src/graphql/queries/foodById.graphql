@@ -1,9 +1,10 @@
-query Foods {
-  foods {
+query FoodById($id: String!) {
+  foodById(id: $id) {
     id
     name
     description
     image
+    price
     sizes {
       id
       name
@@ -12,7 +13,6 @@ query Foods {
         ...AddOnFields
       }
     }
-    price
     addOns {
       ...AddOnFields
     }

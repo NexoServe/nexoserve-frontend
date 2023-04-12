@@ -29,8 +29,8 @@ const FoodSize = ({ size, setSelectedSize, selectedSize }: IFoodSize) => {
         </label>
       </div>
       {/* <ul>
-        {addOn?.items?.map((item) => (
-          <FoodItem key={item?.id} item={item} />
+        {size?.addOns?.map((addOn) => (
+          <FoodAddOn key={addOn?.id} addOn={addOn} />
         ))}
       </ul> */}
     </div>

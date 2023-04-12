@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { MouseEvent, useRef } from 'react';
 
 import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -14,14 +14,7 @@ export const ModalPopUp = ({
   styleClass,
 }: IModal) => {
   const classes = useStyles();
-  const [mounted, setMounted] = useState(false);
   Modal.setAppElement('#__next');
-
-  useEffect(() => {
-    setMounted(true);
-
-    return () => setMounted(false);
-  }, []);
 
   const modalRef = useRef<HTMLInputElement | null>(null);
 
@@ -34,20 +27,6 @@ export const ModalPopUp = ({
       setShowModal(false);
     }
   };
-
-  const keyPress = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && showModal) {
-        setShowModal(false);
-      }
-    },
-    [setShowModal, showModal],
-  );
-
-  useEffect(() => {
-    document.addEventListener('keydown', keyPress);
-    return () => document.removeEventListener('keydown', keyPress);
-  }, [keyPress]);
 
   return (
     <AnimatePresence mode="wait">

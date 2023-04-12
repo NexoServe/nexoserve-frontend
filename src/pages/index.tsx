@@ -1,7 +1,6 @@
 import { GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
 
-import { useFoodsQuery } from '../../generated/graphql';
 import { addApolloState, initializeApollo } from '../../lib/apolloClient';
 import prisma from '../../lib/prisma';
 import Container from '../components/Container/Container';
@@ -16,9 +15,9 @@ import useStyles from './index/css';
 const Home: NextPage = () => {
   const classes = useStyles();
 
-  const { data } = useFoodsQuery({
-    notifyOnNetworkStatusChange: true,
-  });
+  // const { data } = useFoodsQuery({
+  //   notifyOnNetworkStatusChange: true,
+  // });
 
   // const [createLink, {}] = useCreateLinkMutation({
   //   variables: {
@@ -57,7 +56,7 @@ const Home: NextPage = () => {
         <Navbar />
         <Container>
           <div className={classes.indexConatiner}>
-            <FoodList foods={data?.foods} />
+            <FoodList />
             <ShoppingCart styleClass={classes.indexShoppingCartDesktop} />
             <ShoppingCartModal />
             <ShoppingCartButton />

@@ -6,28 +6,22 @@ import FoodCard from '../FoodCard/FoodCard';
 import FoodModal from '../FoodModal/FoodModal';
 
 import useStyles from './css';
-import { FoodType, IFoodList } from './types';
+import { SimpleFoodType } from './types';
 
-const FoodList = ({ foods }: IFoodList) => {
+const FoodList = () => {
   const { data } = useFoodsByCategoryQuery({
     notifyOnNetworkStatusChange: true,
   });
 
-  console.log('data', data);
-
   const classes = useStyles();
 
   const [showModal, setShowModal] = useState(false);
-  const [activeFood, setActiveFood] = useState<FoodType | null>(null);
+  const [activeFood, setActiveFood] = useState<SimpleFoodType | null>(null);
 
-  const activeFoodClick = (food: FoodType) => {
+  const activeFoodClick = (food: SimpleFoodType) => {
     setActiveFood(food);
     setShowModal(true);
   };
-
-  // const openModal = () => {
-  //   setShowModal((prev) => !prev);
-  // };
 
   return (
     <div>
@@ -37,7 +31,7 @@ const FoodList = ({ foods }: IFoodList) => {
             {foodByCategory?.category}
           </h2>
           <div className={classes.foodListInner}>
-            {foodByCategory?.foods?.map((food, i) => (
+            {foodByCategory?.foods?.map((food) => (
               <FoodCard
                 key={food?.id}
                 food={food}
@@ -49,7 +43,7 @@ const FoodList = ({ foods }: IFoodList) => {
       ))}
 
       <ModalPopUp showModal={showModal} setShowModal={setShowModal}>
-        <FoodModal food={activeFood} />
+        <FoodModal foodId={activeFood?.id as string} />
       </ModalPopUp>
     </div>
   );

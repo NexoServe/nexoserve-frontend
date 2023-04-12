@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { useFoodByIdQuery } from '../../../../generated/graphql';
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
 import { ItemType } from '../FoodItem/types';
 import FoodSize from '../FoodSize/FoodSizes';
@@ -10,16 +11,32 @@ import { SizeType } from '../FoodSize/types';
 import useStyles from './css';
 import { FoodFormType, IFoodModal } from './types';
 
-const FoodModal = ({ food }: IFoodModal) => {
+const FoodModal = ({ foodId }: IFoodModal) => {
+  const classes = useStyles();
+
+  const { data } = useFoodByIdQuery({
+    variables: {
+      id: foodId,
+    },
+    notifyOnNetworkStatusChange: true,
+  });
+
+  const food = data?.foodById;
+
+  console.log('food', food);
+
   const [selectedItems, setSelectedItems] = useState<ItemType[]>([]);
   const [selectedSize, setSelectedSize] = useState<SizeType | undefined>(
     food?.sizes?.[0],
   );
 
+  useEffect(() => {
+    setSelectedSize(food?.sizes?.[0]);
+  }, [food]);
+
   console.log('selectedSize', selectedSize);
   console.log('selectedItems', selectedItems);
 
-  const classes = useStyles();
   //TODO
   // const [createOrder, { data }] = useCreateOrderMutation();
   // const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
@@ -59,56 +76,8 @@ const FoodModal = ({ food }: IFoodModal) => {
       });
 
       setSelectedItems(arr as ItemType[]);
-
-      console.log('arr', arr);
     }
   }, [selectedSize]);
-
-  //TODO
-  // const onSubmit: SubmitHandler<FoodFormType> = (data) => {
-  //   const items: IFoodItem[] = [];
-
-  //   console.log('data', data);
-
-  //   setOrder([
-  //     ...order,
-  //     {
-  //       foodId: food?.id,
-  //       itemIds: data.foodItems,
-  //       quantity: data.orderItemQuantity,
-  //     },
-  //   ]);
-
-  //   food?.addOns?.map((addOn) => {
-  //     addOn?.items?.map((item) => {
-  //       if (data.foodItems.includes(item?.id as string)) {
-  //         items.push(item as IFoodItem);
-  //       }
-  //     });
-  //   });
-
-  //   setShoppingCart([
-  //     ...shoppingCart,
-  //     {
-  //       orderItemId: v4(),
-  //       food: food,
-  //       foodItems: items,
-  //       foodIds: data.foodItems,
-  //       orderItemQuantity: data?.orderItemQuantity,
-  //     },
-  //   ]);
-
-  //   console.log('items', items);
-
-  //   // createOrder({
-  //   //   variables: {
-  //   //     createOrderInput: {
-  //   //       foodId: food?.id as string,
-  //   //       itemIds: data.foodItems,
-  //   //     },
-  //   //   },
-  //   // });
-  // };
 
   const orderItemQuantity = methods.watch('orderItemQuantity');
 
@@ -126,7 +95,7 @@ const FoodModal = ({ food }: IFoodModal) => {
     <FormProvider {...methods}>
       <form
         //onSubmit={methods.handleSubmit(onSubmit)}
-        style={{ background: '#fff' }}
+        style={{ background: '#fff', overflow: 'auto', maxHeight: '500px' }}
       >
         <h2>{food?.name}</h2>
         <span>Price: ${price}</span>

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { FoodType } from '../FoodList/types';
+import { FoodType } from '../FoodModal/types';
 
 export interface IFoodSize {
   size: SizeType;

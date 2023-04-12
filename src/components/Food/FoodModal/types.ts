@@ -1,10 +1,12 @@
-import { FoodType } from '../FoodList/types';
+import { FoodByIdQuery } from '../../../../generated/graphql';
 
 export interface IFoodModal {
-  food: FoodType;
+  foodId: string;
 }
 
 export type FoodFormType = {
   foodItems: [string];
   orderItemQuantity: number;
 };
+
+export type FoodType = NonNullable<FoodByIdQuery>['foodById'];

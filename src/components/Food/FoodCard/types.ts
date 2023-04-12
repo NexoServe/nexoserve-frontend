@@ -1,6 +1,6 @@
-import { FoodType } from '../FoodList/types';
+import { SimpleFoodType } from '../FoodList/types';
 
 export interface IFoodCard {
-  food: FoodType;
-  activeFoodClick: (food: FoodType) => void;
+  food: SimpleFoodType;
+  activeFoodClick: (food: SimpleFoodType) => void;
 }

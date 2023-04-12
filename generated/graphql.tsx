@@ -103,7 +103,7 @@ export type FoodSize = {
 export type FoodsByCategory = {
   __typename?: 'FoodsByCategory';
   category: Scalars['String'];
-  foods?: Maybe<Array<Food>>;
+  foods?: Maybe<Array<SimpleFood>>;
 };
 
 export type Item = {
@@ -208,6 +208,8 @@ export type CreateOrderMutationVariables = Exact<{
 
 export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'Order', id?: string | null, total?: number | null, orderItems?: Array<{ __typename: 'OrderItem', id?: string | null } | null> | null } };
 
+export type AddOnFieldsFragment = { __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null };
+
 export type CheckoutCalculateQueryVariables = Exact<{
   input: CheckoutCalculateInput;
 }>;
@@ -215,17 +217,41 @@ export type CheckoutCalculateQueryVariables = Exact<{
 
 export type CheckoutCalculateQuery = { __typename?: 'Query', checkoutCalculate: { __typename?: 'Checkout', id?: string | null, total?: number | null } };
 
+export type FoodByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type FoodByIdQuery = { __typename?: 'Query', foodById?: { __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null };
+
 export type FoodsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null } | null> | null } | null> | null } | null> | null } | null> };
+export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> };
 
 export type FoodsByCategoryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FoodsByCategoryQuery = { __typename?: 'Query', foodsByCategory: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'Food', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null }> | null } | null> };
+export type FoodsByCategoryQuery = { __typename?: 'Query', foodsByCategory: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null }> | null } | null> };
 
-
+export const AddOnFieldsFragmentDoc = gql`
+    fragment AddOnFields on AddOn {
+  id
+  name
+  isRequired
+  items {
+    id
+    name
+    price
+    itemSizes {
+      id
+      name
+      price
+      default
+    }
+  }
+}
+    `;
 export const CheckoutCalculateMutDocument = gql`
     mutation CheckoutCalculateMut($checkoutCalculateMutInput2: CheckoutCalculateInput!) {
   CheckoutCalculateMut(input: $checkoutCalculateMutInput2) {
@@ -335,6 +361,56 @@ export function useCheckoutCalculateLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type CheckoutCalculateQueryHookResult = ReturnType<typeof useCheckoutCalculateQuery>;
 export type CheckoutCalculateLazyQueryHookResult = ReturnType<typeof useCheckoutCalculateLazyQuery>;
 export type CheckoutCalculateQueryResult = Apollo.QueryResult<CheckoutCalculateQuery, CheckoutCalculateQueryVariables>;
+export const FoodByIdDocument = gql`
+    query FoodById($id: String!) {
+  foodById(id: $id) {
+    id
+    name
+    description
+    image
+    price
+    sizes {
+      id
+      name
+      price
+      addOns {
+        ...AddOnFields
+      }
+    }
+    addOns {
+      ...AddOnFields
+    }
+  }
+}
+    ${AddOnFieldsFragmentDoc}`;
+
+/**
+ * __useFoodByIdQuery__
+ *
+ * To run a query within a React component, call `useFoodByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFoodByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFoodByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useFoodByIdQuery(baseOptions: Apollo.QueryHookOptions<FoodByIdQuery, FoodByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FoodByIdQuery, FoodByIdQueryVariables>(FoodByIdDocument, options);
+      }
+export function useFoodByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FoodByIdQuery, FoodByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FoodByIdQuery, FoodByIdQueryVariables>(FoodByIdDocument, options);
+        }
+export type FoodByIdQueryHookResult = ReturnType<typeof useFoodByIdQuery>;
+export type FoodByIdLazyQueryHookResult = ReturnType<typeof useFoodByIdLazyQuery>;
+export type FoodByIdQueryResult = Apollo.QueryResult<FoodByIdQuery, FoodByIdQueryVariables>;
 export const FoodsDocument = gql`
     query Foods {
   foods {
@@ -347,42 +423,16 @@ export const FoodsDocument = gql`
       name
       price
       addOns {
-        id
-        name
-        isRequired
-        items {
-          id
-          name
-          price
-          itemSizes {
-            id
-            name
-            default
-            price
-          }
-        }
+        ...AddOnFields
       }
     }
     price
     addOns {
-      id
-      name
-      isRequired
-      items {
-        id
-        name
-        price
-        itemSizes {
-          id
-          name
-          default
-          price
-        }
-      }
+      ...AddOnFields
     }
   }
 }
-    `;
+    ${AddOnFieldsFragmentDoc}`;
 
 /**
  * __useFoodsQuery__

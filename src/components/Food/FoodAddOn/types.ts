@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { ItemType } from '../FoodItem/types';
-import { FoodType } from '../FoodList/types';
+import { FoodType } from '../FoodModal/types';
 
 export interface IFoodAddOn {
   addOn: AddOnType;
