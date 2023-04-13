@@ -3,78 +3,73 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 
-import {
-  SelectedItemsAtom,
-  SelectedItemSizesAtom,
-} from '../../../state/FoodModalState';
+import { SelectedItemsAtom } from '../../../state/FoodModalState';
 import { FoodFormType } from '../FoodModal/types';
 
 import { IFoodItemSize } from './types';
 
 const FoodItemSize = ({ itemSize, item }: IFoodItemSize) => {
-  const [selectedItemSizes, setSelectedItemSizes] = useRecoilState(
-    SelectedItemSizesAtom,
-  );
   const [selectedItems, setSelectedItems] = useRecoilState(SelectedItemsAtom);
   const [isChecked, setIsChecked] = useState(false);
 
-  const addItemSize = () => {
-    const parentSelectedItemSize = selectedItemSizes.find(
-      (selectedItemSize) => selectedItemSize.parentName === item?.name,
+  useEffect(() => {
+    const selectedItem = selectedItems.find(
+      (selectedItem) => selectedItem?.name === item?.name,
     );
-    console.log('parentSelectedItemSize', parentSelectedItemSize);
 
-    if (
-      !selectedItems.find((selectedItem) => selectedItem?.name === item?.name)
-    ) {
-      setSelectedItems([
-        ...selectedItems,
-        {
-          ...item,
-        },
-      ]);
+    if (selectedItem?.itemSize?.name === itemSize?.name) {
+      setIsChecked(true);
+    } else {
+      setIsChecked(false);
     }
+  }, [selectedItems, item, itemSize]);
 
-    if (parentSelectedItemSize) {
-      const arr = selectedItemSizes.map((selectItemSize) => {
-        if (selectItemSize.parentName === item?.name) {
+  const addItemSize = () => {
+    const itemSizeParent = selectedItems.find(
+      (selectedItem) => selectedItem.name === item?.name,
+    );
+
+    if (itemSizeParent && itemSizeParent?.itemSize?.name === itemSize?.name) {
+      const filteredItems = selectedItems.filter(
+        (selectItem) => selectItem?.name !== item?.name,
+      );
+      setSelectedItems(filteredItems);
+    } else if (itemSizeParent) {
+      const arr = selectedItems.map((selectItem) => {
+        if (selectItem.name === item?.name) {
           return {
-            id: `${itemSize?.name}-${item?.name}`,
-            name: itemSize?.name,
-            parentName: item?.name,
+            id: item?.id,
+            name: item?.name,
+            price: item?.price,
+            itemSize: {
+              id: itemSize?.id,
+              name: itemSize?.name,
+              price: itemSize?.price,
+            },
           };
         }
 
-        return selectItemSize;
+        return selectItem;
       });
-      setSelectedItemSizes(arr);
+      setSelectedItems(arr);
     } else {
-      setSelectedItemSizes([
-        ...selectedItemSizes,
+      setSelectedItems([
+        ...selectedItems,
         {
-          id: `${itemSize?.name}-${item?.name}`,
-          name: itemSize?.name,
-          parentName: item?.name,
+          id: item?.id,
+          name: item?.name,
+          price: item?.price,
+          itemSize: {
+            id: itemSize?.id,
+            name: itemSize?.name,
+            price: itemSize?.price,
+          },
         },
       ]);
     }
   };
 
-  useEffect(() => {
-    const selectedItem = selectedItemSizes.find(
-      (selectedItem) => selectedItem?.id === `${itemSize?.name}-${item?.name}`,
-    );
-
-    if (selectedItem) {
-      setIsChecked(true);
-    } else {
-      setIsChecked(false);
-    }
-  }, [selectedItemSizes, item, itemSize]);
-
   const { register } = useFormContext<FoodFormType>();
-
-  console.log('selectedItemSizes', selectedItemSizes);
 
   return (
     <div>

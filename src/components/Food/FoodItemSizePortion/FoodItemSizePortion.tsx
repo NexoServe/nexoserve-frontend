@@ -9,7 +9,7 @@ const FoodItemSizePortion = ({ itemSizePortion }: IFoodItemSizePortion) => {
 
   return (
     <div>
-      <label>
+      {/* <label>
         <input
           {...register('foodItems')}
           type="checkbox"
@@ -18,7 +18,7 @@ const FoodItemSizePortion = ({ itemSizePortion }: IFoodItemSizePortion) => {
         />
         {itemSizePortion?.name}
       </label>
-      <span>${itemSizePortion?.price}</span>
+      <span>${itemSizePortion?.price}</span> */}
     </div>
   );
 };

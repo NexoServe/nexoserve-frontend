@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { useFormContext } from 'react-hook-form';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { v4 } from 'uuid';
 
 import {
   SelectedItemsAtom,
-  SelectedItemSizesAtom,
+  SelectedSizeAtom,
 } from '../../../state/FoodModalState';
 import FoodItemSize from '../FoodItemSize/FoodItemSize';
 import { FoodFormType } from '../FoodModal/types';
@@ -15,10 +16,14 @@ import { IFoodItem } from './types';
 
 const FoodItem = ({ item }: IFoodItem) => {
   const [selectedItems, setSelectedItems] = useRecoilState(SelectedItemsAtom);
-  const [selectedItemSizes, setSelectedItemSizes] = useRecoilState(
-    SelectedItemSizesAtom,
-  );
+  const [rerender, setRerender] = useState<string>('');
+  const selectedSize = useRecoilValue(SelectedSizeAtom);
   const [isChecked, setIsChecked] = useState(false);
+
+  useEffect(() => {
+    // this component needs a rerender when the selectedSize changes because the checkbox input will stay active
+    setRerender(v4());
+  }, [selectedSize]);
 
   useEffect(() => {
     if (selectedItems === undefined) {
@@ -35,32 +40,13 @@ const FoodItem = ({ item }: IFoodItem) => {
     } else {
       setIsChecked(false);
     }
-  }, [selectedItems, item]);
+  }, [selectedItems, item, setSelectedItems, selectedSize]);
 
   const classes = useStyles();
 
   const { register } = useFormContext<FoodFormType>();
 
   const selectItem = () => {
-    const defaultItemSize = item?.itemSizes?.find(
-      (itemSize) => itemSize?.default === true,
-    );
-    if (
-      !selectedItemSizes.find(
-        (selectedItemSize) =>
-          selectedItemSize?.id === `${defaultItemSize?.name}-${item?.name}`,
-      )
-    ) {
-      setSelectedItemSizes([
-        ...selectedItemSizes,
-        {
-          id: `${defaultItemSize?.name}-${item?.name}`,
-          name: defaultItemSize?.name,
-          parentName: item?.name,
-        },
-      ]);
-    }
-
     if (
       selectedItems.find((selectedItem) => selectedItem?.name === item?.name)
     ) {
@@ -75,6 +61,9 @@ const FoodItem = ({ item }: IFoodItem) => {
           id: item?.id,
           name: item?.name,
           price: item?.price,
+          itemSize: item?.itemSizes?.find(
+            (itemSize) => itemSize?.default === true,
+          ),
         },
       ]);
     }
@@ -90,11 +79,13 @@ const FoodItem = ({ item }: IFoodItem) => {
             ? 'red'
             : 'transparent',
         }}
+        htmlFor={item?.id || undefined}
       >
         <input
           {...register('foodItems')}
           type="checkbox"
           value={item?.id || undefined}
+          id={item?.id || undefined}
           checked={isChecked}
           onChange={() => selectItem()}
         />

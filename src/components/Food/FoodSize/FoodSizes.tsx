@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { useFormContext } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 
@@ -7,10 +9,17 @@ import { FoodFormType } from '../FoodModal/types';
 import { IFoodSize } from './types';
 
 const FoodSize = ({ size }: IFoodSize) => {
-  // const classes = useStyles();
+  const [isChecked, setIsChecked] = useState(false);
+
   const [selectedSize, setSelectedSize] = useRecoilState(SelectedSizeAtom);
 
-  console.log('selectedSize', selectedSize);
+  useEffect(() => {
+    if (size?.id === selectedSize?.id) {
+      setIsChecked(true);
+    } else {
+      setIsChecked(false);
+    }
+  }, [size, selectedSize]);
 
   const { register } = useFormContext<FoodFormType>();
 
@@ -29,8 +38,8 @@ const FoodSize = ({ size }: IFoodSize) => {
             name="foodSize"
             id={size?.id || ''}
             value={size?.id || undefined}
-            defaultChecked={size?.id === selectedSize?.id ? true : false}
-            onClick={() => setSelectedSize(size)}
+            checked={isChecked}
+            onChange={() => setSelectedSize(size)}
           />
           <h4>{size?.name}</h4>
           <p>${size?.price}</p>
