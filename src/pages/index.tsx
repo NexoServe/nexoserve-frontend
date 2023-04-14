@@ -1,3 +1,6 @@
+import { useState } from 'react';
+
+import { AnimatePresence, motion } from 'framer-motion';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
 
@@ -41,6 +44,8 @@ const Home: NextPage = () => {
   //   },
   // });
 
+  const [isChecked, setIsChecked] = useState(false);
+
   return (
     <div>
       <Head>
@@ -55,6 +60,43 @@ const Home: NextPage = () => {
       <main>
         <Navbar />
         <Container>
+          <div
+            style={{
+              height: '50px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}
+          >
+            <button
+              style={{ height: '100%' }}
+              onClick={() => setIsChecked(!isChecked)}
+            >
+              click
+            </button>
+            <AnimatePresence>
+              {isChecked && (
+                <motion.svg
+                  width="25"
+                  height="19"
+                  viewBox="0 0 25 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <motion.path
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: isChecked ? 1 : 0 }}
+                    exit={{ pathLength: 0 }}
+                    d="M3.5 9.5L8 14L21 1"
+                    stroke="green"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                  />
+                </motion.svg>
+              )}
+            </AnimatePresence>
+          </div>
+
           <div className={classes.indexConatiner}>
             <FoodList />
             <ShoppingCart styleClass={classes.indexShoppingCartDesktop} />

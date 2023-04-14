@@ -27,30 +27,44 @@ export const ModalPopUp = ({
     if (modalRef.current === e.target) {
       setShowModal(false);
     }
+    onClose ? onClose() : null;
   };
 
   return (
     <AnimatePresence mode="wait">
-      <Modal
-        isOpen={showModal}
-        onRequestClose={() => setShowModal(false)}
-        className={classNames(styleClass, classes.modal)}
-      >
-        <motion.div
-          key="modal"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.75 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.15 }}
-          className={classes.modalClose}
-          onClick={(e) => {
-            closeModal(e);
+      {showModal && (
+        <Modal
+          isOpen={showModal}
+          onRequestClose={() => setShowModal(false)}
+          className={classNames(styleClass, classes.modal)}
+          onAfterClose={() => {
             onClose ? onClose() : null;
           }}
-          ref={modalRef}
-        ></motion.div>
-        <div className={classes.modalInner}>{children}</div>
-      </Modal>
+        >
+          <motion.div
+            key="modal"
+            initial={{
+              backgroundColor: '#00000000',
+              backdropFilter: 'blur(0px)',
+            }}
+            animate={{
+              backgroundColor: '#00000099',
+              backdropFilter: 'blur(20px)',
+            }}
+            exit={{
+              backgroundColor: '#00000000',
+              backdropFilter: 'blur(0px)',
+            }}
+            transition={{ duration: 0.4, ease: 'easeInOut' }}
+            className={classes.modalClose}
+            onClick={(e) => {
+              closeModal(e);
+            }}
+            ref={modalRef}
+          ></motion.div>
+          <div className={classes.modalInner}>{children}</div>
+        </Modal>
+      )}
     </AnimatePresence>
   );
 };

@@ -1,16 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
+import Image from 'next/image';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 
+import { base } from '../../../../css/base';
 import { useFoodByIdQuery } from '../../../../generated/graphql';
+import Pizza from '../../../assets/pizza.jpg';
 import {
   SelectedItemsAtom,
   SelectedSizeAtom,
 } from '../../../state/FoodModalState';
 import { ModalPopUp } from '../../Modal/Modal';
+import SvgIcons from '../../SvgIcons';
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
 import { AddOnType } from '../FoodAddOn/types';
+import FoodModalFooter from '../FoodModalFooter/FoodModalFooter';
+import FoodModalHeader from '../FoodModalHeader/FoodModalHeader';
+import FoodModalNav from '../FoodModalNav/FoodModalNav';
 import FoodSize from '../FoodSize/FoodSizes';
 
 import useStyles from './css';
@@ -27,7 +34,7 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
   const classes = useStyles();
 
   const [selectedSize, setSelectedSize] = useRecoilState(SelectedSizeAtom);
-  const [selectedItems, setSelectedItems] = useRecoilState(SelectedItemsAtom);
+  const [, setSelectedItems] = useRecoilState(SelectedItemsAtom);
   const [addOns, setAddOns] = useState<AddOnType[] | undefined | null>(
     undefined,
   );
@@ -52,35 +59,13 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
     },
   });
 
-  // const price = useMemo(() => {
-  //   if (data?.foodById?.sizes) {
-  //     return data?.foodById?.sizes?.[0]?.price;
-  //   } else {
-  //     return data?.foodById?.price;
-  //   }
-  // }, [data?.foodById]);
-
-  // const addOns = useMemo(() => {
-  //   if (data?.foodById?.sizes) {
-  //     return selectedSize?.addOns;
-  //   } else {
-  //     return data?.foodById?.addOns;
-  //   }
-  // }, [data?.foodById, selectedSize]);
-
-  // useMemo(() => {
-  //   if (selectedSize) {
-  //     const items = selectedSize.addOns?.map((addOn) => addOn?.items).flat();
-
-  //     const arr = items?.filter((item) => {
-  //       return selectedItems.some(
-  //         (selectedItem) => selectedItem?.name === item?.name,
-  //       );
-  //     });
-
-  //     setSelectedItems(arr as ItemType[]);
-  //   }
-  // }, [selectedSize]);
+  const price = useMemo(() => {
+    if (data?.foodById?.sizes) {
+      return data?.foodById?.sizes?.[0]?.price;
+    } else {
+      return data?.foodById?.price;
+    }
+  }, [data?.foodById]);
 
   const orderItemQuantity = methods.watch('orderItemQuantity');
 
@@ -94,58 +79,77 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
     methods.setValue('orderItemQuantity', orderItemQuantity + 1);
   };
 
+  const onClose = () => {
+    setShowModal(false);
+    setSelectedSize(undefined);
+    setAddOns(undefined);
+    setSelectedItems([]);
+  };
+
   return (
     <ModalPopUp
       showModal={showModal}
       setShowModal={setShowModal}
-      onClose={() => {
-        setSelectedSize(undefined);
-        setAddOns(undefined);
-        setSelectedItems([]);
-      }}
+      onClose={() => onClose()}
     >
-      <FormProvider {...methods}>
-        <form
-          //onSubmit={methods.handleSubmit(onSubmit)}
-          style={{ background: '#fff', overflow: 'auto', maxHeight: '500px' }}
+      <div className={classes.foodModal}>
+        <FoodModalNav name={data?.foodById?.name} />
+        <button
+          onClick={() => setShowModal(false)}
+          className={classes.foodModalCloseBtn}
         >
-          <h2>{data?.foodById?.name}</h2>
-          {/* <span>Price: ${price}</span> */}
-          <p>{data?.foodById?.description}</p>
+          <SvgIcons name="closeFilledWhite" />
+        </button>
+        <FormProvider {...methods}>
+          <form
+            //onSubmit={methods.handleSubmit(onSubmit)}
+            className={classes.foodModalForm}
+            id="foodModal"
+          >
+            <div className={classes.foodModalImage}>
+              <Image
+                src={Pizza}
+                layout="responsive"
+                objectFit="cover"
+                style={{
+                  minWidth: '100%',
+                  maxHeight: base(40),
+                }}
+                alt="hey"
+                quality={100}
+              />
+            </div>
+            <div className={classes.foodModalContent}>
+              <FoodModalHeader
+                name={data?.foodById?.name}
+                description={data?.foodById?.description}
+              />
 
-          <div>
-            {selectedSize &&
-              data?.foodById?.sizes?.map((size) => (
-                <FoodSize
-                  key={size?.id}
-                  size={size}
-                  setSelectedSize={setSelectedSize}
-                  selectedSize={selectedSize}
-                />
-              ))}
-          </div>
+              {selectedSize ? (
+                <div className={classes.foodModalChildBorder}>
+                  {data?.foodById?.sizes?.map((size) => (
+                    <FoodSize
+                      key={size?.id}
+                      size={size}
+                      setSelectedSize={setSelectedSize}
+                      selectedSize={selectedSize}
+                    />
+                  ))}
+                </div>
+              ) : null}
 
-          {addOns &&
-            addOns?.map((addOn) => <FoodAddOn key={addOn?.id} addOn={addOn} />)}
+              {addOns &&
+                addOns?.map((addOn) => (
+                  <div key={addOn?.id} className={classes.foodModalChildBorder}>
+                    <FoodAddOn addOn={addOn} />
+                  </div>
+                ))}
+            </div>
 
-          <div>
-            <button onClick={() => decreaseQuantity()} type="button">
-              -
-            </button>
-            <input
-              className={classes.foodModalQuantity}
-              type="number"
-              {...methods.register('orderItemQuantity')}
-              value={orderItemQuantity}
-            />
-            <button onClick={() => increaseQuantity()} type="button">
-              +
-            </button>
-          </div>
-
-          <button>Add</button>
-        </form>
-      </FormProvider>
+            <FoodModalFooter />
+          </form>
+        </FormProvider>
+      </div>
     </ModalPopUp>
   );
 };

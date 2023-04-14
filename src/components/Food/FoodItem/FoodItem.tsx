@@ -1,13 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { useFormContext } from 'react-hook-form';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { v4 } from 'uuid';
+import { useRecoilState } from 'recoil';
 
-import {
-  SelectedItemsAtom,
-  SelectedSizeAtom,
-} from '../../../state/FoodModalState';
+import { SelectedItemsAtom } from '../../../state/FoodModalState';
 import FoodItemSize from '../FoodItemSize/FoodItemSize';
 import { FoodFormType } from '../FoodModal/types';
 
@@ -16,14 +12,6 @@ import { IFoodItem } from './types';
 
 const FoodItem = ({ item }: IFoodItem) => {
   const [selectedItems, setSelectedItems] = useRecoilState(SelectedItemsAtom);
-  const [rerender, setRerender] = useState<string>('');
-  const selectedSize = useRecoilValue(SelectedSizeAtom);
-  const [isChecked, setIsChecked] = useState(false);
-
-  useEffect(() => {
-    // this component needs a rerender when the selectedSize changes because the checkbox input will stay active
-    setRerender(v4());
-  }, [selectedSize]);
 
   useEffect(() => {
     if (selectedItems === undefined) {
@@ -31,16 +19,16 @@ const FoodItem = ({ item }: IFoodItem) => {
     }
   }, [selectedItems, setSelectedItems]);
 
-  useEffect(() => {
+  const isChecked = useMemo(() => {
     if (
       selectedItems &&
       selectedItems.find((selectedItem) => selectedItem?.name === item?.name)
     ) {
-      setIsChecked(true);
+      return true;
     } else {
-      setIsChecked(false);
+      return false;
     }
-  }, [selectedItems, item, setSelectedItems, selectedSize]);
+  }, [selectedItems, item]);
 
   const classes = useStyles();
 
@@ -69,7 +57,7 @@ const FoodItem = ({ item }: IFoodItem) => {
     }
   };
 
-  return selectedItems !== undefined ? (
+  return (
     <div className={classes.foodItem}>
       <label
         style={{
@@ -99,7 +87,7 @@ const FoodItem = ({ item }: IFoodItem) => {
         ))}
       </div>
     </div>
-  ) : null;
+  );
 };
 
 export default FoodItem;

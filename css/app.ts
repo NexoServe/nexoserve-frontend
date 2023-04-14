@@ -60,6 +60,10 @@ export default createUseStyles({
       padding: 0,
       backgroundColor: 'transparent',
     },
+
+    input: {
+      fontFamily: 'Montserrat, sans-serif',
+    },
   },
 
   app: {
