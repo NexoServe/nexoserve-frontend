@@ -19,7 +19,7 @@ const useStyles = createUseStyles({
     border: `1px solid rgba(0, 0, 0, 0.1)`,
     borderRadius: base(2),
 
-    [queries.m]: {
+    [queries.l]: {
       maxHeight: '70vh',
       height: '70vh',
       position: 'sticky',

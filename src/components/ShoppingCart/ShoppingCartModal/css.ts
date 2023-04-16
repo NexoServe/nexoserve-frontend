@@ -5,14 +5,6 @@ import colors from '../../../../css/colors';
 import queries from '../../../../css/queries';
 
 const useStyles = createUseStyles({
-  shoppingCartModalConatiner: {
-    display: 'flex',
-
-    [queries.m]: {
-      display: 'none',
-    },
-  },
-
   shoppingCartModal: {
     width: '100%',
     height: 'calc(100vh - 30px)',
@@ -24,6 +16,15 @@ const useStyles = createUseStyles({
     borderTopRightRadius: base(2),
     display: 'flex',
     justifyContent: 'center',
+
+    [queries.m]: {
+      width: '100vw',
+      maxWidth: base(50),
+      height: '80vh',
+      bottom: 'unset',
+      position: 'relative',
+      borderRadius: base(2),
+    },
   },
 });
 

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import { base } from '../../../../css/base';
-import Pizza from '../../../assets/pizza.png';
+import Pizza from '../../../assets/pizza_1.png';
 
 import useStyles from './css';
 import { IFoodCard } from './types';

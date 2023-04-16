@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 
 import { base } from '../../../../css/base';
 import { useFoodByIdQuery } from '../../../../generated/graphql';
-import Pizza from '../../../assets/pizza.jpg';
+import Pizza from '../../../assets/pizza_3.png';
 import {
   SelectedItemsAtom,
   SelectedSizeAtom,
@@ -92,14 +93,40 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
       setShowModal={setShowModal}
       onClose={() => onClose()}
     >
-      <div className={classes.foodModal}>
-        <FoodModalNav name={data?.foodById?.name} />
-        <button
-          onClick={() => setShowModal(false)}
-          className={classes.foodModalCloseBtn}
+      <motion.div
+        drag="y"
+        dragConstraints={{ top: 0, bottom: 0 }}
+        // dragControls={controls}
+        onDragEnd={(_, info) => {
+          if (info.offset.y > 150) {
+            setShowModal(false);
+          }
+        }}
+        initial={{ y: '100%', opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: '100%', opacity: 0 }}
+        transition={{ stiffness: 100 }}
+        className={classes.foodModal}
+      >
+        <FoodModalNav onClose={onClose} name={data?.foodById?.name} />
+        <div
+          style={{
+            width: '100%',
+            height: base(10),
+            backgroundColor: 'transparent',
+            position: 'absolute',
+            top: 0,
+            zIndex: 2,
+            pointerEvents: top ? 'all' : 'none',
+          }}
         >
-          <SvgIcons name="closeFilledWhite" />
-        </button>
+          <button
+            onClick={() => setShowModal(false)}
+            className={classes.foodModalCloseBtn}
+          >
+            <SvgIcons name="closeFilledWhite" />
+          </button>
+        </div>
         <FormProvider {...methods}>
           <form
             //onSubmit={methods.handleSubmit(onSubmit)}
@@ -149,7 +176,7 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
             <FoodModalFooter />
           </form>
         </FormProvider>
-      </div>
+      </motion.div>
     </ModalPopUp>
   );
 };

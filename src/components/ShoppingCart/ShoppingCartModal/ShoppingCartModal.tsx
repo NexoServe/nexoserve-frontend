@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
+
 import { motion, useDragControls } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 
+import breakpoints from '../../../../css/breakpoints';
 import { ShowShoppingCartAtom } from '../../../state/ShoppingCartState';
 import { ModalPopUp } from '../../Modal/Modal';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
@@ -13,12 +16,22 @@ const ShoppingCartModal = () => {
   const classes = useStyles();
   const controls = useDragControls();
 
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth > breakpoints.l) {
+        setShowShoppingCart(false);
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [setShowShoppingCart]);
+
   return (
-    <ModalPopUp
-      styleClass={classes.shoppingCartModalConatiner}
-      showModal={showShoppingCart}
-      setShowModal={setShowShoppingCart}
-    >
+    <ModalPopUp showModal={showShoppingCart} setShowModal={setShowShoppingCart}>
       <motion.div
         drag="y"
         dragConstraints={{ top: 0, bottom: 0 }}

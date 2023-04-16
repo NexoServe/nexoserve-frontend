@@ -38,10 +38,15 @@ const useStyles = createUseStyles({
   foodModalImage: {
     minWidth: '100%',
     maxHeight: base(40),
+    pointerEvents: 'none',
   },
 
   foodModalContent: {
     padding: `0 ${base(1)}`,
+
+    [queries.s]: {
+      padding: `0 ${base(2)}`,
+    },
   },
 
   foodModalChildBorder: {

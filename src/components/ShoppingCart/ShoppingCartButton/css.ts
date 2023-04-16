@@ -15,7 +15,7 @@ const useStyles = createUseStyles({
     padding: base(1),
     display: 'block',
 
-    [queries.m]: {
+    [queries.l]: {
       display: 'none',
     },
   },

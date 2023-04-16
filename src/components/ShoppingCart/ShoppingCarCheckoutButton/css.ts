@@ -16,7 +16,7 @@ const useStyles = createUseStyles({
     borderBottomLeftRadius: base(2),
     borderBottomRightRadius: base(2),
 
-    [queries.m]: {
+    [queries.l]: {
       background: 'transparent',
     },
   },

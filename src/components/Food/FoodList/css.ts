@@ -26,7 +26,12 @@ const useStyles = createUseStyles({
     gap: base(1),
     marginBottom: base(5),
 
+    [queries.m]: {
+      gridTemplateColumns: '1fr 1fr',
+    },
+
     [queries.l]: {
+      gridTemplateColumns: '1fr',
       gap: base(2),
       marginBottom: base(8),
     },

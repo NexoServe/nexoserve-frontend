@@ -15,8 +15,9 @@ const useStyles = createUseStyles({
     background: colors.white,
     borderTopLeftRadius: base(2),
     borderTopRightRadius: base(2),
+    position: 'relative',
 
-    [queries.m]: {
+    [queries.l]: {
       background: colors.secondary,
     },
   },
@@ -31,7 +32,7 @@ const useStyles = createUseStyles({
     padding: base(1),
     display: 'block',
 
-    [queries.m]: {
+    [queries.l]: {
       display: 'none',
     },
   },
@@ -40,7 +41,7 @@ const useStyles = createUseStyles({
     display: 'none',
     padding: 0,
 
-    [queries.m]: {
+    [queries.l]: {
       display: 'flex',
     },
   },

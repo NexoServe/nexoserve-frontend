@@ -11,14 +11,13 @@ const useStyles = createUseStyles({
     background: colors.white,
     position: 'sticky',
     top: 0,
-    zIndex: 2,
+    zIndex: 3,
     transform: `translateY(-100%)`,
     transition: 'all 0.2s ease-in-out',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: `0 ${base(1)}`,
-    paddingRight: base(1.5),
     overflow: 'hidden',
     pointerEvents: 'none',
     opacity: 0,
@@ -26,6 +25,7 @@ const useStyles = createUseStyles({
     [queries.s]: {
       borderTopLeftRadius: base(2),
       borderTopRightRadius: base(2),
+      padding: `0 ${base(2)}`,
     },
 
     '& h1': {

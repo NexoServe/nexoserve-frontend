@@ -1,4 +1,4 @@
-import { MouseEvent, useRef } from 'react';
+import { MouseEvent, useMemo, useRef } from 'react';
 
 import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -29,6 +29,14 @@ export const ModalPopUp = ({
     }
     onClose ? onClose() : null;
   };
+
+  useMemo(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [showModal]);
 
   return (
     <AnimatePresence mode="wait">

@@ -20,7 +20,7 @@ const useStyles = createUseStyles({
   shoppingCartItemListShowDetails: {
     display: 'flex',
 
-    [queries.m]: {
+    [queries.l]: {
       display: 'none',
     },
   },

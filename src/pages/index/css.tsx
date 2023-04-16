@@ -9,11 +9,11 @@ const useStyles = createUseStyles({
     gridTemplateColumns: '1fr',
 
     [queries.m]: {
-      gridTemplateColumns: '1fr 1fr',
       gap: base(1),
     },
 
     [queries.l]: {
+      gridTemplateColumns: '1fr 1fr',
       gap: base(2),
     },
 
@@ -29,7 +29,7 @@ const useStyles = createUseStyles({
   indexShoppingCartDesktop: {
     display: 'none',
 
-    [queries.m]: {
+    [queries.l]: {
       display: 'flex',
     },
   },

@@ -7,23 +7,22 @@ import SvgIcons from '../../SvgIcons';
 import useStyles from './css';
 import { IFoodModalNav } from './types';
 
-const FoodModalNav = ({ name }: IFoodModalNav) => {
+const FoodModalNav = ({ name, onClose }: IFoodModalNav) => {
   const [scrolled, setScrolled] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
-    const handleScroll = (event: any) => {
-      const target = event.target;
-      const scrollTop = target.scrollTop;
+    const container = document.querySelector('#foodModal');
+    const tracked = document.querySelector('#foodModalName');
 
-      if (scrollTop > 50) {
+    const handleScroll = () => {
+      if (tracked?.offsetTop - 40 <= container?.scrollTop) {
         setScrolled(true);
       } else {
         setScrolled(false);
       }
     };
 
-    const container = document.querySelector('#foodModal');
     container?.addEventListener('scroll', handleScroll);
 
     return () => {
@@ -41,7 +40,9 @@ const FoodModalNav = ({ name }: IFoodModalNav) => {
       )}
     >
       <h1>{name}</h1>
-      <SvgIcons width="40px" height="40px" name="closeFilledWhite" />
+      <button onClick={onClose}>
+        <SvgIcons width="40px" height="40px" name="closeFilledWhite" />
+      </button>
     </div>
   );
 };
