@@ -8,6 +8,11 @@ const useStyles = createUseStyles({
   foodModal: {
     position: 'relative',
     overflow: 'hidden',
+    height: '100vh',
+
+    [queries.s]: {
+      height: '80vh',
+    },
   },
 
   foodModalForm: {
@@ -20,6 +25,8 @@ const useStyles = createUseStyles({
     margin: '0 auto',
     position: 'relative',
     marginTop: `-${base(7)}`,
+    display: 'flex',
+    flexDirection: 'column',
 
     [queries.s]: {
       height: '80vh',
@@ -27,12 +34,12 @@ const useStyles = createUseStyles({
     },
   },
 
-  foodModalCloseBtn: {
-    position: 'absolute',
-    right: base(1.5),
-    top: base(1.5),
-    zIndex: 2,
-    cursor: 'pointer',
+  foodModalLoader: {
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   foodModalImage: {

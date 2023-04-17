@@ -1,25 +1,27 @@
 import { useEffect, useState } from 'react';
 
-import classNames from 'classnames';
+import { motion } from 'framer-motion';
 
 import SvgIcons from '../../SvgIcons';
 
 import useStyles from './css';
 import { IFoodModalNav } from './types';
 
-const FoodModalNav = ({ name, onClose }: IFoodModalNav) => {
+const FoodModalNav = ({ name, onClick, loading }: IFoodModalNav) => {
   const [scrolled, setScrolled] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
-    const container = document.querySelector('#foodModal');
-    const tracked = document.querySelector('#foodModalName');
+    const container = document.querySelector<HTMLElement>('#foodModal');
+    const tracked = document.querySelector<HTMLElement>('#foodModalName');
 
     const handleScroll = () => {
-      if (tracked?.offsetTop - 40 <= container?.scrollTop) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
+      if (tracked?.offsetTop && container?.scrollTop) {
+        if (tracked.offsetTop - 40 <= container.scrollTop) {
+          setScrolled(true);
+        } else {
+          setScrolled(false);
+        }
       }
     };
 
@@ -28,22 +30,23 @@ const FoodModalNav = ({ name, onClose }: IFoodModalNav) => {
     return () => {
       container?.removeEventListener('scroll', handleScroll);
     };
-  }, []);
-
-  console.log('scrolled', scrolled);
+  }, [loading]);
 
   return (
-    <div
-      className={classNames(
-        classes.foodModalNav,
-        scrolled ? classes.foodModalNavActive : null,
-      )}
+    <motion.div
+      initial={{ y: '-100%', opacity: 0 }}
+      animate={{ y: scrolled ? 0 : '-100%', opacity: 1 }}
+      transition={{
+        duration: 0.3,
+        type: 'tween',
+      }}
+      className={classes.foodModalNav}
     >
       <h1>{name}</h1>
-      <button onClick={onClose}>
+      <button onClick={onClick}>
         <SvgIcons width="40px" height="40px" name="closeFilledWhite" />
       </button>
-    </div>
+    </motion.div>
   );
 };
 

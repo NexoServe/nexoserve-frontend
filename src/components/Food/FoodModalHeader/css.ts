@@ -13,6 +13,7 @@ const useStyles = createUseStyles({
 
   foodModalHeaderDescription: {
     fontSize: '16px',
+    lineHeight: '18px',
     fontWeight: 400,
     margin: 0,
     marginBottom: base(2),

@@ -7,6 +7,7 @@ const useStyles = createUseStyles({
   indexConatiner: {
     display: 'grid',
     gridTemplateColumns: '1fr',
+    position: 'relative',
 
     [queries.m]: {
       gap: base(1),

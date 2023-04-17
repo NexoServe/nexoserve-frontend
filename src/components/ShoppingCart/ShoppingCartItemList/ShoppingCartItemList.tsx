@@ -20,31 +20,31 @@ const ShoppingCartItemList = () => {
 
   useEffect(() => {
     setArray([
-      {
-        id: '123',
-        name: 'hey',
-        price: 2,
-      },
-      {
-        id: '1235',
-        name: 'hey',
-        price: 2,
-      },
-      {
-        id: '1234',
-        name: 'hey',
-        price: 2,
-      },
-      {
-        id: '1236',
-        name: 'hey',
-        price: 2,
-      },
-      {
-        id: '1237',
-        name: 'hey',
-        price: 2,
-      },
+      // {
+      //   id: '123',
+      //   name: 'hey',
+      //   price: 2,
+      // },
+      // {
+      //   id: '1235',
+      //   name: 'hey',
+      //   price: 2,
+      // },
+      // {
+      //   id: '1234',
+      //   name: 'hey',
+      //   price: 2,
+      // },
+      // {
+      //   id: '1236',
+      //   name: 'hey',
+      //   price: 2,
+      // },
+      // {
+      //   id: '1237',
+      //   name: 'hey',
+      //   price: 2,
+      // },
     ]);
   }, []);
 
@@ -52,11 +52,10 @@ const ShoppingCartItemList = () => {
     <div className={classes.shoppingCartItemList}>
       {array.length <= 0 ? (
         <div className={classes.shoppingCartItemListEmpty}>
-          <SvgIcons name="emptyCart" />
-          <p>
-            Your cart is as empty as a bank account on the last day of the
-            month.
-          </p>
+          <div style={{ width: '400px', height: '300px', marginTop: '-100px' }}>
+            <SvgIcons name="emptyCart" />
+          </div>
+          <p>Your cart is empty</p>
         </div>
       ) : (
         <>

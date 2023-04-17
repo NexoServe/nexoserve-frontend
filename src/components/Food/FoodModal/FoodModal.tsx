@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
@@ -12,10 +11,12 @@ import {
   SelectedItemsAtom,
   SelectedSizeAtom,
 } from '../../../state/FoodModalState';
+import Draggable from '../../Draggable/Draggable';
+import Loader from '../../Loader/Loader';
 import { ModalPopUp } from '../../Modal/Modal';
-import SvgIcons from '../../SvgIcons';
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
 import { AddOnType } from '../FoodAddOn/types';
+import FoodModalCloseButton from '../FoodModalCloseButton/FoodModalCloseButton';
 import FoodModalFooter from '../FoodModalFooter/FoodModalFooter';
 import FoodModalHeader from '../FoodModalHeader/FoodModalHeader';
 import FoodModalNav from '../FoodModalNav/FoodModalNav';
@@ -25,7 +26,7 @@ import useStyles from './css';
 import { FoodFormType, IFoodModal } from './types';
 
 const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
-  const { data } = useFoodByIdQuery({
+  const { data, loading, error } = useFoodByIdQuery({
     variables: {
       id: foodId,
     },
@@ -46,12 +47,7 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
 
   useEffect(() => {
     setAddOns(selectedSize?.addOns || data?.foodById?.addOns);
-  }, [selectedSize, data]);
-
-  //TODO
-  // const [createOrder, { data }] = useCreateOrderMutation();
-  // const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
-  // const [order, setOrder] = useRecoilState(OrderAtom);
+  }, [selectedSize, data, showModal]);
 
   const methods = useForm<FoodFormType>({
     defaultValues: {
@@ -59,26 +55,6 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
       orderItemQuantity: 1,
     },
   });
-
-  const price = useMemo(() => {
-    if (data?.foodById?.sizes) {
-      return data?.foodById?.sizes?.[0]?.price;
-    } else {
-      return data?.foodById?.price;
-    }
-  }, [data?.foodById]);
-
-  const orderItemQuantity = methods.watch('orderItemQuantity');
-
-  const decreaseQuantity = () => {
-    if (orderItemQuantity > 1) {
-      methods.setValue('orderItemQuantity', orderItemQuantity - 1);
-    }
-  };
-
-  const increaseQuantity = () => {
-    methods.setValue('orderItemQuantity', orderItemQuantity + 1);
-  };
 
   const onClose = () => {
     setShowModal(false);
@@ -93,90 +69,73 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
       setShowModal={setShowModal}
       onClose={() => onClose()}
     >
-      <motion.div
-        drag="y"
-        dragConstraints={{ top: 0, bottom: 0 }}
-        // dragControls={controls}
-        onDragEnd={(_, info) => {
-          if (info.offset.y > 150) {
-            setShowModal(false);
-          }
-        }}
-        initial={{ y: '100%', opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: '100%', opacity: 0 }}
-        transition={{ stiffness: 100 }}
-        className={classes.foodModal}
-      >
-        <FoodModalNav onClose={onClose} name={data?.foodById?.name} />
-        <div
-          style={{
-            width: '100%',
-            height: base(10),
-            backgroundColor: 'transparent',
-            position: 'absolute',
-            top: 0,
-            zIndex: 2,
-            pointerEvents: top ? 'all' : 'none',
-          }}
-        >
-          <button
-            onClick={() => setShowModal(false)}
-            className={classes.foodModalCloseBtn}
-          >
-            <SvgIcons name="closeFilledWhite" />
-          </button>
-        </div>
+      <Draggable onDragDown={() => onClose()} styleClass={classes.foodModal}>
+        <FoodModalNav
+          loading={loading}
+          onClick={onClose}
+          name={data?.foodById?.name}
+        />
+
+        <FoodModalCloseButton onClick={onClose} />
         <FormProvider {...methods}>
           <form
             //onSubmit={methods.handleSubmit(onSubmit)}
             className={classes.foodModalForm}
             id="foodModal"
           >
-            <div className={classes.foodModalImage}>
-              <Image
-                src={Pizza}
-                layout="responsive"
-                objectFit="cover"
-                style={{
-                  minWidth: '100%',
-                  maxHeight: base(40),
-                }}
-                alt="hey"
-                quality={100}
-              />
-            </div>
-            <div className={classes.foodModalContent}>
-              <FoodModalHeader
-                name={data?.foodById?.name}
-                description={data?.foodById?.description}
-              />
-
-              {selectedSize ? (
-                <div className={classes.foodModalChildBorder}>
-                  {data?.foodById?.sizes?.map((size) => (
-                    <FoodSize
-                      key={size?.id}
-                      size={size}
-                      setSelectedSize={setSelectedSize}
-                      selectedSize={selectedSize}
-                    />
-                  ))}
+            {loading || error ? (
+              <Loader styleClass={classes.foodModalLoader} />
+            ) : (
+              <div>
+                <div className={classes.foodModalImage}>
+                  <Image
+                    src={Pizza}
+                    layout="responsive"
+                    objectFit="cover"
+                    style={{
+                      minWidth: '100%',
+                      maxHeight: base(40),
+                    }}
+                    alt="hey"
+                    quality={100}
+                  />
                 </div>
-              ) : null}
+                <div className={classes.foodModalContent}>
+                  <FoodModalHeader
+                    name={data?.foodById?.name}
+                    description={data?.foodById?.description}
+                  />
 
-              {addOns &&
-                addOns?.map((addOn) => (
-                  <div key={addOn?.id} className={classes.foodModalChildBorder}>
-                    <FoodAddOn addOn={addOn} />
-                  </div>
-                ))}
-            </div>
+                  {selectedSize ? (
+                    <div className={classes.foodModalChildBorder}>
+                      {data?.foodById?.sizes?.map((size) => (
+                        <FoodSize
+                          key={size?.id}
+                          size={size}
+                          setSelectedSize={setSelectedSize}
+                          selectedSize={selectedSize}
+                        />
+                      ))}
+                    </div>
+                  ) : null}
 
-            <FoodModalFooter />
+                  {addOns &&
+                    addOns?.map((addOn) => (
+                      <div
+                        key={addOn?.id}
+                        className={classes.foodModalChildBorder}
+                      >
+                        <FoodAddOn addOn={addOn} />
+                      </div>
+                    ))}
+                </div>
+
+                <FoodModalFooter />
+              </div>
+            )}
           </form>
         </FormProvider>
-      </motion.div>
+      </Draggable>
     </ModalPopUp>
   );
 };

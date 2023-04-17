@@ -1,7 +1,5 @@
 import { MouseEventHandler } from 'react';
 
-export type IFoodModalNav = {
-  name: string | null | undefined;
+export type IFoodModalHeader = {
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
-  loading: boolean;
 };
