@@ -41,27 +41,6 @@ const useStyles = createUseStyles({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  foodModalImage: {
-    minWidth: '100%',
-    maxHeight: base(40),
-    pointerEvents: 'none',
-  },
-
-  foodModalContent: {
-    padding: `0 ${base(1)}`,
-
-    [queries.s]: {
-      padding: `0 ${base(2)}`,
-    },
-  },
-
-  foodModalChildBorder: {
-    border: `1px solid rgba(0, 0, 0, 0.1)`,
-    padding: base(1),
-    borderRadius: base(1),
-    marginBottom: base(2),
-  },
 });
 
 export default useStyles;

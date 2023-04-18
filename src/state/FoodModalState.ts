@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
 
+import { AddOnType } from '../components/Food/FoodAddOn/types';
 import { ItemSizeType } from '../components/Food/FoodItemSize/types';
 import { FoodSizeType } from '../components/Food/FoodSize/types';
 
@@ -10,12 +11,16 @@ type SelectedItem = {
   itemSize: ItemSizeType | null | undefined;
 };
 
-export const SelectedSizeAtom = atom<FoodSizeType | undefined>({
-  key: 'SelectedSizeAtom',
+export const FoodModalSelectedSizeAtom = atom<FoodSizeType | undefined>({
+  key: 'FoodModalSelectedSizeAtom',
   default: undefined,
 });
 
-export const SelectedItemsAtom = atom<SelectedItem[]>({
-  key: 'SelectedItemsAtom',
+export const FoodModalAddOnsAtom = atom<AddOnType[] | undefined | null>({
+  key: 'FoodModalAddOnsAtom',
+  default: undefined,
+});
+export const FoodModalSelectedItemsAtom = atom<SelectedItem[]>({
+  key: 'FoodModalSelectedItemsAtom',
   default: [],
 });

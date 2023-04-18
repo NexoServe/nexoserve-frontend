@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 
-import { SelectedItemsAtom } from '../../../state/FoodModalState';
+import { FoodModalSelectedItemsAtom } from '../../../state/FoodModalState';
 import FoodItemSize from '../FoodItemSize/FoodItemSize';
 import { FoodFormType } from '../FoodModal/types';
 
@@ -11,7 +11,9 @@ import useStyles from './css';
 import { IFoodItem } from './types';
 
 const FoodItem = ({ item }: IFoodItem) => {
-  const [selectedItems, setSelectedItems] = useRecoilState(SelectedItemsAtom);
+  const [selectedItems, setSelectedItems] = useRecoilState(
+    FoodModalSelectedItemsAtom,
+  );
 
   useEffect(() => {
     if (selectedItems === undefined) {

@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 
-import { useDragControls } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 
 import breakpoints from '../../../../css/breakpoints';
@@ -15,7 +14,6 @@ const ShoppingCartModal = () => {
   const [showShoppingCart, setShowShoppingCart] =
     useRecoilState(ShowShoppingCartAtom);
   const classes = useStyles();
-  const controls = useDragControls();
 
   useEffect(() => {
     function handleResize() {

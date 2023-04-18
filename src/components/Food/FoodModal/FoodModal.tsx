@@ -1,26 +1,18 @@
-import { useEffect, useState } from 'react';
-
-import Image from 'next/image';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 
-import { base } from '../../../../css/base';
 import { useFoodByIdQuery } from '../../../../generated/graphql';
-import Pizza from '../../../assets/pizza_3.png';
 import {
-  SelectedItemsAtom,
-  SelectedSizeAtom,
+  FoodModalAddOnsAtom,
+  FoodModalSelectedItemsAtom,
+  FoodModalSelectedSizeAtom,
 } from '../../../state/FoodModalState';
 import Draggable from '../../Draggable/Draggable';
 import Loader from '../../Loader/Loader';
 import { ModalPopUp } from '../../Modal/Modal';
-import FoodAddOn from '../FoodAddOn/FoodAddOn';
-import { AddOnType } from '../FoodAddOn/types';
+import FoodModalBody from '../FoodModalBody/FoodModalBody';
 import FoodModalCloseButton from '../FoodModalCloseButton/FoodModalCloseButton';
-import FoodModalFooter from '../FoodModalFooter/FoodModalFooter';
-import FoodModalHeader from '../FoodModalHeader/FoodModalHeader';
 import FoodModalNav from '../FoodModalNav/FoodModalNav';
-import FoodSize from '../FoodSize/FoodSizes';
 
 import useStyles from './css';
 import { FoodFormType, IFoodModal } from './types';
@@ -35,19 +27,9 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
 
   const classes = useStyles();
 
-  const [selectedSize, setSelectedSize] = useRecoilState(SelectedSizeAtom);
-  const [, setSelectedItems] = useRecoilState(SelectedItemsAtom);
-  const [addOns, setAddOns] = useState<AddOnType[] | undefined | null>(
-    undefined,
-  );
-
-  useEffect(() => {
-    setSelectedSize(data?.foodById?.sizes?.[0]);
-  }, [data, setSelectedSize, showModal]);
-
-  useEffect(() => {
-    setAddOns(selectedSize?.addOns || data?.foodById?.addOns);
-  }, [selectedSize, data, showModal]);
+  const [, setSelectedSize] = useRecoilState(FoodModalSelectedSizeAtom);
+  const [, setAddOns] = useRecoilState(FoodModalAddOnsAtom);
+  const [, setSelectedItems] = useRecoilState(FoodModalSelectedItemsAtom);
 
   const methods = useForm<FoodFormType>({
     defaultValues: {
@@ -86,52 +68,7 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
             {loading || error ? (
               <Loader styleClass={classes.foodModalLoader} />
             ) : (
-              <div>
-                <div className={classes.foodModalImage}>
-                  <Image
-                    src={Pizza}
-                    layout="responsive"
-                    objectFit="cover"
-                    style={{
-                      minWidth: '100%',
-                      maxHeight: base(40),
-                    }}
-                    alt="hey"
-                    quality={100}
-                  />
-                </div>
-                <div className={classes.foodModalContent}>
-                  <FoodModalHeader
-                    name={data?.foodById?.name}
-                    description={data?.foodById?.description}
-                  />
-
-                  {selectedSize ? (
-                    <div className={classes.foodModalChildBorder}>
-                      {data?.foodById?.sizes?.map((size) => (
-                        <FoodSize
-                          key={size?.id}
-                          size={size}
-                          setSelectedSize={setSelectedSize}
-                          selectedSize={selectedSize}
-                        />
-                      ))}
-                    </div>
-                  ) : null}
-
-                  {addOns &&
-                    addOns?.map((addOn) => (
-                      <div
-                        key={addOn?.id}
-                        className={classes.foodModalChildBorder}
-                      >
-                        <FoodAddOn addOn={addOn} />
-                      </div>
-                    ))}
-                </div>
-
-                <FoodModalFooter />
-              </div>
+              <FoodModalBody data={data} showModal={showModal} />
             )}
           </form>
         </FormProvider>

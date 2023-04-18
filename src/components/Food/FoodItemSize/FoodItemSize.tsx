@@ -3,13 +3,15 @@ import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 
-import { SelectedItemsAtom } from '../../../state/FoodModalState';
+import { FoodModalSelectedItemsAtom } from '../../../state/FoodModalState';
 import { FoodFormType } from '../FoodModal/types';
 
 import { IFoodItemSize } from './types';
 
 const FoodItemSize = ({ itemSize, item }: IFoodItemSize) => {
-  const [selectedItems, setSelectedItems] = useRecoilState(SelectedItemsAtom);
+  const [selectedItems, setSelectedItems] = useRecoilState(
+    FoodModalSelectedItemsAtom,
+  );
 
   const isChecked = useMemo(() => {
     const selectedItem = selectedItems.find(
