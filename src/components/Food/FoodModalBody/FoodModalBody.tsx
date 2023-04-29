@@ -10,9 +10,10 @@ import {
   FoodModalSelectedSizeAtom,
 } from '../../../state/FoodModalState';
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
+import FoodModalContentHeader from '../FoodModalContentHeader/FoodModalContentHeader';
 import FoodModalFooter from '../FoodModalFooter/FoodModalFooter';
 import FoodModalHeader from '../FoodModalHeader/FoodModalHeader';
-import FoodSize from '../FoodSize/FoodSizes';
+import FoodSize from '../FoodSize/FoodSize';
 
 import useStyles from './css';
 import { IFoodModalHeader } from './types';
@@ -56,6 +57,7 @@ const FoodModalBody = ({ data, showModal }: IFoodModalHeader) => {
 
         {selectedSize ? (
           <div className={classes.foodModalBodyChildBorder}>
+            <FoodModalContentHeader name="Sizes" isRequired={true} />
             {data?.foodById?.sizes?.map((size) => (
               <FoodSize key={size?.id} size={size} />
             ))}

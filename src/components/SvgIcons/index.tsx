@@ -3,9 +3,11 @@ import Close from './Close';
 import CloseFilled from './CloseFilled';
 import CloseFilledWhite from './CloseFilledWhite';
 import EmptyCart from './EmptyCart';
+import HalfPizza from './HalfPizza';
 import Minus from './Minus';
 import Plus from './Plus';
 import { SvgIconsType } from './types';
+import WholePizza from './WholePizza';
 
 interface SvgProps extends SvgIconsType {
   name:
@@ -15,7 +17,9 @@ interface SvgProps extends SvgIconsType {
     | 'arrow'
     | 'emptyCart'
     | 'minus'
-    | 'plus';
+    | 'plus'
+    | 'halfPizza'
+    | 'wholePizza';
 }
 
 const SvgIcons = (props: SvgProps) => {
@@ -34,6 +38,10 @@ const SvgIcons = (props: SvgProps) => {
       return <Minus {...props} />;
     case 'plus':
       return <Plus {...props} />;
+    case 'halfPizza':
+      return <HalfPizza {...props} />;
+    case 'wholePizza':
+      return <WholePizza {...props} />;
     default:
       return null;
   }

@@ -5,7 +5,7 @@ import { base } from '../../../../css/base';
 const useStyles = createUseStyles({
   foodModalCloseBtnContainer: {
     width: '100%',
-    height: base(10),
+    height: base(7),
     backgroundColor: 'transparent',
     position: 'absolute',
     top: 0,

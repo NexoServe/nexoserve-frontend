@@ -34,16 +34,26 @@ const useStyles = createUseStyles({
     alignItems: 'center',
     opacity: 0.5,
     padding: `${base(3)} 0`,
+    marginTop: `-${base(5)}`,
+  },
 
-    '& p': {
-      fontSize: '20px',
-      lineHeight: '22px',
-      fontWeight: 500,
-      textAlign: 'center',
-      maxWidth: base(30),
-      margin: '0 auto',
-      marginTop: base(3),
+  shoppingCartItemListEmptySvg: {
+    maxHeight: base(30),
+
+    [queries.xs]: {
+      maxHeight: base(40),
     },
+  },
+
+  shoppingCartItemListEmptyText: {
+    fontSize: '20px',
+    lineHeight: '22px',
+    fontWeight: 500,
+    textAlign: 'center',
+    maxWidth: base(30),
+    margin: '0 auto',
+    paddingTop: base(2),
+    marginTop: `-${base(8)}`,
   },
 });
 

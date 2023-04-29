@@ -52,10 +52,13 @@ const ShoppingCartItemList = () => {
     <div className={classes.shoppingCartItemList}>
       {array.length <= 0 ? (
         <div className={classes.shoppingCartItemListEmpty}>
-          <div style={{ width: '400px', height: '300px', marginTop: '-100px' }}>
-            <SvgIcons name="emptyCart" />
-          </div>
-          <p>Your cart is empty</p>
+          <SvgIcons
+            styleClass={classes.shoppingCartItemListEmptySvg}
+            name="emptyCart"
+          />
+          <p className={classes.shoppingCartItemListEmptyText}>
+            Your cart is empty
+          </p>
         </div>
       ) : (
         <>

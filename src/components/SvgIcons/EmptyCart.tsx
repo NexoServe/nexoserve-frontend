@@ -7,12 +7,14 @@ const EmptyCart = ({
   height = '116',
   viewBox = '0 0 116 116',
   fill = 'none',
+  styleClass,
 }: SvgIconsType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       viewBox="0 0 1024 1024"
+      className={styleClass}
     >
       <g strokeWidth="2.0" fill="none" strokeLinecap="butt">
         <path
@@ -597,7 +599,7 @@ const EmptyCart = ({
   Q 484.47 626.86 487.10 628.14"
         />
       </g>
-      <path
+      {/* <path
         fill={colors.secondary}
         width="150"
         height="150"
@@ -800,7 +802,7 @@ const EmptyCart = ({
   C 220.51 478.35 222.22 480.06 224.34 480.06
   C 226.46 480.06 228.17 478.35 228.17 476.23
   Z"
-      />
+      /> */}
       <path
         fill="#7e8fa5"
         d="

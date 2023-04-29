@@ -23,7 +23,7 @@ const useStyles = createUseStyles({
     [queries.s]: {
       borderTopLeftRadius: base(2),
       borderTopRightRadius: base(2),
-      padding: `0 ${base(2)}`,
+      paddingLeft: base(2),
       maxWidth: '500px',
     },
 

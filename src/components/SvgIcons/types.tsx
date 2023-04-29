@@ -3,4 +3,5 @@ export type SvgIconsType = {
   height?: string;
   viewBox?: string;
   fill?: string;
+  styleClass?: string;
 };
