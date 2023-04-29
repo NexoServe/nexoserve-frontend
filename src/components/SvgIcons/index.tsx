@@ -7,6 +7,7 @@ import HalfPizza from './HalfPizza';
 import Minus from './Minus';
 import Plus from './Plus';
 import { SvgIconsType } from './types';
+import Warning from './Warning';
 import WholePizza from './WholePizza';
 
 interface SvgProps extends SvgIconsType {
@@ -19,7 +20,8 @@ interface SvgProps extends SvgIconsType {
     | 'minus'
     | 'plus'
     | 'halfPizza'
-    | 'wholePizza';
+    | 'wholePizza'
+    | 'warning';
 }
 
 const SvgIcons = (props: SvgProps) => {
@@ -42,6 +44,8 @@ const SvgIcons = (props: SvgProps) => {
       return <HalfPizza {...props} />;
     case 'wholePizza':
       return <WholePizza {...props} />;
+    case 'warning':
+      return <Warning {...props} />;
     default:
       return null;
   }

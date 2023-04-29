@@ -6,8 +6,9 @@ import { useRecoilState } from 'recoil';
 import { base } from '../../../../css/base';
 import Pizza from '../../../assets/pizza_3.png';
 import {
+  FoodModalAddOnRequiredAtom,
   FoodModalAddOnsAtom,
-  FoodModalSelectedSizeAtom,
+  FoodModalAtom,
 } from '../../../state/FoodModalState';
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
 import FoodModalContentHeader from '../FoodModalContentHeader/FoodModalContentHeader';
@@ -21,18 +22,28 @@ import { IFoodModalHeader } from './types';
 const FoodModalBody = ({ data, showModal }: IFoodModalHeader) => {
   const classes = useStyles();
 
-  const [selectedSize, setSelectedSize] = useRecoilState(
-    FoodModalSelectedSizeAtom,
-  );
+  const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
   const [addOns, setAddOns] = useRecoilState(FoodModalAddOnsAtom);
+  const [requiredAddOn, setRequiredAddOn] = useRecoilState(
+    FoodModalAddOnRequiredAtom,
+  );
 
   useEffect(() => {
-    setSelectedSize(data?.foodById?.sizes?.[0]);
-  }, [data, setSelectedSize, showModal]);
+    setFoodModal({
+      ...foodModal,
+      food: {
+        name: data?.foodById?.name,
+        description: data?.foodById?.description,
+        price: data?.foodById?.price || data?.foodById?.sizes?.[0]?.price,
+        image: data?.foodById?.image,
+      },
+      selectedSize: data?.foodById?.sizes?.[0],
+    });
+  }, [data, setFoodModal, showModal]);
 
   useEffect(() => {
-    setAddOns(selectedSize?.addOns || data?.foodById?.addOns);
-  }, [selectedSize, data, showModal, setAddOns]);
+    setAddOns(foodModal.selectedSize?.addOns || data?.foodById?.addOns);
+  }, [foodModal, data, showModal, setAddOns]);
 
   return (
     <>
@@ -55,7 +66,7 @@ const FoodModalBody = ({ data, showModal }: IFoodModalHeader) => {
           description={data?.foodById?.description}
         />
 
-        {selectedSize ? (
+        {foodModal.selectedSize ? (
           <div className={classes.foodModalBodyChildBorder}>
             <FoodModalContentHeader name="Sizes" isRequired={true} />
             {data?.foodById?.sizes?.map((size) => (
@@ -66,8 +77,20 @@ const FoodModalBody = ({ data, showModal }: IFoodModalHeader) => {
 
         {addOns &&
           addOns?.map((addOn) => (
-            <div key={addOn?.id} className={classes.foodModalBodyChildBorder}>
-              <FoodAddOn addOn={addOn} />
+            <div
+              style={{
+                boxShadow:
+                  addOn?.id === requiredAddOn?.id
+                    ? 'red 0px 0px 20px -16px'
+                    : '',
+              }}
+              key={addOn?.id}
+              className={classes.foodModalBodyChildBorder}
+            >
+              <FoodAddOn
+                isRequiredAddOn={addOn?.id === requiredAddOn?.id}
+                addOn={addOn}
+              />
             </div>
           ))}
       </div>

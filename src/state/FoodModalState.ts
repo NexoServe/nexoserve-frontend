@@ -2,6 +2,7 @@ import { atom } from 'recoil';
 
 import { AddOnType } from '../components/Food/FoodAddOn/types';
 import { ItemSizeType } from '../components/Food/FoodItemSize/types';
+import { SimpleFoodType } from '../components/Food/FoodList/types';
 import { FoodSizeType } from '../components/Food/FoodSize/types';
 
 type SelectedItem = {
@@ -9,18 +10,35 @@ type SelectedItem = {
   price: number | null | undefined;
   name: string | null | undefined;
   itemSize: ItemSizeType | null | undefined;
+  addOn: string | null | undefined;
 };
 
-export const FoodModalSelectedSizeAtom = atom<FoodSizeType | undefined>({
-  key: 'FoodModalSelectedSizeAtom',
-  default: undefined,
-});
+type FoodModal = {
+  food: SimpleFoodType | null | undefined;
+  selectedSize: FoodSizeType | undefined;
+  quantity: number;
+};
 
 export const FoodModalAddOnsAtom = atom<AddOnType[] | undefined | null>({
   key: 'FoodModalAddOnsAtom',
   default: undefined,
 });
+
+export const FoodModalAddOnRequiredAtom = atom<AddOnType | undefined | null>({
+  key: 'FoodModalAddOnRequiredAtom',
+  default: undefined,
+});
+
 export const FoodModalSelectedItemsAtom = atom<SelectedItem[]>({
   key: 'FoodModalSelectedItemsAtom',
   default: [],
+});
+
+export const FoodModalAtom = atom<FoodModal>({
+  key: 'FoodModalAtom',
+  default: {
+    food: null,
+    selectedSize: undefined,
+    quantity: 1,
+  },
 });

@@ -27,7 +27,7 @@ const FoodItemSizeToppingStyle = ({
             <span
               className={isChecked ? classes.foodItemToppingStyleSizePrice : ''}
             >
-              ${itemSize?.price}
+              ${itemSize?.price?.toFixed(2)}
             </span>
           </div>
         ) : itemSize?.name === 'Whole' ? (
@@ -38,7 +38,7 @@ const FoodItemSizeToppingStyle = ({
             <span
               className={isChecked ? classes.foodItemToppingStyleSizePrice : ''}
             >
-              ${itemSize?.price}
+              ${itemSize?.price?.toFixed(2)}
             </span>
           </div>
         ) : (
@@ -49,7 +49,7 @@ const FoodItemSizeToppingStyle = ({
             <span
               className={isChecked ? classes.foodItemToppingStyleSizePrice : ''}
             >
-              ${itemSize?.price}
+              ${itemSize?.price?.toFixed(2)}
             </span>
           </div>
         )}

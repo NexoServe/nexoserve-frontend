@@ -1,11 +1,14 @@
+import { useMemo } from 'react';
+
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 
 import { useFoodByIdQuery } from '../../../../generated/graphql';
 import {
+  FoodModalAddOnRequiredAtom,
   FoodModalAddOnsAtom,
+  FoodModalAtom,
   FoodModalSelectedItemsAtom,
-  FoodModalSelectedSizeAtom,
 } from '../../../state/FoodModalState';
 import Draggable from '../../Draggable/Draggable';
 import Loader from '../../Loader/Loader';
@@ -25,11 +28,18 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
     notifyOnNetworkStatusChange: true,
   });
 
+  console.log('data', data);
+
   const classes = useStyles();
 
-  const [, setSelectedSize] = useRecoilState(FoodModalSelectedSizeAtom);
-  const [, setAddOns] = useRecoilState(FoodModalAddOnsAtom);
-  const [, setSelectedItems] = useRecoilState(FoodModalSelectedItemsAtom);
+  const [, setFoodModal] = useRecoilState(FoodModalAtom);
+  const [selectedAddOns, setAddOns] = useRecoilState(FoodModalAddOnsAtom);
+  const [requiredAddOn, setRequiredAddOn] = useRecoilState(
+    FoodModalAddOnRequiredAtom,
+  );
+  const [selectedItems, setSelectedItems] = useRecoilState(
+    FoodModalSelectedItemsAtom,
+  );
 
   const methods = useForm<FoodFormType>({
     defaultValues: {
@@ -40,17 +50,39 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
 
   const onClose = () => {
     setShowModal(false);
-    setSelectedSize(undefined);
+    setFoodModal({
+      food: undefined,
+      selectedSize: undefined,
+      quantity: 1,
+    });
     setAddOns(undefined);
     setSelectedItems([]);
+    setRequiredAddOn(undefined);
+  };
+
+  useMemo(() => {
+    if (selectedItems.some((item) => item.addOn === requiredAddOn?.id)) {
+      setRequiredAddOn(undefined);
+    }
+  }, [selectedItems, requiredAddOn, setRequiredAddOn]);
+
+  const onSubmit = (data: FoodFormType) => {
+    const requiredAddOns = selectedAddOns?.filter(
+      (addOn) => addOn?.isRequired === true,
+    );
+
+    const requiredAddOn = requiredAddOns?.find((addOn) => {
+      return !selectedItems.some((item) => item.addOn === addOn?.id);
+    });
+
+    if (requiredAddOn) {
+      setRequiredAddOn(requiredAddOn);
+      return;
+    }
   };
 
   return (
-    <ModalPopUp
-      showModal={showModal}
-      setShowModal={setShowModal}
-      onClose={() => onClose()}
-    >
+    <ModalPopUp showModal={showModal} onClose={() => onClose()}>
       <Draggable onDragDown={() => onClose()} styleClass={classes.foodModal}>
         <FoodModalNav
           loading={loading}
@@ -61,7 +93,7 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
         <FoodModalCloseButton onClick={onClose} />
         <FormProvider {...methods}>
           <form
-            //onSubmit={methods.handleSubmit(onSubmit)}
+            onSubmit={methods.handleSubmit(onSubmit)}
             className={classes.foodModalForm}
             id="foodModal"
           >

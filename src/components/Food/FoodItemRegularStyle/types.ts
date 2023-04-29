@@ -10,6 +10,7 @@ export interface IFoodItemToppingStyle {
   onChange: ChangeEventHandler<HTMLInputElement> | undefined;
   isChecked: boolean;
   register: UseFormRegister<FoodFormType>;
+  addOn: AddOnType;
 }
 
 export type ItemType = NonNullable<NonNullable<AddOnType>['items']>[number];

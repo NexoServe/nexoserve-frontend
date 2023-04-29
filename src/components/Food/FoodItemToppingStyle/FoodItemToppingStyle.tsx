@@ -10,6 +10,7 @@ const FoodItemToppingStyle = ({
   onChange,
   isChecked,
   register,
+  addOn,
 }: IFoodItemToppingStyle) => {
   const classes = useStyles();
 
@@ -25,7 +26,7 @@ const FoodItemToppingStyle = ({
         >
           <Checkbox isChecked={isChecked} />
           <input
-            {...(register('foodItems'), { required: true })}
+            {...(register('foodItems'), { required: false })}
             type="checkbox"
             value={item?.id || undefined}
             id={item?.id || undefined}
@@ -38,7 +39,12 @@ const FoodItemToppingStyle = ({
 
         <div className={classes.foodItemToppingStyleSizes}>
           {item?.itemSizes?.map((itemSize) => (
-            <FoodItemSize item={item} key={itemSize?.id} itemSize={itemSize} />
+            <FoodItemSize
+              addOn={addOn}
+              item={item}
+              key={itemSize?.id}
+              itemSize={itemSize}
+            />
           ))}
         </div>
       </div>

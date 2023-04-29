@@ -30,7 +30,7 @@ const ShoppingCartModal = () => {
   }, [setShowShoppingCart]);
 
   return (
-    <ModalPopUp showModal={showShoppingCart} setShowModal={setShowShoppingCart}>
+    <ModalPopUp showModal={showShoppingCart}>
       <Draggable
         onDragDown={() => setShowShoppingCart(false)}
         styleClass={classes.shoppingCartModal}

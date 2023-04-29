@@ -3,7 +3,9 @@ import { createUseStyles } from 'react-jss';
 import { base } from '../../../../css/base';
 
 const useStyles = createUseStyles({
-  foodAddOn: {},
+  foodAddOn: {
+    position: 'relative',
+  },
 
   foodAddOnInner: {
     display: 'flex',
@@ -19,8 +21,13 @@ const useStyles = createUseStyles({
   },
 
   foodAddOnToppingHeaderInner: {
-    display: 'flex',
+    display: 'grid',
+    gridTemplateColumns: `repeat(3, ${base(4)})`,
     justifyContent: 'space-between',
+  },
+
+  foodAddOnToppingHeaderInnerLast: {
+    textAlign: 'right',
   },
 });
 

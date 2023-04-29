@@ -28,6 +28,12 @@ const useStyles = createUseStyles({
       padding: base(2),
     },
   },
+
+  foodModalBodyChildBorderRequired: {
+    boxShadow: 'red 0px 0px 20px -12px',
+    background: 'red',
+    display: 'none',
+  },
 });
 
 export default useStyles;

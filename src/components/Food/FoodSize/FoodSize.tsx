@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 
-import { FoodModalSelectedSizeAtom } from '../../../state/FoodModalState';
+import { FoodModalAtom } from '../../../state/FoodModalState';
 import RadioButton from '../../RadioButton/RadioButton';
 import { FoodFormType } from '../FoodModal/types';
 
@@ -14,17 +14,15 @@ const FoodSize = ({ size }: IFoodSize) => {
   const classes = useStyles();
   const [isChecked, setIsChecked] = useState(false);
 
-  const [selectedSize, setSelectedSize] = useRecoilState(
-    FoodModalSelectedSizeAtom,
-  );
+  const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
 
   useEffect(() => {
-    if (size?.id === selectedSize?.id) {
+    if (size?.id === foodModal.selectedSize?.id) {
       setIsChecked(true);
     } else {
       setIsChecked(false);
     }
-  }, [size, selectedSize]);
+  }, [size, foodModal]);
 
   const { register } = useFormContext<FoodFormType>();
 
@@ -46,14 +44,14 @@ const FoodSize = ({ size }: IFoodSize) => {
             overflow: 'hidden',
           }}
           {...register('foodSize', {
-            required: true,
+            required: false,
           })}
           type="radio"
           name="foodSize"
           id={size?.id || ''}
           value={size?.id || undefined}
           checked={isChecked}
-          onChange={() => setSelectedSize(size)}
+          onChange={() => setFoodModal({ ...foodModal, selectedSize: size })}
         />
         <h4 className={classes.foodSizeName}>{size?.name}</h4>
       </div>

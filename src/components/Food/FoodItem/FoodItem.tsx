@@ -52,6 +52,7 @@ const FoodItem = ({ item, addOn }: IFoodItem) => {
           id: item?.id,
           name: item?.name,
           price: item?.price,
+          addOn: addOn?.id,
           itemSize: item?.itemSizes?.find(
             (itemSize) => itemSize?.default === true,
           ),
@@ -59,8 +60,6 @@ const FoodItem = ({ item, addOn }: IFoodItem) => {
       ]);
     }
   };
-
-  console.log('addOn?.name', addOn?.name);
 
   return (
     <>
@@ -70,6 +69,7 @@ const FoodItem = ({ item, addOn }: IFoodItem) => {
           onChange={() => selectItem()}
           item={item}
           register={register}
+          addOn={addOn}
         />
       ) : (
         <FoodItemRegularStyle
@@ -77,6 +77,7 @@ const FoodItem = ({ item, addOn }: IFoodItem) => {
           onChange={() => selectItem()}
           item={item}
           register={register}
+          addOn={addOn}
         />
       )}
     </>

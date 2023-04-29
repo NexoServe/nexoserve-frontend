@@ -32,6 +32,10 @@ const useStyles = createUseStyles({
     },
   },
 
+  foodModalFooterButton: {
+    cursor: 'pointer',
+  },
+
   foodModalFooterQuantity: {
     width: '100%',
     textAlign: 'center',

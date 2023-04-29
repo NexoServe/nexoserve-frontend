@@ -1,4 +1,4 @@
-import { MouseEvent, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -9,26 +9,22 @@ import { IModal } from './types';
 
 export const ModalPopUp = ({
   showModal,
-  setShowModal,
   children,
   styleClass,
   onClose,
 }: IModal) => {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (showModal) {
+      setShow(true);
+    } else {
+      setShow(false);
+    }
+  }, [showModal]);
+
   const classes = useStyles();
   Modal.setAppElement('#__next');
-
-  const modalRef = useRef<HTMLInputElement | null>(null);
-
-  const closeModal = (
-    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
-  ): void => {
-    e.preventDefault();
-
-    if (modalRef.current === e.target) {
-      setShowModal(false);
-    }
-    onClose ? onClose() : null;
-  };
 
   useMemo(() => {
     if (showModal) {
@@ -38,12 +34,14 @@ export const ModalPopUp = ({
     }
   }, [showModal]);
 
+  console.log('showModal', showModal);
+
   return (
     <AnimatePresence mode="wait">
-      {showModal && (
+      {show && (
         <Modal
-          isOpen={showModal}
-          onRequestClose={() => setShowModal(false)}
+          isOpen={show}
+          onRequestClose={() => setShow(false)}
           className={classNames(styleClass, classes.modal)}
           onAfterClose={() => {
             onClose ? onClose() : null;
@@ -53,22 +51,24 @@ export const ModalPopUp = ({
             key="modal"
             initial={{
               backgroundColor: '#00000000',
+              opacity: 0,
               backdropFilter: 'blur(0px)',
             }}
             animate={{
               backgroundColor: '#00000099',
+              opacity: 1,
               backdropFilter: 'blur(20px)',
             }}
             exit={{
               backgroundColor: '#00000000',
+              opacity: 0,
               backdropFilter: 'blur(0px)',
             }}
             transition={{ duration: 0.4, ease: 'easeInOut' }}
             className={classes.modalClose}
             onClick={(e) => {
-              closeModal(e);
+              onClose ? onClose() : null;
             }}
-            ref={modalRef}
           ></motion.div>
           <div className={classes.modalInner}>{children}</div>
         </Modal>

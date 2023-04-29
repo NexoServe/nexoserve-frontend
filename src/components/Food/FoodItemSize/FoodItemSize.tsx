@@ -9,7 +9,7 @@ import { FoodFormType } from '../FoodModal/types';
 
 import { IFoodItemSize } from './types';
 
-const FoodItemSize = ({ itemSize, item }: IFoodItemSize) => {
+const FoodItemSize = ({ itemSize, item, addOn }: IFoodItemSize) => {
   const [selectedItems, setSelectedItems] = useRecoilState(
     FoodModalSelectedItemsAtom,
   );
@@ -43,6 +43,7 @@ const FoodItemSize = ({ itemSize, item }: IFoodItemSize) => {
             id: item?.id,
             name: item?.name,
             price: item?.price,
+            addOn: addOn?.id,
             itemSize: {
               id: itemSize?.id,
               name: itemSize?.name,
@@ -61,6 +62,7 @@ const FoodItemSize = ({ itemSize, item }: IFoodItemSize) => {
           id: item?.id,
           name: item?.name,
           price: item?.price,
+          addOn: addOn?.id,
           itemSize: {
             id: itemSize?.id,
             name: itemSize?.name,

@@ -48,8 +48,6 @@ const useStyles = createUseStyles({
   foodItemToppingStyleSizeInput: {
     opacity: 0,
     position: 'absolute',
-    width: 0,
-    height: 0,
     overflow: 'hidden',
   },
 });
