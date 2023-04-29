@@ -80,7 +80,7 @@ const FoodModalBody = ({ data, showModal }: IFoodModalHeader) => {
             <div
               style={{
                 boxShadow:
-                  addOn?.id === requiredAddOn?.id
+                  addOn?.name === requiredAddOn?.name
                     ? 'red 0px 0px 20px -16px'
                     : '',
               }}
@@ -88,7 +88,7 @@ const FoodModalBody = ({ data, showModal }: IFoodModalHeader) => {
               className={classes.foodModalBodyChildBorder}
             >
               <FoodAddOn
-                isRequiredAddOn={addOn?.id === requiredAddOn?.id}
+                isRequiredAddOn={addOn?.name === requiredAddOn?.name}
                 addOn={addOn}
               />
             </div>

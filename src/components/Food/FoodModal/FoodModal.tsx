@@ -1,6 +1,5 @@
-import { useMemo } from 'react';
+import { FormEvent, useMemo } from 'react';
 
-import { FormProvider, useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 
 import { useFoodByIdQuery } from '../../../../generated/graphql';
@@ -18,7 +17,7 @@ import FoodModalCloseButton from '../FoodModalCloseButton/FoodModalCloseButton';
 import FoodModalNav from '../FoodModalNav/FoodModalNav';
 
 import useStyles from './css';
-import { FoodFormType, IFoodModal } from './types';
+import { IFoodModal } from './types';
 
 const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
   const { data, loading, error } = useFoodByIdQuery({
@@ -41,13 +40,6 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
     FoodModalSelectedItemsAtom,
   );
 
-  const methods = useForm<FoodFormType>({
-    defaultValues: {
-      foodItems: [],
-      orderItemQuantity: 1,
-    },
-  });
-
   const onClose = () => {
     setShowModal(false);
     setFoodModal({
@@ -66,7 +58,9 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
     }
   }, [selectedItems, requiredAddOn, setRequiredAddOn]);
 
-  const onSubmit = (data: FoodFormType) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const requiredAddOns = selectedAddOns?.filter(
       (addOn) => addOn?.isRequired === true,
     );
@@ -91,19 +85,18 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
         />
 
         <FoodModalCloseButton onClick={onClose} />
-        <FormProvider {...methods}>
-          <form
-            onSubmit={methods.handleSubmit(onSubmit)}
-            className={classes.foodModalForm}
-            id="foodModal"
-          >
-            {loading || error ? (
-              <Loader styleClass={classes.foodModalLoader} />
-            ) : (
-              <FoodModalBody data={data} showModal={showModal} />
-            )}
-          </form>
-        </FormProvider>
+
+        <form
+          onSubmit={onSubmit}
+          className={classes.foodModalForm}
+          id="foodModal"
+        >
+          {loading || error ? (
+            <Loader styleClass={classes.foodModalLoader} />
+          ) : (
+            <FoodModalBody data={data} showModal={showModal} />
+          )}
+        </form>
       </Draggable>
     </ModalPopUp>
   );

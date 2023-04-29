@@ -1,17 +1,16 @@
 import Checkbox from '../../Checkbox/Checkbox';
 import Divider from '../../Divider/Divider';
+import { IFoodItemStyle } from '../FoodItem/types';
 import FoodItemSize from '../FoodItemSize/FoodItemSize';
 
 import useStyles from './css';
-import { IFoodItemToppingStyle } from './types';
 
 const FoodItemToppingStyle = ({
   item,
   onChange,
   isChecked,
-  register,
   addOn,
-}: IFoodItemToppingStyle) => {
+}: IFoodItemStyle) => {
   const classes = useStyles();
 
   return (
@@ -26,7 +25,6 @@ const FoodItemToppingStyle = ({
         >
           <Checkbox isChecked={isChecked} />
           <input
-            {...(register('foodItems'), { required: false })}
             type="checkbox"
             value={item?.id || undefined}
             id={item?.id || undefined}

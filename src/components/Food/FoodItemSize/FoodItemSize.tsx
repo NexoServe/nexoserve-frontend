@@ -1,11 +1,9 @@
 import { useMemo } from 'react';
 
-import { useFormContext } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 
 import { FoodModalSelectedItemsAtom } from '../../../state/FoodModalState';
 import FoodItemToppingStyleSize from '../FoodItemSizeToppingStyle/FoodItemSizeToppingStyle';
-import { FoodFormType } from '../FoodModal/types';
 
 import { IFoodItemSize } from './types';
 
@@ -73,15 +71,12 @@ const FoodItemSize = ({ itemSize, item, addOn }: IFoodItemSize) => {
     }
   };
 
-  const { register } = useFormContext<FoodFormType>();
-
   return (
     <FoodItemToppingStyleSize
       isChecked={isChecked}
       onChange={() => addItemSize()}
       item={item}
       itemSize={itemSize}
-      register={register}
     />
   );
 };

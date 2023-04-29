@@ -1,12 +1,10 @@
 import { useEffect, useMemo } from 'react';
 
-import { useFormContext } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 
 import { FoodModalSelectedItemsAtom } from '../../../state/FoodModalState';
 import FoodItemRegularStyle from '../FoodItemRegularStyle/FoodItemRegularStyle';
 import FoodItemToppingStyle from '../FoodItemToppingStyle/FoodItemToppingStyle';
-import { FoodFormType } from '../FoodModal/types';
 
 import useStyles from './css';
 import { IFoodItem } from './types';
@@ -34,8 +32,6 @@ const FoodItem = ({ item, addOn }: IFoodItem) => {
   }, [selectedItems, item]);
 
   const classes = useStyles();
-
-  const { register } = useFormContext<FoodFormType>();
 
   const selectItem = () => {
     if (
@@ -68,7 +64,6 @@ const FoodItem = ({ item, addOn }: IFoodItem) => {
           isChecked={isChecked}
           onChange={() => selectItem()}
           item={item}
-          register={register}
           addOn={addOn}
         />
       ) : (
@@ -76,7 +71,6 @@ const FoodItem = ({ item, addOn }: IFoodItem) => {
           isChecked={isChecked}
           onChange={() => selectItem()}
           item={item}
-          register={register}
           addOn={addOn}
         />
       )}

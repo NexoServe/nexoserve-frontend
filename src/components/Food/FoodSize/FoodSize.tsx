@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { useFormContext } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 
 import { FoodModalAtom } from '../../../state/FoodModalState';
 import RadioButton from '../../RadioButton/RadioButton';
-import { FoodFormType } from '../FoodModal/types';
 
 import useStyles from './css';
 import { IFoodSize } from './types';
@@ -24,8 +22,6 @@ const FoodSize = ({ size }: IFoodSize) => {
     }
   }, [size, foodModal]);
 
-  const { register } = useFormContext<FoodFormType>();
-
   return (
     <label
       className={`${classes.foodSize} ${
@@ -43,9 +39,6 @@ const FoodSize = ({ size }: IFoodSize) => {
             height: 0,
             overflow: 'hidden',
           }}
-          {...register('foodSize', {
-            required: false,
-          })}
           type="radio"
           name="foodSize"
           id={size?.id || ''}

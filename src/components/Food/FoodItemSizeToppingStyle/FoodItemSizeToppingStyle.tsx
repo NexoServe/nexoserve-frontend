@@ -1,15 +1,14 @@
 import SvgIcons from '../../SvgIcons';
+import { IFoodItemSizeStyle } from '../FoodItemSize/types';
 
 import useStyles from './css';
-import { IFoodItemSize } from './types';
 
 const FoodItemSizeToppingStyle = ({
   itemSize,
   item,
   isChecked,
-  register,
   onChange,
-}: IFoodItemSize) => {
+}: IFoodItemSizeStyle) => {
   const classes = useStyles();
   return (
     <div
@@ -55,7 +54,6 @@ const FoodItemSizeToppingStyle = ({
         )}
 
         <input
-          {...register('foodItemSize')}
           type="checkbox"
           name={`itemSize-${item?.name}`}
           value={itemSize?.id || undefined}

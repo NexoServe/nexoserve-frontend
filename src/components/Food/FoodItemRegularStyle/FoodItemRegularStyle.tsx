@@ -1,16 +1,15 @@
 import Checkbox from '../../Checkbox/Checkbox';
+import { IFoodItemStyle } from '../FoodItem/types';
 import FoodItemSize from '../FoodItemSize/FoodItemSize';
 
 import useStyles from './css';
-import { IFoodItemToppingStyle } from './types';
 
 const FoodItemRegularStyle = ({
   item,
   onChange,
   isChecked,
-  register,
   addOn,
-}: IFoodItemToppingStyle) => {
+}: IFoodItemStyle) => {
   const classes = useStyles();
 
   return (
@@ -23,7 +22,6 @@ const FoodItemRegularStyle = ({
       >
         <Checkbox isChecked={isChecked} />
         <input
-          {...(register('foodItems'), { required: false, value: 'ERROR' })}
           type="checkbox"
           value={item?.id || undefined}
           id={item?.id || undefined}

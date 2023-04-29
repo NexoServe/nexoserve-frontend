@@ -50,7 +50,7 @@ export default createUseStyles({
       ...body,
     },
     '.focus-visible': {
-      outline: `2px solid blue`,
+      outline: `2px dotted ${colors.black}`,
     },
 
     button: {

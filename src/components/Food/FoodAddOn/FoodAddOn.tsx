@@ -1,9 +1,6 @@
 import { useMemo, useRef } from 'react';
 
-import { useFormContext } from 'react-hook-form';
-
 import FoodItem from '../FoodItem/FoodItem';
-import { FoodFormType } from '../FoodModal/types';
 import FoodModalContentHeader from '../FoodModalContentHeader/FoodModalContentHeader';
 
 import useStyles from './css';
@@ -13,10 +10,6 @@ const FoodAddOn = ({ addOn, isRequiredAddOn }: IFoodAddOn) => {
   const classes = useStyles();
 
   const ref = useRef<HTMLDivElement>(null);
-
-  const {
-    formState: { errors },
-  } = useFormContext<FoodFormType>();
 
   useMemo(() => {
     if (isRequiredAddOn) {
