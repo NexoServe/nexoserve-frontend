@@ -1,5 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
+import { useRecoilState } from 'recoil';
+
+import {
+  ShoppingCartAtom,
+  ShoppingCartItemType,
+} from '../../../state/ShoppingCartState';
 import Divider from '../../Divider/Divider';
 import SvgIcons from '../../SvgIcons';
 import ShoppingCartItem from '../ShoppingCartItem/ShoppingCartItem';
@@ -7,50 +13,52 @@ import ShoppingCartShowDetailsBtn from '../ShoppingCartShowDetailsBtn/ShoppingCa
 
 import useStyles from './css';
 
-type ArrayType = {
-  id: string;
-  name: string;
-  price: number;
-};
-
 const ShoppingCartItemList = () => {
-  const [array, setArray] = useState<ArrayType[]>([]);
+  const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
+
+  useEffect(() => {
+    const shoppingCartItems = localStorage.getItem('shoppingCartItems');
+    let shoppingCartItemsParsed: ShoppingCartItemType[] = [];
+    try {
+      shoppingCartItemsParsed = JSON.parse(shoppingCartItems as string);
+    } catch (error) {
+      localStorage.removeItem('shoppingCartItems');
+    }
+
+    shoppingCartItemsParsed = shoppingCartItemsParsed?.filter((item) => {
+      if (typeof item === 'object' && !Array.isArray(item)) {
+        const requiredProperties = [
+          'orderItemId',
+          'food',
+          'quantity',
+          'selectedItems',
+          'selectedSize',
+        ];
+        if (!requiredProperties.every((prop) => item.hasOwnProperty(prop))) {
+          return false;
+        }
+
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    localStorage.setItem(
+      'shoppingCartItems',
+      JSON.stringify(shoppingCartItemsParsed),
+    );
+
+    setShoppingCart(
+      shoppingCartItemsParsed?.length > 0 ? shoppingCartItemsParsed : [],
+    );
+  }, [setShoppingCart]);
 
   const classes = useStyles();
 
-  useEffect(() => {
-    setArray([
-      // {
-      //   id: '123',
-      //   name: 'hey',
-      //   price: 2,
-      // },
-      // {
-      //   id: '1235',
-      //   name: 'hey',
-      //   price: 2,
-      // },
-      // {
-      //   id: '1234',
-      //   name: 'hey',
-      //   price: 2,
-      // },
-      // {
-      //   id: '1236',
-      //   name: 'hey',
-      //   price: 2,
-      // },
-      // {
-      //   id: '1237',
-      //   name: 'hey',
-      //   price: 2,
-      // },
-    ]);
-  }, []);
-
   return (
     <div className={classes.shoppingCartItemList}>
-      {array.length <= 0 ? (
+      {shoppingCart.length <= 0 ? (
         <div className={classes.shoppingCartItemListEmpty}>
           <SvgIcons
             styleClass={classes.shoppingCartItemListEmptySvg}
@@ -65,9 +73,12 @@ const ShoppingCartItemList = () => {
           <ShoppingCartShowDetailsBtn
             styleClass={classes.shoppingCartItemListShowDetails}
           />
-          {array.map((shoppingCartItem) => (
+          {shoppingCart.map((shoppingCartItem) => (
             <>
-              <ShoppingCartItem key={shoppingCartItem.id} />
+              <ShoppingCartItem
+                shoppingCartItem={shoppingCartItem}
+                key={shoppingCartItem.orderItemId}
+              />
               <Divider />
             </>
           ))}

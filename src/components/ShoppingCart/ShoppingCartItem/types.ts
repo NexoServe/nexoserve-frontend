@@ -1,3 +1,5 @@
+import { ShoppingCartItemType } from '../../../state/ShoppingCartState';
+
 export interface IShoppingCartItem {
-  showDetails: boolean;
+  shoppingCartItem: ShoppingCartItemType;
 }

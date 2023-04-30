@@ -1,8 +1,11 @@
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { ShowShoppingCartDetailsAtom } from '../../../state/ShoppingCartState';
+import {
+  ShoppingCartAtom,
+  ShowShoppingCartDetailsAtom,
+} from '../../../state/ShoppingCartState';
 import SvgIcons from '../../SvgIcons';
 
 import useStyles from './css';
@@ -17,18 +20,22 @@ const ShoppingCartShowDetailsBtn = ({
     ShowShoppingCartDetailsAtom,
   );
 
+  const shoppingCart = useRecoilValue(ShoppingCartAtom);
+
   return (
     <div className={classNames(styleClass, classes.shoppingCartShowDetailsBtn)}>
-      <button
-        onClick={() => setShowShoppingCartDetails(!showShoppingCartDetails)}
-      >
-        {showShoppingCartDetails ? 'Hide Details' : 'Show Details'}
-        <motion.span
-          animate={{ rotate: showShoppingCartDetails ? '180deg' : '0' }}
+      {shoppingCart.length > 0 ? (
+        <button
+          onClick={() => setShowShoppingCartDetails(!showShoppingCartDetails)}
         >
-          <SvgIcons name="arrow" />
-        </motion.span>
-      </button>
+          {showShoppingCartDetails ? 'Hide Details' : 'Show Details'}
+          <motion.span
+            animate={{ rotate: showShoppingCartDetails ? '180deg' : '0' }}
+          >
+            <SvgIcons name="arrow" />
+          </motion.span>
+        </button>
+      ) : null}
     </div>
   );
 };

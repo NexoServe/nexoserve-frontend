@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
 
@@ -42,8 +40,6 @@ const Home: NextPage = () => {
   //     });
   //   },
   // });
-
-  const [isChecked, setIsChecked] = useState(false);
 
   return (
     <div>

@@ -5,7 +5,7 @@ import { ItemSizeType } from '../components/Food/FoodItemSize/types';
 import { SimpleFoodType } from '../components/Food/FoodList/types';
 import { FoodSizeType } from '../components/Food/FoodSize/types';
 
-type SelectedItem = {
+export type SelectedItemType = {
   id: string | null | undefined;
   price: number | null | undefined;
   name: string | null | undefined;
@@ -13,7 +13,7 @@ type SelectedItem = {
   addOn: string | null | undefined;
 };
 
-type FoodModal = {
+export type FoodModalType = {
   food: SimpleFoodType | null | undefined;
   selectedSize: FoodSizeType | undefined;
   quantity: number;
@@ -29,12 +29,12 @@ export const FoodModalAddOnRequiredAtom = atom<AddOnType | undefined | null>({
   default: undefined,
 });
 
-export const FoodModalSelectedItemsAtom = atom<SelectedItem[]>({
+export const FoodModalSelectedItemsAtom = atom<SelectedItemType[]>({
   key: 'FoodModalSelectedItemsAtom',
   default: [],
 });
 
-export const FoodModalAtom = atom<FoodModal>({
+export const FoodModalAtom = atom<FoodModalType>({
   key: 'FoodModalAtom',
   default: {
     food: null,

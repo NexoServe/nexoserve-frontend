@@ -1,3 +1,3 @@
 export type IFoodModalFooter = {
-  quantity?: number;
+  type: 'create' | 'update';
 };

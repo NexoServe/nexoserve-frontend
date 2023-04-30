@@ -27,14 +27,12 @@ export const ModalPopUp = ({
   Modal.setAppElement('#__next');
 
   useMemo(() => {
-    if (showModal) {
+    if (show) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-  }, [showModal]);
-
-  console.log('showModal', showModal);
+  }, [show]);
 
   return (
     <AnimatePresence mode="wait">

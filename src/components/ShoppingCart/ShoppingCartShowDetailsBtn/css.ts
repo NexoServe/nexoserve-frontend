@@ -13,6 +13,7 @@ const useStyles = createUseStyles({
       fontWeight: 400,
       display: 'flex',
       alignItems: 'center',
+      cursor: 'pointer',
 
       '& span': {
         marginLeft: base(1),

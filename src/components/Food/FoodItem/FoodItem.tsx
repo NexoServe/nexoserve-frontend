@@ -6,7 +6,6 @@ import { FoodModalSelectedItemsAtom } from '../../../state/FoodModalState';
 import FoodItemRegularStyle from '../FoodItemRegularStyle/FoodItemRegularStyle';
 import FoodItemToppingStyle from '../FoodItemToppingStyle/FoodItemToppingStyle';
 
-import useStyles from './css';
 import { IFoodItem } from './types';
 
 const FoodItem = ({ item, addOn }: IFoodItem) => {
@@ -30,8 +29,6 @@ const FoodItem = ({ item, addOn }: IFoodItem) => {
       return false;
     }
   }, [selectedItems, item]);
-
-  const classes = useStyles();
 
   const selectItem = () => {
     if (

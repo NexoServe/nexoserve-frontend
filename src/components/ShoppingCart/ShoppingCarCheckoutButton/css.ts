@@ -19,6 +19,10 @@ const useStyles = createUseStyles({
     [queries.l]: {
       background: 'transparent',
     },
+
+    '& button': {
+      cursor: 'pointer',
+    },
   },
 });
 

@@ -1,18 +1,11 @@
 import { FoodByIdQuery } from '../../../../generated/graphql';
-import { ItemSizeType } from '../FoodItemSize/types';
-import { FoodSizeType } from '../FoodSize/types';
 
 export interface IFoodModal {
   foodId: string;
   showModal: boolean;
   setShowModal: (value: React.SetStateAction<boolean>) => void;
+  type: 'create' | 'update';
+  orderItemId?: string;
 }
-
-export type FoodFormType = {
-  foodItems: [string];
-  foodItemSize: ItemSizeType;
-  foodSize: FoodSizeType;
-  orderItemQuantity: number;
-};
 
 export type FoodType = NonNullable<FoodByIdQuery>['foodById'];

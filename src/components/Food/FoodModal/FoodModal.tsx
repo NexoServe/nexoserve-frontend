@@ -1,6 +1,7 @@
 import { FormEvent, useMemo } from 'react';
 
 import { useRecoilState } from 'recoil';
+import { v4 } from 'uuid';
 
 import { useFoodByIdQuery } from '../../../../generated/graphql';
 import {
@@ -9,6 +10,7 @@ import {
   FoodModalAtom,
   FoodModalSelectedItemsAtom,
 } from '../../../state/FoodModalState';
+import { ShoppingCartAtom } from '../../../state/ShoppingCartState';
 import Draggable from '../../Draggable/Draggable';
 import Loader from '../../Loader/Loader';
 import { ModalPopUp } from '../../Modal/Modal';
@@ -19,7 +21,13 @@ import FoodModalNav from '../FoodModalNav/FoodModalNav';
 import useStyles from './css';
 import { IFoodModal } from './types';
 
-const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
+const FoodModal = ({
+  foodId,
+  showModal,
+  setShowModal,
+  type,
+  orderItemId,
+}: IFoodModal) => {
   const { data, loading, error } = useFoodByIdQuery({
     variables: {
       id: foodId,
@@ -27,11 +35,10 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
     notifyOnNetworkStatusChange: true,
   });
 
-  console.log('data', data);
-
   const classes = useStyles();
 
-  const [, setFoodModal] = useRecoilState(FoodModalAtom);
+  const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
+  const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
   const [selectedAddOns, setAddOns] = useRecoilState(FoodModalAddOnsAtom);
   const [requiredAddOn, setRequiredAddOn] = useRecoilState(
     FoodModalAddOnRequiredAtom,
@@ -73,6 +80,69 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
       setRequiredAddOn(requiredAddOn);
       return;
     }
+
+    if (type === 'create') {
+      const orderItemId = v4();
+
+      setShoppingCart([
+        ...shoppingCart,
+        {
+          orderItemId: orderItemId,
+          food: foodModal.food,
+          quantity: foodModal.quantity,
+          selectedSize: foodModal.selectedSize,
+          selectedItems: selectedItems,
+        },
+      ]);
+
+      const shoppingCartItems = localStorage.getItem('shoppingCartItems');
+      let shoppingCartItemsParsed;
+      try {
+        shoppingCartItemsParsed = JSON.parse(shoppingCartItems as string) || [];
+      } catch (error) {
+        localStorage.removeItem('shoppingCartItems');
+      }
+
+      shoppingCartItemsParsed.push({
+        orderItemId: orderItemId,
+        food: foodModal.food,
+        quantity: foodModal.quantity,
+        selectedSize: foodModal.selectedSize ? foodModal.selectedSize : null,
+        selectedItems: selectedItems ? selectedItems : [],
+      });
+
+      localStorage.setItem(
+        'shoppingCartItems',
+        JSON.stringify(shoppingCartItemsParsed),
+      );
+
+      onClose();
+    }
+
+    setShoppingCart((prevArray) => {
+      const index = prevArray.findIndex(
+        (item) => item.orderItemId === orderItemId,
+      );
+
+      if (index !== -1) {
+        const updatedArray = [...prevArray];
+        updatedArray[index] = {
+          ...prevArray[index],
+          food: foodModal.food,
+          quantity: foodModal.quantity,
+          selectedSize: foodModal.selectedSize,
+          selectedItems: selectedItems,
+        };
+
+        localStorage.setItem('shoppingCartItems', JSON.stringify(updatedArray));
+
+        return updatedArray;
+      }
+
+      return prevArray;
+    });
+
+    onClose();
   };
 
   return (
@@ -94,7 +164,7 @@ const FoodModal = ({ foodId, showModal, setShowModal }: IFoodModal) => {
           {loading || error ? (
             <Loader styleClass={classes.foodModalLoader} />
           ) : (
-            <FoodModalBody data={data} showModal={showModal} />
+            <FoodModalBody data={data} showModal={showModal} type={type} />
           )}
         </form>
       </Draggable>

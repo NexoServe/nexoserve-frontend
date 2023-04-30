@@ -1,44 +1,28 @@
 import { useMemo } from 'react';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import {
   FoodModalAddOnRequiredAtom,
   FoodModalAtom,
   FoodModalSelectedItemsAtom,
 } from '../../../state/FoodModalState';
+import calculateShoppingCartItemTotal from '../../../utils/calculateShoppingCartItemTotal';
 import Button from '../../Button/Button';
 import SvgIcons from '../../SvgIcons';
 
 import useStyles from './css';
+import { IFoodModalFooter } from './types';
 
-const FoodModalFooter = () => {
+const FoodModalFooter = ({ type }: IFoodModalFooter) => {
   const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
-  const [selectedItems, setSelectedItems] = useRecoilState(
-    FoodModalSelectedItemsAtom,
-  );
+  const selectedItems = useRecoilValue(FoodModalSelectedItemsAtom);
   const [, setRequiredAddOn] = useRecoilState(FoodModalAddOnRequiredAtom);
 
   const classes = useStyles();
 
   const price = useMemo(() => {
-    let foodPrice: number = foodModal.food?.price as number;
-
-    if (foodModal.selectedSize) {
-      foodPrice = foodModal.selectedSize.price as number;
-    }
-
-    if (selectedItems) {
-      selectedItems.forEach((selectedItem) => {
-        if (selectedItem?.itemSize) {
-          foodPrice = foodPrice + (selectedItem.itemSize.price as number);
-        } else {
-          foodPrice = foodPrice + (selectedItem?.price as number);
-        }
-      });
-    }
-
-    return (foodPrice * foodModal.quantity).toFixed(2);
+    return calculateShoppingCartItemTotal(foodModal, selectedItems);
   }, [foodModal, selectedItems]);
 
   const decreaseQuantity = () => {
@@ -82,7 +66,7 @@ const FoodModalFooter = () => {
         styleClass={classes.foodModalFooterButton}
         type="submit"
       >
-        Add (${price})
+        {type === 'create' ? 'Add' : 'Update'} (${price})
       </Button>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import Image from 'next/image';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { base } from '../../../../css/base';
 import Pizza from '../../../assets/pizza_3.png';
@@ -19,26 +19,27 @@ import FoodSize from '../FoodSize/FoodSize';
 import useStyles from './css';
 import { IFoodModalHeader } from './types';
 
-const FoodModalBody = ({ data, showModal }: IFoodModalHeader) => {
+const FoodModalBody = ({ data, showModal, type }: IFoodModalHeader) => {
   const classes = useStyles();
 
   const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
   const [addOns, setAddOns] = useRecoilState(FoodModalAddOnsAtom);
-  const [requiredAddOn, setRequiredAddOn] = useRecoilState(
-    FoodModalAddOnRequiredAtom,
-  );
+  const requiredAddOn = useRecoilValue(FoodModalAddOnRequiredAtom);
 
   useEffect(() => {
-    setFoodModal({
-      ...foodModal,
-      food: {
-        name: data?.foodById?.name,
-        description: data?.foodById?.description,
-        price: data?.foodById?.price || data?.foodById?.sizes?.[0]?.price,
-        image: data?.foodById?.image,
-      },
-      selectedSize: data?.foodById?.sizes?.[0],
-    });
+    if (type === 'create') {
+      setFoodModal({
+        ...foodModal,
+        food: {
+          id: data?.foodById?.id,
+          name: data?.foodById?.name,
+          description: data?.foodById?.description,
+          price: data?.foodById?.price || data?.foodById?.sizes?.[0]?.price,
+          image: data?.foodById?.image,
+        },
+        selectedSize: data?.foodById?.sizes?.[0],
+      });
+    }
   }, [data, setFoodModal, showModal]);
 
   useEffect(() => {
@@ -95,7 +96,7 @@ const FoodModalBody = ({ data, showModal }: IFoodModalHeader) => {
           ))}
       </div>
 
-      <FoodModalFooter />
+      <FoodModalFooter type={type} />
     </>
   );
 };

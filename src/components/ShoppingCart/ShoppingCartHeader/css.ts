@@ -31,6 +31,7 @@ const useStyles = createUseStyles({
   shoppingCartHeaderCloseButton: {
     padding: base(1),
     display: 'block',
+    cursor: 'pointer',
 
     [queries.l]: {
       display: 'none',

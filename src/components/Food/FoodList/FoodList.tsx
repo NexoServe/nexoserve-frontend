@@ -45,6 +45,7 @@ const FoodList = () => {
         showModal={showModal}
         setShowModal={setShowModal}
         foodId={activeFood?.id as string}
+        type="create"
       />
     </div>
   );

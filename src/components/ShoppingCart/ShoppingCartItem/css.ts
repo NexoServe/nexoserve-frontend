@@ -92,9 +92,12 @@ const useStyles = createUseStyles({
     gridRow: '1/4',
     display: 'flex',
     alignItems: 'center',
+    position: 'relative',
+    zIndex: 2,
 
     '& button': {
       display: 'flex',
+      cursor: 'pointer',
     },
   },
 
@@ -107,6 +110,7 @@ const useStyles = createUseStyles({
       fontSize: '14px',
       fontWeight: 500,
       textDecoration: 'underline',
+      cursor: 'pointer',
     },
   },
 });
