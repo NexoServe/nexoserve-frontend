@@ -63,6 +63,17 @@ export interface NexusGenInputs {
     name: string; // String!
     price: number; // Float!
   }
+  ShoppingCartInput: { // input type
+    foodId: string; // String!
+    foodSizeId?: string | null; // String
+    items: Array<NexusGenInputs['ShoppingCartItemInput'] | null>; // [ShoppingCartItemInput]!
+    orderItemId: string; // String!
+    quantity: number; // Int!
+  }
+  ShoppingCartItemInput: { // input type
+    itemId: string; // String!
+    itemSizeId?: string | null; // String
+  }
 }
 
 export interface NexusGenEnums {
@@ -133,6 +144,23 @@ export interface NexusGenObjects {
     items?: Array<NexusGenRootTypes['Item'] | null> | null; // [Item]
   }
   Query: {};
+  SelectedItem: { // root type
+    id: string; // String!
+    name?: string | null; // String
+    price?: number | null; // Float
+    selectedItemSize?: NexusGenRootTypes['ItemSize'] | null; // ItemSize
+  }
+  ShoppingCart: { // root type
+    grandTotal: number; // Float!
+    shoppingCartItems: Array<NexusGenRootTypes['ShoppingCartItem'] | null>; // [ShoppingCartItem]!
+  }
+  ShoppingCartItem: { // root type
+    food?: NexusGenRootTypes['SimpleFood'] | null; // SimpleFood
+    foodSize?: NexusGenRootTypes['FoodSize'] | null; // FoodSize
+    orderItemId: string; // String!
+    price: number; // Float!
+    selectedItems?: Array<NexusGenRootTypes['SelectedItem'] | null> | null; // [SelectedItem]
+  }
   SimpleFood: { // root type
     description?: string | null; // String
     id?: string | null; // String
@@ -214,10 +242,27 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     addOns: Array<NexusGenRootTypes['AddOn'] | null>; // [AddOn]!
-    checkoutCalculate: NexusGenRootTypes['Checkout']; // Checkout!
     foodById: NexusGenRootTypes['Food'] | null; // Food
     foods: Array<NexusGenRootTypes['Food'] | null>; // [Food]!
     foodsByCategory: Array<NexusGenRootTypes['FoodsByCategory'] | null>; // [FoodsByCategory]!
+    validateShoppingCart: NexusGenRootTypes['ShoppingCart']; // ShoppingCart!
+  }
+  SelectedItem: { // field return type
+    id: string; // String!
+    name: string | null; // String
+    price: number | null; // Float
+    selectedItemSize: NexusGenRootTypes['ItemSize'] | null; // ItemSize
+  }
+  ShoppingCart: { // field return type
+    grandTotal: number; // Float!
+    shoppingCartItems: Array<NexusGenRootTypes['ShoppingCartItem'] | null>; // [ShoppingCartItem]!
+  }
+  ShoppingCartItem: { // field return type
+    food: NexusGenRootTypes['SimpleFood'] | null; // SimpleFood
+    foodSize: NexusGenRootTypes['FoodSize'] | null; // FoodSize
+    orderItemId: string; // String!
+    price: number; // Float!
+    selectedItems: Array<NexusGenRootTypes['SelectedItem'] | null> | null; // [SelectedItem]
   }
   SimpleFood: { // field return type
     description: string | null; // String
@@ -290,10 +335,27 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     addOns: 'AddOn'
-    checkoutCalculate: 'Checkout'
     foodById: 'Food'
     foods: 'Food'
     foodsByCategory: 'FoodsByCategory'
+    validateShoppingCart: 'ShoppingCart'
+  }
+  SelectedItem: { // field return type name
+    id: 'String'
+    name: 'String'
+    price: 'Float'
+    selectedItemSize: 'ItemSize'
+  }
+  ShoppingCart: { // field return type name
+    grandTotal: 'Float'
+    shoppingCartItems: 'ShoppingCartItem'
+  }
+  ShoppingCartItem: { // field return type name
+    food: 'SimpleFood'
+    foodSize: 'FoodSize'
+    orderItemId: 'String'
+    price: 'Float'
+    selectedItems: 'SelectedItem'
   }
   SimpleFood: { // field return type name
     description: 'String'
@@ -317,11 +379,11 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
-    checkoutCalculate: { // args
-      input: NexusGenInputs['CheckoutCalculateInput']; // CheckoutCalculateInput!
-    }
     foodById: { // args
       id: string; // String!
+    }
+    validateShoppingCart: { // args
+      input: Array<NexusGenInputs['ShoppingCartInput'] | null>; // [ShoppingCartInput]!
     }
   }
 }

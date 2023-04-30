@@ -130,10 +130,43 @@ type OrderItem {
 
 type Query {
   addOns: [AddOn]!
-  checkoutCalculate(input: CheckoutCalculateInput!): Checkout!
   foodById(id: String!): Food
   foods: [Food]!
   foodsByCategory: [FoodsByCategory]!
+  validateShoppingCart(input: [ShoppingCartInput]!): ShoppingCart!
+}
+
+type SelectedItem {
+  id: String!
+  name: String
+  price: Float
+  selectedItemSize: ItemSize
+}
+
+type ShoppingCart {
+  grandTotal: Float!
+  shoppingCartItems: [ShoppingCartItem]!
+}
+
+input ShoppingCartInput {
+  foodId: String!
+  foodSizeId: String
+  items: [ShoppingCartItemInput]!
+  orderItemId: String!
+  quantity: Int!
+}
+
+type ShoppingCartItem {
+  food: SimpleFood
+  foodSize: FoodSize
+  orderItemId: String!
+  price: Float!
+  selectedItems: [SelectedItem]
+}
+
+input ShoppingCartItemInput {
+  itemId: String!
+  itemSizeId: String
 }
 
 type SimpleFood {

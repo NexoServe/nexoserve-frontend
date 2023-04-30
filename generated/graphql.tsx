@@ -169,20 +169,56 @@ export type OrderItem = {
 export type Query = {
   __typename?: 'Query';
   addOns: Array<Maybe<AddOn>>;
-  checkoutCalculate: Checkout;
   foodById?: Maybe<Food>;
   foods: Array<Maybe<Food>>;
   foodsByCategory: Array<Maybe<FoodsByCategory>>;
-};
-
-
-export type QueryCheckoutCalculateArgs = {
-  input: CheckoutCalculateInput;
+  validateShoppingCart: ShoppingCart;
 };
 
 
 export type QueryFoodByIdArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryValidateShoppingCartArgs = {
+  input: Array<InputMaybe<ShoppingCartInput>>;
+};
+
+export type SelectedItem = {
+  __typename?: 'SelectedItem';
+  id: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+  selectedItemSize?: Maybe<ItemSize>;
+};
+
+export type ShoppingCart = {
+  __typename?: 'ShoppingCart';
+  grandTotal: Scalars['Float'];
+  shoppingCartItems: Array<Maybe<ShoppingCartItem>>;
+};
+
+export type ShoppingCartInput = {
+  foodId: Scalars['String'];
+  foodSizeId?: InputMaybe<Scalars['String']>;
+  items: Array<InputMaybe<ShoppingCartItemInput>>;
+  orderItemId: Scalars['String'];
+  quantity: Scalars['Int'];
+};
+
+export type ShoppingCartItem = {
+  __typename?: 'ShoppingCartItem';
+  food?: Maybe<SimpleFood>;
+  foodSize?: Maybe<FoodSize>;
+  orderItemId: Scalars['String'];
+  price: Scalars['Float'];
+  selectedItems?: Maybe<Array<Maybe<SelectedItem>>>;
+};
+
+export type ShoppingCartItemInput = {
+  itemId: Scalars['String'];
+  itemSizeId?: InputMaybe<Scalars['String']>;
 };
 
 export type SimpleFood = {
@@ -210,13 +246,6 @@ export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __ty
 
 export type AddOnFieldsFragment = { __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null };
 
-export type CheckoutCalculateQueryVariables = Exact<{
-  input: CheckoutCalculateInput;
-}>;
-
-
-export type CheckoutCalculateQuery = { __typename?: 'Query', checkoutCalculate: { __typename?: 'Checkout', id?: string | null, total?: number | null } };
-
 export type FoodByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -233,6 +262,13 @@ export type FoodsByCategoryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type FoodsByCategoryQuery = { __typename?: 'Query', foodsByCategory: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null }> | null } | null> };
+
+export type ValidateShoppingCartQueryVariables = Exact<{
+  input: Array<InputMaybe<ShoppingCartInput>> | InputMaybe<ShoppingCartInput>;
+}>;
+
+
+export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', grandTotal: number, shoppingCartItems: Array<{ __typename?: 'ShoppingCartItem', price: number, food?: { __typename?: 'SimpleFood', id?: string | null, name?: string | null, price?: number | null } | null, foodSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, selectedItems?: Array<{ __typename?: 'SelectedItem', id: string, name?: string | null, price?: number | null, selectedItemSize?: { __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null } | null } | null> | null } | null> } };
 
 export const AddOnFieldsFragmentDoc = gql`
     fragment AddOnFields on AddOn {
@@ -325,42 +361,6 @@ export function useCreateOrderMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateOrderMutationHookResult = ReturnType<typeof useCreateOrderMutation>;
 export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrderMutation>;
 export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrderMutation, CreateOrderMutationVariables>;
-export const CheckoutCalculateDocument = gql`
-    query CheckoutCalculate($input: CheckoutCalculateInput!) {
-  checkoutCalculate(input: $input) {
-    id
-    total
-  }
-}
-    `;
-
-/**
- * __useCheckoutCalculateQuery__
- *
- * To run a query within a React component, call `useCheckoutCalculateQuery` and pass it any options that fit your needs.
- * When your component renders, `useCheckoutCalculateQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useCheckoutCalculateQuery({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useCheckoutCalculateQuery(baseOptions: Apollo.QueryHookOptions<CheckoutCalculateQuery, CheckoutCalculateQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CheckoutCalculateQuery, CheckoutCalculateQueryVariables>(CheckoutCalculateDocument, options);
-      }
-export function useCheckoutCalculateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CheckoutCalculateQuery, CheckoutCalculateQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CheckoutCalculateQuery, CheckoutCalculateQueryVariables>(CheckoutCalculateDocument, options);
-        }
-export type CheckoutCalculateQueryHookResult = ReturnType<typeof useCheckoutCalculateQuery>;
-export type CheckoutCalculateLazyQueryHookResult = ReturnType<typeof useCheckoutCalculateLazyQuery>;
-export type CheckoutCalculateQueryResult = Apollo.QueryResult<CheckoutCalculateQuery, CheckoutCalculateQueryVariables>;
 export const FoodByIdDocument = gql`
     query FoodById($id: String!) {
   foodById(id: $id) {
@@ -501,3 +501,61 @@ export function useFoodsByCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type FoodsByCategoryQueryHookResult = ReturnType<typeof useFoodsByCategoryQuery>;
 export type FoodsByCategoryLazyQueryHookResult = ReturnType<typeof useFoodsByCategoryLazyQuery>;
 export type FoodsByCategoryQueryResult = Apollo.QueryResult<FoodsByCategoryQuery, FoodsByCategoryQueryVariables>;
+export const ValidateShoppingCartDocument = gql`
+    query ValidateShoppingCart($input: [ShoppingCartInput]!) {
+  validateShoppingCart(input: $input) {
+    grandTotal
+    shoppingCartItems {
+      food {
+        id
+        name
+        price
+      }
+      foodSize {
+        id
+        name
+        price
+      }
+      selectedItems {
+        id
+        name
+        price
+        selectedItemSize {
+          id
+          name
+          price
+        }
+      }
+      price
+    }
+  }
+}
+    `;
+
+/**
+ * __useValidateShoppingCartQuery__
+ *
+ * To run a query within a React component, call `useValidateShoppingCartQuery` and pass it any options that fit your needs.
+ * When your component renders, `useValidateShoppingCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useValidateShoppingCartQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useValidateShoppingCartQuery(baseOptions: Apollo.QueryHookOptions<ValidateShoppingCartQuery, ValidateShoppingCartQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ValidateShoppingCartQuery, ValidateShoppingCartQueryVariables>(ValidateShoppingCartDocument, options);
+      }
+export function useValidateShoppingCartLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ValidateShoppingCartQuery, ValidateShoppingCartQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ValidateShoppingCartQuery, ValidateShoppingCartQueryVariables>(ValidateShoppingCartDocument, options);
+        }
+export type ValidateShoppingCartQueryHookResult = ReturnType<typeof useValidateShoppingCartQuery>;
+export type ValidateShoppingCartLazyQueryHookResult = ReturnType<typeof useValidateShoppingCartLazyQuery>;
+export type ValidateShoppingCartQueryResult = Apollo.QueryResult<ValidateShoppingCartQuery, ValidateShoppingCartQueryVariables>;

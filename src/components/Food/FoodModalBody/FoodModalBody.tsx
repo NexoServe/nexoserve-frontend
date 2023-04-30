@@ -40,7 +40,7 @@ const FoodModalBody = ({ data, showModal, type }: IFoodModalHeader) => {
         selectedSize: data?.foodById?.sizes?.[0],
       });
     }
-  }, [data, setFoodModal, showModal]);
+  }, [data, setFoodModal, showModal, type]);
 
   useEffect(() => {
     setAddOns(foodModal.selectedSize?.addOns || data?.foodById?.addOns);

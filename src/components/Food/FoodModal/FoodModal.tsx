@@ -1,9 +1,9 @@
-import { FormEvent, useMemo } from 'react';
+import { FormEvent, useEffect, useMemo } from 'react';
 
 import { useRecoilState } from 'recoil';
 import { v4 } from 'uuid';
 
-import { useFoodByIdQuery } from '../../../../generated/graphql';
+import { useFoodByIdLazyQuery } from '../../../../generated/graphql';
 import {
   FoodModalAddOnRequiredAtom,
   FoodModalAddOnsAtom,
@@ -28,12 +28,21 @@ const FoodModal = ({
   type,
   orderItemId,
 }: IFoodModal) => {
-  const { data, loading, error } = useFoodByIdQuery({
+  const [getFoodById, { data, loading, error }] = useFoodByIdLazyQuery({
     variables: {
       id: foodId,
     },
     notifyOnNetworkStatusChange: true,
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (showModal) {
+        await getFoodById();
+      }
+    };
+    fetchData();
+  }, [showModal, getFoodById]);
 
   const classes = useStyles();
 
