@@ -7,6 +7,9 @@ query FoodsByCategory {
       image
       name
       price
+      sizes {
+        price
+      }
     }
   }
 }

@@ -7,8 +7,11 @@ import calculateShoppingCartItemTotal from '../../../utils/calculateShoppingCart
 import Button from '../../Button/Button';
 
 import useStyles from './css';
+import { IShoppingCartCheckoutButton } from './types';
 
-const ShoppingCarCheckoutButton = () => {
+const ShoppingCarCheckoutButton = ({
+  validatedTotal,
+}: IShoppingCartCheckoutButton) => {
   const styles = useStyles();
 
   const shoppingCart = useRecoilValue(ShoppingCartAtom);
@@ -36,7 +39,9 @@ const ShoppingCarCheckoutButton = () => {
     <>
       {shoppingCart.length > 0 ? (
         <div className={styles.shoppingCartModalButtonBox}>
-          <Button>Checkout (${totalPrice})</Button>
+          <Button>
+            Checkout (${validatedTotal ? validatedTotal : totalPrice})
+          </Button>
         </div>
       ) : null}
     </>

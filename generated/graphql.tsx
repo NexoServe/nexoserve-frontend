@@ -228,6 +228,7 @@ export type SimpleFood = {
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
+  sizes?: Maybe<Array<Maybe<FoodSize>>>;
 };
 
 export type CheckoutCalculateMutMutationVariables = Exact<{
@@ -261,7 +262,7 @@ export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Fo
 export type FoodsByCategoryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FoodsByCategoryQuery = { __typename?: 'Query', foodsByCategory: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null }> | null } | null> };
+export type FoodsByCategoryQuery = { __typename?: 'Query', foodsByCategory: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null } | null> };
 
 export type ValidateShoppingCartQueryVariables = Exact<{
   input: Array<InputMaybe<ShoppingCartInput>> | InputMaybe<ShoppingCartInput>;
@@ -470,6 +471,9 @@ export const FoodsByCategoryDocument = gql`
       image
       name
       price
+      sizes {
+        price
+      }
     }
   }
 }

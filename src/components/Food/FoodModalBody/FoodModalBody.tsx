@@ -58,7 +58,7 @@ const FoodModalBody = ({ data, showModal, type }: IFoodModalHeader) => {
             maxHeight: base(40),
           }}
           alt="hey"
-          quality={100}
+          loading="eager"
         />
       </div>
       <div className={classes.foodModalBodyContent}>

@@ -28,7 +28,9 @@ const FoodCard = ({ food, activeFoodClick }: IFoodCard) => {
         <p className={classes.foodCardContentDescription}>
           {food?.description}
         </p>
-        <div className={classes.foodCardContentPrice}>${food.price}</div>
+        <div className={classes.foodCardContentPrice}>
+          ${food.price ? food.price : food?.sizes?.[0]?.price}
+        </div>
       </div>
     </button>
   );

@@ -25,6 +25,9 @@ export const SimpleFood = objectType({
     t.string(`description`);
     t.string(`image`);
     t.float(`price`);
+    t.list.field(`sizes`, {
+      type: 'FoodSize',
+    });
   },
 });
 

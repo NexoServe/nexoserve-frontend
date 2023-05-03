@@ -167,6 +167,7 @@ export interface NexusGenObjects {
     image?: string | null; // String
     name?: string | null; // String
     price?: number | null; // Float
+    sizes?: Array<NexusGenRootTypes['FoodSize'] | null> | null; // [FoodSize]
   }
 }
 
@@ -270,6 +271,7 @@ export interface NexusGenFieldTypes {
     image: string | null; // String
     name: string | null; // String
     price: number | null; // Float
+    sizes: Array<NexusGenRootTypes['FoodSize'] | null> | null; // [FoodSize]
   }
 }
 
@@ -363,6 +365,7 @@ export interface NexusGenFieldTypeNames {
     image: 'String'
     name: 'String'
     price: 'Float'
+    sizes: 'FoodSize'
   }
 }
 

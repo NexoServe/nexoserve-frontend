@@ -106,13 +106,16 @@ export const FoodsByCategoryQuery = extendType({
 
         return foodsByCategory.map((foodByCategory) => ({
           category: foodByCategory.name,
-          foods: foodByCategory.foods.map((food) => ({
-            id: food.id,
-            name: food.name,
-            description: food.description,
-            image: food.image,
-            price: food?.price ? food?.price : food?.sizes?.[0]?.price,
-          })),
+          foods: foodByCategory.foods.map((food) => {
+            return {
+              id: food.id,
+              name: food.name,
+              description: food.description,
+              image: food.image,
+              price: food.price,
+              sizes: food.sizes,
+            };
+          }),
         }));
       },
     });

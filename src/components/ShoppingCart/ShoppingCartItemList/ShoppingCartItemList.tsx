@@ -12,8 +12,9 @@ import ShoppingCartItem from '../ShoppingCartItem/ShoppingCartItem';
 import ShoppingCartShowDetailsBtn from '../ShoppingCartShowDetailsBtn/ShoppingCartShowDetailsBtn';
 
 import useStyles from './css';
+import { IShoppingCartItemList } from './types';
 
-const ShoppingCartItemList = () => {
+const ShoppingCartItemList = ({ validatedData }: IShoppingCartItemList) => {
   const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
 
   useEffect(() => {
