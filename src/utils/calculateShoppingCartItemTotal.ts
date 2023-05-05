@@ -18,7 +18,7 @@ const calculateShoppingCartItemTotal = (
     });
   }
 
-  return (foodPrice * foodModal.quantity).toFixed(2);
+  return parseFloat((foodPrice * foodModal.quantity).toFixed(2));
 };
 
 export default calculateShoppingCartItemTotal;

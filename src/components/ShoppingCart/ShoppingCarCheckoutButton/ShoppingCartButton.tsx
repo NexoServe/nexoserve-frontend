@@ -29,15 +29,13 @@ const ShoppingCarCheckoutButton = ({
       let total = 0;
 
       shoppingCart.forEach((item) => {
-        total += parseFloat(
-          calculateShoppingCartItemTotal(
-            {
-              food: item.food,
-              selectedSize: item.selectedSize,
-              quantity: item.quantity,
-            },
-            item?.selectedItems as SelectedItem[],
-          ),
+        total += calculateShoppingCartItemTotal(
+          {
+            food: item.food,
+            selectedSize: item.selectedSize,
+            quantity: item.quantity,
+          },
+          item?.selectedItems as SelectedItem[],
         );
       });
 

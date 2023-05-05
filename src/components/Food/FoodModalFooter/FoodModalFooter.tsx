@@ -6,9 +6,8 @@ import {
   FoodModalAddOnRequiredAtom,
   FoodModalAtom,
   FoodModalPriceAtom,
-  FoodModalSelectedItemsAtom,
+  foodModalTotalSelector,
 } from '../../../state/FoodModalState';
-import calculateShoppingCartItemTotal from '../../../utils/calculateShoppingCartItemTotal';
 import Button from '../../Button/Button';
 import SvgIcons from '../../SvgIcons';
 
@@ -17,17 +16,15 @@ import { IFoodModalFooter } from './types';
 
 const FoodModalFooter = ({ type }: IFoodModalFooter) => {
   const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
-  const selectedItems = useRecoilValue(FoodModalSelectedItemsAtom);
   const [, setRequiredAddOn] = useRecoilState(FoodModalAddOnRequiredAtom);
-  const [foodModalPrice, setFoodModalPrice] =
-    useRecoilState(FoodModalPriceAtom);
+  const [, setFoodModalPrice] = useRecoilState(FoodModalPriceAtom);
 
   const classes = useStyles();
+  const total = useRecoilValue(foodModalTotalSelector);
 
   useEffect(() => {
-    const total = calculateShoppingCartItemTotal(foodModal, selectedItems);
-    setFoodModalPrice(parseFloat(total));
-  }, [foodModal, selectedItems]);
+    setFoodModalPrice(total);
+  }, [total, setFoodModalPrice]);
 
   const decreaseQuantity = () => {
     if (foodModal.quantity > (type === 'create' ? 1 : 0)) {
@@ -69,8 +66,8 @@ const FoodModalFooter = ({ type }: IFoodModalFooter) => {
         {foodModal.quantity === 0
           ? 'Remove'
           : type === 'create'
-          ? `Add ($${foodModalPrice.toFixed(2)})`
-          : `Update ($${foodModalPrice.toFixed(2)})`}
+          ? `Add ($${total.toFixed(2)})`
+          : `Update ($${total.toFixed(2)})`}
       </Button>
     </div>
   );

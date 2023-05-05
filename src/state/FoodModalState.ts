@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
 import { AddOnType } from '../components/Food/FoodAddOn/types';
 import { ItemSizeType } from '../components/Food/FoodItemSize/types';
@@ -45,5 +45,29 @@ export const FoodModalAtom = atom<FoodModalType>({
     food: null,
     selectedSize: undefined,
     quantity: 1,
+  },
+});
+
+export const foodModalTotalSelector = selector({
+  key: 'foodModalTotalSelector',
+  get: ({ get }) => {
+    const foodModal = get(FoodModalAtom);
+    const selectedItems = get(FoodModalSelectedItemsAtom);
+
+    let foodPrice: number = foodModal.food?.price as number;
+
+    if (foodModal.selectedSize) {
+      foodPrice = foodModal.selectedSize.price ?? 0;
+    }
+
+    if (selectedItems) {
+      selectedItems.forEach((selectedItem) => {
+        const itemPrice =
+          selectedItem.itemSize?.price || selectedItem.price || 0;
+        foodPrice += itemPrice;
+      });
+    }
+
+    return parseFloat((foodPrice * foodModal.quantity).toFixed(2));
   },
 });

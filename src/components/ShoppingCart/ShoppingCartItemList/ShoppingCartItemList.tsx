@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+
 import { useRecoilValue } from 'recoil';
 
 import { ShoppingCartAtom } from '../../../state/ShoppingCartState';
@@ -31,13 +33,10 @@ const ShoppingCartItemList = () => {
             styleClass={classes.shoppingCartItemListShowDetails}
           />
           {shoppingCart?.map((shoppingCartItem) => (
-            <>
-              <ShoppingCartItem
-                shoppingCartItem={shoppingCartItem}
-                key={shoppingCartItem.orderItemId}
-              />
+            <Fragment key={shoppingCartItem.orderItemId}>
+              <ShoppingCartItem shoppingCartItem={shoppingCartItem} />
               <Divider />
-            </>
+            </Fragment>
           ))}
         </>
       )}

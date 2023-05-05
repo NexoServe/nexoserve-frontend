@@ -76,6 +76,7 @@ const FoodModal = ({
     setSelectedItems([]);
     setRequiredAddOn(undefined);
     setFoodModalPrice(0);
+    document.body.style.overflow = 'unset';
   };
 
   useMemo(() => {
