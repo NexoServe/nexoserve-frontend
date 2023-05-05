@@ -3,20 +3,55 @@ import { v4 as uuidv4 } from 'uuid';
 import { data } from '../../data/foods';
 import prisma from '../../lib/prisma';
 
+const getCategoryID = async (name: string) => {
+  console.log('name', name);
+  const category = await prisma.foodCategory.findFirst({
+    where: { name },
+  });
+
+  console.log('category', category);
+
+  if (category) {
+    console.log('HERE');
+    return category.id;
+  }
+
+  const newCategory = await prisma.foodCategory.create({
+    data: { name },
+  });
+
+  return newCategory.id;
+};
+
 async function main() {
   await prisma.food.deleteMany({});
   await prisma.addOn.deleteMany({});
   await prisma.item.deleteMany({});
   await prisma.foodSize.deleteMany({});
+  await prisma.foodCategory.deleteMany({});
+
+  await prisma.foodCategory.createMany({
+    data: [
+      { name: 'Traditional Pizza', order: 1 },
+      { name: 'Speciality Pizza', order: 2 },
+      { name: 'Speciality Sicilian Pizza', order: 3 },
+      { name: 'Appetizers', order: 4 },
+    ],
+  });
 
   await Promise.all(
-    data.map((input) =>
-      prisma.food.create({
+    data.map(async (input) => {
+      console.log('input.category', input.category);
+      const categoryId = await getCategoryID(input.category);
+
+      console.log('categoryId', categoryId);
+      return prisma.food.create({
         data: {
           id: uuidv4(),
           name: input?.name,
           description: input?.description,
           price: input.price,
+          categoryId: categoryId,
           sizes: {
             connectOrCreate: input.sizes?.map((size) => ({
               where: {
@@ -54,22 +89,7 @@ async function main() {
                                     id: uuidv4(),
                                     name: itemSize?.name,
                                     price: itemSize?.price,
-                                    default: itemSize.default,
-                                    portions: {
-                                      connectOrCreate: itemSize.portions?.map(
-                                        (portion) => ({
-                                          where: {
-                                            id: uuidv4(),
-                                          },
-                                          create: {
-                                            id: uuidv4(),
-                                            name: portion?.name,
-                                            price: portion?.price,
-                                            default: portion.default,
-                                          },
-                                        }),
-                                      ),
-                                    },
+                                    default: itemSize?.default,
                                   },
                                 }),
                               ),
@@ -111,21 +131,6 @@ async function main() {
                             name: itemSize?.name,
                             price: itemSize?.price,
                             default: itemSize.default,
-                            portions: {
-                              connectOrCreate: itemSize.portions?.map(
-                                (portion) => ({
-                                  where: {
-                                    id: portion?.id || '',
-                                  },
-                                  create: {
-                                    id: uuidv4(),
-                                    name: portion?.name,
-                                    price: portion?.price,
-                                    default: portion.default,
-                                  },
-                                }),
-                              ),
-                            },
                           },
                         })),
                       },
@@ -136,8 +141,8 @@ async function main() {
             })),
           },
         },
-      }),
-    ),
+      });
+    }),
   );
 }
 

@@ -14,8 +14,8 @@
     "predev": "yarn run generate",
     "dev": "next",
     "dev:ts": "yarn lint && yarn dev & yarn ts:watch",
-    "ts": "tsc --noEmit --incremental",
-    "ts:watch": "yarn ts --watch",
+    "type-check": "tsc --noEmit --incremental",
+    "ts:watch": "yarn type-check --watch",
     "prebuild": "yarn run generate",
     "build": "next build",
     "start": "next start",
@@ -23,11 +23,11 @@
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "postinstall": "husky install",
     "commit": "cz",
-    "generate": "graphql-codegen --config codegen.yml"
+    "generate": "graphql-codegen --config codegen.yml",
+    "seed": "ts-node ./modules/prisma/seed.ts"
   },
   "prisma": {
-    "schema": "modules/prisma/schema.prisma",
-    "seed": "ts-node ./modules/prisma/seed.ts"
+    "schema": "modules/prisma/schema.prisma"
   },
   "lint-staged": {
     "./src/**/*.{ts,js,jsx,tsx}": [
@@ -43,8 +43,11 @@
     "@stripe/react-stripe-js": "1.12.0",
     "@stripe/stripe-js": "1.38.1",
     "apollo-server-micro": "3.9.0",
+    "classnames": "2.3.2",
     "deepmerge": "4.2.2",
     "esbuild": "0.14.45",
+    "focus-visible": "5.2.0",
+    "framer-motion": "10.0.1",
     "graphql": "16.5.0",
     "jss-global": "3.0.0",
     "lodash": "4.17.21",
@@ -56,9 +59,11 @@
     "react-dom": "18.2.0",
     "react-hook-form": "7.32.2",
     "react-jss": "10.9.0",
+    "react-modal": "3.16.1",
     "recoil": "0.7.5",
     "stripe": "10.12.0",
-    "uuid": "8.3.2"
+    "uuid": "8.3.2",
+    "webfontloader": "1.6.28"
   },
   "devDependencies": {
     "@commitlint/cli": "17.0.2",
@@ -72,7 +77,9 @@
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
+    "@types/react-modal": "3.13.1",
     "@types/uuid": "8.3.4",
+    "@types/webfontloader": "1.6.35",
     "@typescript-eslint/eslint-plugin": "5.28.0",
     "@typescript-eslint/parser": "5.28.0",
     "commitizen": "4.2.4",

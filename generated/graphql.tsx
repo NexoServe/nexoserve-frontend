@@ -24,6 +24,13 @@ export type AddOn = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type BaseFood = {
+  __typename?: 'BaseFood';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+};
+
 export type Checkout = {
   __typename?: 'Checkout';
   clientSecret?: Maybe<Scalars['String']>;
@@ -45,8 +52,10 @@ export type CreateAddOnInput = {
 
 export type CreateFoodInput = {
   addOns?: InputMaybe<Array<CreateAddOnInput>>;
+  category: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   price?: InputMaybe<Scalars['Float']>;
   sizes?: InputMaybe<Array<CreateFoodSizeInput>>;
@@ -84,6 +93,7 @@ export type Food = {
   addOns?: Maybe<Array<Maybe<AddOn>>>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
   sizes?: Maybe<Array<Maybe<FoodSize>>>;
@@ -95,6 +105,12 @@ export type FoodSize = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
+};
+
+export type FoodsByCategory = {
+  __typename?: 'FoodsByCategory';
+  category: Scalars['String'];
+  foods?: Maybe<Array<SimpleFood>>;
 };
 
 export type Item = {
@@ -111,27 +127,10 @@ export type ItemSize = {
   default?: Maybe<Scalars['Boolean']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  portions?: Maybe<Array<Maybe<ItemSizePortion>>>;
   price?: Maybe<Scalars['Float']>;
 };
 
 export type ItemSizeInput = {
-  default?: InputMaybe<Scalars['Boolean']>;
-  id?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-  portions?: InputMaybe<Array<ItemSizePortionInput>>;
-  price: Scalars['Float'];
-};
-
-export type ItemSizePortion = {
-  __typename?: 'ItemSizePortion';
-  default?: Maybe<Scalars['Boolean']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Float']>;
-};
-
-export type ItemSizePortionInput = {
   default?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
@@ -177,14 +176,76 @@ export type OrderItem = {
 export type Query = {
   __typename?: 'Query';
   addOns: Array<Maybe<AddOn>>;
-  checkoutCalculate: Checkout;
+  foodById?: Maybe<Food>;
   foods: Array<Maybe<Food>>;
-  items: Array<Maybe<Item>>;
+  foodsByCategory: Array<Maybe<FoodsByCategory>>;
+  validateShoppingCart: ShoppingCart;
 };
 
 
-export type QueryCheckoutCalculateArgs = {
-  input: CheckoutCalculateInput;
+export type QueryFoodByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryValidateShoppingCartArgs = {
+  input: Array<InputMaybe<ShoppingCartInput>>;
+};
+
+export type SelectedItem = {
+  __typename?: 'SelectedItem';
+  addOnName: Scalars['String'];
+  id: Scalars['String'];
+  itemSize?: Maybe<ItemSize>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+};
+
+export type ShoppingCart = {
+  __typename?: 'ShoppingCart';
+  grandTotal: Scalars['Float'];
+  shoppingCartItems: Array<Maybe<ShoppingCartItem>>;
+};
+
+export type ShoppingCartInput = {
+  foodId: Scalars['String'];
+  foodSizeId?: InputMaybe<Scalars['String']>;
+  items: Array<InputMaybe<ShoppingCartItemInput>>;
+  orderItemId: Scalars['String'];
+  quantity: Scalars['Int'];
+};
+
+export type ShoppingCartItem = {
+  __typename?: 'ShoppingCartItem';
+  food?: Maybe<SimpleFood>;
+  orderItemId: Scalars['String'];
+  price: Scalars['Float'];
+  quantity: Scalars['Int'];
+  selectedItems?: Maybe<Array<Maybe<SelectedItem>>>;
+  selectedSize?: Maybe<FoodSize>;
+};
+
+export type ShoppingCartItemInput = {
+  addOnName: Scalars['String'];
+  itemId: Scalars['String'];
+  itemSizeId?: InputMaybe<Scalars['String']>;
+};
+
+export type SimpleFood = {
+  __typename?: 'SimpleFood';
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+  sizes?: Maybe<Array<Maybe<FoodSize>>>;
+};
+
+export type SimpleFoodSize = {
+  __typename?: 'SimpleFoodSize';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
 };
 
 export type CheckoutCalculateMutMutationVariables = Exact<{
@@ -201,19 +262,50 @@ export type CreateOrderMutationVariables = Exact<{
 
 export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'Order', id?: string | null, total?: number | null, orderItems?: Array<{ __typename: 'OrderItem', id?: string | null } | null> | null } };
 
-export type CheckoutCalculateQueryVariables = Exact<{
-  input: CheckoutCalculateInput;
+export type AddOnFieldsFragment = { __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null };
+
+export type FoodByIdQueryVariables = Exact<{
+  id: Scalars['String'];
 }>;
 
 
-export type CheckoutCalculateQuery = { __typename?: 'Query', checkoutCalculate: { __typename?: 'Checkout', id?: string | null, total?: number | null } };
+export type FoodByIdQuery = { __typename?: 'Query', foodById?: { __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null };
 
 export type FoodsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null, portions?: Array<{ __typename?: 'ItemSizePortion', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null } | null> | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null, portions?: Array<{ __typename?: 'ItemSizePortion', id?: string | null, name?: string | null, default?: boolean | null, price?: number | null } | null> | null } | null> | null } | null> | null } | null> | null } | null> };
+export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> };
+
+export type FoodsByCategoryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
+export type FoodsByCategoryQuery = { __typename?: 'Query', foodsByCategory: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null } | null> };
+
+export type ValidateShoppingCartQueryVariables = Exact<{
+  input: Array<InputMaybe<ShoppingCartInput>> | InputMaybe<ShoppingCartInput>;
+}>;
+
+
+export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', grandTotal: number, shoppingCartItems: Array<{ __typename?: 'ShoppingCartItem', orderItemId: string, price: number, quantity: number, food?: { __typename?: 'SimpleFood', id?: string | null, name?: string | null, price?: number | null } | null, selectedSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, selectedItems?: Array<{ __typename?: 'SelectedItem', id: string, name?: string | null, price?: number | null, addOnName: string, itemSize?: { __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null } | null } | null> | null } | null> } };
+
+export const AddOnFieldsFragmentDoc = gql`
+    fragment AddOnFields on AddOn {
+  id
+  name
+  isRequired
+  items {
+    id
+    name
+    price
+    itemSizes {
+      id
+      name
+      price
+      default
+    }
+  }
+}
+    `;
 export const CheckoutCalculateMutDocument = gql`
     mutation CheckoutCalculateMut($checkoutCalculateMutInput2: CheckoutCalculateInput!) {
   CheckoutCalculateMut(input: $checkoutCalculateMutInput2) {
@@ -287,101 +379,78 @@ export function useCreateOrderMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateOrderMutationHookResult = ReturnType<typeof useCreateOrderMutation>;
 export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrderMutation>;
 export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrderMutation, CreateOrderMutationVariables>;
-export const CheckoutCalculateDocument = gql`
-    query CheckoutCalculate($input: CheckoutCalculateInput!) {
-  checkoutCalculate(input: $input) {
+export const FoodByIdDocument = gql`
+    query FoodById($id: String!) {
+  foodById(id: $id) {
     id
-    total
+    name
+    description
+    image
+    price
+    sizes {
+      id
+      name
+      price
+      addOns {
+        ...AddOnFields
+      }
+    }
+    addOns {
+      ...AddOnFields
+    }
   }
 }
-    `;
+    ${AddOnFieldsFragmentDoc}`;
 
 /**
- * __useCheckoutCalculateQuery__
+ * __useFoodByIdQuery__
  *
- * To run a query within a React component, call `useCheckoutCalculateQuery` and pass it any options that fit your needs.
- * When your component renders, `useCheckoutCalculateQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useFoodByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFoodByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useCheckoutCalculateQuery({
+ * const { data, loading, error } = useFoodByIdQuery({
  *   variables: {
- *      input: // value for 'input'
+ *      id: // value for 'id'
  *   },
  * });
  */
-export function useCheckoutCalculateQuery(baseOptions: Apollo.QueryHookOptions<CheckoutCalculateQuery, CheckoutCalculateQueryVariables>) {
+export function useFoodByIdQuery(baseOptions: Apollo.QueryHookOptions<FoodByIdQuery, FoodByIdQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CheckoutCalculateQuery, CheckoutCalculateQueryVariables>(CheckoutCalculateDocument, options);
+        return Apollo.useQuery<FoodByIdQuery, FoodByIdQueryVariables>(FoodByIdDocument, options);
       }
-export function useCheckoutCalculateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CheckoutCalculateQuery, CheckoutCalculateQueryVariables>) {
+export function useFoodByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FoodByIdQuery, FoodByIdQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CheckoutCalculateQuery, CheckoutCalculateQueryVariables>(CheckoutCalculateDocument, options);
+          return Apollo.useLazyQuery<FoodByIdQuery, FoodByIdQueryVariables>(FoodByIdDocument, options);
         }
-export type CheckoutCalculateQueryHookResult = ReturnType<typeof useCheckoutCalculateQuery>;
-export type CheckoutCalculateLazyQueryHookResult = ReturnType<typeof useCheckoutCalculateLazyQuery>;
-export type CheckoutCalculateQueryResult = Apollo.QueryResult<CheckoutCalculateQuery, CheckoutCalculateQueryVariables>;
+export type FoodByIdQueryHookResult = ReturnType<typeof useFoodByIdQuery>;
+export type FoodByIdLazyQueryHookResult = ReturnType<typeof useFoodByIdLazyQuery>;
+export type FoodByIdQueryResult = Apollo.QueryResult<FoodByIdQuery, FoodByIdQueryVariables>;
 export const FoodsDocument = gql`
     query Foods {
   foods {
     id
     name
     description
+    image
     sizes {
       id
       name
       price
       addOns {
-        id
-        name
-        isRequired
-        items {
-          id
-          name
-          price
-          itemSizes {
-            id
-            name
-            default
-            price
-            portions {
-              id
-              name
-              default
-              price
-            }
-          }
-        }
+        ...AddOnFields
       }
     }
     price
     addOns {
-      id
-      name
-      isRequired
-      items {
-        id
-        name
-        price
-        itemSizes {
-          id
-          name
-          default
-          price
-          portions {
-            id
-            name
-            default
-            price
-          }
-        }
-      }
+      ...AddOnFields
     }
   }
 }
-    `;
+    ${AddOnFieldsFragmentDoc}`;
 
 /**
  * __useFoodsQuery__
@@ -409,3 +478,108 @@ export function useFoodsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Food
 export type FoodsQueryHookResult = ReturnType<typeof useFoodsQuery>;
 export type FoodsLazyQueryHookResult = ReturnType<typeof useFoodsLazyQuery>;
 export type FoodsQueryResult = Apollo.QueryResult<FoodsQuery, FoodsQueryVariables>;
+export const FoodsByCategoryDocument = gql`
+    query FoodsByCategory {
+  foodsByCategory {
+    category
+    foods {
+      id
+      description
+      image
+      name
+      price
+      sizes {
+        price
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useFoodsByCategoryQuery__
+ *
+ * To run a query within a React component, call `useFoodsByCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFoodsByCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFoodsByCategoryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFoodsByCategoryQuery(baseOptions?: Apollo.QueryHookOptions<FoodsByCategoryQuery, FoodsByCategoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FoodsByCategoryQuery, FoodsByCategoryQueryVariables>(FoodsByCategoryDocument, options);
+      }
+export function useFoodsByCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FoodsByCategoryQuery, FoodsByCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FoodsByCategoryQuery, FoodsByCategoryQueryVariables>(FoodsByCategoryDocument, options);
+        }
+export type FoodsByCategoryQueryHookResult = ReturnType<typeof useFoodsByCategoryQuery>;
+export type FoodsByCategoryLazyQueryHookResult = ReturnType<typeof useFoodsByCategoryLazyQuery>;
+export type FoodsByCategoryQueryResult = Apollo.QueryResult<FoodsByCategoryQuery, FoodsByCategoryQueryVariables>;
+export const ValidateShoppingCartDocument = gql`
+    query ValidateShoppingCart($input: [ShoppingCartInput]!) {
+  validateShoppingCart(input: $input) {
+    grandTotal
+    shoppingCartItems {
+      orderItemId
+      food {
+        id
+        name
+        price
+      }
+      selectedSize {
+        id
+        name
+        price
+      }
+      selectedItems {
+        id
+        name
+        price
+        addOnName
+        itemSize {
+          id
+          name
+          price
+        }
+      }
+      price
+      quantity
+    }
+  }
+}
+    `;
+
+/**
+ * __useValidateShoppingCartQuery__
+ *
+ * To run a query within a React component, call `useValidateShoppingCartQuery` and pass it any options that fit your needs.
+ * When your component renders, `useValidateShoppingCartQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useValidateShoppingCartQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useValidateShoppingCartQuery(baseOptions: Apollo.QueryHookOptions<ValidateShoppingCartQuery, ValidateShoppingCartQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ValidateShoppingCartQuery, ValidateShoppingCartQueryVariables>(ValidateShoppingCartDocument, options);
+      }
+export function useValidateShoppingCartLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ValidateShoppingCartQuery, ValidateShoppingCartQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ValidateShoppingCartQuery, ValidateShoppingCartQueryVariables>(ValidateShoppingCartDocument, options);
+        }
+export type ValidateShoppingCartQueryHookResult = ReturnType<typeof useValidateShoppingCartQuery>;
+export type ValidateShoppingCartLazyQueryHookResult = ReturnType<typeof useValidateShoppingCartLazyQuery>;
+export type ValidateShoppingCartQueryResult = Apollo.QueryResult<ValidateShoppingCartQuery, ValidateShoppingCartQueryVariables>;

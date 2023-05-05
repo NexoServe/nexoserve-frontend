@@ -1,17 +1,23 @@
 import { GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
 
-import { useFoodsQuery } from '../../generated/graphql';
 import { addApolloState, initializeApollo } from '../../lib/apolloClient';
 import prisma from '../../lib/prisma';
-import FoodList from '../components/FoodList/FoodList';
+import Container from '../components/Container/Container';
+import FoodList from '../components/Food/FoodList/FoodList';
 import Navbar from '../components/Navbar/Navbar';
-// import ShoppingCart from '../components/ShoppingCart/ShoppingCart';
+import ShoppingCart from '../components/ShoppingCart/ShoppingCart/ShoppingCart';
+import ShoppingCartButton from '../components/ShoppingCart/ShoppingCartButton/ShoppingCartButton';
+import ShoppingCartModal from '../components/ShoppingCart/ShoppingCartModal/ShoppingCartModal';
+
+import useStyles from './index/css';
 
 const Home: NextPage = () => {
-  const { data } = useFoodsQuery({
-    notifyOnNetworkStatusChange: true,
-  });
+  const classes = useStyles();
+
+  // const { data } = useFoodsQuery({
+  //   notifyOnNetworkStatusChange: true,
+  // });
 
   // const [createLink, {}] = useCreateLinkMutation({
   //   variables: {
@@ -48,10 +54,14 @@ const Home: NextPage = () => {
 
       <main>
         <Navbar />
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <FoodList foods={data?.foods} />
-          {/* <ShoppingCart /> */}
-        </div>
+        <Container>
+          <div className={classes.indexConatiner}>
+            <FoodList />
+            <ShoppingCart styleClass={classes.indexShoppingCartDesktop} />
+            <ShoppingCartModal />
+            <ShoppingCartButton />
+          </div>
+        </Container>
       </main>
     </div>
   );

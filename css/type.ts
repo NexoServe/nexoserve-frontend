@@ -1,7 +1,9 @@
 import { base, htmlFontSize } from './base';
+import colors from './colors';
 
 const heading = {
   fontWeight: 'normal',
+  color: colors.black,
 };
 
 export const h1 = {
@@ -13,33 +15,34 @@ export const h1 = {
 
 export const h2 = {
   ...heading,
-  fontSize: base(4.25),
+  fontSize: base(4),
   lineHeight: base(5),
   margin: `${base(2)} 0`,
 };
 
 export const h3 = {
   ...heading,
-  fontSize: base(3.5),
+  fontSize: base(3),
   lineHeight: base(4),
   margin: `${base(2)} 0 ${base(1.5)}`,
 };
 
 export const h4 = {
   ...heading,
-  fontSize: base(2.25),
+  fontSize: base(2),
   lineHeight: base(2.5),
   margin: `${base(1.5)} 0 ${base()}`,
 };
 
 export const h5 = {
   ...heading,
-  fontSize: base(1.625),
-  lineHeight: base(2.25),
+  fontSize: base(1.5),
+  lineHeight: base(2),
   margin: `${base(1)} 0 ${base(0.5)}`,
 };
 
 export const body = {
   fontSize: htmlFontSize,
   lineHeight: base(1.5),
+  fontFamily: 'Montserrat, sans-serif',
 };

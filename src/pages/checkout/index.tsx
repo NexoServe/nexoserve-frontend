@@ -1,44 +1,33 @@
-import React from 'react';
-
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import { useRecoilValue } from 'recoil';
-
-import { useCheckoutCalculateMutMutation } from '../../../generated/graphql';
-import { OrderAtom } from '../../state/ShoppingCartState';
-
-import CheckoutForm from './components/CheckoutForm';
-
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
 
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
-);
+// const stripePromise = loadStripe(
+//   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
+// );
 
 const Checkout = () => {
-  const cart = useRecoilValue(OrderAtom);
-  const [checkoutCalculateMut, { data }] = useCheckoutCalculateMutMutation();
+  // const cart = useRecoilValue(OrderAtom);
+  // const [checkoutCalculateMut, { data }] = useCheckoutCalculateMutMutation();
 
-  React.useEffect(() => {
-    if (cart) {
-      checkoutCalculateMut({
-        variables: {
-          checkoutCalculateMutInput2: {
-            orders: cart,
-          },
-        },
-        context: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
-        },
-      });
-    }
-  }, [cart, checkoutCalculateMut]);
+  // React.useEffect(() => {
+  //   if (cart) {
+  //     checkoutCalculateMut({
+  //       variables: {
+  //         checkoutCalculateMutInput2: {
+  //           orders: cart,
+  //         },
+  //       },
+  //       context: {
+  //         Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
+  //       },
+  //     });
+  //   }
+  // }, [cart, checkoutCalculateMut]);
 
   return (
     <div className="App">
-      {data?.CheckoutCalculateMut?.clientSecret && (
+      {/* {data?.CheckoutCalculateMut?.clientSecret && (
         <Elements
           options={{
             clientSecret: data?.CheckoutCalculateMut?.clientSecret,
@@ -50,7 +39,7 @@ const Checkout = () => {
         >
           <CheckoutForm />
         </Elements>
-      )}
+      )} */}
     </div>
   );
 };

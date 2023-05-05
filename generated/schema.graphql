@@ -10,6 +10,12 @@ type AddOn {
   name: String
 }
 
+type BaseFood {
+  id: String
+  name: String
+  price: Float
+}
+
 type Checkout {
   clientSecret: String
   id: String
@@ -30,8 +36,10 @@ input CreateAddOnInput {
 
 input CreateFoodInput {
   addOns: [CreateAddOnInput!]
+  category: String!
   description: String
   id: String
+  image: String
   name: String!
   price: Float
   sizes: [CreateFoodSizeInput!]
@@ -68,6 +76,7 @@ type Food {
   addOns: [AddOn]
   description: String
   id: String
+  image: String
   name: String
   price: Float
   sizes: [FoodSize]
@@ -78,6 +87,11 @@ type FoodSize {
   id: String
   name: String
   price: Float
+}
+
+type FoodsByCategory {
+  category: String!
+  foods: [SimpleFood!]
 }
 
 type Item {
@@ -92,26 +106,10 @@ type ItemSize {
   default: Boolean
   id: String
   name: String
-  portions: [ItemSizePortion]
   price: Float
 }
 
 input ItemSizeInput {
-  default: Boolean
-  id: String
-  name: String!
-  portions: [ItemSizePortionInput!]
-  price: Float!
-}
-
-type ItemSizePortion {
-  default: Boolean
-  id: String
-  name: String
-  price: Float
-}
-
-input ItemSizePortionInput {
   default: Boolean
   id: String
   name: String!
@@ -138,7 +136,59 @@ type OrderItem {
 
 type Query {
   addOns: [AddOn]!
-  checkoutCalculate(input: CheckoutCalculateInput!): Checkout!
+  foodById(id: String!): Food
   foods: [Food]!
-  items: [Item]!
+  foodsByCategory: [FoodsByCategory]!
+  validateShoppingCart(input: [ShoppingCartInput]!): ShoppingCart!
+}
+
+type SelectedItem {
+  addOnName: String!
+  id: String!
+  itemSize: ItemSize
+  name: String
+  price: Float
+}
+
+type ShoppingCart {
+  grandTotal: Float!
+  shoppingCartItems: [ShoppingCartItem]!
+}
+
+input ShoppingCartInput {
+  foodId: String!
+  foodSizeId: String
+  items: [ShoppingCartItemInput]!
+  orderItemId: String!
+  quantity: Int!
+}
+
+type ShoppingCartItem {
+  food: SimpleFood
+  orderItemId: String!
+  price: Float!
+  quantity: Int!
+  selectedItems: [SelectedItem]
+  selectedSize: FoodSize
+}
+
+input ShoppingCartItemInput {
+  addOnName: String!
+  itemId: String!
+  itemSizeId: String
+}
+
+type SimpleFood {
+  description: String
+  id: String
+  image: String
+  name: String
+  price: Float
+  sizes: [FoodSize]
+}
+
+type SimpleFoodSize {
+  id: String
+  name: String
+  price: Float
 }

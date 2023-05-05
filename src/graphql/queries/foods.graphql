@@ -3,55 +3,18 @@ query Foods {
     id
     name
     description
+    image
     sizes {
       id
       name
       price
       addOns {
-        id
-        name
-        isRequired
-        items {
-          id
-          name
-          price
-          itemSizes {
-            id
-            name
-            default
-            price
-            portions {
-              id
-              name
-              default
-              price
-            }
-          }
-        }
+        ...AddOnFields
       }
     }
     price
     addOns {
-      id
-      name
-      isRequired
-      items {
-        id
-        name
-        price
-        itemSizes {
-          id
-          name
-          default
-          price
-          portions {
-            id
-            name
-            default
-            price
-          }
-        }
-      }
+      ...AddOnFields
     }
   }
 }

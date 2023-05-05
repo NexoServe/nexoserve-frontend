@@ -1,62 +1,68 @@
-import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { createPortal } from 'react-dom';
+import classNames from 'classnames';
+import { AnimatePresence, motion } from 'framer-motion';
+import Modal from 'react-modal';
 
 import useStyles from './css';
 import { IModal } from './types';
 
-export const Modal = ({ showModal, setShowModal, children }: IModal) => {
-  const classes = useStyles();
-  const [mounted, setMounted] = useState(false);
+export const ModalPopUp = ({
+  showModal,
+  children,
+  styleClass,
+  onClose,
+}: IModal) => {
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-
-    return () => setMounted(false);
-  }, []);
-
-  const modalRef = useRef<HTMLInputElement | null>(null);
-
-  const closeModal = (
-    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
-  ): void => {
-    e.preventDefault();
-
-    if (modalRef.current === e.target) {
-      setShowModal(false);
+    if (showModal) {
+      setShow(true);
+    } else {
+      setShow(false);
     }
-  };
+  }, [showModal]);
 
-  const keyPress = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && showModal) {
-        setShowModal(false);
-      }
-    },
-    [setShowModal, showModal],
+  const classes = useStyles();
+  Modal.setAppElement('#__next');
+
+  return (
+    <AnimatePresence mode="wait">
+      {show && (
+        <Modal
+          isOpen={show}
+          onRequestClose={() => setShow(false)}
+          className={classNames(styleClass, classes.modal)}
+          onAfterClose={() => {
+            onClose ? onClose() : null;
+          }}
+        >
+          <motion.div
+            key="modal"
+            initial={{
+              backgroundColor: '#00000000',
+              opacity: 0,
+              backdropFilter: 'blur(0px)',
+            }}
+            animate={{
+              backgroundColor: '#00000099',
+              opacity: 1,
+              backdropFilter: 'blur(20px)',
+            }}
+            exit={{
+              backgroundColor: '#00000000',
+              opacity: 0,
+              backdropFilter: 'blur(0px)',
+            }}
+            transition={{ duration: 0.4, ease: 'easeInOut' }}
+            className={classes.modalClose}
+            onClick={(e) => {
+              onClose ? onClose() : null;
+            }}
+          ></motion.div>
+          <div className={classes.modalInner}>{children}</div>
+        </Modal>
+      )}
+    </AnimatePresence>
   );
-
-  useEffect(() => {
-    document.addEventListener('keydown', keyPress);
-    return () => document.removeEventListener('keydown', keyPress);
-  }, [keyPress]);
-
-  return mounted
-    ? createPortal(
-        <>
-          {showModal ? (
-            <div className={classes.modal}>
-              <div
-                className={classes.modalClose}
-                onClick={closeModal}
-                ref={modalRef}
-              ></div>
-              <div className={classes.modalInner}>{children}</div>
-            </div>
-          ) : null}
-        </>,
-
-        document.getElementById('__next') as HTMLElement,
-      )
-    : null;
 };

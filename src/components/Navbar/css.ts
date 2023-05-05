@@ -2,7 +2,6 @@ import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
   navbar: {
-    border: '1px solid red',
     marginBottom: '1rem',
     display: 'flex',
     justifyContent: 'space-between',

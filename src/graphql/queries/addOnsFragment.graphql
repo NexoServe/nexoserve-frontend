@@ -1,0 +1,16 @@
+fragment AddOnFields on AddOn {
+  id
+  name
+  isRequired
+  items {
+    id
+    name
+    price
+    itemSizes {
+      id
+      name
+      price
+      default
+    }
+  }
+}

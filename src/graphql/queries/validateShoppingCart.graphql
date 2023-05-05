@@ -1,0 +1,31 @@
+query ValidateShoppingCart($input: [ShoppingCartInput]!) {
+  validateShoppingCart(input: $input) {
+    grandTotal
+    shoppingCartItems {
+      orderItemId
+      food {
+        id
+        name
+        price
+      }
+      selectedSize {
+        id
+        name
+        price
+      }
+      selectedItems {
+        id
+        name
+        price
+        addOnName
+        itemSize {
+          id
+          name
+          price
+        }
+      }
+      price
+      quantity
+    }
+  }
+}

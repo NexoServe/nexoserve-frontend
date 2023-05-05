@@ -1,18 +1,16 @@
-import { useRecoilValue } from 'recoil';
-
-import { ShoppingCartAtom } from '../../state/ShoppingCartState';
+// import { ShoppingCartAtom } from '../../state/ShoppingCartState';
 
 import useStyles from './css';
 
 const Navbar = () => {
   const styles = useStyles();
 
-  const shoppingCart = useRecoilValue(ShoppingCartAtom);
+  // const shoppingCart = useRecoilValue(ShoppingCartAtom);
 
   return (
     <nav className={styles.navbar}>
       <h1>Navbar</h1>
-      <div className={styles.navbarCounter}>{shoppingCart.length}</div>
+      <div className={styles.navbarCounter}>0</div>
     </nav>
   );
 };

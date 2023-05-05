@@ -1,0 +1,20 @@
+query FoodById($id: String!) {
+  foodById(id: $id) {
+    id
+    name
+    description
+    image
+    price
+    sizes {
+      id
+      name
+      price
+      addOns {
+        ...AddOnFields
+      }
+    }
+    addOns {
+      ...AddOnFields
+    }
+  }
+}
