@@ -8,7 +8,10 @@ import {
   FoodModalAtom,
   FoodModalSelectedItemsAtom,
 } from '../../../state/FoodModalState';
-import { ShowShoppingCartDetailsAtom } from '../../../state/ShoppingCartState';
+import {
+  ShoppingCartAtom,
+  ShowShoppingCartDetailsAtom,
+} from '../../../state/ShoppingCartState';
 import FoodModal from '../../Food/FoodModal/FoodModal';
 import SvgIcons from '../../SvgIcons';
 
@@ -23,6 +26,7 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
   const [, setFoodModalSelectedItems] = useRecoilState(
     FoodModalSelectedItemsAtom,
   );
+  const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
   const classes = useStyles();
 
   const updateShoppingCartItem = () => {
@@ -45,17 +49,32 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
     setShowUpdateFoodModal(true);
   };
 
+  const removeShoppingCartItem = () => {
+    const newShoppingCart = shoppingCart.filter(
+      (cartItem) => cartItem.orderItemId !== shoppingCartItem?.orderItemId,
+    );
+
+    localStorage.setItem('shoppingCartItems', JSON.stringify(newShoppingCart));
+
+    setShoppingCart(newShoppingCart);
+  };
+
   return (
     <>
-      <motion.button
+      <motion.div
         animate={{ rowGap: showShoppingCartDetails ? base(1) : 0 }}
         className={classes.shoppingCartItem}
-        onClick={updateShoppingCartItem}
       >
-        <div className={classes.shoppingCartItemQuantity}>
+        <div
+          onClick={updateShoppingCartItem}
+          className={classes.shoppingCartItemQuantity}
+        >
           <span>{shoppingCartItem?.quantity}</span>
         </div>
-        <div className={classes.shoppingCartItemContent}>
+        <div
+          onClick={updateShoppingCartItem}
+          className={classes.shoppingCartItemContent}
+        >
           <h3 className={classes.shoppingCartItemTitle}>
             {shoppingCartItem?.food?.name}
           </h3>
@@ -72,7 +91,11 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
           }}
           className={classes.shoppingCartItemDetails}
         >
-          <div className={classes.shoppingCartItemDetailsInner}>
+          <div onClick={updateShoppingCartItem}></div>
+          <div
+            onClick={updateShoppingCartItem}
+            className={classes.shoppingCartItemDetailsInner}
+          >
             {shoppingCartItem.selectedSize ? (
               <div className={classes.shoppingCartItemDetailsItem}>
                 {shoppingCartItem.selectedSize?.name}
@@ -90,15 +113,15 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
             ))}
           </div>
           <div className={classes.shoppingCartItemDeleteButton}>
-            <button onClick={() => console.log('HERE')}>
+            <button onClick={removeShoppingCartItem}>
               <SvgIcons name="closeFilled" />
             </button>
           </div>
           <div className={classes.shoppingCartItemEditButton}>
-            <button>Edit Item</button>
+            <button onClick={updateShoppingCartItem}>Edit Item</button>
           </div>
         </motion.div>
-      </motion.button>
+      </motion.div>
 
       {showUpdateFoodModal && (
         <FoodModal
