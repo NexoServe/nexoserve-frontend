@@ -34,7 +34,7 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
 
     setFoodModalSelectedItems(
       shoppingCartItem?.selectedItems?.map((item) => ({
-        addOnId: item?.addOnId as string,
+        addOnName: item?.addOnName as string,
         id: item?.id,
         name: item?.name,
         price: item?.price,

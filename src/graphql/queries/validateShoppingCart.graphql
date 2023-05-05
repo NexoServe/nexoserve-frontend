@@ -17,7 +17,7 @@ query ValidateShoppingCart($input: [ShoppingCartInput]!) {
         id
         name
         price
-        addOnId
+        addOnName
         itemSize {
           id
           name

@@ -6,7 +6,7 @@ export const SelectedItem = objectType({
     t.nonNull.string(`id`);
     t.string(`name`);
     t.float(`price`);
-    t.nonNull.string('addOnId');
+    t.nonNull.string('addOnName');
     t.field(`itemSize`, {
       type: 'ItemSize',
     });
@@ -47,7 +47,7 @@ export const ShoppingCartItemInput = inputObjectType({
   definition(t) {
     t.nonNull.string('itemId');
     t.string('itemSizeId');
-    t.nonNull.string('addOnId');
+    t.nonNull.string('addOnName');
   },
 });
 

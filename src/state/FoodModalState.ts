@@ -10,7 +10,7 @@ export type SelectedItemType = {
   price: number | null | undefined;
   name: string | null | undefined;
   itemSize: ItemSizeType | null | undefined;
-  addOnId: string | null | undefined;
+  addOnName: string | null | undefined;
 };
 
 export type FoodModalType = {

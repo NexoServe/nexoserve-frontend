@@ -194,7 +194,7 @@ export type QueryValidateShoppingCartArgs = {
 
 export type SelectedItem = {
   __typename?: 'SelectedItem';
-  addOnId: Scalars['String'];
+  addOnName: Scalars['String'];
   id: Scalars['String'];
   itemSize?: Maybe<ItemSize>;
   name?: Maybe<Scalars['String']>;
@@ -226,7 +226,7 @@ export type ShoppingCartItem = {
 };
 
 export type ShoppingCartItemInput = {
-  addOnId: Scalars['String'];
+  addOnName: Scalars['String'];
   itemId: Scalars['String'];
   itemSizeId?: InputMaybe<Scalars['String']>;
 };
@@ -286,7 +286,7 @@ export type ValidateShoppingCartQueryVariables = Exact<{
 }>;
 
 
-export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', grandTotal: number, shoppingCartItems: Array<{ __typename?: 'ShoppingCartItem', orderItemId: string, price: number, quantity: number, food?: { __typename?: 'SimpleFood', id?: string | null, name?: string | null, price?: number | null } | null, selectedSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, selectedItems?: Array<{ __typename?: 'SelectedItem', id: string, name?: string | null, price?: number | null, addOnId: string, itemSize?: { __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null } | null } | null> | null } | null> } };
+export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', grandTotal: number, shoppingCartItems: Array<{ __typename?: 'ShoppingCartItem', orderItemId: string, price: number, quantity: number, food?: { __typename?: 'SimpleFood', id?: string | null, name?: string | null, price?: number | null } | null, selectedSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, selectedItems?: Array<{ __typename?: 'SelectedItem', id: string, name?: string | null, price?: number | null, addOnName: string, itemSize?: { __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null } | null } | null> | null } | null> } };
 
 export const AddOnFieldsFragmentDoc = gql`
     fragment AddOnFields on AddOn {
@@ -542,7 +542,7 @@ export const ValidateShoppingCartDocument = gql`
         id
         name
         price
-        addOnId
+        addOnName
         itemSize {
           id
           name

@@ -67,7 +67,7 @@ const ShoppingCart = ({ styleClass }: IShoppingCart) => {
               return {
                 itemId: selectedItem?.id as string,
                 itemSizeId: selectedItem?.itemSize?.id as string,
-                addOnId: selectedItem?.addOnId as string,
+                addOnName: selectedItem?.addOnName as string,
               };
             }) as ShoppingCartItemInput[],
             quantity: item?.quantity,

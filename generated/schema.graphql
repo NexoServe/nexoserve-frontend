@@ -143,7 +143,7 @@ type Query {
 }
 
 type SelectedItem {
-  addOnId: String!
+  addOnName: String!
   id: String!
   itemSize: ItemSize
   name: String
@@ -173,7 +173,7 @@ type ShoppingCartItem {
 }
 
 input ShoppingCartItemInput {
-  addOnId: String!
+  addOnName: String!
   itemId: String!
   itemSizeId: String
 }

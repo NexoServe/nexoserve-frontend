@@ -71,7 +71,7 @@ export interface NexusGenInputs {
     quantity: number; // Int!
   }
   ShoppingCartItemInput: { // input type
-    addOnId: string; // String!
+    addOnName: string; // String!
     itemId: string; // String!
     itemSizeId?: string | null; // String
   }
@@ -151,7 +151,7 @@ export interface NexusGenObjects {
   }
   Query: {};
   SelectedItem: { // root type
-    addOnId: string; // String!
+    addOnName: string; // String!
     id: string; // String!
     itemSize?: NexusGenRootTypes['ItemSize'] | null; // ItemSize
     name?: string | null; // String
@@ -267,7 +267,7 @@ export interface NexusGenFieldTypes {
     validateShoppingCart: NexusGenRootTypes['ShoppingCart']; // ShoppingCart!
   }
   SelectedItem: { // field return type
-    addOnId: string; // String!
+    addOnName: string; // String!
     id: string; // String!
     itemSize: NexusGenRootTypes['ItemSize'] | null; // ItemSize
     name: string | null; // String
@@ -373,7 +373,7 @@ export interface NexusGenFieldTypeNames {
     validateShoppingCart: 'ShoppingCart'
   }
   SelectedItem: { // field return type name
-    addOnId: 'String'
+    addOnName: 'String'
     id: 'String'
     itemSize: 'ItemSize'
     name: 'String'

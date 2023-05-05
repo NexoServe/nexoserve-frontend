@@ -123,7 +123,7 @@ export const ValidateShoppingCart = extendType({
                       id: item?.itemId as string,
                       name: itemObj?.name,
                       price: itemObj?.price,
-                      addOnId: item?.addOnId as string,
+                      addOnName: item?.addOnName as string,
                       itemSize: itemSizeObj,
                     };
 

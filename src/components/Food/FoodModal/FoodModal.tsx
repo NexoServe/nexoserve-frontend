@@ -79,7 +79,7 @@ const FoodModal = ({
   };
 
   useMemo(() => {
-    if (selectedItems.some((item) => item.addOnId === requiredAddOn?.id)) {
+    if (selectedItems.some((item) => item.addOnName === requiredAddOn?.name)) {
       setRequiredAddOn(undefined);
     }
   }, [selectedItems, requiredAddOn, setRequiredAddOn]);
@@ -92,7 +92,7 @@ const FoodModal = ({
     );
 
     const requiredAddOn = requiredAddOns?.find((addOn) => {
-      return !selectedItems.some((item) => item.addOnId === addOn?.id);
+      return !selectedItems.some((item) => item.addOnName === addOn?.name);
     });
 
     if (requiredAddOn) {
@@ -123,7 +123,7 @@ const FoodModal = ({
             id: item.id as string,
             name: item.name as string,
             price: item.price as number,
-            addOnId: item.addOnId as string,
+            addOnName: item.addOnName as string,
             itemSize: {
               id: item.itemSize?.id as string,
               name: item.itemSize?.name as string,
@@ -159,7 +159,7 @@ const FoodModal = ({
           id: item.id as string,
           name: item.name as string,
           price: item.price as number,
-          addOnId: item.addOnId as string,
+          addOnName: item.addOnName as string,
           itemSize: {
             id: item.itemSize?.id as string,
             name: item.itemSize?.name as string,
@@ -201,7 +201,7 @@ const FoodModal = ({
               id: item.id as string,
               name: item.name as string,
               price: item.price as number,
-              addOnId: item.addOnId as string,
+              addOnName: item.addOnName as string,
               itemSize: {
                 id: item.itemSize?.id as string,
                 name: item.itemSize?.name as string,

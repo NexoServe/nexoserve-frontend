@@ -44,7 +44,7 @@ const FoodItemSize = ({ itemSize, item, addOn }: IFoodItemSize) => {
             id: item?.id,
             name: item?.name,
             price: item?.price,
-            addOnId: addOn?.id,
+            addOnName: addOn?.name,
             itemSize: {
               id: itemSize?.id,
               name: itemSize?.name,
@@ -63,7 +63,7 @@ const FoodItemSize = ({ itemSize, item, addOn }: IFoodItemSize) => {
           id: item?.id,
           name: item?.name,
           price: item?.price,
-          addOnId: addOn?.id,
+          addOnName: addOn?.name,
           itemSize: {
             id: itemSize?.id,
             name: itemSize?.name,
