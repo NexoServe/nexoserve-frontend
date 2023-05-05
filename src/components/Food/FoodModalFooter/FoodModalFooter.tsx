@@ -49,11 +49,9 @@ const FoodModalFooter = ({ type }: IFoodModalFooter) => {
         >
           <SvgIcons name="minus" />
         </button>
-        <input
-          className={classes.foodModalFooterQuantity}
-          type="number"
-          value={foodModal.quantity}
-        />
+        <div className={classes.foodModalFooterQuantity}>
+          {foodModal.quantity}
+        </div>
         <button
           type="button"
           className={classes.foodModalFooterButton}

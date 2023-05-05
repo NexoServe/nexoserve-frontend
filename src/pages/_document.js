@@ -31,7 +31,6 @@ export default class JssDocument extends Document {
         <React.Fragment>
           {initialProps.styles}
           <style id="server-side-styles">{registry.toString()}</style>
-          <link rel="preload" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
             href="https://fonts.gstatic.com"

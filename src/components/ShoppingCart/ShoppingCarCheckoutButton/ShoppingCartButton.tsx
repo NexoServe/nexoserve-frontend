@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect } from 'react';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -24,7 +24,7 @@ const ShoppingCarCheckoutButton = ({
 
   const shoppingCart = useRecoilValue(ShoppingCartAtom);
 
-  const totalPrice = useMemo(() => {
+  useEffect(() => {
     if (!shoppingCartTotal.isValidated) {
       let total = 0;
 
@@ -45,8 +45,6 @@ const ShoppingCarCheckoutButton = ({
         ...shoppingCartTotal,
         total: parseFloat(total.toFixed(2)),
       });
-
-      return total.toFixed(2);
     }
   }, [shoppingCart]);
 
@@ -54,12 +52,7 @@ const ShoppingCarCheckoutButton = ({
     <>
       {shoppingCart.length > 0 ? (
         <div className={styles.shoppingCartModalButtonBox}>
-          <Button>
-            Checkout $
-            {shoppingCartTotal.isValidated
-              ? shoppingCartTotal.total
-              : totalPrice}
-          </Button>
+          <Button>Checkout ${shoppingCartTotal.total.toFixed(2)}</Button>
         </div>
       ) : null}
     </>

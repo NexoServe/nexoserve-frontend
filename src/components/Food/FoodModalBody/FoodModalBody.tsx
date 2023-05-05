@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import Image from 'next/image';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { base } from '../../../../css/base';
 import Pizza from '../../../assets/pizza_3.png';
 import {
   FoodModalAddOnRequiredAtom,
@@ -67,10 +66,6 @@ const FoodModalBody = ({ data, showModal, type }: IFoodModalHeader) => {
           src={Pizza}
           layout="responsive"
           objectFit="cover"
-          style={{
-            minWidth: '100%',
-            maxHeight: base(40),
-          }}
           alt="hey"
           loading="eager"
         />

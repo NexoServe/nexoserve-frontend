@@ -1,6 +1,5 @@
 import Image from 'next/image';
 
-import { base } from '../../../../css/base';
 import Pizza from '../../../assets/pizza_1.png';
 
 import useStyles from './css';
@@ -14,8 +13,6 @@ const FoodCard = ({ food, activeFoodClick }: IFoodCard) => {
       <div className={classes.foodCardImgContainer}>
         <Image
           src={Pizza}
-          width={base(14)}
-          height={base(14)}
           layout="fill"
           objectFit="cover"
           alt="pizza"

@@ -38,6 +38,9 @@ const useStyles = createUseStyles({
 
   foodModalFooterQuantity: {
     width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     textAlign: 'center',
     fontSize: '18px',
     fontWeight: 600,
