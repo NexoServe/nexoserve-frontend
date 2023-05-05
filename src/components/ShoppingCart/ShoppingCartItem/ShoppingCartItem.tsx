@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import { motion } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -9,7 +9,6 @@ import {
   FoodModalSelectedItemsAtom,
 } from '../../../state/FoodModalState';
 import { ShowShoppingCartDetailsAtom } from '../../../state/ShoppingCartState';
-import calculateShoppingCartItemTotal from '../../../utils/calculateShoppingCartItemTotal';
 import FoodModal from '../../Food/FoodModal/FoodModal';
 import SvgIcons from '../../SvgIcons';
 
@@ -19,24 +18,12 @@ import { IShoppingCartItem } from './types';
 const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
   const [showUpdateFoodModal, setShowUpdateFoodModal] = useState(false);
   const showShoppingCartDetails = useRecoilValue(ShowShoppingCartDetailsAtom);
+
   const [, setFoodModal] = useRecoilState(FoodModalAtom);
   const [, setFoodModalSelectedItems] = useRecoilState(
     FoodModalSelectedItemsAtom,
   );
   const classes = useStyles();
-
-  const itemPrice = useMemo(() => {
-    const price = calculateShoppingCartItemTotal(
-      {
-        food: shoppingCartItem?.food,
-        selectedSize: shoppingCartItem?.selectedSize,
-        quantity: shoppingCartItem?.quantity,
-      },
-      shoppingCartItem?.selectedItems,
-    );
-
-    return price;
-  }, [shoppingCartItem]);
 
   const updateShoppingCartItem = () => {
     setFoodModal({
@@ -45,7 +32,15 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
       quantity: shoppingCartItem?.quantity,
     });
 
-    setFoodModalSelectedItems(shoppingCartItem?.selectedItems);
+    setFoodModalSelectedItems(
+      shoppingCartItem?.selectedItems?.map((item) => ({
+        addOnId: item?.addOnId as string,
+        id: item?.id,
+        name: item?.name,
+        price: item?.price,
+        itemSize: item?.itemSize,
+      })) || [],
+    );
 
     setShowUpdateFoodModal(true);
   };
@@ -64,7 +59,9 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
           <h3 className={classes.shoppingCartItemTitle}>
             {shoppingCartItem?.food?.name}
           </h3>
-          <div className={classes.shoppingCartItemPrice}>${itemPrice}</div>
+          <div className={classes.shoppingCartItemPrice}>
+            ${shoppingCartItem?.price.toFixed(2)}
+          </div>
         </div>
 
         <motion.div
@@ -84,11 +81,11 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
 
             {shoppingCartItem?.selectedItems?.map((selectedItem) => (
               <div
-                key={selectedItem.id}
+                key={selectedItem?.id}
                 className={classes.shoppingCartItemDetailsItem}
               >
                 {/* <span>2</span> */}
-                {selectedItem.name}
+                {selectedItem?.name}
               </div>
             ))}
           </div>

@@ -45,7 +45,7 @@ const FoodItem = ({ item, addOn }: IFoodItem) => {
           id: item?.id,
           name: item?.name,
           price: item?.price,
-          addOn: addOn?.id,
+          addOnId: addOn?.id,
           itemSize: item?.itemSizes?.find(
             (itemSize) => itemSize?.default === true,
           ),

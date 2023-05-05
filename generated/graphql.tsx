@@ -24,6 +24,13 @@ export type AddOn = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type BaseFood = {
+  __typename?: 'BaseFood';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+};
+
 export type Checkout = {
   __typename?: 'Checkout';
   clientSecret?: Maybe<Scalars['String']>;
@@ -187,10 +194,11 @@ export type QueryValidateShoppingCartArgs = {
 
 export type SelectedItem = {
   __typename?: 'SelectedItem';
+  addOnId: Scalars['String'];
   id: Scalars['String'];
+  itemSize?: Maybe<ItemSize>;
   name?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
-  selectedItemSize?: Maybe<ItemSize>;
 };
 
 export type ShoppingCart = {
@@ -210,13 +218,15 @@ export type ShoppingCartInput = {
 export type ShoppingCartItem = {
   __typename?: 'ShoppingCartItem';
   food?: Maybe<SimpleFood>;
-  foodSize?: Maybe<FoodSize>;
   orderItemId: Scalars['String'];
   price: Scalars['Float'];
+  quantity: Scalars['Int'];
   selectedItems?: Maybe<Array<Maybe<SelectedItem>>>;
+  selectedSize?: Maybe<FoodSize>;
 };
 
 export type ShoppingCartItemInput = {
+  addOnId: Scalars['String'];
   itemId: Scalars['String'];
   itemSizeId?: InputMaybe<Scalars['String']>;
 };
@@ -229,6 +239,13 @@ export type SimpleFood = {
   name?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
   sizes?: Maybe<Array<Maybe<FoodSize>>>;
+};
+
+export type SimpleFoodSize = {
+  __typename?: 'SimpleFoodSize';
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
 };
 
 export type CheckoutCalculateMutMutationVariables = Exact<{
@@ -269,7 +286,7 @@ export type ValidateShoppingCartQueryVariables = Exact<{
 }>;
 
 
-export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', grandTotal: number, shoppingCartItems: Array<{ __typename?: 'ShoppingCartItem', price: number, food?: { __typename?: 'SimpleFood', id?: string | null, name?: string | null, price?: number | null } | null, foodSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, selectedItems?: Array<{ __typename?: 'SelectedItem', id: string, name?: string | null, price?: number | null, selectedItemSize?: { __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null } | null } | null> | null } | null> } };
+export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', grandTotal: number, shoppingCartItems: Array<{ __typename?: 'ShoppingCartItem', orderItemId: string, price: number, quantity: number, food?: { __typename?: 'SimpleFood', id?: string | null, name?: string | null, price?: number | null } | null, selectedSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, selectedItems?: Array<{ __typename?: 'SelectedItem', id: string, name?: string | null, price?: number | null, addOnId: string, itemSize?: { __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null } | null } | null> | null } | null> } };
 
 export const AddOnFieldsFragmentDoc = gql`
     fragment AddOnFields on AddOn {
@@ -510,12 +527,13 @@ export const ValidateShoppingCartDocument = gql`
   validateShoppingCart(input: $input) {
     grandTotal
     shoppingCartItems {
+      orderItemId
       food {
         id
         name
         price
       }
-      foodSize {
+      selectedSize {
         id
         name
         price
@@ -524,13 +542,15 @@ export const ValidateShoppingCartDocument = gql`
         id
         name
         price
-        selectedItemSize {
+        addOnId
+        itemSize {
           id
           name
           price
         }
       }
       price
+      quantity
     }
   }
 }

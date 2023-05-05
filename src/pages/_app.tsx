@@ -9,6 +9,15 @@ import useStyles from '../../css/app';
 import { useApollo } from '../../lib/apolloClient';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  if (process.env.NODE_ENV === 'development') {
+    console.error = (messages, ...rest) => {
+      if (messages?.message?.includes('Duplicate atom key')) {
+        return;
+      }
+      console.warn(messages, ...rest);
+    };
+  }
+
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {

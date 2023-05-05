@@ -10,7 +10,7 @@ export type SelectedItemType = {
   price: number | null | undefined;
   name: string | null | undefined;
   itemSize: ItemSizeType | null | undefined;
-  addOn: string | null | undefined;
+  addOnId: string | null | undefined;
 };
 
 export type FoodModalType = {
@@ -32,6 +32,11 @@ export const FoodModalAddOnRequiredAtom = atom<AddOnType | undefined | null>({
 export const FoodModalSelectedItemsAtom = atom<SelectedItemType[]>({
   key: 'FoodModalSelectedItemsAtom',
   default: [],
+});
+
+export const FoodModalPriceAtom = atom<number>({
+  key: 'FoodModalPriceAtom',
+  default: 0,
 });
 
 export const FoodModalAtom = atom<FoodModalType>({

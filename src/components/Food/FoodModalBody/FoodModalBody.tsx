@@ -39,6 +39,20 @@ const FoodModalBody = ({ data, showModal, type }: IFoodModalHeader) => {
         },
         selectedSize: data?.foodById?.sizes?.[0],
       });
+    } else {
+      setFoodModal({
+        ...foodModal,
+        food: {
+          id: data?.foodById?.id,
+          name: data?.foodById?.name,
+          description: data?.foodById?.description,
+          price: data?.foodById?.price,
+          image: data?.foodById?.image,
+        },
+        selectedSize: data?.foodById?.sizes?.find(
+          (size) => size?.id === foodModal.selectedSize?.id,
+        ),
+      });
     }
   }, [data, setFoodModal, showModal, type]);
 

@@ -1,10 +1,11 @@
-import { useMemo } from 'react';
+import { useEffect } from 'react';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import {
   FoodModalAddOnRequiredAtom,
   FoodModalAtom,
+  FoodModalPriceAtom,
   FoodModalSelectedItemsAtom,
 } from '../../../state/FoodModalState';
 import calculateShoppingCartItemTotal from '../../../utils/calculateShoppingCartItemTotal';
@@ -18,11 +19,14 @@ const FoodModalFooter = ({ type }: IFoodModalFooter) => {
   const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
   const selectedItems = useRecoilValue(FoodModalSelectedItemsAtom);
   const [, setRequiredAddOn] = useRecoilState(FoodModalAddOnRequiredAtom);
+  const [foodModalPrice, setFoodModalPrice] =
+    useRecoilState(FoodModalPriceAtom);
 
   const classes = useStyles();
 
-  const price = useMemo(() => {
-    return calculateShoppingCartItemTotal(foodModal, selectedItems);
+  useEffect(() => {
+    const total = calculateShoppingCartItemTotal(foodModal, selectedItems);
+    setFoodModalPrice(parseFloat(total));
   }, [foodModal, selectedItems]);
 
   const decreaseQuantity = () => {
@@ -66,7 +70,7 @@ const FoodModalFooter = ({ type }: IFoodModalFooter) => {
         styleClass={classes.foodModalFooterButton}
         type="submit"
       >
-        {type === 'create' ? 'Add' : 'Update'} (${price})
+        {type === 'create' ? 'Add' : 'Update'} ({foodModalPrice})
       </Button>
     </div>
   );

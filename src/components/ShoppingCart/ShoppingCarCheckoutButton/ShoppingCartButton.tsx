@@ -1,8 +1,12 @@
 import { useMemo } from 'react';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { ShoppingCartAtom } from '../../../state/ShoppingCartState';
+import { SelectedItem } from '../../../../generated/graphql';
+import {
+  ShoppingCartAtom,
+  ShoppingCartTotalAtom,
+} from '../../../state/ShoppingCartState';
 import calculateShoppingCartItemTotal from '../../../utils/calculateShoppingCartItemTotal';
 import Button from '../../Button/Button';
 
@@ -14,34 +18,46 @@ const ShoppingCarCheckoutButton = ({
 }: IShoppingCartCheckoutButton) => {
   const styles = useStyles();
 
+  const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
+    ShoppingCartTotalAtom,
+  );
+
   const shoppingCart = useRecoilValue(ShoppingCartAtom);
 
   const totalPrice = useMemo(() => {
-    let total = 0;
+    if (!shoppingCartTotal.isValidated) {
+      let total = 0;
 
-    shoppingCart.forEach((item) => {
-      total += parseFloat(
-        calculateShoppingCartItemTotal(
-          {
-            food: item.food,
-            selectedSize: item.selectedSize,
-            quantity: item.quantity,
-          },
-          item.selectedItems,
-        ),
-      );
-    });
+      shoppingCart.forEach((item) => {
+        total += parseFloat(
+          calculateShoppingCartItemTotal(
+            {
+              food: item.food,
+              selectedSize: item.selectedSize,
+              quantity: item.quantity,
+            },
+            item?.selectedItems as SelectedItem[],
+          ),
+        );
+        console.log('TOTAL', total);
+      });
 
-    return total.toFixed(2);
+      setShoppingCartTotal({
+        ...shoppingCartTotal,
+        total: parseFloat(total.toFixed(2)),
+      });
+
+      return total.toFixed(2);
+    }
   }, [shoppingCart]);
+
+  console.log('totalPrice', totalPrice);
 
   return (
     <>
       {shoppingCart.length > 0 ? (
         <div className={styles.shoppingCartModalButtonBox}>
-          <Button>
-            Checkout (${validatedTotal ? validatedTotal : totalPrice})
-          </Button>
+          <Button>Checkout ${shoppingCartTotal.total.toFixed(2)}</Button>
         </div>
       ) : null}
     </>

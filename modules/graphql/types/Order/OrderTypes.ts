@@ -6,7 +6,8 @@ export const SelectedItem = objectType({
     t.nonNull.string(`id`);
     t.string(`name`);
     t.float(`price`);
-    t.field(`selectedItemSize`, {
+    t.nonNull.string('addOnId');
+    t.field(`itemSize`, {
       type: 'ItemSize',
     });
   },
@@ -19,13 +20,15 @@ export const ShoppingCartItem = objectType({
     t.field(`food`, {
       type: 'SimpleFood',
     });
-    t.field(`foodSize`, {
+    t.field(`selectedSize`, {
       type: 'FoodSize',
     });
     t.list.field(`selectedItems`, {
       type: 'SelectedItem',
     });
     t.nonNull.float(`price`);
+    t.nonNull.int(`quantity`);
+    t.nonNull.string(`orderItemId`);
   },
 });
 
@@ -44,6 +47,7 @@ export const ShoppingCartItemInput = inputObjectType({
   definition(t) {
     t.nonNull.string('itemId');
     t.string('itemSizeId');
+    t.nonNull.string('addOnId');
   },
 });
 

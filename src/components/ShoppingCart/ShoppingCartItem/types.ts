@@ -1,5 +1,5 @@
-import { ShoppingCartItemType } from '../../../state/ShoppingCartState';
+import { ShoppingCartItem } from '../../../../generated/graphql';
 
 export interface IShoppingCartItem {
-  shoppingCartItem: ShoppingCartItemType;
+  shoppingCartItem: ShoppingCartItem;
 }

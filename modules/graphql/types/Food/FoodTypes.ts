@@ -31,6 +31,15 @@ export const SimpleFood = objectType({
   },
 });
 
+export const BaseFood = objectType({
+  name: `BaseFood`,
+  definition(t) {
+    t.string(`id`);
+    t.string(`name`);
+    t.float(`price`);
+  },
+});
+
 export const FoodsByCategory = objectType({
   name: `FoodsByCategory`,
   definition(t) {

@@ -8,9 +8,13 @@ import {
   FoodModalAddOnRequiredAtom,
   FoodModalAddOnsAtom,
   FoodModalAtom,
+  FoodModalPriceAtom,
   FoodModalSelectedItemsAtom,
 } from '../../../state/FoodModalState';
-import { ShoppingCartAtom } from '../../../state/ShoppingCartState';
+import {
+  ShoppingCartAtom,
+  ShoppingCartTotalAtom,
+} from '../../../state/ShoppingCartState';
 import Draggable from '../../Draggable/Draggable';
 import Loader from '../../Loader/Loader';
 import { ModalPopUp } from '../../Modal/Modal';
@@ -34,6 +38,9 @@ const FoodModal = ({
     },
     notifyOnNetworkStatusChange: true,
   });
+  const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
+    ShoppingCartTotalAtom,
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +62,8 @@ const FoodModal = ({
   const [selectedItems, setSelectedItems] = useRecoilState(
     FoodModalSelectedItemsAtom,
   );
+  const [foodModalPrice, setFoodModalPrice] =
+    useRecoilState(FoodModalPriceAtom);
 
   const onClose = () => {
     setShowModal(false);
@@ -66,10 +75,11 @@ const FoodModal = ({
     setAddOns(undefined);
     setSelectedItems([]);
     setRequiredAddOn(undefined);
+    setFoodModalPrice(0);
   };
 
   useMemo(() => {
-    if (selectedItems.some((item) => item.addOn === requiredAddOn?.id)) {
+    if (selectedItems.some((item) => item.addOnId === requiredAddOn?.id)) {
       setRequiredAddOn(undefined);
     }
   }, [selectedItems, requiredAddOn, setRequiredAddOn]);
@@ -82,7 +92,7 @@ const FoodModal = ({
     );
 
     const requiredAddOn = requiredAddOns?.find((addOn) => {
-      return !selectedItems.some((item) => item.addOn === addOn?.id);
+      return !selectedItems.some((item) => item.addOnId === addOn?.id);
     });
 
     if (requiredAddOn) {
@@ -93,14 +103,34 @@ const FoodModal = ({
     if (type === 'create') {
       const orderItemId = v4();
 
+      setShoppingCartTotal({
+        ...shoppingCartTotal,
+        isValidated: false,
+      });
+
       setShoppingCart([
         ...shoppingCart,
         {
           orderItemId: orderItemId,
-          food: foodModal.food,
+          food: {
+            id: foodModal.food?.id as string,
+            name: foodModal.food?.name as string,
+            price: foodModal.food?.price as number,
+          },
           quantity: foodModal.quantity,
           selectedSize: foodModal.selectedSize,
-          selectedItems: selectedItems,
+          selectedItems: selectedItems.map((item) => ({
+            id: item.id as string,
+            name: item.name as string,
+            price: item.price as number,
+            addOnId: item.addOnId as string,
+            itemSize: {
+              id: item.itemSize?.id as string,
+              name: item.itemSize?.name as string,
+              price: item.itemSize?.price as number,
+            },
+          })),
+          price: foodModalPrice,
         },
       ]);
 
@@ -112,12 +142,31 @@ const FoodModal = ({
         localStorage.removeItem('shoppingCartItems');
       }
 
-      shoppingCartItemsParsed.push({
-        orderItemId: orderItemId,
-        food: foodModal.food,
+      shoppingCartItemsParsed?.push({
+        orderItemId: orderItemId as string,
+        food: {
+          id: foodModal.food?.id as string,
+          name: foodModal.food?.name as string,
+          price: foodModal.food?.price as number,
+        },
         quantity: foodModal.quantity,
-        selectedSize: foodModal.selectedSize ? foodModal.selectedSize : null,
-        selectedItems: selectedItems ? selectedItems : [],
+        selectedSize: {
+          id: foodModal.selectedSize?.id as string,
+          name: foodModal.selectedSize?.name as string,
+          price: foodModal.selectedSize?.price as number,
+        },
+        selectedItems: selectedItems.map((item) => ({
+          id: item.id as string,
+          name: item.name as string,
+          price: item.price as number,
+          addOnId: item.addOnId as string,
+          itemSize: {
+            id: item.itemSize?.id as string,
+            name: item.itemSize?.name as string,
+            price: item.itemSize?.price as number,
+          },
+        })),
+        price: foodModalPrice,
       });
 
       localStorage.setItem(
@@ -126,32 +175,55 @@ const FoodModal = ({
       );
 
       onClose();
+    } else {
+      setShoppingCartTotal({
+        ...shoppingCartTotal,
+        isValidated: false,
+      });
+
+      setShoppingCart((prevArray) => {
+        const index = prevArray.findIndex(
+          (item) => item.orderItemId === orderItemId,
+        );
+
+        if (index !== -1) {
+          const updatedArray = [...prevArray];
+          updatedArray[index] = {
+            orderItemId: orderItemId as string,
+            food: {
+              id: foodModal.food?.id as string,
+              name: foodModal.food?.name as string,
+              price: foodModal.food?.price as number,
+            },
+            quantity: foodModal.quantity,
+            selectedSize: foodModal.selectedSize,
+            selectedItems: selectedItems.map((item) => ({
+              id: item.id as string,
+              name: item.name as string,
+              price: item.price as number,
+              addOnId: item.addOnId as string,
+              itemSize: {
+                id: item.itemSize?.id as string,
+                name: item.itemSize?.name as string,
+                price: item.itemSize?.price as number,
+              },
+            })),
+            price: foodModalPrice,
+          };
+
+          localStorage.setItem(
+            'shoppingCartItems',
+            JSON.stringify(updatedArray),
+          );
+
+          return updatedArray;
+        }
+
+        return prevArray;
+      });
+
+      onClose();
     }
-
-    setShoppingCart((prevArray) => {
-      const index = prevArray.findIndex(
-        (item) => item.orderItemId === orderItemId,
-      );
-
-      if (index !== -1) {
-        const updatedArray = [...prevArray];
-        updatedArray[index] = {
-          ...prevArray[index],
-          food: foodModal.food,
-          quantity: foodModal.quantity,
-          selectedSize: foodModal.selectedSize,
-          selectedItems: selectedItems,
-        };
-
-        localStorage.setItem('shoppingCartItems', JSON.stringify(updatedArray));
-
-        return updatedArray;
-      }
-
-      return prevArray;
-    });
-
-    onClose();
   };
 
   return (

@@ -10,6 +10,12 @@ type AddOn {
   name: String
 }
 
+type BaseFood {
+  id: String
+  name: String
+  price: Float
+}
+
 type Checkout {
   clientSecret: String
   id: String
@@ -137,10 +143,11 @@ type Query {
 }
 
 type SelectedItem {
+  addOnId: String!
   id: String!
+  itemSize: ItemSize
   name: String
   price: Float
-  selectedItemSize: ItemSize
 }
 
 type ShoppingCart {
@@ -158,13 +165,15 @@ input ShoppingCartInput {
 
 type ShoppingCartItem {
   food: SimpleFood
-  foodSize: FoodSize
   orderItemId: String!
   price: Float!
+  quantity: Int!
   selectedItems: [SelectedItem]
+  selectedSize: FoodSize
 }
 
 input ShoppingCartItemInput {
+  addOnId: String!
   itemId: String!
   itemSizeId: String
 }
@@ -176,4 +185,10 @@ type SimpleFood {
   name: String
   price: Float
   sizes: [FoodSize]
+}
+
+type SimpleFoodSize {
+  id: String
+  name: String
+  price: Float
 }

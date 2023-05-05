@@ -2,7 +2,10 @@ import { useMemo } from 'react';
 
 import { useRecoilState } from 'recoil';
 
-import { FoodModalSelectedItemsAtom } from '../../../state/FoodModalState';
+import {
+  FoodModalSelectedItemsAtom,
+  SelectedItemType,
+} from '../../../state/FoodModalState';
 import FoodItemToppingStyleSize from '../FoodItemSizeToppingStyle/FoodItemSizeToppingStyle';
 
 import { IFoodItemSize } from './types';
@@ -35,13 +38,13 @@ const FoodItemSize = ({ itemSize, item, addOn }: IFoodItemSize) => {
       );
       setSelectedItems(filteredItems);
     } else if (itemSizeParent) {
-      const arr = selectedItems.map((selectItem) => {
+      const arr: SelectedItemType[] = selectedItems.map((selectItem) => {
         if (selectItem.name === item?.name) {
           return {
             id: item?.id,
             name: item?.name,
             price: item?.price,
-            addOn: addOn?.id,
+            addOnId: addOn?.id,
             itemSize: {
               id: itemSize?.id,
               name: itemSize?.name,
@@ -60,7 +63,7 @@ const FoodItemSize = ({ itemSize, item, addOn }: IFoodItemSize) => {
           id: item?.id,
           name: item?.name,
           price: item?.price,
-          addOn: addOn?.id,
+          addOnId: addOn?.id,
           itemSize: {
             id: itemSize?.id,
             name: itemSize?.name,

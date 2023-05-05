@@ -1,15 +1,23 @@
 import { atom } from 'recoil';
 
-import { FoodModalType, SelectedItemType } from './FoodModalState';
+import { ShoppingCartItem } from '../../generated/graphql';
 
-export interface ShoppingCartItemType extends FoodModalType {
-  orderItemId: string;
-  selectedItems: SelectedItemType[];
-}
+type ShoppingCartTotalType = {
+  total: number;
+  isValidated: boolean;
+};
 
-export const ShoppingCartAtom = atom<ShoppingCartItemType[]>({
+export const ShoppingCartAtom = atom<ShoppingCartItem[]>({
   key: 'ShoppingCartAtom',
   default: [],
+});
+
+export const ShoppingCartTotalAtom = atom<ShoppingCartTotalType>({
+  key: 'ShoppingCartTotalAtom',
+  default: {
+    total: 0,
+    isValidated: false,
+  },
 });
 
 export const ShowShoppingCartAtom = atom({

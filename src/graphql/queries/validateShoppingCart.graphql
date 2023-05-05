@@ -2,12 +2,13 @@ query ValidateShoppingCart($input: [ShoppingCartInput]!) {
   validateShoppingCart(input: $input) {
     grandTotal
     shoppingCartItems {
+      orderItemId
       food {
         id
         name
         price
       }
-      foodSize {
+      selectedSize {
         id
         name
         price
@@ -16,13 +17,15 @@ query ValidateShoppingCart($input: [ShoppingCartInput]!) {
         id
         name
         price
-        selectedItemSize {
+        addOnId
+        itemSize {
           id
           name
           price
         }
       }
       price
+      quantity
     }
   }
 }

@@ -12,6 +12,15 @@ export const FoodSize = objectType({
   },
 });
 
+export const SimpleFoodSize = objectType({
+  name: `SimpleFoodSize`,
+  definition(t) {
+    t.string(`id`);
+    t.string(`name`);
+    t.float(`price`);
+  },
+});
+
 export const CreateFoodSizeInput = inputObjectType({
   name: 'CreateFoodSizeInput',
   definition(t) {
