@@ -100,13 +100,15 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
         </motion.div>
       </motion.button>
 
-      <FoodModal
-        setShowModal={setShowUpdateFoodModal}
-        showModal={showUpdateFoodModal}
-        foodId={shoppingCartItem?.food?.id as string}
-        type="update"
-        orderItemId={shoppingCartItem?.orderItemId}
-      />
+      {showUpdateFoodModal && (
+        <FoodModal
+          setShowModal={setShowUpdateFoodModal}
+          showModal={showUpdateFoodModal}
+          foodId={shoppingCartItem?.food?.id as string}
+          type="update"
+          orderItemId={shoppingCartItem?.orderItemId}
+        />
+      )}
     </>
   );
 };

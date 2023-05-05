@@ -29,8 +29,6 @@ const ShoppingCartModal = () => {
     };
   }, [setShowShoppingCart]);
 
-  console.log('showShoppingCart', showShoppingCart);
-
   useMemo(() => {
     if (showShoppingCart) {
       document.body.style.overflow = 'hidden';

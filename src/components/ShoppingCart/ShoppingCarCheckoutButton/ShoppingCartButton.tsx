@@ -54,7 +54,12 @@ const ShoppingCarCheckoutButton = ({
     <>
       {shoppingCart.length > 0 ? (
         <div className={styles.shoppingCartModalButtonBox}>
-          <Button>Checkout ${shoppingCartTotal.total.toFixed(2)}</Button>
+          <Button>
+            Checkout $
+            {shoppingCartTotal.isValidated
+              ? shoppingCartTotal.total
+              : totalPrice}
+          </Button>
         </div>
       ) : null}
     </>

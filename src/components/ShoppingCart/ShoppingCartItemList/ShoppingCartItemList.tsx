@@ -30,7 +30,7 @@ const ShoppingCartItemList = () => {
           <ShoppingCartShowDetailsBtn
             styleClass={classes.shoppingCartItemListShowDetails}
           />
-          {shoppingCart.map((shoppingCartItem) => (
+          {shoppingCart?.map((shoppingCartItem) => (
             <>
               <ShoppingCartItem
                 shoppingCartItem={shoppingCartItem}

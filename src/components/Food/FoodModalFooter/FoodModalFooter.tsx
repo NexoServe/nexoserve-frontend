@@ -30,7 +30,7 @@ const FoodModalFooter = ({ type }: IFoodModalFooter) => {
   }, [foodModal, selectedItems]);
 
   const decreaseQuantity = () => {
-    if (foodModal.quantity > 1) {
+    if (foodModal.quantity > (type === 'create' ? 1 : 0)) {
       setFoodModal({ ...foodModal, quantity: foodModal.quantity - 1 });
     }
   };
@@ -53,8 +53,6 @@ const FoodModalFooter = ({ type }: IFoodModalFooter) => {
           className={classes.foodModalFooterQuantity}
           type="number"
           value={foodModal.quantity}
-          // {...methods.register('orderItemQuantity')}
-          // value={orderItemQuantity}
         />
         <button
           type="button"
@@ -70,7 +68,11 @@ const FoodModalFooter = ({ type }: IFoodModalFooter) => {
         styleClass={classes.foodModalFooterButton}
         type="submit"
       >
-        {type === 'create' ? 'Add' : 'Update'} ({foodModalPrice})
+        {foodModal.quantity === 0
+          ? 'Remove'
+          : type === 'create'
+          ? `Add ($${foodModalPrice.toFixed(2)})`
+          : `Update ($${foodModalPrice.toFixed(2)})`}
       </Button>
     </div>
   );

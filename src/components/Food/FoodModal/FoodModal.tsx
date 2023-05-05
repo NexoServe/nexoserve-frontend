@@ -188,37 +188,47 @@ const FoodModal = ({
 
         if (index !== -1) {
           const updatedArray = [...prevArray];
-          updatedArray[index] = {
-            orderItemId: orderItemId as string,
-            food: {
-              id: foodModal.food?.id as string,
-              name: foodModal.food?.name as string,
-              price: foodModal.food?.price as number,
-            },
-            quantity: foodModal.quantity,
-            selectedSize: foodModal.selectedSize,
-            selectedItems: selectedItems.map((item) => ({
-              id: item.id as string,
-              name: item.name as string,
-              price: item.price as number,
-              addOnName: item.addOnName as string,
-              itemSize: {
-                id: item.itemSize?.id as string,
-                name: item.itemSize?.name as string,
-                price: item.itemSize?.price as number,
+          if (foodModal.quantity === 0) {
+            updatedArray.splice(index, 1);
+
+            localStorage.setItem(
+              'shoppingCartItems',
+              JSON.stringify(updatedArray),
+            );
+
+            return updatedArray;
+          } else {
+            updatedArray[index] = {
+              orderItemId: orderItemId as string,
+              food: {
+                id: foodModal.food?.id as string,
+                name: foodModal.food?.name as string,
+                price: foodModal.food?.price as number,
               },
-            })),
-            price: foodModalPrice,
-          };
+              quantity: foodModal.quantity,
+              selectedSize: foodModal.selectedSize,
+              selectedItems: selectedItems.map((item) => ({
+                id: item.id as string,
+                name: item.name as string,
+                price: item.price as number,
+                addOnName: item.addOnName as string,
+                itemSize: {
+                  id: item.itemSize?.id as string,
+                  name: item.itemSize?.name as string,
+                  price: item.itemSize?.price as number,
+                },
+              })),
+              price: foodModalPrice,
+            };
 
-          localStorage.setItem(
-            'shoppingCartItems',
-            JSON.stringify(updatedArray),
-          );
+            localStorage.setItem(
+              'shoppingCartItems',
+              JSON.stringify(updatedArray),
+            );
 
-          return updatedArray;
+            return updatedArray;
+          }
         }
-
         return prevArray;
       });
 
