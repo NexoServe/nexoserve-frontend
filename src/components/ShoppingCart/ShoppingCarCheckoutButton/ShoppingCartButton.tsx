@@ -39,7 +39,6 @@ const ShoppingCarCheckoutButton = ({
             item?.selectedItems as SelectedItem[],
           ),
         );
-        console.log('TOTAL', total);
       });
 
       setShoppingCartTotal({
@@ -50,8 +49,6 @@ const ShoppingCarCheckoutButton = ({
       return total.toFixed(2);
     }
   }, [shoppingCart]);
-
-  console.log('totalPrice', totalPrice);
 
   return (
     <>

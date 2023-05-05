@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -25,14 +25,6 @@ export const ModalPopUp = ({
 
   const classes = useStyles();
   Modal.setAppElement('#__next');
-
-  useMemo(() => {
-    if (show) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [show]);
 
   return (
     <AnimatePresence mode="wait">

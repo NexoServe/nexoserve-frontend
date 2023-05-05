@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { useRecoilState } from 'recoil';
 
@@ -29,8 +29,21 @@ const ShoppingCartModal = () => {
     };
   }, [setShowShoppingCart]);
 
+  console.log('showShoppingCart', showShoppingCart);
+
+  useMemo(() => {
+    if (showShoppingCart) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [showShoppingCart]);
+
   return (
-    <ModalPopUp showModal={showShoppingCart}>
+    <ModalPopUp
+      showModal={showShoppingCart}
+      onClose={() => setShowShoppingCart(false)}
+    >
       <Draggable
         onDragDown={() => setShowShoppingCart(false)}
         styleClass={classes.shoppingCartModal}

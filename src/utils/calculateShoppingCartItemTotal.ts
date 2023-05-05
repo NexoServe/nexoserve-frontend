@@ -7,9 +7,6 @@ const calculateShoppingCartItemTotal = (
 ) => {
   let foodPrice: number = foodModal.food?.price as number;
 
-  console.log('foodModal');
-  console.log('selectedItems', selectedItems);
-
   if (foodModal.selectedSize) {
     foodPrice = foodModal.selectedSize.price ?? 0;
   }

@@ -226,6 +226,14 @@ const FoodModal = ({
     }
   };
 
+  useMemo(() => {
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [showModal]);
+
   return (
     <ModalPopUp showModal={showModal} onClose={() => onClose()}>
       <Draggable onDragDown={() => onClose()} styleClass={classes.foodModal}>
