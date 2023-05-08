@@ -1,3 +1,5 @@
+import colors from '../../../css/colors';
+
 import { SvgIconsType } from './types';
 
 const Close = ({
@@ -16,7 +18,7 @@ const Close = ({
     >
       <path
         d="M1.21803 0L0 1.21803L6.28197 7.5L0 13.782L1.21803 15L7.5 8.71803L13.782 15L15 13.782L8.71803 7.5L15 1.21803L13.782 0L7.5 6.28197L1.21803 0Z"
-        fill="#626262"
+        fill={colors.black}
       />
     </svg>
   );

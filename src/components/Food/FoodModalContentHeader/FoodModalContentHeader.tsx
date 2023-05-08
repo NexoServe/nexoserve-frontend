@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 
+import colors from '../../../../css/colors';
 import SvgIcons from '../../SvgIcons';
 
 import useStyles from './css';
@@ -21,10 +22,10 @@ const FoodModalContentHeader = ({
         style={
           isRequiredAddOn
             ? {
-                border: '1px solid red',
+                border: `1px solid ${colors.red}`,
                 padding: '0.2rem 0.5rem',
                 borderRadius: '0.5rem',
-                color: 'red',
+                color: colors.red,
               }
             : {}
         }

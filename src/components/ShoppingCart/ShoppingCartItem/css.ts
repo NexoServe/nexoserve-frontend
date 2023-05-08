@@ -62,6 +62,7 @@ const useStyles = createUseStyles({
   shoppingCartItemDetailsInner: {
     gridColumn: '2/3',
     fontSize: '14px',
+    lineHeight: '16px',
     textAlign: 'left',
     paddingBottom: base(2),
   },

@@ -18,7 +18,7 @@ const Checkbox = ({ isChecked }: ICheckbox) => {
       }}
       initial={{ backgroundColor: 'transparent' }}
       animate={{
-        backgroundColor: isChecked ? colors.black : '#fff',
+        backgroundColor: isChecked ? colors.black : colors.white,
       }}
       exit={{ backgroundColor: 'transparent' }}
       transition={{ duration: 0.3 }}
@@ -42,7 +42,7 @@ const Checkbox = ({ isChecked }: ICheckbox) => {
               }}
               exit={{ pathLength: 0 }}
               d="M3.5 9.5L8 14L21 1"
-              stroke="#fff"
+              stroke={colors.white}
               strokeWidth="3"
               strokeLinecap="round"
             />

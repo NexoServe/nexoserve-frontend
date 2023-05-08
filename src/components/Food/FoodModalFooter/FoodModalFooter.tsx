@@ -22,6 +22,7 @@ const FoodModalFooter = ({ type }: IFoodModalFooter) => {
   const classes = useStyles();
   const total = useRecoilValue(foodModalTotalSelector);
 
+  console.log('total', total);
   useEffect(() => {
     setFoodModalPrice(total);
   }, [total, setFoodModalPrice]);
