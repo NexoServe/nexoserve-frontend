@@ -10,6 +10,7 @@ import {
 } from '../../../state/FoodModalState';
 import {
   ShoppingCartAtom,
+  ShoppingCartTotalAtom,
   ShowShoppingCartDetailsAtom,
 } from '../../../state/ShoppingCartState';
 import FoodModal from '../../Food/FoodModal/FoodModal';
@@ -27,6 +28,9 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
     FoodModalSelectedItemsAtom,
   );
   const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
+  const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
+    ShoppingCartTotalAtom,
+  );
   const classes = useStyles();
 
   const updateShoppingCartItem = () => {
@@ -57,6 +61,10 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
     localStorage.setItem('shoppingCartItems', JSON.stringify(newShoppingCart));
 
     setShoppingCart(newShoppingCart);
+    setShoppingCartTotal({
+      ...shoppingCartTotal,
+      isValidated: false,
+    });
   };
 
   return (
