@@ -12,13 +12,11 @@ const useStyles = createUseStyles({
     flexDirection: 'column',
   },
 
-  shoppingCartInner: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    border: `1px solid rgba(0, 0, 0, 0.1)`,
-    borderRadius: base(2),
+  shoppingCartCheckout: {
+    minHeight: '100%',
+  },
 
+  shoppingCartInner: {
     [queries.l]: {
       maxHeight: '70vh',
       height: '70vh',

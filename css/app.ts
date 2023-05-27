@@ -64,6 +64,10 @@ export default createUseStyles({
     input: {
       fontFamily: 'Montserrat, sans-serif',
     },
+
+    '.Label': {
+      fontSize: '160px',
+    },
   },
 
   app: {

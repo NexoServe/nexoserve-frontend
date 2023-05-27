@@ -12,7 +12,6 @@ const useStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    background: colors.white,
     borderTopLeftRadius: base(2),
     borderTopRightRadius: base(2),
     position: 'relative',
@@ -38,6 +37,10 @@ const useStyles = createUseStyles({
     },
   },
 
+  shoppingCartHeaderCloseButtonCheckout: {
+    display: 'none',
+  },
+
   shoppingCartHeaderShowDetails: {
     display: 'none',
     padding: 0,
@@ -45,6 +48,10 @@ const useStyles = createUseStyles({
     [queries.l]: {
       display: 'flex',
     },
+  },
+
+  shoppingCartHeaderShowDetailsCheckout: {
+    display: 'flex',
   },
 });
 

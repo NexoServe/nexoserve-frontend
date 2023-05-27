@@ -1,19 +1,26 @@
-import React from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
+import { useRecoilState } from 'recoil';
+
+import { ShoppingCartTotalAtom } from '../../../state/ShoppingCartState';
+import Button from '../../Button/Button';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = React.useState('');
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
+    ShoppingCartTotalAtom,
+  );
+  const [message, setMessage] = useState<string | null | undefined>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!stripe) {
       return;
     }
@@ -44,11 +51,11 @@ export default function CheckoutForm() {
     });
   }, [stripe]);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
+      // Stripe.js hasn't yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
@@ -59,7 +66,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: 'http://localhost:3000/checkout',
+        return_url: `${window.location.origin}`,
       },
     });
 
@@ -69,7 +76,7 @@ export default function CheckoutForm() {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error.message as string);
+      setMessage(error.message);
     } else {
       setMessage('An unexpected error occurred.');
     }
@@ -79,13 +86,35 @@ export default function CheckoutForm() {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
+      <PaymentElement
+        id="payment-element"
+        options={{
+          wallets: {
+            applePay: 'auto',
+            googlePay: 'auto',
+          },
+        }}
+      />
+
+      <Button
+        id="submit"
+        disabled={isLoading || !stripe || !elements}
+        title="Pay Now"
+        style={{
+          height: '60px',
+          marginTop: '20px',
+          marginBottom: '10px',
+          fontSize: '16px',
+        }}
+      >
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : 'Pay now'}
+          {isLoading ? (
+            <div className="spinner" id="spinner"></div>
+          ) : (
+            `Place Pick up order ($${shoppingCartTotal.grandTotal?.toFixed(2)})`
+          )}
         </span>
-      </button>
-      {/* Show any error or success messages */}
+      </Button>
       {message && <div id="payment-message">{message}</div>}
     </form>
   );

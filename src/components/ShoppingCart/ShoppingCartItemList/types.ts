@@ -1,3 +1,3 @@
 export interface IShoppingCartItemList {
-  validatedData?: [];
+  isCheckout: boolean;
 }

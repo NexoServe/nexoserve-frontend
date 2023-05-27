@@ -66,9 +66,11 @@ export interface NexusGenInputs {
   ShoppingCartInput: { // input type
     foodId: string; // String!
     foodSizeId?: string | null; // String
+    isTipPercentage?: boolean | null; // Boolean
     items: Array<NexusGenInputs['ShoppingCartItemInput'] | null>; // [ShoppingCartItemInput]!
     orderItemId: string; // String!
     quantity: number; // Int!
+    tip?: number | null; // Float
   }
   ShoppingCartItemInput: { // input type
     addOnName: string; // String!
@@ -158,8 +160,11 @@ export interface NexusGenObjects {
     price?: number | null; // Float
   }
   ShoppingCart: { // root type
-    grandTotal: number; // Float!
+    grandTotal?: number | null; // Float
     shoppingCartItems: Array<NexusGenRootTypes['ShoppingCartItem'] | null>; // [ShoppingCartItem]!
+    subTotal: number; // Float!
+    tax?: number | null; // Float
+    tip?: number | null; // Float
   }
   ShoppingCartItem: { // root type
     food?: NexusGenRootTypes['SimpleFood'] | null; // SimpleFood
@@ -274,8 +279,11 @@ export interface NexusGenFieldTypes {
     price: number | null; // Float
   }
   ShoppingCart: { // field return type
-    grandTotal: number; // Float!
+    grandTotal: number | null; // Float
     shoppingCartItems: Array<NexusGenRootTypes['ShoppingCartItem'] | null>; // [ShoppingCartItem]!
+    subTotal: number; // Float!
+    tax: number | null; // Float
+    tip: number | null; // Float
   }
   ShoppingCartItem: { // field return type
     food: NexusGenRootTypes['SimpleFood'] | null; // SimpleFood
@@ -382,6 +390,9 @@ export interface NexusGenFieldTypeNames {
   ShoppingCart: { // field return type name
     grandTotal: 'Float'
     shoppingCartItems: 'ShoppingCartItem'
+    subTotal: 'Float'
+    tax: 'Float'
+    tip: 'Float'
   }
   ShoppingCartItem: { // field return type name
     food: 'SimpleFood'
@@ -409,7 +420,7 @@ export interface NexusGenFieldTypeNames {
 export interface NexusGenArgTypes {
   Mutation: {
     CheckoutCalculateMut: { // args
-      input: NexusGenInputs['CheckoutCalculateInput']; // CheckoutCalculateInput!
+      input: Array<NexusGenInputs['ShoppingCartInput'] | null>; // [ShoppingCartInput]!
     }
     createFood: { // args
       input: NexusGenInputs['CreateFoodInput']; // CreateFoodInput!

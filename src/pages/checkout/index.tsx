@@ -1,46 +1,51 @@
-// Make sure to call loadStripe outside of a component’s render to avoid
-// recreating the Stripe object on every render.
-// This is your test publishable API key.
+import { useEffect } from 'react';
 
-// const stripePromise = loadStripe(
-//   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
-// );
+import { loadStripe } from '@stripe/stripe-js';
+import { useRecoilValue } from 'recoil';
+
+import { useCheckoutCalculateMutMutation } from '../../../generated/graphql';
+import CheckoutContact from '../../components/Checkout/CheckoutContact/CheckoutContact';
+import CheckoutDetails from '../../components/Checkout/CheckoutDetails/CheckoutDetails';
+import CheckoutOrder from '../../components/Checkout/CheckoutOrder/CheckoutOrder';
+import CheckoutPayment from '../../components/Checkout/CheckoutPayment/CheckoutPayment';
+import Container from '../../components/Container/Container';
+import {
+  ShoppingCartAtom,
+  ShoppingCartTipAtom,
+} from '../../state/ShoppingCartState';
+import getShoppingCartInput from '../../utils/shoppingCartInput';
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
+);
 
 const Checkout = () => {
-  // const cart = useRecoilValue(OrderAtom);
-  // const [checkoutCalculateMut, { data }] = useCheckoutCalculateMutMutation();
+  const shoppingCart = useRecoilValue(ShoppingCartAtom);
+  const shoppingCartTip = useRecoilValue(ShoppingCartTipAtom);
+  const [checkoutCalculateMut, { data }] = useCheckoutCalculateMutMutation();
 
-  // React.useEffect(() => {
-  //   if (cart) {
-  //     checkoutCalculateMut({
-  //       variables: {
-  //         checkoutCalculateMutInput2: {
-  //           orders: cart,
-  //         },
-  //       },
-  //       context: {
-  //         Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
-  //       },
-  //     });
-  //   }
-  // }, [cart, checkoutCalculateMut]);
+  useEffect(() => {
+    if (shoppingCart) {
+      checkoutCalculateMut({
+        variables: {
+          input: getShoppingCartInput({
+            shoppingCartTip: shoppingCartTip,
+          }),
+        },
+        context: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
+        },
+      });
+    }
+  }, [shoppingCart, checkoutCalculateMut]);
 
   return (
-    <div className="App">
-      {/* {data?.CheckoutCalculateMut?.clientSecret && (
-        <Elements
-          options={{
-            clientSecret: data?.CheckoutCalculateMut?.clientSecret,
-            appearance: {
-              theme: 'stripe',
-            },
-          }}
-          stripe={stripePromise}
-        >
-          <CheckoutForm />
-        </Elements>
-      )} */}
-    </div>
+    <Container>
+      <CheckoutDetails />
+      <CheckoutContact />
+      <CheckoutOrder />
+      <CheckoutPayment />
+    </Container>
   );
 };
 

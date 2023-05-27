@@ -94,7 +94,6 @@ const useStyles = createUseStyles({
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
-    zIndex: 2,
 
     '& button': {
       display: 'flex',

@@ -1,92 +1,50 @@
 import { useEffect } from 'react';
 
-import classNames from 'classnames';
 import { useRecoilState } from 'recoil';
 
 import {
-  ShoppingCartInput,
   ShoppingCartItem,
-  ShoppingCartItemInput,
   useValidateShoppingCartLazyQuery,
 } from '../../../../generated/graphql';
 import {
   ShoppingCartAtom,
+  ShoppingCartTipAtom,
   ShoppingCartTotalAtom,
 } from '../../../state/ShoppingCartState';
+import fetchShoppingCart from '../../../utils/fetchShoppingCart';
+import RoundBorder from '../../RoundBorder/RoundBorder';
 import ShoppingCarCheckoutButton from '../ShoppingCarCheckoutButton/ShoppingCartButton';
+import ShoppingCartCheckout from '../ShoppingCartCheckout/ShoppingCartCheckout';
 import ShoppingCartHeader from '../ShoppingCartHeader/ShoppingCartHeader';
 import ShoppingCartItemList from '../ShoppingCartItemList/ShoppingCartItemList';
 
 import useStyles from './css';
 import { IShoppingCart } from './types';
 
-const ShoppingCart = ({ styleClass }: IShoppingCart) => {
+const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
   const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
   const [, setShoppingCartTotal] = useRecoilState(ShoppingCartTotalAtom);
+  const [shoppingCartTip, setShoppingCartTip] =
+    useRecoilState(ShoppingCartTipAtom);
 
   const [fetchValidateShoppingCart, { data }] =
     useValidateShoppingCartLazyQuery();
 
   useEffect(() => {
-    if (shoppingCart.length <= 0) {
-      const shoppingCartItems = localStorage.getItem('shoppingCartItems');
-
-      let shoppingCartItemsParsed: ShoppingCartItem[] = [];
-      try {
-        shoppingCartItemsParsed = JSON.parse(shoppingCartItems as string);
-      } catch (error) {
-        localStorage.removeItem('shoppingCartItems');
-      }
-
-      shoppingCartItemsParsed?.filter((item) => {
-        if (typeof item === 'object' && !Array.isArray(item)) {
-          const requiredProperties = [
-            'orderItemId',
-            'food',
-            'quantity',
-            'selectedItems',
-            'selectedSize',
-          ];
-          if (!requiredProperties.every((prop) => item.hasOwnProperty(prop))) {
-            return false;
-          }
-
-          return true;
-        } else {
-          return false;
-        }
+    if (isCheckout) {
+      fetchShoppingCart({
+        fetchValidateShoppingCart: fetchValidateShoppingCart,
+        shoppingCartTip: shoppingCartTip,
       });
-
-      const shoppingCartInput: ShoppingCartInput[] =
-        shoppingCartItemsParsed?.map((item) => {
-          return {
-            orderItemId: item?.orderItemId,
-            foodId: item?.food?.id as string,
-            foodSizeId: item?.selectedSize?.id,
-            items: item?.selectedItems?.map((selectedItem) => {
-              return {
-                itemId: selectedItem?.id as string,
-                itemSizeId: selectedItem?.itemSize?.id as string,
-                addOnName: selectedItem?.addOnName as string,
-              };
-            }) as ShoppingCartItemInput[],
-            quantity: item?.quantity,
-          };
+    } else {
+      if (shoppingCart.length <= 0) {
+        fetchShoppingCart({
+          fetchValidateShoppingCart: fetchValidateShoppingCart,
+          shoppingCartTip: shoppingCartTip,
         });
-
-      if (shoppingCartInput?.length > 0) {
-        async function fetchData() {
-          await fetchValidateShoppingCart({
-            variables: {
-              input: shoppingCartInput,
-            },
-          });
-        }
-
-        fetchData();
       }
     }
-  }, []);
+  }, [shoppingCart, isCheckout, shoppingCartTip]);
 
   useEffect(() => {
     if (data) {
@@ -109,9 +67,17 @@ const ShoppingCart = ({ styleClass }: IShoppingCart) => {
         JSON.stringify(shoppingCartValidated || []),
       );
 
+      console.log('data', data);
+
       setShoppingCartTotal({
         isValidated: true,
-        total: data?.validateShoppingCart.grandTotal as number,
+        subtotal: data?.validateShoppingCart.subTotal as number,
+        grandTotal: data.validateShoppingCart.grandTotal,
+        tax: data.validateShoppingCart.tax,
+        tip:
+          data.validateShoppingCart.tip === null
+            ? 0
+            : data.validateShoppingCart.tip,
       });
     }
   }, [data]);
@@ -119,14 +85,16 @@ const ShoppingCart = ({ styleClass }: IShoppingCart) => {
   const classes = useStyles();
 
   return (
-    <div className={classNames(styleClass, classes.shoppingCart)}>
-      <div className={classes.shoppingCartInner}>
-        <ShoppingCartHeader />
-        <ShoppingCartItemList />
-        <ShoppingCarCheckoutButton
-          validatedTotal={data?.validateShoppingCart?.grandTotal}
-        />
-      </div>
+    <div
+      className={`${styleClass} ${classes.shoppingCart} ${
+        isCheckout && classes.shoppingCartCheckout
+      }`}
+    >
+      <RoundBorder styleClass={classes.shoppingCartInner}>
+        <ShoppingCartHeader isCheckout={isCheckout} />
+        <ShoppingCartItemList isCheckout={isCheckout} />
+        {isCheckout ? <ShoppingCartCheckout /> : <ShoppingCarCheckoutButton />}
+      </RoundBorder>
     </div>
   );
 };

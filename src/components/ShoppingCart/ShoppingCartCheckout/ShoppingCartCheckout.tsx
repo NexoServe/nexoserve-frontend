@@ -1,0 +1,55 @@
+import Link from 'next/link';
+import { useRecoilState } from 'recoil';
+
+import { ShoppingCartTotalAtom } from '../../../state/ShoppingCartState';
+import Divider from '../../Divider/Divider';
+import ShoppingCartCheckoutTips from '../ShoppingCartCheckoutTips/ShoppingCartCheckoutTips';
+
+import useStyles from './css';
+
+const ShoppingCartCheckout = () => {
+  const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
+    ShoppingCartTotalAtom,
+  );
+
+  const classes = useStyles();
+  return (
+    <>
+      <div className={classes.shoppingCartCheckoutLinkBox}>
+        <Link href={'/'}>
+          <a className={classes.shoppingCartCheckoutLink}>Add Another Item</a>
+        </Link>
+      </div>
+
+      <Divider />
+      <div className={classes.shoppingCartCheckout}>
+        <div className={classes.shoppingCartCheckoutInner}>
+          <h4 className={classes.shoppingCartCheckoutLabel}>Subtotal: </h4>
+          <div>${shoppingCartTotal.subtotal}</div>
+        </div>
+        <div className={classes.shoppingCartCheckoutInner}>
+          <h4 className={classes.shoppingCartCheckoutLabel}>Tax: </h4>
+          <div>${shoppingCartTotal.tax}</div>
+        </div>
+        <div className={classes.shoppingCartCheckoutInner}>
+          <h4 className={classes.shoppingCartCheckoutLabel}>Tip: </h4>
+          <div>${shoppingCartTotal.tip?.toFixed(2)}</div>
+        </div>
+        <ShoppingCartCheckoutTips />
+
+        <div className={classes.shoppingCartCheckoutInner}>
+          <h4
+            className={`${classes.shoppingCartCheckoutLabel} ${classes.shoppingCartCheckoutTotalLabel}`}
+          >
+            Total:{' '}
+          </h4>
+          <div className={classes.shoppingCartCheckoutTotalDiv}>
+            ${shoppingCartTotal.grandTotal?.toFixed(2)}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default ShoppingCartCheckout;
