@@ -42,6 +42,8 @@ const useStyles = createUseStyles({
   shoppingCartCheckoutModal: {
     background: colors.white,
     width: '80vw',
+    maxWidth: base(50),
+    borderRadius: base(2),
     height: '300px',
   },
 });
