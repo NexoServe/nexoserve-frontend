@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { useRouter } from 'next/router';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { SelectedItem } from '../../../../generated/graphql';
@@ -14,6 +15,7 @@ import useStyles from './css';
 
 const ShoppingCarCheckoutButton = () => {
   const styles = useStyles();
+  const router = useRouter();
 
   const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
     ShoppingCartTotalAtom,
@@ -47,7 +49,9 @@ const ShoppingCarCheckoutButton = () => {
     <>
       {shoppingCart.length > 0 ? (
         <div className={styles.shoppingCartModalButtonBox}>
-          <Button>Checkout ${shoppingCartTotal.subtotal.toFixed(2)}</Button>
+          <Button onClick={() => router.push('/checkout')}>
+            Checkout ${shoppingCartTotal.subtotal.toFixed(2)}
+          </Button>
         </div>
       ) : null}
     </>

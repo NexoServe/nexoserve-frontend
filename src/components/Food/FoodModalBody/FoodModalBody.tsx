@@ -8,6 +8,7 @@ import {
   FoodModalAddOnRequiredAtom,
   FoodModalAddOnsAtom,
   FoodModalAtom,
+  FoodModalSelectedSizeAtom,
 } from '../../../state/FoodModalState';
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
 import FoodModalContentHeader from '../FoodModalContentHeader/FoodModalContentHeader';
@@ -22,6 +23,9 @@ const FoodModalBody = ({ data, showModal, type }: IFoodModalHeader) => {
   const classes = useStyles();
 
   const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
+  const [foodModalSelectedSize, setFoodModalSelectedSize] = useRecoilState(
+    FoodModalSelectedSizeAtom,
+  );
   const [addOns, setAddOns] = useRecoilState(FoodModalAddOnsAtom);
   const requiredAddOn = useRecoilValue(FoodModalAddOnRequiredAtom);
 
@@ -49,7 +53,7 @@ const FoodModalBody = ({ data, showModal, type }: IFoodModalHeader) => {
           image: data?.foodById?.image,
         },
         selectedSize: data?.foodById?.sizes?.find(
-          (size) => size?.id === foodModal.selectedSize?.id,
+          (size) => size?.id === foodModalSelectedSize?.id,
         ),
       });
     }

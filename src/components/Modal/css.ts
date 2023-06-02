@@ -32,7 +32,7 @@ const useStyles = createUseStyles({
   modalInner: {
     position: 'relative',
     zIndex: zIndex.modal + 1,
-    width: 'max-content',
+    minWidth: 'max-content',
   },
 });
 

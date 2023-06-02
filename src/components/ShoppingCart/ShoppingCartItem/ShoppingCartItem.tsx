@@ -7,6 +7,7 @@ import { base } from '../../../../css/base';
 import {
   FoodModalAtom,
   FoodModalSelectedItemsAtom,
+  FoodModalSelectedSizeAtom,
 } from '../../../state/FoodModalState';
 import {
   ShoppingCartAtom,
@@ -23,7 +24,10 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
   const [showUpdateFoodModal, setShowUpdateFoodModal] = useState(false);
   const showShoppingCartDetails = useRecoilValue(ShowShoppingCartDetailsAtom);
 
-  const [, setFoodModal] = useRecoilState(FoodModalAtom);
+  const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
+  const [foodModalSelectedSize, setFoodModalSelectedSize] = useRecoilState(
+    FoodModalSelectedSizeAtom,
+  );
   const [, setFoodModalSelectedItems] = useRecoilState(
     FoodModalSelectedItemsAtom,
   );
@@ -34,11 +38,16 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
   const classes = useStyles();
 
   const updateShoppingCartItem = () => {
+    console.log('shoppingCartItem', shoppingCartItem.selectedSize);
     setFoodModal({
       food: shoppingCartItem?.food,
       selectedSize: shoppingCartItem?.selectedSize,
       quantity: shoppingCartItem?.quantity,
     });
+
+    setFoodModalSelectedSize(shoppingCartItem?.selectedSize);
+
+    console.log('foodModal1', foodModal);
 
     setFoodModalSelectedItems(
       shoppingCartItem?.selectedItems?.map((item) => ({
@@ -133,15 +142,17 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
         </AnimatePresence>
       </motion.div>
 
-      {showUpdateFoodModal && (
-        <FoodModal
-          setShowModal={setShowUpdateFoodModal}
-          showModal={showUpdateFoodModal}
-          foodId={shoppingCartItem?.food?.id as string}
-          type="update"
-          orderItemId={shoppingCartItem?.orderItemId}
-        />
-      )}
+      <AnimatePresence mode="wait">
+        {showUpdateFoodModal && (
+          <FoodModal
+            setShowModal={setShowUpdateFoodModal}
+            showModal={showUpdateFoodModal}
+            foodId={shoppingCartItem?.food?.id as string}
+            type="update"
+            orderItemId={shoppingCartItem?.orderItemId}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };

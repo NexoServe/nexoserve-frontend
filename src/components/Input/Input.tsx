@@ -12,8 +12,6 @@ const Input = ({
 }: IInput) => {
   const classes = useStyles();
 
-  console.log('rest', rest);
-
   return (
     <div className={classNames(styleClass)}>
       <label className={classes.inputLabel}>

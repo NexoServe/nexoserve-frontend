@@ -49,7 +49,12 @@ export default createUseStyles({
     li: {
       ...body,
     },
+
     '.focus-visible': {
+      outline: `2px dotted ${colors.black}`,
+    },
+
+    'label:focus-within': {
       outline: `2px dotted ${colors.black}`,
     },
 

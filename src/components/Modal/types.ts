@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface IModal {
+export interface IModalPopUp {
   showModal: boolean;
   children: ReactNode;
   styleClass?: string;

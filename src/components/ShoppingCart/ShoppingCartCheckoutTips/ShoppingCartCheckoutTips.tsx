@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { ShoppingCartTipAtom } from '../../../state/ShoppingCartState';
-import Draggable from '../../Draggable/Draggable';
 import { ModalPopUp } from '../../Modal/Modal';
 
 import useStyles from './css';
@@ -89,9 +88,9 @@ const ShoppingCartCheckoutTips = () => {
           setShowCustomTip(false);
         }}
       >
-        <Draggable onDragDown={() => setShowCustomTip(false)}>
+        <div>
           <div className={classes.shoppingCartCheckoutModal}>hey</div>
-        </Draggable>
+        </div>
       </ModalPopUp>
     </>
   );
