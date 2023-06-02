@@ -67,8 +67,6 @@ const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
         JSON.stringify(shoppingCartValidated || []),
       );
 
-      console.log('data', data);
-
       setShoppingCartTotal({
         isValidated: true,
         subtotal: data?.validateShoppingCart.subTotal as number,

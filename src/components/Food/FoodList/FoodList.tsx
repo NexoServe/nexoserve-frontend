@@ -24,8 +24,6 @@ const FoodList = () => {
     setShowModal(true);
   };
 
-  console.log('showModal', showModal);
-
   return (
     <div>
       {data?.foodsByCategory?.map((foodByCategory) => (

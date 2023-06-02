@@ -38,7 +38,6 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
   const classes = useStyles();
 
   const updateShoppingCartItem = () => {
-    console.log('shoppingCartItem', shoppingCartItem.selectedSize);
     setFoodModal({
       food: shoppingCartItem?.food,
       selectedSize: shoppingCartItem?.selectedSize,
@@ -46,8 +45,6 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
     });
 
     setFoodModalSelectedSize(shoppingCartItem?.selectedSize);
-
-    console.log('foodModal1', foodModal);
 
     setFoodModalSelectedItems(
       shoppingCartItem?.selectedItems?.map((item) => ({

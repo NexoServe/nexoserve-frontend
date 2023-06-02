@@ -30,8 +30,6 @@ export const ModalPopUp = ({
   const classes = useStyles();
   Modal.setAppElement('#__next');
 
-  console.log('MODAL', showModal);
-
   return (
     <Modal
       isOpen={showModal}
