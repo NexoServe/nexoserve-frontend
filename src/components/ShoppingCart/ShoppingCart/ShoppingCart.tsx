@@ -85,10 +85,14 @@ const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
   return (
     <div
       className={`${styleClass} ${classes.shoppingCart} ${
-        isCheckout && classes.shoppingCartCheckout
+        isCheckout ? classes.shoppingCartCheckout : ''
       }`}
     >
-      <RoundBorder styleClass={classes.shoppingCartInner}>
+      <RoundBorder
+        styleClass={`${classes.shoppingCartInner} ${
+          isCheckout ? classes.shoppingCartInnerCheckout : ''
+        }`}
+      >
         <ShoppingCartHeader isCheckout={isCheckout} />
         <ShoppingCartItemList isCheckout={isCheckout} />
         {isCheckout ? <ShoppingCartCheckout /> : <ShoppingCarCheckoutButton />}

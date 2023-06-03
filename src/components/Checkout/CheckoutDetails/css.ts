@@ -1,10 +1,16 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
+import queries from '../../../../css/queries';
 
 const useStyles = createUseStyles({
   checkoutDetails: {
     padding: `0 ${base(2)}`,
+    maxHeight: '100%',
+
+    [queries.l]: {
+      height: 'auto',
+    },
   },
 
   checkoutDetailsContentItem: {

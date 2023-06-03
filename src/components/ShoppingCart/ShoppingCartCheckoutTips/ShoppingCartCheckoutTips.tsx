@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { AnimatePresence } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 
 import { ShoppingCartTipAtom } from '../../../state/ShoppingCartState';
@@ -82,16 +83,20 @@ const ShoppingCartCheckoutTips = () => {
         </button>
       </div>
 
-      <ModalPopUp
-        showModal={showCustomTip}
-        onClose={() => {
-          setShowCustomTip(false);
-        }}
-      >
-        <div>
-          <div className={classes.shoppingCartCheckoutModal}>hey</div>
-        </div>
-      </ModalPopUp>
+      <AnimatePresence>
+        {showCustomTip && (
+          <ModalPopUp
+            showModal={showCustomTip}
+            onClose={() => {
+              setShowCustomTip(false);
+            }}
+          >
+            <div>
+              <div className={classes.shoppingCartCheckoutModal}>hey</div>
+            </div>
+          </ModalPopUp>
+        )}
+      </AnimatePresence>
     </>
   );
 };
