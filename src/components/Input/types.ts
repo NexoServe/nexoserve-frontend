@@ -8,5 +8,5 @@ export interface IInput
   styleClass?: string;
   label: string;
   isRequired?: boolean;
-  isPhoneNumber?: boolean;
+  error: string | null;
 }

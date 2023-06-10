@@ -9,20 +9,33 @@ const useStyles = createUseStyles({
     flexDirection: 'column',
     fontSize: '16px',
     lineHeight: '18px',
-    fontWeight: 500,
-    marginBottom: base(1),
+    marginBottom: base(0.75),
   },
 
   inputLabelRequired: {
     color: colors.red,
   },
+
   input: {
     height: base(4),
-    padding: `0 ${base(1)}`,
-    borderRadius: base(1),
+    padding: `0.75rem`,
+    borderRadius: base(0.5),
     marginTop: base(0.5),
-    border: `1px solid rgba(0, 0, 0, 0.1)`,
+    border: `1px solid #e1e1e1`,
+    fontSize: '16px',
     background: colors.white,
+    boxShadow:
+      '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02)',
+  },
+
+  inputError: {
+    borderColor: colors.red,
+    borderWidth: '2px',
+  },
+
+  inputErrorMessage: {
+    color: colors.red,
+    marginBottom: base(1.5),
   },
 });
 

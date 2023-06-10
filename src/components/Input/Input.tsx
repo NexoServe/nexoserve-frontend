@@ -6,8 +6,9 @@ import { IInput } from './types';
 const Input = ({
   styleClass,
   isRequired = false,
-  isPhoneNumber = false,
   label,
+
+  error,
   ...rest
 }: IInput) => {
   const classes = useStyles();
@@ -20,8 +21,12 @@ const Input = ({
           {isRequired && <span className={classes.inputLabelRequired}>*</span>}
         </div>
 
-        <input className={classes.input} {...rest} />
+        <input
+          className={`${classes.input} ${error && classes.inputError}`}
+          {...rest}
+        />
       </label>
+      {error && <div className={classes.inputErrorMessage}>{error}</div>}
     </div>
   );
 };

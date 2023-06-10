@@ -7,16 +7,51 @@ import {
 } from '@stripe/react-stripe-js';
 import { useRecoilState } from 'recoil';
 
+import {
+  CheckoutEmailAtom,
+  CheckoutEmailErrorAtom,
+  CheckoutFirstNameAtom,
+  CheckoutFirstNameErrorAtom,
+  CheckoutLastNameAtom,
+  CheckoutLastNameErrorAtom,
+  CheckoutPhoneNumberAtom,
+  CheckoutPhoneNumberErrorAtom,
+  isCheckoutContactIncompleteAtom,
+} from '../../../state/CheckoutState';
 import { ShoppingCartTotalAtom } from '../../../state/ShoppingCartState';
 import Button from '../../Button/Button';
+
+import useStyles from './css';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
+  const classes = useStyles();
 
   const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
     ShoppingCartTotalAtom,
   );
+  const [firstName, setFirstName] = useRecoilState(CheckoutFirstNameAtom);
+  const [firstNameError, setFirstNameError] = useRecoilState(
+    CheckoutFirstNameErrorAtom,
+  );
+
+  const [lastName, setLastName] = useRecoilState(CheckoutLastNameAtom);
+  const [lastNameError, setLastNameError] = useRecoilState(
+    CheckoutLastNameErrorAtom,
+  );
+
+  const [email, setEmail] = useRecoilState(CheckoutEmailAtom);
+  const [emailError, setEmailError] = useRecoilState(CheckoutEmailErrorAtom);
+
+  const [phone, setPhone] = useRecoilState(CheckoutPhoneNumberAtom);
+  const [phoneError, setPhoneError] = useRecoilState(
+    CheckoutPhoneNumberErrorAtom,
+  );
+
+  const [isCheckoutContactIncomplete, setIsCheckoutContactIncomplete] =
+    useRecoilState(isCheckoutContactIncompleteAtom);
+
   const [message, setMessage] = useState<string | null | undefined>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -53,6 +88,28 @@ export default function CheckoutForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsCheckoutContactIncomplete(false);
+
+    if (firstName === '') {
+      setFirstNameError(true);
+    }
+
+    if (lastName === '') {
+      setLastNameError(true);
+    }
+
+    if (email === '') {
+      setEmailError(true);
+    }
+
+    if (phone === '') {
+      setPhoneError(true);
+    }
+
+    if (firstName === '' || lastName === '' || email === '' || phone === '') {
+      setIsCheckoutContactIncomplete(true);
+      return;
+    }
 
     if (!stripe || !elements) {
       // Stripe.js hasn't yet loaded.
@@ -109,13 +166,19 @@ export default function CheckoutForm() {
       >
         <span id="button-text">
           {isLoading ? (
-            <div className="spinner" id="spinner"></div>
+            <div className="spinner" id="spinner">
+              Loading...
+            </div>
           ) : (
             `Place Pick up order ($${shoppingCartTotal.grandTotal?.toFixed(2)})`
           )}
         </span>
       </Button>
-      {message && <div id="payment-message">{message}</div>}
+      {message && (
+        <div className={classes.checkoutFormError} id="payment-message">
+          {message}
+        </div>
+      )}
     </form>
   );
 }
