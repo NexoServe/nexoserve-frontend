@@ -6,7 +6,9 @@ import {
   useStripe,
 } from '@stripe/react-stripe-js';
 import { useRecoilState } from 'recoil';
+import SkeletonLoader from 'tiny-skeleton-loader-react';
 
+import colors from '../../../../css/colors';
 import {
   CheckoutEmailAtom,
   CheckoutEmailErrorAtom,
@@ -20,6 +22,7 @@ import {
 } from '../../../state/CheckoutState';
 import { ShoppingCartTotalAtom } from '../../../state/ShoppingCartState';
 import Button from '../../Button/Button';
+import Loader from '../../Loader/Loader';
 
 import useStyles from './css';
 
@@ -155,24 +158,46 @@ export default function CheckoutForm() {
 
       <Button
         id="submit"
-        disabled={isLoading || !stripe || !elements}
+        disabled={
+          isLoading || !stripe || !elements || shoppingCartTotal.isLoading
+        }
         title="Pay Now"
         style={{
           height: '60px',
           marginTop: '20px',
           marginBottom: '10px',
           fontSize: '16px',
+          background: isLoading ? 'rgba(238, 231, 165, 0.7)' : colors.primary,
         }}
       >
-        <span id="button-text">
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          id="button-text"
+        >
           {isLoading ? (
-            <div className="spinner" id="spinner">
-              Loading...
-            </div>
+            <Loader width="50px" height="50px" scale={0.5} />
           ) : (
-            `Place Pick up order ($${shoppingCartTotal.grandTotal?.toFixed(2)})`
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <div style={{ whiteSpace: 'nowrap' }}>Place Pick up order (</div>
+              {shoppingCartTotal.isLoading ? (
+                <SkeletonLoader background={colors.darkGray} width={50} />
+              ) : (
+                `$${shoppingCartTotal.grandTotal?.toFixed(2)}`
+              )}
+              )
+            </div>
           )}
-        </span>
+        </div>
       </Button>
       {message && (
         <div className={classes.checkoutFormError} id="payment-message">

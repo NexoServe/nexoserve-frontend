@@ -23,11 +23,13 @@ import { IShoppingCart } from './types';
 
 const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
   const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
-  const [, setShoppingCartTotal] = useRecoilState(ShoppingCartTotalAtom);
+  const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
+    ShoppingCartTotalAtom,
+  );
   const [shoppingCartTip, setShoppingCartTip] =
     useRecoilState(ShoppingCartTipAtom);
 
-  const [fetchValidateShoppingCart, { data }] =
+  const [fetchValidateShoppingCart, { data, loading }] =
     useValidateShoppingCartLazyQuery();
 
   useEffect(() => {
@@ -47,7 +49,12 @@ const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
   }, [shoppingCart, isCheckout, shoppingCartTip]);
 
   useEffect(() => {
-    if (data) {
+    if (loading) {
+      setShoppingCartTotal({
+        ...shoppingCartTotal,
+        isLoading: true,
+      });
+    } else if (data) {
       const shoppingCartValidated: ShoppingCartItem[] =
         data?.validateShoppingCart.shoppingCartItems.map(
           (shoppingCartItem) => ({
@@ -76,9 +83,10 @@ const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
           data.validateShoppingCart.tip === null
             ? 0
             : data.validateShoppingCart.tip,
+        isLoading: false,
       });
     }
-  }, [data]);
+  }, [data, loading]);
 
   const classes = useStyles();
 

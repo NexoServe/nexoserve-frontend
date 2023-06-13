@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
+import SkeletonLoader from 'tiny-skeleton-loader-react';
 
+import colors from '../../../../css/colors';
 import { ShoppingCartTotalAtom } from '../../../state/ShoppingCartState';
 import Divider from '../../Divider/Divider';
 import ShoppingCartCheckoutTips from '../ShoppingCartCheckoutTips/ShoppingCartCheckoutTips';
@@ -25,15 +27,27 @@ const ShoppingCartCheckout = () => {
       <div className={classes.shoppingCartCheckout}>
         <div className={classes.shoppingCartCheckoutInner}>
           <h4 className={classes.shoppingCartCheckoutLabel}>Subtotal: </h4>
-          <div>${shoppingCartTotal.subtotal}</div>
+          {shoppingCartTotal.isLoading ? (
+            <SkeletonLoader background={colors.darkGray} width={50} />
+          ) : (
+            <div>${shoppingCartTotal.subtotal}</div>
+          )}
         </div>
         <div className={classes.shoppingCartCheckoutInner}>
           <h4 className={classes.shoppingCartCheckoutLabel}>Tax: </h4>
-          <div>${shoppingCartTotal.tax}</div>
+          {shoppingCartTotal.isLoading ? (
+            <SkeletonLoader background={colors.darkGray} width={50} />
+          ) : (
+            <div>${shoppingCartTotal.tax?.toFixed(2)}</div>
+          )}
         </div>
         <div className={classes.shoppingCartCheckoutInner}>
           <h4 className={classes.shoppingCartCheckoutLabel}>Tip: </h4>
-          <div>${shoppingCartTotal.tip?.toFixed(2)}</div>
+          {shoppingCartTotal.isLoading ? (
+            <SkeletonLoader background={colors.darkGray} width={50} />
+          ) : (
+            <div>${shoppingCartTotal.tip?.toFixed(2)}</div>
+          )}
         </div>
         <ShoppingCartCheckoutTips />
 
@@ -43,9 +57,13 @@ const ShoppingCartCheckout = () => {
           >
             Total:{' '}
           </h4>
-          <div className={classes.shoppingCartCheckoutTotalDiv}>
-            ${shoppingCartTotal.grandTotal?.toFixed(2)}
-          </div>
+          {shoppingCartTotal.isLoading ? (
+            <SkeletonLoader background={colors.darkGray} width={50} />
+          ) : (
+            <div className={classes.shoppingCartCheckoutTotalDiv}>
+              ${shoppingCartTotal.grandTotal?.toFixed(2)}
+            </div>
+          )}
         </div>
       </div>
     </>

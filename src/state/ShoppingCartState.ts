@@ -8,6 +8,7 @@ type ShoppingCartTotalType = {
   tip: number | undefined | null;
   grandTotal: number | undefined | null;
   isValidated: boolean;
+  isLoading: boolean;
 };
 
 export type ShoppingCartTipType = {
@@ -28,6 +29,7 @@ export const ShoppingCartTotalAtom = atom<ShoppingCartTotalType>({
     tip: undefined,
     grandTotal: undefined,
     isValidated: false,
+    isLoading: false,
   },
 });
 

@@ -8,6 +8,13 @@ const useStyles = createUseStyles({
     color: colors.red,
     padding: `${base(1)} 0`,
   },
+
+  skeleton: {
+    width: '100px',
+    height: '100%',
+
+    lineHeight: 1,
+  },
 });
 
 export default useStyles;
