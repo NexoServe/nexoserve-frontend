@@ -78,6 +78,7 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
       <motion.div
         animate={{ rowGap: showShoppingCartDetails ? base(1) : 0 }}
         className={classes.shoppingCartItem}
+        onClick={updateShoppingCartItem}
       >
         <div
           onClick={updateShoppingCartItem}
@@ -127,7 +128,12 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
                 ))}
               </div>
               <div className={classes.shoppingCartItemDeleteButton}>
-                <button onClick={removeShoppingCartItem}>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeShoppingCartItem();
+                  }}
+                >
                   <SvgIcons name="closeFilled" />
                 </button>
               </div>
