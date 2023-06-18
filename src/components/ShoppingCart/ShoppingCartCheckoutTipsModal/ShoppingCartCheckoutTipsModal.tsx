@@ -51,7 +51,7 @@ const ShoppingCartCheckoutTipsModal = ({
         />
         <Button
           type="submit"
-          className={classes.shoppingCartCheckoutTipsModalButton}
+          styleClass={classes.shoppingCartCheckoutTipsModalButton}
         >
           Add Tip
         </Button>
