@@ -50,7 +50,7 @@ const ShoppingCarCheckoutButton = () => {
       {shoppingCart.length > 0 ? (
         <div className={styles.shoppingCartModalButtonBox}>
           <Button onClick={() => router.push('/checkout')}>
-            Checkout ${shoppingCartTotal.subtotal.toFixed(2)}
+            Checkout (${shoppingCartTotal.subtotal.toFixed(2)})
           </Button>
         </div>
       ) : null}

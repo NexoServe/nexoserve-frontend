@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 
 import { ShoppingCartTipAtom } from '../../../state/ShoppingCartState';
 import { ModalPopUp } from '../../Modal/Modal';
+import ShoppingCartCheckoutTipsModal from '../ShoppingCartCheckoutTipsModal/ShoppingCartCheckoutTipsModal';
 
 import useStyles from './css';
 
@@ -35,7 +36,9 @@ const ShoppingCartCheckoutTips = () => {
         </button>
         <button
           className={`${classes.shoppingCartCheckoutTip} ${
-            shoppingCartTip.tip === 10 && classes.shoppingCartCheckoutTipActive
+            shoppingCartTip.isTipPercentage === true &&
+            shoppingCartTip.tip === 10 &&
+            classes.shoppingCartCheckoutTipActive
           }`}
           onClick={() =>
             setShoppingCartTip({
@@ -48,7 +51,9 @@ const ShoppingCartCheckoutTips = () => {
         </button>
         <button
           className={`${classes.shoppingCartCheckoutTip} ${
-            shoppingCartTip.tip === 15 && classes.shoppingCartCheckoutTipActive
+            shoppingCartTip.isTipPercentage === true &&
+            shoppingCartTip.tip === 15 &&
+            classes.shoppingCartCheckoutTipActive
           }`}
           onClick={() =>
             setShoppingCartTip({
@@ -61,7 +66,9 @@ const ShoppingCartCheckoutTips = () => {
         </button>
         <button
           className={`${classes.shoppingCartCheckoutTip} ${
-            shoppingCartTip.tip === 20 && classes.shoppingCartCheckoutTipActive
+            shoppingCartTip.isTipPercentage === true &&
+            shoppingCartTip.tip === 20 &&
+            classes.shoppingCartCheckoutTipActive
           }`}
           onClick={() =>
             setShoppingCartTip({
@@ -75,6 +82,7 @@ const ShoppingCartCheckoutTips = () => {
         <button
           className={`${classes.shoppingCartCheckoutTip} ${
             shoppingCartTip.isTipPercentage === false &&
+            shoppingCartTip.tip !== 0 &&
             classes.shoppingCartCheckoutTipActive
           }`}
           onClick={() => setShowCustomTip(true)}
@@ -91,9 +99,9 @@ const ShoppingCartCheckoutTips = () => {
               setShowCustomTip(false);
             }}
           >
-            <div>
-              <div className={classes.shoppingCartCheckoutModal}>hey</div>
-            </div>
+            <ShoppingCartCheckoutTipsModal
+              setShowCustomTip={setShowCustomTip}
+            />
           </ModalPopUp>
         )}
       </AnimatePresence>

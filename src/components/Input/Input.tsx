@@ -7,7 +7,6 @@ const Input = ({
   styleClass,
   isRequired = false,
   label,
-
   error,
   ...rest
 }: IInput) => {

@@ -30,7 +30,7 @@ const ShoppingCartCheckout = () => {
           {shoppingCartTotal.isLoading ? (
             <SkeletonLoader background={colors.darkGray} width={50} />
           ) : (
-            <div>${shoppingCartTotal.subtotal}</div>
+            <div>${shoppingCartTotal.subtotal.toFixed(2)}</div>
           )}
         </div>
         <div className={classes.shoppingCartCheckoutInner}>
@@ -49,6 +49,7 @@ const ShoppingCartCheckout = () => {
             <div>${shoppingCartTotal.tip?.toFixed(2)}</div>
           )}
         </div>
+
         <ShoppingCartCheckoutTips />
 
         <div className={classes.shoppingCartCheckoutInner}>
