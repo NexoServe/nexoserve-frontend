@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { useRecoilValue } from 'recoil';
 
 import colors from '../../../../css/colors';
-import { useCheckoutCalculateMutMutation } from '../../../../generated/graphql';
+import { useValidateShoppingCartLazyQuery } from '../../../../generated/graphql';
 import {
   ShoppingCartAtom,
   ShoppingCartTipAtom,
+  ShoppingCartTotalAtom,
 } from '../../../state/ShoppingCartState';
 import getShoppingCartInput from '../../../utils/shoppingCartInput';
 import RoundBorder from '../../RoundBorder/RoundBorder';
@@ -17,24 +18,21 @@ import CheckoutHeader from '../CheckoutHeader/CheckoutHeader';
 
 import useStyles from './css';
 
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
-);
-
 const CheckoutPayment = () => {
   const classes = useStyles();
   const shoppingCart = useRecoilValue(ShoppingCartAtom);
+  const shoppingCartTotal = useRecoilValue(ShoppingCartTotalAtom);
   const shoppingCartTip = useRecoilValue(ShoppingCartTipAtom);
-  const [clientSecret, setClientSecret] = useState<string | null | undefined>(
-    null,
-  );
-  const [checkoutCalculateMut] = useCheckoutCalculateMutMutation();
+
+  const [validateShoppingCart, { data }] = useValidateShoppingCartLazyQuery();
+
+  const [stripePromise, setStripePromise] = useState<Stripe | null>(null);
 
   useEffect(() => {
-    const initializeStripeElements = async () => {
+    const fetchValidateShoppingCart = async () => {
       if (shoppingCart) {
         try {
-          const response = await checkoutCalculateMut({
+          await validateShoppingCart({
             variables: {
               input: getShoppingCartInput({
                 shoppingCartTip: shoppingCartTip,
@@ -45,43 +43,61 @@ const CheckoutPayment = () => {
             },
           });
 
-          setClientSecret(response?.data?.CheckoutCalculateMut?.clientSecret);
+          if (!stripePromise) {
+            const stripe = await loadStripe(
+              process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
+            );
+
+            setStripePromise(stripe);
+          }
         } catch (error) {
-          console.error('Error calculating checkout:', error);
+          console.error('Error validating shoppingCart:', error);
         }
       }
     };
 
-    initializeStripeElements();
-  }, [shoppingCart, shoppingCartTip, checkoutCalculateMut]);
+    fetchValidateShoppingCart();
+  }, [shoppingCart, shoppingCartTip]);
+
+  console.log('data', data);
+  console.log('shoppingCartTotal', shoppingCartTotal);
 
   return (
-    <RoundBorder styleClass={classes.checkoutPayment}>
-      <CheckoutHeader title="Payment" />
-      {clientSecret && (
-        <Elements
-          options={{
-            clientSecret: clientSecret,
-            appearance: {
-              theme: 'stripe',
-              variables: {
-                fontFamily: 'Montserrat, sans-serif',
-                fontSizeBase: '16px',
-                fontSizeSm: '16px',
-                colorBackground: colors.white,
-                colorText: colors.black,
-                fontWeightMedium: '800',
-                fontWeightNormal: '500',
-                colorDanger: colors.red,
+    <>
+      <RoundBorder styleClass={classes.checkoutPayment}>
+        <CheckoutHeader title="Payment" />
+        {stripePromise !== undefined && (
+          <Elements
+            stripe={stripePromise}
+            options={{
+              // @ts-expect-error: unsupported types
+              mode: 'payment',
+              amount: data?.validateShoppingCart?.grandTotal
+                ? data?.validateShoppingCart?.grandTotal * 100
+                : 1,
+              currency: 'usd',
+              payment_method_types: ['card', 'cashapp'],
+              paymentMethodCreation: 'manual',
+              appearance: {
+                theme: 'stripe',
+                variables: {
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontSizeBase: '16px',
+                  fontSizeSm: '16px',
+                  colorBackground: colors.white,
+                  colorText: colors.black,
+                  fontWeightMedium: '800',
+                  fontWeightNormal: '500',
+                  colorDanger: colors.red,
+                },
               },
-            },
-          }}
-          stripe={stripePromise}
-        >
-          <CheckoutForm />
-        </Elements>
-      )}
-    </RoundBorder>
+            }}
+          >
+            <CheckoutForm />
+          </Elements>
+        )}
+      </RoundBorder>
+    </>
   );
 };
 

@@ -14,6 +14,7 @@
     "predev": "yarn run generate",
     "dev": "next",
     "dev:ts": "yarn lint && yarn dev & yarn ts:watch",
+    "dev:https": "node server.js",
     "type-check": "tsc --noEmit --incremental",
     "ts:watch": "yarn type-check --watch",
     "prebuild": "yarn run generate",

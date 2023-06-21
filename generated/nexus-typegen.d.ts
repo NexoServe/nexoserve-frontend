@@ -106,6 +106,7 @@ export interface NexusGenObjects {
   Checkout: { // root type
     clientSecret?: string | null; // String
     id?: string | null; // String
+    status?: string | null; // String
     total?: number | null; // Float
   }
   Food: { // root type
@@ -215,6 +216,7 @@ export interface NexusGenFieldTypes {
   Checkout: { // field return type
     clientSecret: string | null; // String
     id: string | null; // String
+    status: string | null; // String
     total: number | null; // Float
   }
   Food: { // field return type
@@ -324,6 +326,7 @@ export interface NexusGenFieldTypeNames {
   Checkout: { // field return type name
     clientSecret: 'String'
     id: 'String'
+    status: 'String'
     total: 'Float'
   }
   Food: { // field return type name
@@ -421,6 +424,7 @@ export interface NexusGenArgTypes {
   Mutation: {
     CheckoutCalculateMut: { // args
       input: Array<NexusGenInputs['ShoppingCartInput'] | null>; // [ShoppingCartInput]!
+      paymentMethodId: string; // String!
     }
     createFood: { // args
       input: NexusGenInputs['CreateFoodInput']; // CreateFoodInput!

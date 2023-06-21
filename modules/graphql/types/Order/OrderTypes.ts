@@ -84,6 +84,7 @@ export const Checkout = objectType({
     t.string(`id`);
     t.float(`total`);
     t.string('clientSecret');
+    t.string('status');
   },
 });
 

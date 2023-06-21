@@ -1,4 +1,4 @@
-import { extendType, list, nonNull } from 'nexus';
+import { extendType, list, nonNull, stringArg } from 'nexus';
 
 import { NexusGenInputs } from '../../../../generated/nexus-typegen';
 import calculateTotal from '../../../utils/calculateTotal';
@@ -12,21 +12,29 @@ export const CheckoutCalculateMut = extendType({
       type: 'Checkout',
       args: {
         input: nonNull(list(ShoppingCartInput)),
+        paymentMethodId: nonNull(stringArg()),
       },
-      async resolve(_parent, { input }, ctx) {
+      async resolve(_parent, { input, paymentMethodId }, ctx) {
         const result = await calculateTotal({
           ctx: ctx,
           input: input as NexusGenInputs['ShoppingCartInput'][],
         });
 
         const paymentIntent = await ctx.stripe.paymentIntents.create({
+          confirm: true,
           amount: parseInt((result.grandTotal * 100).toFixed(0)),
           currency: 'usd',
+          payment_method_types: ['card', 'cashapp'],
+          payment_method: paymentMethodId, // the PaymentMethod ID sent by your client
+          return_url: 'https://localhost:3000',
+          use_stripe_sdk: true,
+          capture_method: 'manual',
         });
 
         return {
           total: result.grandTotal,
           clientSecret: paymentIntent.client_secret,
+          status: paymentIntent.status,
         };
       },
     });

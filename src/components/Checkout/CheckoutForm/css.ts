@@ -7,6 +7,7 @@ const useStyles = createUseStyles({
   checkoutFormError: {
     color: colors.red,
     padding: `${base(1)} 0`,
+    lineHeight: '18px',
   },
 
   skeleton: {

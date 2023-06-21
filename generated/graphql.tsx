@@ -35,6 +35,7 @@ export type Checkout = {
   __typename?: 'Checkout';
   clientSecret?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Float']>;
 };
 
@@ -147,6 +148,7 @@ export type Mutation = {
 
 export type MutationCheckoutCalculateMutArgs = {
   input: Array<InputMaybe<ShoppingCartInput>>;
+  paymentMethodId: Scalars['String'];
 };
 
 
@@ -255,10 +257,11 @@ export type SimpleFoodSize = {
 
 export type CheckoutCalculateMutMutationVariables = Exact<{
   input: Array<InputMaybe<ShoppingCartInput>> | InputMaybe<ShoppingCartInput>;
+  paymentMethodId: Scalars['String'];
 }>;
 
 
-export type CheckoutCalculateMutMutation = { __typename?: 'Mutation', CheckoutCalculateMut: { __typename?: 'Checkout', id?: string | null, total?: number | null, clientSecret?: string | null } };
+export type CheckoutCalculateMutMutation = { __typename?: 'Mutation', CheckoutCalculateMut: { __typename?: 'Checkout', id?: string | null, total?: number | null, clientSecret?: string | null, status?: string | null } };
 
 export type CreateOrderMutationVariables = Exact<{
   createOrderInput: CreateOrderInput;
@@ -312,11 +315,12 @@ export const AddOnFieldsFragmentDoc = gql`
 }
     `;
 export const CheckoutCalculateMutDocument = gql`
-    mutation CheckoutCalculateMut($input: [ShoppingCartInput]!) {
-  CheckoutCalculateMut(input: $input) {
+    mutation CheckoutCalculateMut($input: [ShoppingCartInput]!, $paymentMethodId: String!) {
+  CheckoutCalculateMut(input: $input, paymentMethodId: $paymentMethodId) {
     id
     total
     clientSecret
+    status
   }
 }
     `;
@@ -336,6 +340,7 @@ export type CheckoutCalculateMutMutationFn = Apollo.MutationFunction<CheckoutCal
  * const [checkoutCalculateMutMutation, { data, loading, error }] = useCheckoutCalculateMutMutation({
  *   variables: {
  *      input: // value for 'input'
+ *      paymentMethodId: // value for 'paymentMethodId'
  *   },
  * });
  */

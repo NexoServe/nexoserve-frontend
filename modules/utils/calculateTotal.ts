@@ -144,10 +144,7 @@ const calculateTotal = async ({ input, ctx }: ICalculateTotal) => {
     subTotal: parseFloat(subTotal.toFixed(2)),
     tax: parseFloat((subTotal * taxRate).toFixed(2)),
     tip: parseFloat(tip.toFixed(2)) || undefined,
-    grandTotal:
-      parseFloat(subTotal.toFixed(2)) +
-        parseFloat((subTotal * taxRate).toFixed(2)) +
-        parseFloat(tip.toFixed(2)) || 0,
+    grandTotal: parseFloat((subTotal + subTotal * taxRate + tip).toFixed(2)),
     shoppingCartItems: filteredResult,
   };
 };

@@ -1,14 +1,15 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import SkeletonLoader from 'tiny-skeleton-loader-react';
 
 import colors from '../../../../css/colors';
+import { useCheckoutCalculateMutMutation } from '../../../../generated/graphql';
 import {
   CheckoutEmailAtom,
   CheckoutEmailErrorAtom,
@@ -20,7 +21,11 @@ import {
   CheckoutPhoneNumberErrorAtom,
   isCheckoutContactIncompleteAtom,
 } from '../../../state/CheckoutState';
-import { ShoppingCartTotalAtom } from '../../../state/ShoppingCartState';
+import {
+  ShoppingCartTipAtom,
+  ShoppingCartTotalAtom,
+} from '../../../state/ShoppingCartState';
+import getShoppingCartInput from '../../../utils/shoppingCartInput';
 import Button from '../../Button/Button';
 import Loader from '../../Loader/Loader';
 
@@ -58,61 +63,33 @@ export default function CheckoutForm() {
   const [message, setMessage] = useState<string | null | undefined>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (!stripe) {
-      return;
-    }
-
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      'payment_intent_client_secret',
-    );
-
-    if (!clientSecret) {
-      return;
-    }
-
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent?.status) {
-        case 'succeeded':
-          setMessage('Payment succeeded!');
-          break;
-        case 'processing':
-          setMessage('Your payment is processing.');
-          break;
-        case 'requires_payment_method':
-          setMessage('Your payment was not successful, please try again.');
-          break;
-        default:
-          setMessage('Something went wrong.');
-          break;
-      }
-    });
-  }, [stripe]);
+  const [checkoutCalculateMut, { data }] = useCheckoutCalculateMutMutation();
+  const shoppingCartTip = useRecoilValue(ShoppingCartTipAtom);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsCheckoutContactIncomplete(false);
+    // setIsCheckoutContactIncomplete(false);
 
-    if (firstName === '') {
-      setFirstNameError(true);
-    }
+    // if (firstName === '') {
+    //   setFirstNameError(true);
+    // }
 
-    if (lastName === '') {
-      setLastNameError(true);
-    }
+    // if (lastName === '') {
+    //   setLastNameError(true);
+    // }
 
-    if (email === '') {
-      setEmailError(true);
-    }
+    // if (email === '') {
+    //   setEmailError(true);
+    // }
 
-    if (phone === '') {
-      setPhoneError(true);
-    }
+    // if (phone === '') {
+    //   setPhoneError(true);
+    // }
 
-    if (firstName === '' || lastName === '' || email === '' || phone === '') {
-      setIsCheckoutContactIncomplete(true);
-      return;
-    }
+    // if (firstName === '' || lastName === '' || email === '' || phone === '') {
+    //   setIsCheckoutContactIncomplete(true);
+    //   return;
+    // }
 
     if (!stripe || !elements) {
       // Stripe.js hasn't yet loaded.
@@ -122,39 +99,88 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
+    // Trigger form validation and wallet collection
+    // @ts-expect-error: unsupported types
+    const { error: submitError } = await elements.submit();
+    if (submitError) {
+      setMessage(submitError.message);
+      setIsLoading(false);
+      return;
+    }
+
+    // Create the PaymentMethod using the details collected by the Payment Element
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      // @ts-expect-error: unsupported types
       elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: `${window.location.origin}`,
+      params: {
+        billing_details: {
+          name: `${firstName} ${lastName}`,
+        },
       },
     });
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error.message);
-    } else {
-      setMessage('An unexpected error occurred.');
+    if (error) {
+      // This point is only reached if there's an immediate error when
+      // creating the PaymentMethod. Show the error to your customer (for example, payment details incomplete)
+      setMessage(submitError.message);
+      setIsLoading(false);
+      return;
     }
 
+    try {
+      const res = await checkoutCalculateMut({
+        variables: {
+          input: getShoppingCartInput({
+            shoppingCartTip: shoppingCartTip,
+          }),
+          paymentMethodId: paymentMethod.id,
+        },
+        context: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
+        },
+      });
+
+      if (res.data?.CheckoutCalculateMut.status === 'requires_action') {
+        // Use Stripe.js to handle the required next action
+        // @ts-expect-error: unsupported types
+        const { error, paymentIntent } = await stripe.handleNextAction({
+          clientSecret: res.data.CheckoutCalculateMut.clientSecret,
+        });
+
+        if (paymentIntent.last_payment_error) {
+          if (
+            paymentIntent.last_payment_error.decline_code ===
+            'cashapp_customer_request_declined'
+          ) {
+            setMessage(
+              'Your payment was declined, please try another payment.',
+            );
+          } else {
+            setMessage(
+              'Something went wrong with your payment. Please try again or try a different method of payment.',
+            );
+          }
+        }
+
+        if (error) {
+          // Show error from Stripe.js in payment form
+          setMessage(error.message);
+        } else {
+          // Actions handled, show success message
+        }
+      }
+    } catch (error) {
+      setMessage(
+        'Something went wrong with your payment. Please try again or try a different method of payment.',
+      );
+    }
+    setMessage(null);
     setIsLoading(false);
   };
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement
-        id="payment-element"
-        options={{
-          wallets: {
-            applePay: 'auto',
-            googlePay: 'auto',
-          },
-        }}
-      />
+      <PaymentElement options={{}} />
 
       <Button
         id="submit"
