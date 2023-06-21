@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import {
   ShoppingCartItem,
@@ -26,8 +26,7 @@ const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
   const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
     ShoppingCartTotalAtom,
   );
-  const [shoppingCartTip, setShoppingCartTip] =
-    useRecoilState(ShoppingCartTipAtom);
+  const shoppingCartTip = useRecoilValue(ShoppingCartTipAtom);
 
   const [fetchValidateShoppingCart, { data, loading }] =
     useValidateShoppingCartLazyQuery();

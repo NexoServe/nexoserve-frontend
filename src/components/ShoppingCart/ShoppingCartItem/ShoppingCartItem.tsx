@@ -24,8 +24,8 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
   const [showUpdateFoodModal, setShowUpdateFoodModal] = useState(false);
   const showShoppingCartDetails = useRecoilValue(ShowShoppingCartDetailsAtom);
 
-  const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
-  const [foodModalSelectedSize, setFoodModalSelectedSize] = useRecoilState(
+  const [, setFoodModal] = useRecoilState(FoodModalAtom);
+  const [, setFoodModalSelectedSize] = useRecoilState(
     FoodModalSelectedSizeAtom,
   );
   const [, setFoodModalSelectedItems] = useRecoilState(

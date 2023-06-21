@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
 import * as EmailValidator from 'email-validator';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import {
   CheckoutEmailAtom,
@@ -33,8 +33,9 @@ const CheckoutContact = () => {
   const [, setEmail] = useRecoilState(CheckoutEmailAtom);
   const [emailError, setEmailError] = useRecoilState(CheckoutEmailErrorAtom);
 
-  const [isCheckoutContactIncomplete, setIsCheckoutContactIncomplete] =
-    useRecoilState(isCheckoutContactIncompleteAtom);
+  const isCheckoutContactIncomplete = useRecoilValue(
+    isCheckoutContactIncompleteAtom,
+  );
 
   const classes = useStyles();
 

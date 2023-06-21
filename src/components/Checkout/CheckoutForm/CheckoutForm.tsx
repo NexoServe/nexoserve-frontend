@@ -36,60 +36,53 @@ export default function CheckoutForm() {
   const elements = useElements();
   const classes = useStyles();
 
-  const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
-    ShoppingCartTotalAtom,
-  );
-  const [firstName, setFirstName] = useRecoilState(CheckoutFirstNameAtom);
-  const [firstNameError, setFirstNameError] = useRecoilState(
-    CheckoutFirstNameErrorAtom,
-  );
+  const shoppingCartTotal = useRecoilValue(ShoppingCartTotalAtom);
+  const firstName = useRecoilValue(CheckoutFirstNameAtom);
+  const [, setFirstNameError] = useRecoilState(CheckoutFirstNameErrorAtom);
 
-  const [lastName, setLastName] = useRecoilState(CheckoutLastNameAtom);
-  const [lastNameError, setLastNameError] = useRecoilState(
-    CheckoutLastNameErrorAtom,
+  const lastName = useRecoilValue(CheckoutLastNameAtom);
+  const [, setLastNameError] = useRecoilState(CheckoutLastNameErrorAtom);
+
+  const email = useRecoilValue(CheckoutEmailAtom);
+  const [, setEmailError] = useRecoilState(CheckoutEmailErrorAtom);
+
+  const phone = useRecoilValue(CheckoutPhoneNumberAtom);
+  const [, setPhoneError] = useRecoilState(CheckoutPhoneNumberErrorAtom);
+
+  const [, setIsCheckoutContactIncomplete] = useRecoilState(
+    isCheckoutContactIncompleteAtom,
   );
-
-  const [email, setEmail] = useRecoilState(CheckoutEmailAtom);
-  const [emailError, setEmailError] = useRecoilState(CheckoutEmailErrorAtom);
-
-  const [phone, setPhone] = useRecoilState(CheckoutPhoneNumberAtom);
-  const [phoneError, setPhoneError] = useRecoilState(
-    CheckoutPhoneNumberErrorAtom,
-  );
-
-  const [isCheckoutContactIncomplete, setIsCheckoutContactIncomplete] =
-    useRecoilState(isCheckoutContactIncompleteAtom);
 
   const [message, setMessage] = useState<string | null | undefined>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [checkoutCalculateMut, { data }] = useCheckoutCalculateMutMutation();
+  const [checkoutCalculateMut] = useCheckoutCalculateMutMutation();
   const shoppingCartTip = useRecoilValue(ShoppingCartTipAtom);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // setIsCheckoutContactIncomplete(false);
+    setIsCheckoutContactIncomplete(false);
 
-    // if (firstName === '') {
-    //   setFirstNameError(true);
-    // }
+    if (firstName === '') {
+      setFirstNameError(true);
+    }
 
-    // if (lastName === '') {
-    //   setLastNameError(true);
-    // }
+    if (lastName === '') {
+      setLastNameError(true);
+    }
 
-    // if (email === '') {
-    //   setEmailError(true);
-    // }
+    if (email === '') {
+      setEmailError(true);
+    }
 
-    // if (phone === '') {
-    //   setPhoneError(true);
-    // }
+    if (phone === '') {
+      setPhoneError(true);
+    }
 
-    // if (firstName === '' || lastName === '' || email === '' || phone === '') {
-    //   setIsCheckoutContactIncomplete(true);
-    //   return;
-    // }
+    if (firstName === '' || lastName === '' || email === '' || phone === '') {
+      setIsCheckoutContactIncomplete(true);
+      return;
+    }
 
     if (!stripe || !elements) {
       // Stripe.js hasn't yet loaded.

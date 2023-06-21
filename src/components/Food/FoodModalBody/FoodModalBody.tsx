@@ -23,9 +23,7 @@ const FoodModalBody = ({ data, showModal, type }: IFoodModalHeader) => {
   const classes = useStyles();
 
   const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
-  const [foodModalSelectedSize, setFoodModalSelectedSize] = useRecoilState(
-    FoodModalSelectedSizeAtom,
-  );
+  const foodModalSelectedSize = useRecoilValue(FoodModalSelectedSizeAtom);
   const [addOns, setAddOns] = useRecoilState(FoodModalAddOnsAtom);
   const requiredAddOn = useRecoilValue(FoodModalAddOnRequiredAtom);
 

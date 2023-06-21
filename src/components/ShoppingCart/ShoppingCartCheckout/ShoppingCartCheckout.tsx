@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import SkeletonLoader from 'tiny-skeleton-loader-react';
 
 import colors from '../../../../css/colors';
@@ -10,9 +10,7 @@ import ShoppingCartCheckoutTips from '../ShoppingCartCheckoutTips/ShoppingCartCh
 import useStyles from './css';
 
 const ShoppingCartCheckout = () => {
-  const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
-    ShoppingCartTotalAtom,
-  );
+  const shoppingCartTotal = useRecoilValue(ShoppingCartTotalAtom);
 
   const classes = useStyles();
   return (
