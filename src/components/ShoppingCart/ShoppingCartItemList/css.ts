@@ -10,11 +10,6 @@ const useStyles = createUseStyles({
     flexGrow: 1,
     maxHeight: '100%',
     height: '100%',
-
-    // [queries.m]: {
-    //   height: '60vh',
-    //   maxHeight: base(60),
-    // },
   },
 
   shoppingCartItemListShowDetails: {
@@ -23,6 +18,10 @@ const useStyles = createUseStyles({
     [queries.l]: {
       display: 'none',
     },
+  },
+
+  shoppingCartItemListShowDetailsChecked: {
+    display: 'none',
   },
 
   shoppingCartItemListEmpty: {

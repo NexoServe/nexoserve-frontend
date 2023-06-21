@@ -15,6 +15,7 @@ const useStyles = createUseStyles({
     borderRadius: base(5),
     fontSize: '16px',
     fontWeight: '600',
+    cursor: 'pointer',
   },
 });
 

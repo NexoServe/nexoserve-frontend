@@ -39,6 +39,11 @@ export const FoodModalPriceAtom = atom<number>({
   default: 0,
 });
 
+export const FoodModalSelectedSizeAtom = atom<FoodSizeType | undefined>({
+  key: 'FoodModalSelectedSizeAtom',
+  default: undefined,
+});
+
 export const FoodModalAtom = atom<FoodModalType>({
   key: 'FoodModalAtom',
   default: {
@@ -52,22 +57,24 @@ export const foodModalTotalSelector = selector({
   key: 'foodModalTotalSelector',
   get: ({ get }) => {
     const foodModal = get(FoodModalAtom);
-    const selectedItems = get(FoodModalSelectedItemsAtom);
+    if (foodModal.food) {
+      const selectedItems = get(FoodModalSelectedItemsAtom);
 
-    let foodPrice: number = foodModal.food?.price as number;
+      let foodPrice: number = foodModal.food?.price as number;
 
-    if (foodModal.selectedSize) {
-      foodPrice = foodModal.selectedSize.price ?? 0;
+      if (foodModal.selectedSize) {
+        foodPrice = foodModal.selectedSize.price ?? 0;
+      }
+
+      if (selectedItems) {
+        selectedItems.forEach((selectedItem) => {
+          const itemPrice =
+            selectedItem.itemSize?.price || selectedItem.price || 0;
+          foodPrice += itemPrice;
+        });
+      }
+
+      return parseFloat((foodPrice * foodModal.quantity).toFixed(2));
     }
-
-    if (selectedItems) {
-      selectedItems.forEach((selectedItem) => {
-        const itemPrice =
-          selectedItem.itemSize?.price || selectedItem.price || 0;
-        foodPrice += itemPrice;
-      });
-    }
-
-    return parseFloat((foodPrice * foodModal.quantity).toFixed(2));
   },
 });

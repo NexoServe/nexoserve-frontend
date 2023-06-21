@@ -19,6 +19,7 @@ type BaseFood {
 type Checkout {
   clientSecret: String
   id: String
+  status: String
   total: Float
 }
 
@@ -117,7 +118,7 @@ input ItemSizeInput {
 }
 
 type Mutation {
-  CheckoutCalculateMut(input: CheckoutCalculateInput!): Checkout!
+  CheckoutCalculateMut(input: [ShoppingCartInput]!, paymentMethodId: String!): Checkout!
   createFood(input: CreateFoodInput!): Food!
   createOrder(input: CreateOrderInput!): Order!
 }
@@ -151,16 +152,21 @@ type SelectedItem {
 }
 
 type ShoppingCart {
-  grandTotal: Float!
+  grandTotal: Float
   shoppingCartItems: [ShoppingCartItem]!
+  subTotal: Float!
+  tax: Float
+  tip: Float
 }
 
 input ShoppingCartInput {
   foodId: String!
   foodSizeId: String
+  isTipPercentage: Boolean
   items: [ShoppingCartItemInput]!
   orderItemId: String!
   quantity: Int!
+  tip: Float
 }
 
 type ShoppingCartItem {

@@ -22,9 +22,8 @@ const FoodModalFooter = ({ type }: IFoodModalFooter) => {
   const classes = useStyles();
   const total = useRecoilValue(foodModalTotalSelector);
 
-  console.log('total', total);
   useEffect(() => {
-    setFoodModalPrice(total);
+    setFoodModalPrice(total || 0);
   }, [total, setFoodModalPrice]);
 
   const decreaseQuantity = () => {
@@ -67,8 +66,8 @@ const FoodModalFooter = ({ type }: IFoodModalFooter) => {
         {foodModal.quantity === 0
           ? 'Remove'
           : type === 'create'
-          ? `Add ($${total.toFixed(2)})`
-          : `Update ($${total.toFixed(2)})`}
+          ? `Add ($${total?.toFixed(2)})`
+          : `Update ($${total?.toFixed(2)})`}
       </Button>
     </div>
   );

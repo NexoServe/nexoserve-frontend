@@ -35,6 +35,7 @@ export type Checkout = {
   __typename?: 'Checkout';
   clientSecret?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
   total?: Maybe<Scalars['Float']>;
 };
 
@@ -146,7 +147,8 @@ export type Mutation = {
 
 
 export type MutationCheckoutCalculateMutArgs = {
-  input: CheckoutCalculateInput;
+  input: Array<InputMaybe<ShoppingCartInput>>;
+  paymentMethodId: Scalars['String'];
 };
 
 
@@ -203,16 +205,21 @@ export type SelectedItem = {
 
 export type ShoppingCart = {
   __typename?: 'ShoppingCart';
-  grandTotal: Scalars['Float'];
+  grandTotal?: Maybe<Scalars['Float']>;
   shoppingCartItems: Array<Maybe<ShoppingCartItem>>;
+  subTotal: Scalars['Float'];
+  tax?: Maybe<Scalars['Float']>;
+  tip?: Maybe<Scalars['Float']>;
 };
 
 export type ShoppingCartInput = {
   foodId: Scalars['String'];
   foodSizeId?: InputMaybe<Scalars['String']>;
+  isTipPercentage?: InputMaybe<Scalars['Boolean']>;
   items: Array<InputMaybe<ShoppingCartItemInput>>;
   orderItemId: Scalars['String'];
   quantity: Scalars['Int'];
+  tip?: InputMaybe<Scalars['Float']>;
 };
 
 export type ShoppingCartItem = {
@@ -249,11 +256,12 @@ export type SimpleFoodSize = {
 };
 
 export type CheckoutCalculateMutMutationVariables = Exact<{
-  checkoutCalculateMutInput2: CheckoutCalculateInput;
+  input: Array<InputMaybe<ShoppingCartInput>> | InputMaybe<ShoppingCartInput>;
+  paymentMethodId: Scalars['String'];
 }>;
 
 
-export type CheckoutCalculateMutMutation = { __typename?: 'Mutation', CheckoutCalculateMut: { __typename?: 'Checkout', id?: string | null, total?: number | null, clientSecret?: string | null } };
+export type CheckoutCalculateMutMutation = { __typename?: 'Mutation', CheckoutCalculateMut: { __typename?: 'Checkout', id?: string | null, total?: number | null, clientSecret?: string | null, status?: string | null } };
 
 export type CreateOrderMutationVariables = Exact<{
   createOrderInput: CreateOrderInput;
@@ -286,7 +294,7 @@ export type ValidateShoppingCartQueryVariables = Exact<{
 }>;
 
 
-export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', grandTotal: number, shoppingCartItems: Array<{ __typename?: 'ShoppingCartItem', orderItemId: string, price: number, quantity: number, food?: { __typename?: 'SimpleFood', id?: string | null, name?: string | null, price?: number | null } | null, selectedSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, selectedItems?: Array<{ __typename?: 'SelectedItem', id: string, name?: string | null, price?: number | null, addOnName: string, itemSize?: { __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null } | null } | null> | null } | null> } };
+export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', grandTotal?: number | null, subTotal: number, tax?: number | null, tip?: number | null, shoppingCartItems: Array<{ __typename?: 'ShoppingCartItem', orderItemId: string, price: number, quantity: number, food?: { __typename?: 'SimpleFood', id?: string | null, name?: string | null, price?: number | null } | null, selectedSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, selectedItems?: Array<{ __typename?: 'SelectedItem', id: string, name?: string | null, price?: number | null, addOnName: string, itemSize?: { __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null } | null } | null> | null } | null> } };
 
 export const AddOnFieldsFragmentDoc = gql`
     fragment AddOnFields on AddOn {
@@ -307,11 +315,12 @@ export const AddOnFieldsFragmentDoc = gql`
 }
     `;
 export const CheckoutCalculateMutDocument = gql`
-    mutation CheckoutCalculateMut($checkoutCalculateMutInput2: CheckoutCalculateInput!) {
-  CheckoutCalculateMut(input: $checkoutCalculateMutInput2) {
+    mutation CheckoutCalculateMut($input: [ShoppingCartInput]!, $paymentMethodId: String!) {
+  CheckoutCalculateMut(input: $input, paymentMethodId: $paymentMethodId) {
     id
     total
     clientSecret
+    status
   }
 }
     `;
@@ -330,7 +339,8 @@ export type CheckoutCalculateMutMutationFn = Apollo.MutationFunction<CheckoutCal
  * @example
  * const [checkoutCalculateMutMutation, { data, loading, error }] = useCheckoutCalculateMutMutation({
  *   variables: {
- *      checkoutCalculateMutInput2: // value for 'checkoutCalculateMutInput2'
+ *      input: // value for 'input'
+ *      paymentMethodId: // value for 'paymentMethodId'
  *   },
  * });
  */
@@ -526,6 +536,9 @@ export const ValidateShoppingCartDocument = gql`
     query ValidateShoppingCart($input: [ShoppingCartInput]!) {
   validateShoppingCart(input: $input) {
     grandTotal
+    subTotal
+    tax
+    tip
     shoppingCartItems {
       orderItemId
       food {

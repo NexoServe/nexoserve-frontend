@@ -6,11 +6,10 @@ import queries from '../../../../css/queries';
 
 const useStyles = createUseStyles({
   shoppingCartModal: {
-    width: '100%',
+    width: '100vw',
     height: 'calc(100vh - 30px)',
-    position: 'fixed',
-    bottom: 0,
-    left: 0,
+    position: 'relative',
+    marginBottom: '-30px',
     background: colors.secondary,
     borderTopLeftRadius: base(2),
     borderTopRightRadius: base(2),
@@ -24,6 +23,7 @@ const useStyles = createUseStyles({
       bottom: 'unset',
       position: 'relative',
       borderRadius: base(2),
+      marginBottom: 'unset',
     },
   },
 });

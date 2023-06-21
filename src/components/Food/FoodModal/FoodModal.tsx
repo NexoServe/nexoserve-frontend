@@ -15,7 +15,6 @@ import {
   ShoppingCartAtom,
   ShoppingCartTotalAtom,
 } from '../../../state/ShoppingCartState';
-import Draggable from '../../Draggable/Draggable';
 import Loader from '../../Loader/Loader';
 import { ModalPopUp } from '../../Modal/Modal';
 import FoodModalBody from '../FoodModalBody/FoodModalBody';
@@ -237,17 +236,9 @@ const FoodModal = ({
     }
   };
 
-  useMemo(() => {
-    if (showModal) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [showModal]);
-
   return (
     <ModalPopUp showModal={showModal} onClose={() => onClose()}>
-      <Draggable onDragDown={() => onClose()} styleClass={classes.foodModal}>
+      <div className={classes.foodModal}>
         <FoodModalNav
           loading={loading}
           onClick={onClose}
@@ -267,7 +258,7 @@ const FoodModal = ({
             <FoodModalBody data={data} showModal={showModal} type={type} />
           )}
         </form>
-      </Draggable>
+      </div>
     </ModalPopUp>
   );
 };

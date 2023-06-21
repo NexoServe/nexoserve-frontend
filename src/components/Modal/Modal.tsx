@@ -1,68 +1,78 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import classNames from 'classnames';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Modal from 'react-modal';
 
+import Draggable from '../Draggable/Draggable';
+
 import useStyles from './css';
-import { IModal } from './types';
+import { IModalPopUp } from './types';
 
 export const ModalPopUp = ({
   showModal,
   children,
   styleClass,
   onClose,
-}: IModal) => {
-  const [show, setShow] = useState(false);
-
+}: IModalPopUp) => {
   useEffect(() => {
     if (showModal) {
-      setShow(true);
+      document.body.style.overflow = 'hidden';
     } else {
-      setShow(false);
+      document.body.style.overflow = 'unset';
     }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [showModal]);
 
   const classes = useStyles();
   Modal.setAppElement('#__next');
 
   return (
-    <AnimatePresence mode="wait">
-      {show && (
-        <Modal
-          isOpen={show}
-          onRequestClose={() => setShow(false)}
-          className={classNames(styleClass, classes.modal)}
-          onAfterClose={() => {
+    <Modal
+      isOpen={showModal}
+      onRequestClose={() => (onClose ? onClose() : null)}
+      className={classNames(styleClass, classes.modal)}
+      onAfterClose={() => {
+        onClose ? onClose() : null;
+      }}
+    >
+      {showModal && (
+        <motion.div
+          key="modal"
+          initial={{
+            backgroundColor: '#00000000',
+            opacity: 0,
+            backdropFilter: 'blur(0px)',
+          }}
+          animate={{
+            backgroundColor: '#00000099',
+            opacity: 1,
+            backdropFilter: 'blur(20px)',
+          }}
+          exit={{
+            backgroundColor: '#00000000',
+            opacity: 0,
+            backdropFilter: 'blur(0px)',
+          }}
+          transition={{ duration: 0.4, ease: 'easeInOut' }}
+          className={classes.modalClose}
+          onClick={(e) => {
             onClose ? onClose() : null;
           }}
-        >
-          <motion.div
-            key="modal"
-            initial={{
-              backgroundColor: '#00000000',
-              opacity: 0,
-              backdropFilter: 'blur(0px)',
-            }}
-            animate={{
-              backgroundColor: '#00000099',
-              opacity: 1,
-              backdropFilter: 'blur(20px)',
-            }}
-            exit={{
-              backgroundColor: '#00000000',
-              opacity: 0,
-              backdropFilter: 'blur(0px)',
-            }}
-            transition={{ duration: 0.4, ease: 'easeInOut' }}
-            className={classes.modalClose}
-            onClick={(e) => {
-              onClose ? onClose() : null;
-            }}
-          ></motion.div>
-          <div className={classes.modalInner}>{children}</div>
-        </Modal>
+        ></motion.div>
       )}
-    </AnimatePresence>
+
+      <Draggable
+        onDragDown={() => {
+          onClose ? onClose() : null;
+        }}
+        styleClass={classes.modalInner}
+      >
+        {children}
+      </Draggable>
+    </Modal>
   );
 };

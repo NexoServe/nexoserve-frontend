@@ -12,18 +12,25 @@ const useStyles = createUseStyles({
     flexDirection: 'column',
   },
 
-  shoppingCartInner: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    border: `1px solid rgba(0, 0, 0, 0.1)`,
-    borderRadius: base(2),
+  shoppingCartCheckout: {
+    height: 'auto',
+  },
 
+  shoppingCartInner: {
     [queries.l]: {
       maxHeight: '70vh',
       height: '70vh',
       position: 'sticky',
       top: base(3),
+    },
+  },
+
+  shoppingCartInnerCheckout: {
+    [queries.l]: {
+      maxHeight: '100%',
+      height: '100%',
+      position: 'relative',
+      top: base(0),
     },
   },
 });

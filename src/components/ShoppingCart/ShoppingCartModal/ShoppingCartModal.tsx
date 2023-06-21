@@ -1,5 +1,6 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
+import { AnimatePresence } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 
 import breakpoints from '../../../../css/breakpoints';
@@ -29,26 +30,22 @@ const ShoppingCartModal = () => {
     };
   }, [setShowShoppingCart]);
 
-  useMemo(() => {
-    if (showShoppingCart) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [showShoppingCart]);
-
   return (
-    <ModalPopUp
-      showModal={showShoppingCart}
-      onClose={() => setShowShoppingCart(false)}
-    >
-      <Draggable
-        onDragDown={() => setShowShoppingCart(false)}
-        styleClass={classes.shoppingCartModal}
-      >
-        <ShoppingCart />
-      </Draggable>
-    </ModalPopUp>
+    <AnimatePresence>
+      {showShoppingCart && (
+        <ModalPopUp
+          showModal={showShoppingCart}
+          onClose={() => setShowShoppingCart(false)}
+        >
+          <Draggable
+            onDragDown={() => setShowShoppingCart(false)}
+            styleClass={classes.shoppingCartModal}
+          >
+            <ShoppingCart />
+          </Draggable>
+        </ModalPopUp>
+      )}
+    </AnimatePresence>
   );
 };
 

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { useRouter } from 'next/router';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { SelectedItem } from '../../../../generated/graphql';
@@ -11,12 +12,10 @@ import calculateShoppingCartItemTotal from '../../../utils/calculateShoppingCart
 import Button from '../../Button/Button';
 
 import useStyles from './css';
-import { IShoppingCartCheckoutButton } from './types';
 
-const ShoppingCarCheckoutButton = ({
-  validatedTotal,
-}: IShoppingCartCheckoutButton) => {
+const ShoppingCarCheckoutButton = () => {
   const styles = useStyles();
+  const router = useRouter();
 
   const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
     ShoppingCartTotalAtom,
@@ -41,7 +40,7 @@ const ShoppingCarCheckoutButton = ({
 
       setShoppingCartTotal({
         ...shoppingCartTotal,
-        total: parseFloat(total.toFixed(2)),
+        subtotal: parseFloat(total.toFixed(2)),
       });
     }
   }, [shoppingCart]);
@@ -50,7 +49,9 @@ const ShoppingCarCheckoutButton = ({
     <>
       {shoppingCart.length > 0 ? (
         <div className={styles.shoppingCartModalButtonBox}>
-          <Button>Checkout ${shoppingCartTotal.total.toFixed(2)}</Button>
+          <Button onClick={() => router.push('/checkout')}>
+            Checkout (${shoppingCartTotal.subtotal.toFixed(2)})
+          </Button>
         </div>
       ) : null}
     </>

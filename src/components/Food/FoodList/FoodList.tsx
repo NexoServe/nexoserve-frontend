@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { AnimatePresence } from 'framer-motion';
+
 import { useFoodsByCategoryQuery } from '../../../../generated/graphql';
 import FoodCard from '../FoodCard/FoodCard';
 import FoodModal from '../FoodModal/FoodModal';
@@ -41,12 +43,16 @@ const FoodList = () => {
         </div>
       ))}
 
-      <FoodModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        foodId={activeFood?.id as string}
-        type="create"
-      />
+      <AnimatePresence>
+        {showModal && (
+          <FoodModal
+            showModal={showModal}
+            setShowModal={setShowModal}
+            foodId={activeFood?.id as string}
+            type="create"
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -3,8 +3,10 @@ import { motion } from 'framer-motion';
 import useStyles from './css';
 import { ILoader } from './types';
 
-const Loader = ({ styleClass }: ILoader) => {
+const Loader = ({ styleClass, scale = 1, width, height }: ILoader) => {
   const classes = useStyles();
+
+  console.log('scale', scale);
 
   return (
     <div className={styleClass}>
@@ -19,9 +21,17 @@ const Loader = ({ styleClass }: ILoader) => {
           staggerChildren: 0.2,
         }}
         className={classes.wrapper}
+        style={{
+          width: width && width,
+          height: height && height,
+        }}
       >
         {[...Array(6)].map((_, index) => (
-          <div key={index} className={classes.slice}>
+          <div
+            key={index}
+            style={{ scale: `${scale}` }}
+            className={classes.slice}
+          >
             <div className={classes.tomato}></div>
             <div className={classes.tomato}></div>
             <div className={classes.olive}></div>

@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { base } from '../../../../css/base';
 import {
   FoodModalAtom,
   FoodModalSelectedItemsAtom,
+  FoodModalSelectedSizeAtom,
 } from '../../../state/FoodModalState';
 import {
   ShoppingCartAtom,
@@ -24,6 +25,9 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
   const showShoppingCartDetails = useRecoilValue(ShowShoppingCartDetailsAtom);
 
   const [, setFoodModal] = useRecoilState(FoodModalAtom);
+  const [, setFoodModalSelectedSize] = useRecoilState(
+    FoodModalSelectedSizeAtom,
+  );
   const [, setFoodModalSelectedItems] = useRecoilState(
     FoodModalSelectedItemsAtom,
   );
@@ -39,6 +43,8 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
       selectedSize: shoppingCartItem?.selectedSize,
       quantity: shoppingCartItem?.quantity,
     });
+
+    setFoodModalSelectedSize(shoppingCartItem?.selectedSize);
 
     setFoodModalSelectedItems(
       shoppingCartItem?.selectedItems?.map((item) => ({
@@ -72,6 +78,7 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
       <motion.div
         animate={{ rowGap: showShoppingCartDetails ? base(1) : 0 }}
         className={classes.shoppingCartItem}
+        onClick={updateShoppingCartItem}
       >
         <div
           onClick={updateShoppingCartItem}
@@ -91,55 +98,64 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
           </div>
         </div>
 
-        <motion.div
-          animate={{
-            height: showShoppingCartDetails ? '100%' : '0',
-            opacity: showShoppingCartDetails ? 1 : 0,
-            pointerEvents: showShoppingCartDetails ? 'all' : 'none',
-          }}
-          className={classes.shoppingCartItemDetails}
-        >
-          <div onClick={updateShoppingCartItem}></div>
-          <div
-            onClick={updateShoppingCartItem}
-            className={classes.shoppingCartItemDetailsInner}
-          >
-            {shoppingCartItem.selectedSize ? (
-              <div className={classes.shoppingCartItemDetailsItem}>
-                {shoppingCartItem.selectedSize?.name}
-              </div>
-            ) : null}
-
-            {shoppingCartItem?.selectedItems?.map((selectedItem) => (
+        <AnimatePresence mode="wait">
+          {showShoppingCartDetails && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: '0', opacity: 0 }}
+              className={classes.shoppingCartItemDetails}
+            >
+              <div onClick={updateShoppingCartItem}></div>
               <div
-                key={selectedItem?.id}
-                className={classes.shoppingCartItemDetailsItem}
+                onClick={updateShoppingCartItem}
+                className={classes.shoppingCartItemDetailsInner}
               >
-                {/* <span>2</span> */}
-                {selectedItem?.name}
+                {shoppingCartItem.selectedSize ? (
+                  <div className={classes.shoppingCartItemDetailsItem}>
+                    {shoppingCartItem.selectedSize?.name}
+                  </div>
+                ) : null}
+
+                {shoppingCartItem?.selectedItems?.map((selectedItem) => (
+                  <div
+                    key={selectedItem?.id}
+                    className={classes.shoppingCartItemDetailsItem}
+                  >
+                    {/* <span>2</span> */}
+                    {selectedItem?.name}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <div className={classes.shoppingCartItemDeleteButton}>
-            <button onClick={removeShoppingCartItem}>
-              <SvgIcons name="closeFilled" />
-            </button>
-          </div>
-          <div className={classes.shoppingCartItemEditButton}>
-            <button onClick={updateShoppingCartItem}>Edit Item</button>
-          </div>
-        </motion.div>
+              <div className={classes.shoppingCartItemDeleteButton}>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeShoppingCartItem();
+                  }}
+                >
+                  <SvgIcons name="closeFilled" />
+                </button>
+              </div>
+              <div className={classes.shoppingCartItemEditButton}>
+                <button onClick={updateShoppingCartItem}>Edit Item</button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
 
-      {showUpdateFoodModal && (
-        <FoodModal
-          setShowModal={setShowUpdateFoodModal}
-          showModal={showUpdateFoodModal}
-          foodId={shoppingCartItem?.food?.id as string}
-          type="update"
-          orderItemId={shoppingCartItem?.orderItemId}
-        />
-      )}
+      <AnimatePresence mode="wait">
+        {showUpdateFoodModal && (
+          <FoodModal
+            setShowModal={setShowUpdateFoodModal}
+            showModal={showUpdateFoodModal}
+            foodId={shoppingCartItem?.food?.id as string}
+            type="update"
+            orderItemId={shoppingCartItem?.orderItemId}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };

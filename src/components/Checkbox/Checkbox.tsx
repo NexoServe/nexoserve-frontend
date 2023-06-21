@@ -6,7 +6,7 @@ import { ICheckbox } from './types';
 
 const Checkbox = ({ isChecked }: ICheckbox) => {
   return (
-    <motion.div
+    <div
       style={{
         border: `2px solid ${colors.black}`,
         minHeight: '20px',
@@ -15,13 +15,9 @@ const Checkbox = ({ isChecked }: ICheckbox) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-      }}
-      initial={{ backgroundColor: 'transparent' }}
-      animate={{
         backgroundColor: isChecked ? colors.black : colors.white,
+        transition: '300ms ease-in-out',
       }}
-      exit={{ backgroundColor: 'transparent' }}
-      transition={{ duration: 0.3 }}
     >
       <AnimatePresence>
         {isChecked && (
@@ -49,7 +45,7 @@ const Checkbox = ({ isChecked }: ICheckbox) => {
           </motion.svg>
         )}
       </AnimatePresence>
-    </motion.div>
+    </div>
   );
 };
 

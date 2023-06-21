@@ -1,6 +1,9 @@
 query ValidateShoppingCart($input: [ShoppingCartInput]!) {
   validateShoppingCart(input: $input) {
     grandTotal
+    subTotal
+    tax
+    tip
     shoppingCartItems {
       orderItemId
       food {

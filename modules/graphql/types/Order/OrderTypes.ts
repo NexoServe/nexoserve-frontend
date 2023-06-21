@@ -35,7 +35,10 @@ export const ShoppingCartItem = objectType({
 export const ShoppingCart = objectType({
   name: `ShoppingCart`,
   definition(t) {
-    t.nonNull.float('grandTotal');
+    t.nonNull.float('subTotal');
+    t.float('tax');
+    t.float('tip');
+    t.float('grandTotal');
     t.nonNull.list.field(`shoppingCartItems`, {
       type: 'ShoppingCartItem',
     });
@@ -59,6 +62,8 @@ export const ShoppingCartInput = inputObjectType({
     t.string('foodSizeId');
     t.nonNull.list.field('items', { type: ShoppingCartItemInput });
     t.nonNull.int('quantity');
+    t.float('tip');
+    t.boolean('isTipPercentage');
   },
 });
 
@@ -79,6 +84,7 @@ export const Checkout = objectType({
     t.string(`id`);
     t.float(`total`);
     t.string('clientSecret');
+    t.string('status');
   },
 });
 

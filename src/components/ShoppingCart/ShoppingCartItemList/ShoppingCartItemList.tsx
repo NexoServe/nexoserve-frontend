@@ -9,8 +9,9 @@ import ShoppingCartItem from '../ShoppingCartItem/ShoppingCartItem';
 import ShoppingCartShowDetailsBtn from '../ShoppingCartShowDetailsBtn/ShoppingCartShowDetailsBtn';
 
 import useStyles from './css';
+import { IShoppingCartItemList } from './types';
 
-const ShoppingCartItemList = () => {
+const ShoppingCartItemList = ({ isCheckout }: IShoppingCartItemList) => {
   const shoppingCart = useRecoilValue(ShoppingCartAtom);
 
   const classes = useStyles();
@@ -30,7 +31,9 @@ const ShoppingCartItemList = () => {
       ) : (
         <>
           <ShoppingCartShowDetailsBtn
-            styleClass={classes.shoppingCartItemListShowDetails}
+            styleClass={`${classes.shoppingCartItemListShowDetails} ${
+              isCheckout && classes.shoppingCartItemListShowDetailsChecked
+            }`}
           />
           {shoppingCart?.map((shoppingCartItem) => (
             <Fragment key={shoppingCartItem.orderItemId}>

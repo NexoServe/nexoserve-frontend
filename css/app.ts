@@ -49,9 +49,14 @@ export default createUseStyles({
     li: {
       ...body,
     },
+
     '.focus-visible': {
       outline: `2px dotted ${colors.black}`,
     },
+
+    // 'label:focus-within': {
+    //   outline: `2px dotted ${colors.black}`,
+    // },
 
     button: {
       fontFamily: 'Montserrat, sans-serif',
@@ -63,6 +68,10 @@ export default createUseStyles({
 
     input: {
       fontFamily: 'Montserrat, sans-serif',
+    },
+
+    '.Label': {
+      fontSize: '160px',
     },
   },
 
