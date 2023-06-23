@@ -8,6 +8,7 @@ const useStyles = createUseStyles({
     padding: base(1),
     paddingBottom: base(10),
     maxWidth: base(160),
+    width: '100%',
     margin: '0 auto',
 
     [queries.l]: {

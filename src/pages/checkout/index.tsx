@@ -3,6 +3,7 @@ import CheckoutDetails from '../../components/Checkout/CheckoutDetails/CheckoutD
 import CheckoutOrder from '../../components/Checkout/CheckoutOrder/CheckoutOrder';
 import CheckoutPayment from '../../components/Checkout/CheckoutPayment/CheckoutPayment';
 import Container from '../../components/Container/Container';
+import Navbar from '../../components/Navbar/Navbar';
 
 import useStyles from './css';
 
@@ -10,14 +11,17 @@ const Checkout = () => {
   const classes = useStyles();
 
   return (
-    <Container>
-      <div className={classes.checkout}>
-        <CheckoutDetails />
-        <CheckoutContact />
-        <CheckoutOrder />
-        <CheckoutPayment />
-      </div>
-    </Container>
+    <main>
+      <Navbar />
+      <Container>
+        <div className={classes.checkout}>
+          <CheckoutDetails />
+          <CheckoutContact />
+          <CheckoutOrder />
+          <CheckoutPayment />
+        </div>
+      </Container>
+    </main>
   );
 };
 

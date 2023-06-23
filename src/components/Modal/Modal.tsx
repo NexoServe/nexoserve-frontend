@@ -13,6 +13,7 @@ export const ModalPopUp = ({
   showModal,
   children,
   styleClass,
+  overlayClass,
   onClose,
 }: IModalPopUp) => {
   useEffect(() => {
@@ -38,6 +39,7 @@ export const ModalPopUp = ({
       onAfterClose={() => {
         onClose ? onClose() : null;
       }}
+      overlayClassName={classNames(classes.modalOverlay, overlayClass)}
     >
       {showModal && (
         <motion.div
