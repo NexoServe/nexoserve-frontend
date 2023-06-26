@@ -4,9 +4,12 @@ import Clock from './Clock';
 import Close from './Close';
 import CloseFilled from './CloseFilled';
 import CloseFilledWhite from './CloseFilledWhite';
+import Delivery from './Delivery';
 import EmptyCart from './EmptyCart';
 import HalfPizza from './HalfPizza';
+import Info from './Info';
 import Minus from './Minus';
+import PickUp from './PickUp';
 import Plus from './Plus';
 import { SvgIconsType } from './types';
 import Warning from './Warning';
@@ -25,7 +28,10 @@ interface SvgProps extends SvgIconsType {
     | 'wholePizza'
     | 'warning'
     | 'car'
-    | 'clock';
+    | 'clock'
+    | 'info'
+    | 'pickUp'
+    | 'delivery';
 }
 
 const SvgIcons = (props: SvgProps) => {
@@ -54,6 +60,12 @@ const SvgIcons = (props: SvgProps) => {
       return <Car {...props} />;
     case 'clock':
       return <Clock {...props} />;
+    case 'info':
+      return <Info {...props} />;
+    case 'pickUp':
+      return <PickUp {...props} />;
+    case 'delivery':
+      return <Delivery {...props} />;
     default:
       return null;
   }

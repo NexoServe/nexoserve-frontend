@@ -14,6 +14,7 @@ const ModalHeader = ({ text, onClick }: IModalHeader) => {
         <button
           className={`${classes.modalHeaderCloseButton}`}
           onClick={onClick}
+          type="button"
         >
           <SvgIcons name="close" />
         </button>

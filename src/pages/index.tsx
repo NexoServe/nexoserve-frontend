@@ -6,6 +6,7 @@ import prisma from '../../lib/prisma';
 import Container from '../components/Container/Container';
 import FoodList from '../components/Food/FoodList/FoodList';
 import Navbar from '../components/Navbar/Navbar';
+import OrderNavbar from '../components/OrderNavbar/OrderNavbar/OrderNavbar';
 import ShoppingCart from '../components/ShoppingCart/ShoppingCart/ShoppingCart';
 import ShoppingCartButton from '../components/ShoppingCart/ShoppingCartButton/ShoppingCartButton';
 import ShoppingCartModal from '../components/ShoppingCart/ShoppingCartModal/ShoppingCartModal';
@@ -54,6 +55,7 @@ const Home: NextPage = () => {
 
       <main>
         <Navbar />
+        <OrderNavbar />
         <Container>
           <div className={classes.indexConatiner}>
             <FoodList />

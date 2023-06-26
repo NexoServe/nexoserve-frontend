@@ -3,11 +3,12 @@
 import { useEffect, useState } from 'react';
 
 import { AnimatePresence } from 'framer-motion';
-import Hamburger from 'hamburger-react';
+import Hamburger, { Divide } from 'hamburger-react';
 
 import breakpoints from '../../../css/breakpoints';
 import colors from '../../../css/colors';
 import Container from '../Container/Container';
+import Divider from '../Divider/Divider';
 import Menu from '../Menu/Menu';
 import { ModalPopUp } from '../Modal/Modal';
 
@@ -64,6 +65,7 @@ const Navbar = () => {
           )}
         </AnimatePresence>
       </Container>
+      <Divider />
     </nav>
   );
 };

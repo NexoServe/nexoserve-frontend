@@ -20,6 +20,8 @@ export const CheckoutCalculateMut = extendType({
           input: input as NexusGenInputs['ShoppingCartInput'][],
         });
 
+        console.log('result', result);
+
         const paymentIntent = await ctx.stripe.paymentIntents.create({
           confirm: true,
           amount: parseInt((result.grandTotal * 100).toFixed(0)),

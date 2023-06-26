@@ -13,7 +13,7 @@ import { IShoppingCartCheckoutTipsModal } from './types';
 const ShoppingCartCheckoutTipsModal = ({
   setShowCustomTip,
 }: IShoppingCartCheckoutTipsModal) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<null | string>(null);
   const [, setShoppingCartTip] = useRecoilState(ShoppingCartTipAtom);
   const classes = useStyles();
 
@@ -27,9 +27,14 @@ const ShoppingCartCheckoutTipsModal = ({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (value === null || value === '') {
+      setValue('');
+      return;
+    }
+
     setShoppingCartTip({
       isTipPercentage: false,
-      tip: parseFloat(value),
+      tip: parseFloat(value as string),
     });
     setShowCustomTip(false);
   };
@@ -39,12 +44,12 @@ const ShoppingCartCheckoutTipsModal = ({
       onSubmit={handleSubmit}
       className={classes.shoppingCartCheckoutTipsModal}
     >
-      <ModalHeader text="Add a Tip" />
+      <ModalHeader text="Add a Tip" onClick={() => setShowCustomTip(false)} />
       <div className={classes.shoppingCartCheckoutTipsModalContent}>
         <Input
-          error={null}
+          error={value === '' ? 'Please enter a tip amount' : null}
           label="How much would you like to tip?"
-          value={value}
+          value={value || undefined}
           inputMode="decimal"
           onChange={handleChange}
           placeholder="$0.00"

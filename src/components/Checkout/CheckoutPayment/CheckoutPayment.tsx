@@ -59,9 +59,6 @@ const CheckoutPayment = () => {
     fetchValidateShoppingCart();
   }, [shoppingCart, shoppingCartTip]);
 
-  console.log('data', data);
-  console.log('shoppingCartTotal', shoppingCartTotal);
-
   return (
     <>
       <RoundBorder styleClass={classes.checkoutPayment}>
@@ -73,7 +70,9 @@ const CheckoutPayment = () => {
               // @ts-expect-error: unsupported types
               mode: 'payment',
               amount: data?.validateShoppingCart?.grandTotal
-                ? data?.validateShoppingCart?.grandTotal * 100
+                ? parseFloat(
+                    (data?.validateShoppingCart?.grandTotal * 100).toFixed(0),
+                  )
                 : 1,
               currency: 'usd',
               payment_method_types: ['card', 'cashapp'],

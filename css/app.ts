@@ -73,6 +73,23 @@ export default createUseStyles({
     '.Label': {
       fontSize: '160px',
     },
+
+    span: {
+      lineHeight: '16px',
+    },
+
+    select: {
+      '-webkit-appearance': 'none',
+    },
+
+    '.css-eip71p-DropDown': {},
+
+    // '.css-1aarvou-DropdownHandleComponent': {
+    //   width: '100% !important',
+    //   position: 'absolute !important',
+    //   height: '100% !important',
+    //   textAlign: 'right !important',
+    // },
   },
 
   app: {
