@@ -1,25 +1,20 @@
 import { ChangeEvent, useState } from 'react';
 
-import { useRecoilState } from 'recoil';
-
-import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
-import { ShoppingCartTipAtom } from '../../../state/ShoppingCartState';
 import Button from '../../Button/Button';
 import Dropdown from '../../Dropdown/Dropdown';
 import Input from '../../Input/Input';
 import ModalHeader from '../../ModalHeader/ModalHeader';
+import TextArea from '../../TextArea/TextArea';
 
-import 'react-dropdown/style.css';
 import useStyles from './css';
-import { IShoppingCartCheckoutTipsModal } from './types';
+import { IOrderNavBarModal } from './types';
 
 const OrderNavBarModal = ({
-  setShowCustomTip,
+  setModal,
   headerText,
-}: IShoppingCartCheckoutTipsModal) => {
+  type,
+}: IOrderNavBarModal) => {
   const [value, setValue] = useState('');
-  const [, setShoppingCartTip] = useRecoilState(ShoppingCartTipAtom);
   const classes = useStyles();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -57,27 +52,6 @@ const OrderNavBarModal = ({
     { value: 'three', label: 'Three' },
   ];
 
-  const dropdownStyles = {
-    control: {
-      height: base(4),
-      padding: `0.75rem`,
-      borderRadius: base(0.5),
-      marginTop: base(0.5),
-      border: `1px solid #e1e1e1`,
-      fontSize: '16px',
-      background: colors.white,
-      boxShadow:
-        '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02)',
-    },
-    dropdown: {
-      // any styles you want to apply to the dropdown
-    },
-    option: {
-      // any styles you want to apply to the options
-    },
-    // ... any other styles you want to customize
-  };
-
   const [selected, setSelected] = useState<string[]>([]);
   const [handle, setHandle] = useState(false);
 
@@ -86,31 +60,40 @@ const OrderNavBarModal = ({
       // onSubmit={handleSubmit}
       className={classes.shoppingCartCheckoutTipsModal}
     >
-      <ModalHeader text={headerText} />
+      <ModalHeader text={headerText} onClick={() => setModal(false)} />
       <div className={classes.shoppingCartCheckoutTipsModalContent}>
-        <Dropdown />
+        {type === 'delivery' && (
+          <>
+            <Input
+              error={null}
+              isRequired={true}
+              required
+              label="Address"
+              value={value}
+              onChange={handleChange}
+              placeholder="Your Address"
+            />
 
-        <Input
-          error={null}
-          label="Date"
-          value={value}
-          inputMode="decimal"
-          onChange={handleChange}
-          placeholder="$0.00"
-        />
-        <Input
-          error={null}
-          label="Time"
-          value={value}
-          inputMode="decimal"
-          onChange={handleChange}
-          placeholder="$0.00"
-        />
+            <Input
+              error={null}
+              label="Ste, Apt, Floor"
+              value={value}
+              onChange={handleChange}
+              placeholder="Ste, Apt, Floor"
+            />
+
+            <TextArea />
+          </>
+        )}
+
+        <Dropdown label="Date" />
+        <Dropdown label="Time" />
+
         <Button
           type="submit"
           styleClass={classes.shoppingCartCheckoutTipsModalButton}
         >
-          Add Tip
+          Add Details
         </Button>
       </div>
     </form>

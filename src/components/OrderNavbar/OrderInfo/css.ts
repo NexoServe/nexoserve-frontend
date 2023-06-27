@@ -6,6 +6,8 @@ import queries from '../../../../css/queries';
 
 const useStyles = createUseStyles({
   orderInfo: {
+    cursor: 'pointer',
+
     [queries.m]: {
       display: 'flex',
       alignItems: 'center',
@@ -59,6 +61,46 @@ const useStyles = createUseStyles({
     [queries.xl]: {
       marginLeft: base(1),
     },
+  },
+
+  orderInfoModal: {
+    background: colors.white,
+    width: '80vw',
+    maxHeight: '80vh',
+    overflow: 'auto',
+    maxWidth: base(50),
+    borderRadius: base(2),
+  },
+
+  orderInfoModalContent: {
+    padding: base(2),
+  },
+
+  orderInfoModalContentName: {
+    fontSize: '18px',
+    lineHeight: '20px',
+    fontWeight: 600,
+    paddingBottom: base(1),
+  },
+
+  orderInfoModalContenPhone: {
+    fontSize: '16px',
+    paddingBottom: base(1.5),
+    color: colors.black,
+    opacity: 1,
+  },
+
+  orderInfoModalContenAddress: {
+    fontSize: '16px',
+    paddingBottom: base(0.5),
+    color: colors.darkGray,
+    opacity: 0.8,
+  },
+
+  orderInfoModalContenDirections: {
+    textDecoration: 'underline',
+    padding: `${base(1)} 0`,
+    display: 'block',
   },
 });
 

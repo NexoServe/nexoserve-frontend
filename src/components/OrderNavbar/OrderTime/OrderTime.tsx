@@ -35,7 +35,10 @@ const OrderTime = () => {
             showModal={showTimeModal}
             onClose={() => setShowTimeModal(false)}
           >
-            <OrderNavBarModal headerText="Time Details" type="time" />
+            <OrderNavBarModal
+              setModal={setShowTimeModal}
+              headerText="Time Details"
+            />
           </ModalPopUp>
         )}
       </AnimatePresence>

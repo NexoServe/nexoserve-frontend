@@ -1,7 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
 
-export interface IOrderNavBarModal {
+export interface IOrderInfoModal {
   setModal: Dispatch<SetStateAction<boolean>>;
-  headerText: string;
-  type?: 'delivery' | null;
 }

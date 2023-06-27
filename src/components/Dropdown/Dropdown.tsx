@@ -3,7 +3,12 @@ import { useState } from 'react';
 import Select from 'react-select';
 
 import colors from '../../../css/colors';
-const Dropdown = (props: SelectProps<{ value: string; label: string }>) => {
+
+import useStyles from './css';
+import { IDropdown } from './types';
+
+const Dropdown = ({ label }: IDropdown) => {
+  const classes = useStyles();
   const [isFocused, setIsFocused] = useState(false);
 
   const colourOptions = [
@@ -29,44 +34,49 @@ const Dropdown = (props: SelectProps<{ value: string; label: string }>) => {
     { value: 'silver', label: 'Silver', color: '#666666' },
   ];
 
-  const customStyles = {
-    control: (provided) => ({
-      ...provided,
-      height: 40, // adjust this as needed
-      borderRadius: '5px', // adjust this as needed
-      border: isFocused ? '1px solid blue' : '1px solid #e1e1e1',
-      fontSize: '16px',
-      background: colors.white,
-      boxShadow:
-        '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02)',
-    }),
-    singleValue: (provided) => ({
-      ...provided,
-      height: '100%',
-      lineHeight: '100%',
-    }),
-  };
-
   return (
-    <>
-      <label>Date</label>
+    <div className={classes.dropdown}>
+      <label className={classes.dropdownLabel}>{label}</label>
       <Select
-        tabIndex={0}
         className="basic-single"
         classNamePrefix="select"
         defaultValue={colourOptions[0]}
         // isDisabled={isDisabled}
-        isLoading={true}
+        isLoading={false}
         isClearable={false}
         // isRtl={isRtl}
         isSearchable={false}
         name="color"
+        menuPlacement="auto"
+        menuPortalTarget={document.body}
+        menuPosition="fixed"
         options={colourOptions}
-        styles={customStyles}
-        onFocus={(e) => setIsFocused(true)}
-        onBlur={(e) => setIsFocused(false)}
+        styles={{
+          control: (provided) => ({
+            ...provided,
+            height: 40, // adjust this as needed
+            borderRadius: '5px', // adjust this as needed
+            border: isFocused ? '1px solid blue' : '1px solid #e1e1e1',
+            fontSize: '16px',
+            background: colors.white,
+            boxShadow:
+              '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02)',
+          }),
+          menuPortal: (base) => ({
+            ...base,
+            zIndex: 9999, // adjust this as needed
+          }),
+          singleValue: (provided) => ({
+            ...provided,
+            height: '100%',
+            lineHeight: '100%',
+          }),
+        }}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        onChange={(e) => console.log(e)}
       />
-    </>
+    </div>
   );
 };
 

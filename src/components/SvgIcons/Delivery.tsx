@@ -6,7 +6,7 @@ const Delivery = ({
   width = '46',
   height = '41',
   viewBox = '0 0 46 41',
-  fill = 'none',
+  fill = colors.black,
   styleClass,
 }: SvgIconsType) => {
   return (
@@ -19,7 +19,7 @@ const Delivery = ({
       className={styleClass}
     >
       <path
-        fill={colors.black}
+        fill={fill}
         fillOpacity="0.008"
         d="
       M 0.00 0.00
@@ -66,7 +66,7 @@ const Delivery = ({
       Z"
       />
       <path
-        fill={colors.black}
+        fill={fill}
         fillOpacity="0.992"
         d="
       M 38.34 25.03
@@ -155,7 +155,7 @@ const Delivery = ({
       Z"
       />
       <path
-        fill={colors.black}
+        fill={fill}
         fillOpacity="0.008"
         d="
       M 16.51 17.40
@@ -170,7 +170,7 @@ const Delivery = ({
       Z"
       />
       <path
-        fill={colors.black}
+        fill={fill}
         fillOpacity="0.008"
         d="
       M 29.88 17.67
@@ -200,7 +200,7 @@ const Delivery = ({
       Z"
       />
       <path
-        fill="#010001"
+        fill={fill}
         fillOpacity="0.992"
         d="
       M 5.30 20.50
@@ -213,22 +213,10 @@ const Delivery = ({
       Q 6.67 20.85 5.30 20.50
       Z"
       />
-      <circle
-        fill={colors.black}
-        fillOpacity="0.008"
-        cx="16.51"
-        cy="24.42"
-        r="2.57"
-      />
-      <circle
-        fill={colors.black}
-        fillOpacity="0.008"
-        cx="34.63"
-        cy="24.51"
-        r="2.62"
-      />
+      <circle fill={fill} fillOpacity="0.008" cx="16.51" cy="24.42" r="2.57" />
+      <circle fill={fill} fillOpacity="0.008" cx="34.63" cy="24.51" r="2.62" />
       <rect
-        fill={colors.black}
+        fill={fill}
         fillOpacity="0.008"
         x="-6.14"
         y="-1.55"

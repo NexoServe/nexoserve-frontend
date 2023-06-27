@@ -7,6 +7,8 @@ const useStyles = createUseStyles({
   shoppingCartCheckoutTipsModal: {
     background: colors.white,
     width: '80vw',
+    maxHeight: '80vh',
+    overflow: 'auto',
     maxWidth: base(50),
     borderRadius: base(2),
   },

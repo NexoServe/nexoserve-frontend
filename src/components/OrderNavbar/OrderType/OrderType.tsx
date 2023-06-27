@@ -1,10 +1,12 @@
 import { useState } from 'react';
 
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { base } from '../../../../css/base';
+import { ModalPopUp } from '../../Modal/Modal';
 import RoundBorder from '../../RoundBorder/RoundBorder';
 import SvgIcons from '../../SvgIcons';
+import OrderNavBarModal from '../OrderNavBarModal/OrderNavBarModal';
 
 import useStyles from './css';
 
@@ -14,6 +16,7 @@ const variants = {
 };
 
 const OrderType = () => {
+  const [showDeliveryModal, setShowDeliveryModal] = useState(false);
   const classes = useStyles();
   const [isPickUp, setIsPickUp] = useState(true);
 
@@ -39,7 +42,10 @@ const OrderType = () => {
             Pick Up
           </button>
           <button
-            onClick={() => setIsPickUp(false)}
+            onClick={() => {
+              setIsPickUp(false);
+              setShowDeliveryModal(true);
+            }}
             className={classes.orderTypeToggleButton}
           >
             Delivery
@@ -50,6 +56,21 @@ const OrderType = () => {
           </button>
         </div>
       </RoundBorder>
+
+      <AnimatePresence>
+        {showDeliveryModal && (
+          <ModalPopUp
+            showModal={showDeliveryModal}
+            onClose={() => setShowDeliveryModal(false)}
+          >
+            <OrderNavBarModal
+              setModal={setShowDeliveryModal}
+              headerText="Delivery Details"
+              type="delivery"
+            />
+          </ModalPopUp>
+        )}
+      </AnimatePresence>
     </>
   );
 };

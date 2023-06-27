@@ -54,6 +54,10 @@ export default createUseStyles({
       outline: `2px dotted ${colors.black}`,
     },
 
+    a: {
+      cursor: 'pointer',
+    },
+
     // 'label:focus-within': {
     //   outline: `2px dotted ${colors.black}`,
     // },
@@ -64,6 +68,7 @@ export default createUseStyles({
       margin: 0,
       padding: 0,
       backgroundColor: 'transparent',
+      cursor: 'pointer',
     },
 
     input: {

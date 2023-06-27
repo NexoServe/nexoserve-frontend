@@ -57,6 +57,7 @@ const useStyles = createUseStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    cursor: 'pointer',
 
     [queries.s]: {
       maxHeight: base(6),
