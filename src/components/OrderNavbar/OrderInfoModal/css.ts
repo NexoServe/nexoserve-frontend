@@ -25,14 +25,14 @@ const useStyles = createUseStyles({
   },
 
   orderInfoModalContentPhone: {
-    fontSize: '16px',
+    fontSize: '14px',
     paddingBottom: base(1.5),
     color: colors.black,
     opacity: 1,
   },
 
   orderInfoModalContentAddress: {
-    fontSize: '16px',
+    fontSize: '14px',
     paddingBottom: base(0.5),
     color: colors.darkGray,
     opacity: 0.8,
@@ -86,6 +86,7 @@ const useStyles = createUseStyles({
 
   orderInfoHoursTabContentItem: {
     display: 'flex',
+    fontSize: '14px',
     justifyContent: 'space-between',
     padding: `${base(1)} 0`,
     opacity: 0.8,

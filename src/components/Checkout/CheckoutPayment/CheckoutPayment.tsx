@@ -9,7 +9,6 @@ import { useValidateShoppingCartLazyQuery } from '../../../../generated/graphql'
 import {
   ShoppingCartAtom,
   ShoppingCartTipAtom,
-  ShoppingCartTotalAtom,
 } from '../../../state/ShoppingCartState';
 import getShoppingCartInput from '../../../utils/shoppingCartInput';
 import RoundBorder from '../../RoundBorder/RoundBorder';
@@ -21,7 +20,7 @@ import useStyles from './css';
 const CheckoutPayment = () => {
   const classes = useStyles();
   const shoppingCart = useRecoilValue(ShoppingCartAtom);
-  const shoppingCartTotal = useRecoilValue(ShoppingCartTotalAtom);
+
   const shoppingCartTip = useRecoilValue(ShoppingCartTipAtom);
 
   const [validateShoppingCart, { data }] = useValidateShoppingCartLazyQuery();

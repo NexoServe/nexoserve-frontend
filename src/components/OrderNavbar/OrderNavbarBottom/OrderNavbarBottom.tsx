@@ -1,5 +1,3 @@
-import colors from '../../../../css/colors';
-
 import useStyles from './css';
 
 const OrderNavbarBottom = () => {

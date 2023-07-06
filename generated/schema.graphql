@@ -73,6 +73,16 @@ input CreateOrderItemInput {
   items: [String!]!
 }
 
+input DayInput {
+  dayOfWeek: String!
+  time: [TimeInput!]!
+}
+
+type DayOutput {
+  dayOfWeek: String!
+  time: [TimeOutput!]!
+}
+
 type Food {
   addOns: [AddOn]
   description: String
@@ -119,8 +129,18 @@ input ItemSizeInput {
 
 type Mutation {
   CheckoutCalculateMut(input: [ShoppingCartInput]!, paymentMethodId: String!): Checkout!
-  createFood(input: CreateFoodInput!): Food!
+  addOpeningHours(openingHours: [DayInput!]!, restaurantId: String!): Boolean
+  createFood(input: CreateFoodInput!, restaurantId: String!): Food!
   createOrder(input: CreateOrderInput!): Order!
+  createRestaurant(name: String!, restaurantId: String!, timezone: String!): Boolean
+}
+
+type OpeningHour {
+  closeTime: String!
+  dayOfWeek: String!
+  id: Int!
+  openTime: String!
+  restaurantId: Int!
 }
 
 type Order {
@@ -140,7 +160,19 @@ type Query {
   foodById(id: String!): Food
   foods: [Food]!
   foodsByCategory: [FoodsByCategory]!
+  restaurant(orderTime: String, restaurantId: String!): Restaurant!
+  validateOrderDetails(dateTime: String, restaurantId: String!, timeLabel: String): validateOrderDetailsType!
   validateShoppingCart(input: [ShoppingCartInput]!): ShoppingCart!
+}
+
+type Restaurant {
+  currentDateTime: String!
+  isOpenNow: Boolean!
+  isOrderTimeValid: Boolean!
+  menu: [FoodsByCategory!]!
+  name: String!
+  openingHours: [DayOutput!]!
+  timezone: String!
 }
 
 type SelectedItem {
@@ -197,4 +229,20 @@ type SimpleFoodSize {
   id: String
   name: String
   price: Float
+}
+
+input TimeInput {
+  closes_at: String
+  opens_at: String
+}
+
+type TimeOutput {
+  closes_at: String
+  opens_at: String
+}
+
+type validateOrderDetailsType {
+  currentDateTime: String
+  isDateTimeValid: Boolean!
+  timezone: String
 }

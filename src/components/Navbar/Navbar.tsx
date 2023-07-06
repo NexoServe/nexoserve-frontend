@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { AnimatePresence } from 'framer-motion';
-import Hamburger, { Divide } from 'hamburger-react';
+import Hamburger from 'hamburger-react';
 
 import breakpoints from '../../../css/breakpoints';
 import colors from '../../../css/colors';

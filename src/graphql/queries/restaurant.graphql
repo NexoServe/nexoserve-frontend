@@ -1,0 +1,29 @@
+query Restaurant($restaurantId: String!, $orderTime: String) {
+  restaurant(restaurantId: $restaurantId, orderTime: $orderTime) {
+    name
+    menu {
+      category
+      foods {
+        id
+        description
+        image
+        name
+        price
+        sizes {
+          price
+        }
+      }
+    }
+    openingHours {
+      dayOfWeek
+      time {
+        opens_at
+        closes_at
+      }
+    }
+    currentDateTime
+    timezone
+    isOpenNow
+    isOrderTimeValid
+  }
+}

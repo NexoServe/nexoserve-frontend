@@ -1,0 +1,7 @@
+query ValidateOrderDetails($dateTime: String!, $restaurantId: String!) {
+  validateOrderDetails(dateTime: $dateTime, restaurantId: $restaurantId) {
+    currentDateTime
+    isDateTimeValid
+    timezone
+  }
+}

@@ -1,8 +1,20 @@
-import { ChangeEvent, useState } from 'react';
+import { FormEvent, useMemo, useState } from 'react';
 
+import { DateTime, Interval } from 'luxon';
+import { useRecoilState } from 'recoil';
+
+import { useValidateOrderDetailsLazyQuery } from '../../../../generated/graphql';
+import {
+  OrderDateAtom,
+  OrderOpeningHoursAtom,
+  OrderTime,
+  OrderTimeAtom,
+} from '../../../state/OrderNavbar';
+import getHourAndMinute from '../../../utils/getHourAndMintue';
 import Button from '../../Button/Button';
 import Dropdown from '../../Dropdown/Dropdown';
 import Input from '../../Input/Input';
+import Loader from '../../Loader/Loader';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import TextArea from '../../TextArea/TextArea';
 
@@ -13,55 +25,271 @@ const OrderNavBarModal = ({
   setModal,
   headerText,
   type,
+  error,
 }: IOrderNavBarModal) => {
+  const [validateOrderDetails, { loading }] =
+    useValidateOrderDetailsLazyQuery();
+
+  const [openingHours, setOpeningHours] = useRecoilState(OrderOpeningHoursAtom);
+
   const [value, setValue] = useState('');
   const classes = useStyles();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
+  const [orderTime, setOrderTime] = useRecoilState(OrderTimeAtom);
+  const [orderDate, setOrderDate] = useRecoilState(OrderDateAtom);
 
-    if (/^\d*(\.\d{0,2})?$/.test(newValue) || newValue === '') {
-      setValue(newValue);
+  const [orderDateState, setOrderDateState] = useState<OrderTime>();
+  const [orderTimeState, setOrderTimeState] = useState<OrderTime>();
+
+  const now = DateTime.fromISO(openingHours?.currentDateTime as string).setZone(
+    openingHours?.timezone,
+  );
+
+  const days: OrderTime[] = [];
+
+  for (let i = 0; i < 7; i++) {
+    const day = now.plus({ days: i });
+    days.push({
+      value: day,
+      label: day.toFormat('EEE, MMM dd'),
+    });
+  }
+
+  const openingHoursForDay = openingHours?.openingHours.find(
+    (day) => day.dayOfWeek === now.weekdayLong?.toLowerCase(),
+  );
+
+  const allHoursAreInThePast = openingHoursForDay?.time.every((interval) => {
+    const openingTime = DateTime.fromFormat(
+      interval?.opens_at as string,
+      'HH:mm',
+      {
+        zone: openingHours?.timezone,
+      },
+    ).set({
+      day: now.day,
+      month: now.month,
+      year: now.year,
+    });
+
+    let closingTime = DateTime.fromFormat(
+      interval?.closes_at as string,
+      'HH:mm',
+      {
+        zone: openingHours?.timezone,
+      },
+    ).set({
+      day: now.day,
+      month: now.month,
+      year: now.year,
+    });
+
+    // If closingTime is before openingTime, it means the closingTime is on the next day
+    if (closingTime < openingTime) {
+      closingTime = closingTime.plus({ days: 1 });
     }
+
+    return now > closingTime;
+  });
+
+  if (allHoursAreInThePast) {
+    days.shift();
+  } else {
+    days[0].label = 'Today';
+  }
+
+  useMemo(() => {
+    if (!orderDate?.value) {
+      setOrderDateState({
+        label: days[0]?.label,
+        value: days[0].value,
+      });
+    } else {
+      setOrderDateState({
+        label: orderDate?.label,
+        value:
+          orderDate?.label === 'Today'
+            ? now
+            : DateTime.fromISO(orderDate?.value.toString()).setZone(
+                openingHours?.timezone,
+              ),
+      });
+    }
+  }, []);
+
+  console.log('orderDateState', orderDateState);
+
+  const dayHours =
+    openingHours?.openingHours.find(
+      (hours) =>
+        hours.dayOfWeek.toLowerCase() ===
+        orderDateState?.value?.weekdayLong?.toLowerCase(),
+    )?.time || [];
+
+  let intervals = [];
+
+  for (const period of dayHours) {
+    const openingTime = DateTime?.fromObject(
+      {
+        day: orderDateState?.value ? orderDateState.value.day : now.day,
+        month: orderDateState?.value ? orderDateState.value.month : now.month,
+        year: orderDateState?.value ? orderDateState.value.year : now.year,
+        hour: parseInt(period?.opens_at?.split(':')[0] as string),
+        minute: parseInt(period?.opens_at?.split(':')[1] as string),
+      },
+      {
+        zone: openingHours?.timezone,
+      },
+    );
+
+    const closingTime = DateTime?.fromObject(
+      {
+        day: orderDateState?.value ? orderDateState.value.day : now.day,
+        month: orderDateState?.value ? orderDateState.value.month : now.month,
+        year: orderDateState?.value ? orderDateState.value.year : now.year,
+        hour: parseInt(period?.closes_at?.split(':')[0] as string),
+        minute: parseInt(period?.closes_at?.split(':')[1] as string),
+      },
+      {
+        zone: openingHours?.timezone,
+      },
+    );
+
+    const timeInterval = Interval.fromDateTimes(
+      openingTime.toFormat('hh:mm a') === '12:00 AM'
+        ? openingTime
+        : openingTime.plus({ minutes: 15 }),
+      closingTime,
+    );
+
+    intervals.push(
+      ...Array.from(timeInterval.splitBy({ minutes: 15 }), (i) => i.start),
+    );
+  }
+
+  // Remove intervals that have already passed
+  if (
+    orderDateState?.value?.weekdayLong?.toLowerCase() ===
+    now.weekdayLong?.toLowerCase()
+  ) {
+    intervals = intervals.filter((interval) => (interval as DateTime) > now);
+  }
+
+  // Format the intervals
+  const formattedIntervals = intervals.map((interval, i) => ({
+    value: interval,
+    label: interval?.toFormat('hh:mm a'),
+  }));
+
+  if (
+    openingHours?.isOpenNow &&
+    formattedIntervals &&
+    formattedIntervals.length > 0 &&
+    !allHoursAreInThePast &&
+    orderDateState?.label === 'Today'
+  ) {
+    formattedIntervals[0].label = 'ASAP';
+  }
+
+  if (formattedIntervals.length === 0 && openingHours?.isOpenNow) {
+    formattedIntervals.push({
+      value: now,
+      label: 'ASAP',
+    });
+  }
+
+  useMemo(() => {
+    if (orderTime?.value) {
+      setOrderTimeState({
+        label: orderTime?.label,
+        value: orderTime?.value,
+      });
+    } else {
+      if (
+        orderTimeState?.value !== null &&
+        !formattedIntervals.find(
+          (interval) => interval.label === orderTimeState?.label,
+        )
+      ) {
+        setOrderTimeState({
+          label: formattedIntervals?.[0]?.label as string,
+          value: formattedIntervals?.[0]?.value,
+        });
+      }
+    }
+  }, [orderDateState]);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    let hourMinutes;
+
+    if (orderTimeState?.label !== 'ASAP') {
+      hourMinutes = getHourAndMinute(orderTimeState?.label as string);
+    }
+
+    const value = DateTime.fromObject({
+      day: orderDateState?.value?.day,
+      month: orderDateState?.value?.month,
+      year: orderDateState?.value?.year,
+      hour: hourMinutes ? hourMinutes?.hour : now.hour,
+      minute: hourMinutes ? hourMinutes?.minute : now.minute,
+    });
+
+    const res = await validateOrderDetails({
+      variables: {
+        restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
+        dateTime: orderTimeState?.label === 'ASAP' ? 'ASAP' : value.toString(),
+      },
+    });
+
+    if (!res.data) {
+      return;
+    }
+
+    setOpeningHours({
+      isOrderTimeValid: res.data.validateOrderDetails.isDateTimeValid,
+      isOpenNow: openingHours?.isOpenNow as boolean,
+      currentDateTime: res.data.validateOrderDetails.currentDateTime as string,
+      openingHours: openingHours?.openingHours ?? [],
+      timezone: res.data.validateOrderDetails.timezone as string,
+    });
+
+    setOrderTime({
+      label: orderTimeState?.label as string,
+      value: value,
+    });
+    setOrderDate({
+      label: orderDateState?.label as string,
+      value: value,
+    });
+
+    localStorage.setItem(
+      'orderTime',
+      JSON.stringify({
+        label: orderTimeState?.label,
+        value: orderTimeState?.label === 'ASAP' ? 'ASAP' : value,
+      }),
+    );
+
+    setModal(false);
   };
 
-  // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   setShoppingCartTip({
-  //     isTipPercentage: false,
-  //     tip: parseFloat(value),
-  //   });
-  //   setShowCustomTip(false);
-  // };
-
-  const options = [
-    { value: 'one', label: 'One' },
-    { value: 'two', label: 'Two' },
-    { value: 'three', label: 'Three' },
-    { value: 'one', label: 'One' },
-    { value: 'two', label: 'Two' },
-    { value: 'three', label: 'Three' },
-    { value: 'one', label: 'One' },
-    { value: 'two', label: 'Two' },
-    { value: 'three', label: 'Three' },
-    { value: 'one', label: 'One' },
-    { value: 'two', label: 'Two' },
-    { value: 'three', label: 'Three' },
-    { value: 'one', label: 'One' },
-    { value: 'two', label: 'Two' },
-    { value: 'three', label: 'Three' },
-  ];
-
-  const [selected, setSelected] = useState<string[]>([]);
-  const [handle, setHandle] = useState(false);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
 
   return (
-    <form
-      // onSubmit={handleSubmit}
-      className={classes.shoppingCartCheckoutTipsModal}
-    >
-      <ModalHeader text={headerText} onClick={() => setModal(false)} />
-      <div className={classes.shoppingCartCheckoutTipsModalContent}>
+    <form onSubmit={handleSubmit} className={classes.orderNavbarModal}>
+      <ModalHeader
+        showCloseIcon={error ? false : true}
+        text={headerText}
+        onClick={() => setModal(false)}
+      />
+
+      <div className={classes.orderNavbarModalContent}>
+        {error && <div className={classes.orderNavbarModalError}>{error}</div>}
+
         {type === 'delivery' && (
           <>
             <Input
@@ -86,14 +314,34 @@ const OrderNavBarModal = ({
           </>
         )}
 
-        <Dropdown label="Date" />
-        <Dropdown label="Time" />
+        <Dropdown
+          id="1"
+          options={days}
+          label="Date"
+          onChange={(e) => setOrderDateState(e as OrderTime)}
+          defaultValue={days[0]}
+          value={orderDateState}
+        />
 
-        <Button
-          type="submit"
-          styleClass={classes.shoppingCartCheckoutTipsModalButton}
-        >
-          Add Details
+        <Dropdown
+          id="2"
+          options={formattedIntervals}
+          label="Time"
+          onChange={(e) => setOrderTimeState(e as OrderTime)}
+          defaultValue={formattedIntervals[0]}
+          value={
+            orderTimeState?.value === null
+              ? formattedIntervals[0]
+              : orderTimeState
+          }
+        />
+
+        <Button type="submit" styleClass={classes.orderNavbarModalButton}>
+          {loading ? (
+            <Loader width="50px" height="50px" scale={0.5} />
+          ) : (
+            'Add Details'
+          )}
         </Button>
       </div>
     </form>

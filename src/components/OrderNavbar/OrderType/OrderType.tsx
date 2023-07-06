@@ -1,8 +1,10 @@
 import { useState } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
+import { useRecoilState } from 'recoil';
 
 import { base } from '../../../../css/base';
+import { OrderIsPickUpAtom } from '../../../state/OrderNavbar';
 import { ModalPopUp } from '../../Modal/Modal';
 import RoundBorder from '../../RoundBorder/RoundBorder';
 import SvgIcons from '../../SvgIcons';
@@ -18,7 +20,8 @@ const variants = {
 const OrderType = () => {
   const [showDeliveryModal, setShowDeliveryModal] = useState(false);
   const classes = useStyles();
-  const [isPickUp, setIsPickUp] = useState(true);
+
+  const [isPickUp, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
 
   return (
     <>

@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
 import { AnimatePresence } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
 
+import { OrderDateAtom, OrderTimeAtom } from '../../../state/OrderNavbar';
 import { ModalPopUp } from '../../Modal/Modal';
 import RoundBorder from '../../RoundBorder/RoundBorder';
 import SvgIcons from '../../SvgIcons';
@@ -11,6 +13,9 @@ import useStyles from './css';
 
 const OrderTime = () => {
   const [showTimeModal, setShowTimeModal] = useState(false);
+
+  const orderTime = useRecoilValue(OrderTimeAtom);
+  const orderDate = useRecoilValue(OrderDateAtom);
   const classes = useStyles();
 
   return (
@@ -22,8 +27,8 @@ const OrderTime = () => {
         <RoundBorder styleClass={classes.orderTimeContainer}>
           <SvgIcons styleClass={classes.orderTimeIcon} name="clock" />
           <div className={classes.orderTimeInner}>
-            <span className={classes.orderTimeLabel}>Sat. Jun 12:</span>
-            <span>10:40 PM</span>
+            <span className={classes.orderTimeLabel}>{orderDate?.label}:</span>
+            <span>{orderTime?.label}</span>
           </div>
           <SvgIcons styleClass={classes.orderTimeIconArrow} name="arrow" />
         </RoundBorder>
@@ -37,7 +42,7 @@ const OrderTime = () => {
           >
             <OrderNavBarModal
               setModal={setShowTimeModal}
-              headerText="Time Details"
+              headerText="Date and Time"
             />
           </ModalPopUp>
         )}

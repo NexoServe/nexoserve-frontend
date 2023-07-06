@@ -4,7 +4,7 @@ import { base } from '../../../../css/base';
 import colors from '../../../../css/colors';
 
 const useStyles = createUseStyles({
-  shoppingCartCheckoutTipsModal: {
+  orderNavbarModal: {
     background: colors.white,
     width: '80vw',
     maxHeight: '80vh',
@@ -13,14 +13,21 @@ const useStyles = createUseStyles({
     borderRadius: base(2),
   },
 
-  shoppingCartCheckoutTipsModalContent: {
+  orderNavbarModalContent: {
     padding: `${base(2)}`,
     paddingTop: base(3),
   },
 
-  shoppingCartCheckoutTipsModalButton: {
+  orderNavbarModalButton: {
     height: base(6),
     marginTop: base(2),
+  },
+
+  orderNavbarModalError: {
+    color: colors.red,
+    fontSize: '16px',
+    lineHeight: '18px',
+    paddingBottom: base(3),
   },
 });
 
