@@ -63,6 +63,10 @@ const useStyles = createUseStyles({
     },
   },
 
+  orderInfoStatusIconClosed: {
+    background: colors.red,
+  },
+
   orderInfoModal: {
     background: colors.white,
     width: '80vw',

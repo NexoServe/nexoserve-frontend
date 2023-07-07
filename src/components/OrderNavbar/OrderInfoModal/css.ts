@@ -17,6 +17,11 @@ const useStyles = createUseStyles({
     padding: base(2),
   },
 
+  orderInfoModalContentInner: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+
   orderInfoModalContentName: {
     fontSize: '18px',
     lineHeight: '20px',
@@ -29,10 +34,12 @@ const useStyles = createUseStyles({
     paddingBottom: base(1.5),
     color: colors.black,
     opacity: 1,
+    textDecoration: 'underline',
   },
 
   orderInfoModalContentAddress: {
-    fontSize: '14px',
+    fontSize: '16px',
+    lineHeight: '18px',
     paddingBottom: base(0.5),
     color: colors.darkGray,
     opacity: 0.8,
@@ -90,6 +97,10 @@ const useStyles = createUseStyles({
     justifyContent: 'space-between',
     padding: `${base(1)} 0`,
     opacity: 0.8,
+  },
+
+  orderInfoHoursTabContentItemActive: {
+    fontWeight: 700,
   },
 });
 

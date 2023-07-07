@@ -173,6 +173,7 @@ export type MutationAddOpeningHoursArgs = {
 
 export type MutationCreateFoodArgs = {
   input: CreateFoodInput;
+  restaurantId: Scalars['String'];
 };
 
 
