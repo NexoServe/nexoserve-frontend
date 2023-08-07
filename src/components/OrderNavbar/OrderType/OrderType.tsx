@@ -23,6 +23,10 @@ const OrderType = () => {
 
   const [isPickUp, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
 
+  const onClose = () => {
+    setShowDeliveryModal(false);
+  };
+
   return (
     <>
       <RoundBorder styleClass={classes.orderType}>
@@ -46,7 +50,6 @@ const OrderType = () => {
           </button>
           <button
             onClick={() => {
-              setIsPickUp(false);
               setShowDeliveryModal(true);
             }}
             className={classes.orderTypeToggleButton}
@@ -62,10 +65,7 @@ const OrderType = () => {
 
       <AnimatePresence>
         {showDeliveryModal && (
-          <ModalPopUp
-            showModal={showDeliveryModal}
-            onClose={() => setShowDeliveryModal(false)}
-          >
+          <ModalPopUp showModal={showDeliveryModal} onClose={onClose}>
             <OrderNavBarModal
               setModal={setShowDeliveryModal}
               headerText="Delivery Details"

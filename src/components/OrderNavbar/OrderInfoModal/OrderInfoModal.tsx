@@ -3,7 +3,7 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
 import { DateTime } from 'luxon';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import { OrderOpeningHoursAtom } from '../../../state/OrderNavbar';
 import Divider from '../../Divider/Divider';
@@ -13,7 +13,7 @@ import useStyles from './css';
 import { IOrderInfoModal } from './types';
 
 const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
-  const [openingHours, setOpeningHours] = useRecoilState(OrderOpeningHoursAtom);
+  const openingHours = useRecoilValue(OrderOpeningHoursAtom);
 
   const [isPickUp, setIsPickUp] = useState(true);
   const classes = useStyles();

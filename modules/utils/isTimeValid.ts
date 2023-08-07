@@ -15,9 +15,6 @@ const isTimeValid = (
 
   const nowUTC = DateTime.utc();
   const timeZonedTime = nowUTC.setZone(timezone);
-  // const timeZonedTime = DateTime.fromISO(
-  //   '2023-07-06T22:50:15.381-04:00',
-  // ).setZone(timezone);
 
   if (dateTime === 'ASAP') {
     if (isStoreOpen(openingHoursByDay, timeZonedTime, timezone) === true) {
@@ -36,8 +33,21 @@ const isTimeValid = (
   }
 
   const datetime = DateTime.fromISO(dateTime as string);
-
   const datetimeInRestaurantTimezone = datetime.setZone(timezone);
+
+  // Check if selected time is at least 15 min after current time
+  const differenceInMinutes = datetimeInRestaurantTimezone.diff(
+    timeZonedTime,
+    'minutes',
+  ).minutes;
+
+  if (differenceInMinutes < 15) {
+    return {
+      isDateTimeValid: false,
+      currentDateTime: timeZonedTime.toString(),
+      timezone: timezone,
+    };
+  }
 
   if (datetimeInRestaurantTimezone < timeZonedTime) {
     return {

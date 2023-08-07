@@ -14,6 +14,7 @@ const useStyles = createUseStyles({
     background: colors.white,
     maxWidth: '100%',
     width: '100%',
+    minWidth: '100%',
     maxHeight: base(15),
     minHeight: base(7),
     marginBottom: base(2),

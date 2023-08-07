@@ -41,3 +41,17 @@ export const OrderOpeningHoursAtom = atom<IOrderOpeningHours | undefined>({
   key: 'OrderOpeningHoursAtom',
   default: undefined,
 });
+
+export const OrderDeliveryAddressAtom = atom<string | undefined>({
+  key: 'OrderDeliveryAddressAtom',
+  default: undefined,
+});
+
+export const OrderDeliveryAdditionalAddressInfoAtom = atom<string | undefined>({
+  key: 'OrderDeliveryAdditionalAddressInfoAtom',
+  default: undefined,
+});
+export const OrderDeliveryDetailsAtom = atom<string | undefined>({
+  key: 'OrderDeliveryDetailsAtom',
+  default: undefined,
+});

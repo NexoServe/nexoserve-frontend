@@ -35,8 +35,9 @@ const useStyles = createUseStyles({
   },
 
   shoppingCartCheckoutTipActive: {
-    background: colors.black,
-    color: colors.white,
+    background: colors.primary,
+    color: colors.black,
+    border: `0.2px solid ${colors.primary}`,
   },
 
   shoppingCartCheckoutModal: {

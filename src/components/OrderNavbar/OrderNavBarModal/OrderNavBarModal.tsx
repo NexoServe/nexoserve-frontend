@@ -1,11 +1,15 @@
 import { FormEvent, useMemo, useState } from 'react';
 
 import { DateTime, Interval } from 'luxon';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { useValidateOrderDetailsLazyQuery } from '../../../../generated/graphql';
 import {
   OrderDateAtom,
+  OrderDeliveryAdditionalAddressInfoAtom,
+  OrderDeliveryAddressAtom,
+  OrderDeliveryDetailsAtom,
+  OrderIsPickUpAtom,
   OrderOpeningHoursAtom,
   OrderTime,
   OrderTimeAtom,
@@ -13,10 +17,9 @@ import {
 import getHourAndMinute from '../../../utils/getHourAndMintue';
 import Button from '../../Button/Button';
 import Dropdown from '../../Dropdown/Dropdown';
-import Input from '../../Input/Input';
 import Loader from '../../Loader/Loader';
 import ModalHeader from '../../ModalHeader/ModalHeader';
-import TextArea from '../../TextArea/TextArea';
+import OrderNavBarModalDelivery from '../OrderNavBarModalDelivery/OrderNavBarModalDelivery';
 
 import useStyles from './css';
 import { IOrderNavBarModal } from './types';
@@ -32,7 +35,6 @@ const OrderNavBarModal = ({
 
   const [openingHours, setOpeningHours] = useRecoilState(OrderOpeningHoursAtom);
 
-  const [value, setValue] = useState('');
   const classes = useStyles();
 
   const [orderTime, setOrderTime] = useRecoilState(OrderTimeAtom);
@@ -40,6 +42,13 @@ const OrderNavBarModal = ({
 
   const [orderDateState, setOrderDateState] = useState<OrderTime>();
   const [orderTimeState, setOrderTimeState] = useState<OrderTime>();
+  const [isAddressValid, setIsAddressValid] = useState<null | boolean>(null);
+  const [, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
+  const deliveryAddress = useRecoilValue(OrderDeliveryAddressAtom);
+  const additionalAddressInfo = useRecoilValue(
+    OrderDeliveryAdditionalAddressInfoAtom,
+  );
+  const deliveryDetails = useRecoilValue(OrderDeliveryDetailsAtom);
 
   const now = DateTime.fromISO(openingHours?.currentDateTime as string).setZone(
     openingHours?.timezone,
@@ -272,11 +281,21 @@ const OrderNavBarModal = ({
       }),
     );
 
-    setModal(false);
-  };
+    if (type === 'delivery') {
+      setIsPickUp(false);
+      localStorage.setItem('isPickUp', JSON.stringify(false));
+      localStorage.setItem('deliveryAddress', JSON.stringify(deliveryAddress));
+      localStorage.setItem(
+        'additionalAddressInfo',
+        JSON.stringify(additionalAddressInfo),
+      );
+      localStorage.setItem('deliveryDetails', JSON.stringify(deliveryDetails));
+    } else {
+      setIsPickUp(true);
+      localStorage.setItem('isPickUp', JSON.stringify(true));
+    }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    setModal(false);
   };
 
   return (
@@ -291,31 +310,14 @@ const OrderNavBarModal = ({
         {error && <div className={classes.orderNavbarModalError}>{error}</div>}
 
         {type === 'delivery' && (
-          <>
-            <Input
-              error={null}
-              isRequired={true}
-              required
-              label="Address"
-              value={value}
-              onChange={handleChange}
-              placeholder="Your Address"
-            />
-
-            <Input
-              error={null}
-              label="Ste, Apt, Floor"
-              value={value}
-              onChange={handleChange}
-              placeholder="Ste, Apt, Floor"
-            />
-
-            <TextArea />
-          </>
+          <OrderNavBarModalDelivery
+            setIsAddressValid={setIsAddressValid}
+            isAddressValid={isAddressValid}
+          />
         )}
 
         <Dropdown
-          id="1"
+          id="DateDropdown"
           options={days}
           label="Date"
           onChange={(e) => setOrderDateState(e as OrderTime)}
@@ -324,7 +326,7 @@ const OrderNavBarModal = ({
         />
 
         <Dropdown
-          id="2"
+          id="TimeDropdown"
           options={formattedIntervals}
           label="Time"
           onChange={(e) => setOrderTimeState(e as OrderTime)}
@@ -336,7 +338,11 @@ const OrderNavBarModal = ({
           }
         />
 
-        <Button type="submit" styleClass={classes.orderNavbarModalButton}>
+        <Button
+          disabled={!isAddressValid && type === 'delivery'}
+          type="submit"
+          styleClass={classes.orderNavbarModalButton}
+        >
           {loading ? (
             <Loader width="50px" height="50px" scale={0.5} />
           ) : (

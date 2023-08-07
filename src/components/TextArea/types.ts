@@ -1,12 +1,9 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { DetailedHTMLProps, TextareaHTMLAttributes } from 'react';
 
-export interface IInput
+export interface ITextArea
   extends DetailedHTMLProps<
-    InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
+    TextareaHTMLAttributes<HTMLTextAreaElement>,
+    HTMLTextAreaElement
   > {
-  styleClass?: string;
   label: string;
-  isRequired?: boolean;
-  error: string | null;
 }

@@ -1,18 +1,14 @@
 import useStyles from './css';
+import { ITextArea } from './types';
 
-const TextArea = () => {
+const TextArea = ({ label, ...rest }: ITextArea) => {
   const classes = useStyles();
   return (
     <>
       <label className={classes.textAreaLabel} htmlFor="textarea">
-        Delivery Details
+        {label}
       </label>
-      <textarea
-        placeholder="Enter delivery details here. (Max 140 characters)"
-        maxLength={140}
-        id="textarea"
-        className={classes.textArea}
-      />
+      <textarea id="textarea" className={classes.textArea} {...rest} />
     </>
   );
 };
