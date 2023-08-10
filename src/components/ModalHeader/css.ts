@@ -25,6 +25,7 @@ const useStyles = createUseStyles({
     margin: 0,
     fontSize: '20px',
     fontWeight: '500',
+    lineHeight: '22px',
   },
 
   modalHeaderCloseButton: {

@@ -160,19 +160,33 @@ type Query {
   foodById(id: String!): Food
   foods: [Food]!
   foodsByCategory: [FoodsByCategory]!
-  restaurant(orderTime: String, restaurantId: String!): Restaurant!
-  validateOrderDetails(dateTime: String, restaurantId: String!, timeLabel: String): validateOrderDetailsType!
+  restaurant(input: RestaurantInput!): Restaurant!
+  validateOrderDetails(input: ValidateOrderDetailsInput!): ValidateOrderDetailsType!
   validateShoppingCart(input: [ShoppingCartInput]!): ShoppingCart!
 }
 
 type Restaurant {
   currentDateTime: String!
+  deliveryAddress: String
+  deliveryAddressAdditionalInfo: String
+  deliveryDetails: String
+  isDeliveryAddressValid: Boolean!
   isOpenNow: Boolean!
   isOrderTimeValid: Boolean!
+  isPickUp: Boolean!
   menu: [FoodsByCategory!]!
   name: String!
   openingHours: [DayOutput!]!
   timezone: String!
+}
+
+input RestaurantInput {
+  deliveryAddress: String
+  deliveryAddressAdditionalInfo: String
+  deliveryDetails: String
+  isPickUp: Boolean!
+  orderTime: String!
+  restaurantId: String!
 }
 
 type SelectedItem {
@@ -241,8 +255,25 @@ type TimeOutput {
   opens_at: String
 }
 
-type validateOrderDetailsType {
-  currentDateTime: String
-  isDateTimeValid: Boolean!
-  timezone: String
+input ValidateOrderDetailsInput {
+  deliveryAddress: String
+  deliveryAddressAdditionalInfo: String
+  deliveryDetails: String
+  isPickUp: Boolean!
+  orderTime: String!
+  restaurantId: String!
+}
+
+type ValidateOrderDetailsType {
+  currentDateTime: String!
+  deliveryAddress: String
+  deliveryAddressAdditionalInfo: String
+  deliveryDetails: String
+  isDeliveryAddressValid: Boolean!
+  isOpenNow: Boolean!
+  isOrderTimeValid: Boolean!
+  isPickUp: Boolean!
+  menu: [FoodsByCategory!]!
+  openingHours: [DayOutput!]!
+  timezone: String!
 }

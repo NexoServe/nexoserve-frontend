@@ -1,9 +1,8 @@
 import { inputObjectType, objectType } from 'nexus';
 
-export const Restaurant = objectType({
-  name: 'Restaurant',
+export const ValidateOrderDetailsType = objectType({
+  name: 'ValidateOrderDetailsType',
   definition(t) {
-    t.nonNull.string('name');
     t.nonNull.list.nonNull.field('openingHours', { type: 'DayOutput' });
     t.nonNull.list.nonNull.field('menu', { type: 'FoodsByCategory' });
     t.nonNull.string('currentDateTime');
@@ -18,8 +17,8 @@ export const Restaurant = objectType({
   },
 });
 
-export const RestaurantInput = inputObjectType({
-  name: 'RestaurantInput',
+export const ValidateOrderDetailsInput = inputObjectType({
+  name: 'ValidateOrderDetailsInput',
   definition(t) {
     t.nonNull.string('restaurantId');
     t.nonNull.string('orderTime');

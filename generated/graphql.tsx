@@ -229,15 +229,12 @@ export type QueryFoodByIdArgs = {
 
 
 export type QueryRestaurantArgs = {
-  orderTime?: InputMaybe<Scalars['String']>;
-  restaurantId: Scalars['String'];
+  input: RestaurantInput;
 };
 
 
 export type QueryValidateOrderDetailsArgs = {
-  dateTime?: InputMaybe<Scalars['String']>;
-  restaurantId: Scalars['String'];
-  timeLabel?: InputMaybe<Scalars['String']>;
+  input: ValidateOrderDetailsInput;
 };
 
 
@@ -248,12 +245,26 @@ export type QueryValidateShoppingCartArgs = {
 export type Restaurant = {
   __typename?: 'Restaurant';
   currentDateTime: Scalars['String'];
+  deliveryAddress?: Maybe<Scalars['String']>;
+  deliveryAddressAdditionalInfo?: Maybe<Scalars['String']>;
+  deliveryDetails?: Maybe<Scalars['String']>;
+  isDeliveryAddressValid: Scalars['Boolean'];
   isOpenNow: Scalars['Boolean'];
   isOrderTimeValid: Scalars['Boolean'];
+  isPickUp: Scalars['Boolean'];
   menu: Array<FoodsByCategory>;
   name: Scalars['String'];
   openingHours: Array<DayOutput>;
   timezone: Scalars['String'];
+};
+
+export type RestaurantInput = {
+  deliveryAddress?: InputMaybe<Scalars['String']>;
+  deliveryAddressAdditionalInfo?: InputMaybe<Scalars['String']>;
+  deliveryDetails?: InputMaybe<Scalars['String']>;
+  isPickUp: Scalars['Boolean'];
+  orderTime: Scalars['String'];
+  restaurantId: Scalars['String'];
 };
 
 export type SelectedItem = {
@@ -328,11 +339,28 @@ export type TimeOutput = {
   opens_at?: Maybe<Scalars['String']>;
 };
 
+export type ValidateOrderDetailsInput = {
+  deliveryAddress?: InputMaybe<Scalars['String']>;
+  deliveryAddressAdditionalInfo?: InputMaybe<Scalars['String']>;
+  deliveryDetails?: InputMaybe<Scalars['String']>;
+  isPickUp: Scalars['Boolean'];
+  orderTime: Scalars['String'];
+  restaurantId: Scalars['String'];
+};
+
 export type ValidateOrderDetailsType = {
-  __typename?: 'validateOrderDetailsType';
-  currentDateTime?: Maybe<Scalars['String']>;
-  isDateTimeValid: Scalars['Boolean'];
-  timezone?: Maybe<Scalars['String']>;
+  __typename?: 'ValidateOrderDetailsType';
+  currentDateTime: Scalars['String'];
+  deliveryAddress?: Maybe<Scalars['String']>;
+  deliveryAddressAdditionalInfo?: Maybe<Scalars['String']>;
+  deliveryDetails?: Maybe<Scalars['String']>;
+  isDeliveryAddressValid: Scalars['Boolean'];
+  isOpenNow: Scalars['Boolean'];
+  isOrderTimeValid: Scalars['Boolean'];
+  isPickUp: Scalars['Boolean'];
+  menu: Array<FoodsByCategory>;
+  openingHours: Array<DayOutput>;
+  timezone: Scalars['String'];
 };
 
 export type CheckoutCalculateMutMutationVariables = Exact<{
@@ -370,20 +398,18 @@ export type FoodsByCategoryQueryVariables = Exact<{ [key: string]: never; }>;
 export type FoodsByCategoryQuery = { __typename?: 'Query', foodsByCategory: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null } | null> };
 
 export type RestaurantQueryVariables = Exact<{
-  restaurantId: Scalars['String'];
-  orderTime?: InputMaybe<Scalars['String']>;
+  input: RestaurantInput;
 }>;
 
 
-export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'Restaurant', name: string, currentDateTime: string, timezone: string, isOpenNow: boolean, isOrderTimeValid: boolean, menu: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> } };
+export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'Restaurant', name: string, currentDateTime: string, timezone: string, isOpenNow: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null, menu: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> } };
 
 export type ValidateOrderDetailsQueryVariables = Exact<{
-  dateTime: Scalars['String'];
-  restaurantId: Scalars['String'];
+  input: ValidateOrderDetailsInput;
 }>;
 
 
-export type ValidateOrderDetailsQuery = { __typename?: 'Query', validateOrderDetails: { __typename?: 'validateOrderDetailsType', currentDateTime?: string | null, isDateTimeValid: boolean, timezone?: string | null } };
+export type ValidateOrderDetailsQuery = { __typename?: 'Query', validateOrderDetails: { __typename?: 'ValidateOrderDetailsType', currentDateTime: string, timezone: string, isOpenNow: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null, menu: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> } };
 
 export type ValidateShoppingCartQueryVariables = Exact<{
   input: Array<InputMaybe<ShoppingCartInput>> | InputMaybe<ShoppingCartInput>;
@@ -629,8 +655,8 @@ export type FoodsByCategoryQueryHookResult = ReturnType<typeof useFoodsByCategor
 export type FoodsByCategoryLazyQueryHookResult = ReturnType<typeof useFoodsByCategoryLazyQuery>;
 export type FoodsByCategoryQueryResult = Apollo.QueryResult<FoodsByCategoryQuery, FoodsByCategoryQueryVariables>;
 export const RestaurantDocument = gql`
-    query Restaurant($restaurantId: String!, $orderTime: String) {
-  restaurant(restaurantId: $restaurantId, orderTime: $orderTime) {
+    query Restaurant($input: RestaurantInput!) {
+  restaurant(input: $input) {
     name
     menu {
       category
@@ -656,6 +682,11 @@ export const RestaurantDocument = gql`
     timezone
     isOpenNow
     isOrderTimeValid
+    isDeliveryAddressValid
+    isPickUp
+    deliveryAddress
+    deliveryAddressAdditionalInfo
+    deliveryDetails
   }
 }
     `;
@@ -672,8 +703,7 @@ export const RestaurantDocument = gql`
  * @example
  * const { data, loading, error } = useRestaurantQuery({
  *   variables: {
- *      restaurantId: // value for 'restaurantId'
- *      orderTime: // value for 'orderTime'
+ *      input: // value for 'input'
  *   },
  * });
  */
@@ -689,11 +719,37 @@ export type RestaurantQueryHookResult = ReturnType<typeof useRestaurantQuery>;
 export type RestaurantLazyQueryHookResult = ReturnType<typeof useRestaurantLazyQuery>;
 export type RestaurantQueryResult = Apollo.QueryResult<RestaurantQuery, RestaurantQueryVariables>;
 export const ValidateOrderDetailsDocument = gql`
-    query ValidateOrderDetails($dateTime: String!, $restaurantId: String!) {
-  validateOrderDetails(dateTime: $dateTime, restaurantId: $restaurantId) {
+    query ValidateOrderDetails($input: ValidateOrderDetailsInput!) {
+  validateOrderDetails(input: $input) {
+    menu {
+      category
+      foods {
+        id
+        description
+        image
+        name
+        price
+        sizes {
+          price
+        }
+      }
+    }
+    openingHours {
+      dayOfWeek
+      time {
+        opens_at
+        closes_at
+      }
+    }
     currentDateTime
-    isDateTimeValid
     timezone
+    isOpenNow
+    isOrderTimeValid
+    isDeliveryAddressValid
+    isPickUp
+    deliveryAddress
+    deliveryAddressAdditionalInfo
+    deliveryDetails
   }
 }
     `;
@@ -710,8 +766,7 @@ export const ValidateOrderDetailsDocument = gql`
  * @example
  * const { data, loading, error } = useValidateOrderDetailsQuery({
  *   variables: {
- *      dateTime: // value for 'dateTime'
- *      restaurantId: // value for 'restaurantId'
+ *      input: // value for 'input'
  *   },
  * });
  */

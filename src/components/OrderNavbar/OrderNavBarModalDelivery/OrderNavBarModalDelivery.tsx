@@ -50,6 +50,8 @@ const OrderNavBarModalDelivery = ({
   setIsAddressValid,
   isAddressValid,
 }: IOrderNavBarModalDelivery) => {
+  const [address, setAddress] = useState('');
+
   const [deliveryAddress, setDeliveryAddress] = useRecoilState(
     OrderDeliveryAddressAtom,
   );
@@ -66,22 +68,12 @@ const OrderNavBarModalDelivery = ({
   const radius = 10 * 1609.34; // 10 miles in meters
   const [adminLocation, setAdminLocation] = useState<null | LatLng>(null);
 
-  const {
-    ready,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete({
-    requestOptions: {
-      componentRestrictions: { country: 'us' },
-      location: new google.maps.LatLng(40.749934, -73.991834),
-      radius: 100 * 1609.34, // 100 miles in meters
-    },
-  });
-
-  console.log('data', data);
-
   useEffect(() => {
+    if (deliveryAddress) {
+      setAddress(deliveryAddress);
+      setIsAddressValid(true);
+    }
+
     // Get the lat/lng of the admin address
     getGeocode({ address: adminAddress })
       .then((results) => getLatLng(results[0]))
@@ -92,6 +84,21 @@ const OrderNavBarModalDelivery = ({
         console.log('Error: ', error);
       });
   }, []);
+
+  const {
+    ready,
+    suggestions: { status, data },
+    setValue,
+    clearSuggestions,
+  } = usePlacesAutocomplete({
+    requestOptions: {
+      componentRestrictions: { country: 'us' },
+      // location: adminLocation,
+      // radius: 20 * 1609.34, // 20 miles in meters
+    },
+  });
+
+  console.log('data', data);
 
   const handleSelect = async (address: string) => {
     console.log('address', address);
@@ -104,10 +111,13 @@ const OrderNavBarModalDelivery = ({
       const latLng = await getLatLng(results[0]);
       const distance = getDistance(adminLocation as LatLng, latLng);
 
+      console.log('distance', distance);
+      console.log('radius', radius);
       if (distance <= radius) {
         console.log('The address is within the radius');
         setIsAddressValid(true);
         setDeliveryAddress(address);
+        setAddress(address);
       } else {
         console.log('The address is not within the radius');
         setIsAddressValid(false);
@@ -132,9 +142,10 @@ const OrderNavBarModalDelivery = ({
           </div>
 
           <ComboboxInput
-            defaultValue={deliveryAddress}
-            value={deliveryAddress}
+            defaultValue={address}
+            value={address}
             onChange={(e) => {
+              setAddress(e.target.value);
               setValue(e.target.value);
             }}
             disabled={!ready}
@@ -167,7 +178,8 @@ const OrderNavBarModalDelivery = ({
         label="Ste, Apt, Floor"
         value={additionalAddressInfo}
         onChange={(e) => setAdditionalAddressInfo(e.target.value)}
-        placeholder="Ste, Apt, Floor"
+        placeholder="Ste, Apt, Floor (Max 50 characters)"
+        maxLength={50}
       />
 
       <TextArea

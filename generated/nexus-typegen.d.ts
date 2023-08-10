@@ -67,6 +67,14 @@ export interface NexusGenInputs {
     name: string; // String!
     price: number; // Float!
   }
+  RestaurantInput: { // input type
+    deliveryAddress?: string | null; // String
+    deliveryAddressAdditionalInfo?: string | null; // String
+    deliveryDetails?: string | null; // String
+    isPickUp: boolean; // Boolean!
+    orderTime: string; // String!
+    restaurantId: string; // String!
+  }
   ShoppingCartInput: { // input type
     foodId: string; // String!
     foodSizeId?: string | null; // String
@@ -84,6 +92,14 @@ export interface NexusGenInputs {
   TimeInput: { // input type
     closes_at?: string | null; // String
     opens_at?: string | null; // String
+  }
+  ValidateOrderDetailsInput: { // input type
+    deliveryAddress?: string | null; // String
+    deliveryAddressAdditionalInfo?: string | null; // String
+    deliveryDetails?: string | null; // String
+    isPickUp: boolean; // Boolean!
+    orderTime: string; // String!
+    restaurantId: string; // String!
   }
 }
 
@@ -174,8 +190,13 @@ export interface NexusGenObjects {
   Query: {};
   Restaurant: { // root type
     currentDateTime: string; // String!
+    deliveryAddress?: string | null; // String
+    deliveryAddressAdditionalInfo?: string | null; // String
+    deliveryDetails?: string | null; // String
+    isDeliveryAddressValid: boolean; // Boolean!
     isOpenNow: boolean; // Boolean!
     isOrderTimeValid: boolean; // Boolean!
+    isPickUp: boolean; // Boolean!
     menu: NexusGenRootTypes['FoodsByCategory'][]; // [FoodsByCategory!]!
     name: string; // String!
     openingHours: NexusGenRootTypes['DayOutput'][]; // [DayOutput!]!
@@ -220,10 +241,18 @@ export interface NexusGenObjects {
     closes_at?: string | null; // String
     opens_at?: string | null; // String
   }
-  validateOrderDetailsType: { // root type
-    currentDateTime?: string | null; // String
-    isDateTimeValid: boolean; // Boolean!
-    timezone?: string | null; // String
+  ValidateOrderDetailsType: { // root type
+    currentDateTime: string; // String!
+    deliveryAddress?: string | null; // String
+    deliveryAddressAdditionalInfo?: string | null; // String
+    deliveryDetails?: string | null; // String
+    isDeliveryAddressValid: boolean; // Boolean!
+    isOpenNow: boolean; // Boolean!
+    isOrderTimeValid: boolean; // Boolean!
+    isPickUp: boolean; // Boolean!
+    menu: NexusGenRootTypes['FoodsByCategory'][]; // [FoodsByCategory!]!
+    openingHours: NexusGenRootTypes['DayOutput'][]; // [DayOutput!]!
+    timezone: string; // String!
   }
 }
 
@@ -322,13 +351,18 @@ export interface NexusGenFieldTypes {
     foods: Array<NexusGenRootTypes['Food'] | null>; // [Food]!
     foodsByCategory: Array<NexusGenRootTypes['FoodsByCategory'] | null>; // [FoodsByCategory]!
     restaurant: NexusGenRootTypes['Restaurant']; // Restaurant!
-    validateOrderDetails: NexusGenRootTypes['validateOrderDetailsType']; // validateOrderDetailsType!
+    validateOrderDetails: NexusGenRootTypes['ValidateOrderDetailsType']; // ValidateOrderDetailsType!
     validateShoppingCart: NexusGenRootTypes['ShoppingCart']; // ShoppingCart!
   }
   Restaurant: { // field return type
     currentDateTime: string; // String!
+    deliveryAddress: string | null; // String
+    deliveryAddressAdditionalInfo: string | null; // String
+    deliveryDetails: string | null; // String
+    isDeliveryAddressValid: boolean; // Boolean!
     isOpenNow: boolean; // Boolean!
     isOrderTimeValid: boolean; // Boolean!
+    isPickUp: boolean; // Boolean!
     menu: NexusGenRootTypes['FoodsByCategory'][]; // [FoodsByCategory!]!
     name: string; // String!
     openingHours: NexusGenRootTypes['DayOutput'][]; // [DayOutput!]!
@@ -373,10 +407,18 @@ export interface NexusGenFieldTypes {
     closes_at: string | null; // String
     opens_at: string | null; // String
   }
-  validateOrderDetailsType: { // field return type
-    currentDateTime: string | null; // String
-    isDateTimeValid: boolean; // Boolean!
-    timezone: string | null; // String
+  ValidateOrderDetailsType: { // field return type
+    currentDateTime: string; // String!
+    deliveryAddress: string | null; // String
+    deliveryAddressAdditionalInfo: string | null; // String
+    deliveryDetails: string | null; // String
+    isDeliveryAddressValid: boolean; // Boolean!
+    isOpenNow: boolean; // Boolean!
+    isOrderTimeValid: boolean; // Boolean!
+    isPickUp: boolean; // Boolean!
+    menu: NexusGenRootTypes['FoodsByCategory'][]; // [FoodsByCategory!]!
+    openingHours: NexusGenRootTypes['DayOutput'][]; // [DayOutput!]!
+    timezone: string; // String!
   }
 }
 
@@ -465,13 +507,18 @@ export interface NexusGenFieldTypeNames {
     foods: 'Food'
     foodsByCategory: 'FoodsByCategory'
     restaurant: 'Restaurant'
-    validateOrderDetails: 'validateOrderDetailsType'
+    validateOrderDetails: 'ValidateOrderDetailsType'
     validateShoppingCart: 'ShoppingCart'
   }
   Restaurant: { // field return type name
     currentDateTime: 'String'
+    deliveryAddress: 'String'
+    deliveryAddressAdditionalInfo: 'String'
+    deliveryDetails: 'String'
+    isDeliveryAddressValid: 'Boolean'
     isOpenNow: 'Boolean'
     isOrderTimeValid: 'Boolean'
+    isPickUp: 'Boolean'
     menu: 'FoodsByCategory'
     name: 'String'
     openingHours: 'DayOutput'
@@ -516,9 +563,17 @@ export interface NexusGenFieldTypeNames {
     closes_at: 'String'
     opens_at: 'String'
   }
-  validateOrderDetailsType: { // field return type name
+  ValidateOrderDetailsType: { // field return type name
     currentDateTime: 'String'
-    isDateTimeValid: 'Boolean'
+    deliveryAddress: 'String'
+    deliveryAddressAdditionalInfo: 'String'
+    deliveryDetails: 'String'
+    isDeliveryAddressValid: 'Boolean'
+    isOpenNow: 'Boolean'
+    isOrderTimeValid: 'Boolean'
+    isPickUp: 'Boolean'
+    menu: 'FoodsByCategory'
+    openingHours: 'DayOutput'
     timezone: 'String'
   }
 }
@@ -551,13 +606,10 @@ export interface NexusGenArgTypes {
       id: string; // String!
     }
     restaurant: { // args
-      orderTime?: string | null; // String
-      restaurantId: string; // String!
+      input: NexusGenInputs['RestaurantInput']; // RestaurantInput!
     }
     validateOrderDetails: { // args
-      dateTime?: string | null; // String
-      restaurantId: string; // String!
-      timeLabel?: string | null; // String
+      input: NexusGenInputs['ValidateOrderDetailsInput']; // ValidateOrderDetailsInput!
     }
     validateShoppingCart: { // args
       input: Array<NexusGenInputs['ShoppingCartInput'] | null>; // [ShoppingCartInput]!

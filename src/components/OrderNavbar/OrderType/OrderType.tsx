@@ -27,6 +27,11 @@ const OrderType = () => {
     setShowDeliveryModal(false);
   };
 
+  const handlePickUpClick = () => {
+    setIsPickUp(true);
+    localStorage.setItem('isPickUp', 'true');
+  };
+
   return (
     <>
       <RoundBorder styleClass={classes.orderType}>
@@ -38,7 +43,7 @@ const OrderType = () => {
             variants={variants}
           />
           <button
-            onClick={() => setIsPickUp(true)}
+            onClick={handlePickUpClick}
             className={classes.orderTypeToggleButton}
           >
             <SvgIcons

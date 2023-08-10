@@ -42,12 +42,3 @@ export const DayInput = inputObjectType({
     t.nonNull.list.nonNull.field('time', { type: 'TimeInput' });
   },
 });
-
-export const validateOrderDetailsType = objectType({
-  name: 'validateOrderDetailsType',
-  definition(t) {
-    t.string('currentDateTime');
-    t.string('timezone');
-    t.nonNull.boolean('isDateTimeValid');
-  },
-});

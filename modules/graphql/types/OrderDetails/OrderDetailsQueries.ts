@@ -7,12 +7,12 @@ import { isValidAddress } from '../../../utils/isAddressValid';
 import isStoreOpen from '../../../utils/isStoreOpen';
 import isTimeValid from '../../../utils/isTimeValid';
 
-import { RestaurantInput } from './RestaurantTypes';
+import { ValidateOrderDetailsInput } from './OrderDetailsTypes';
 
-export const RestaurantQuery = queryField('restaurant', {
-  type: nonNull('Restaurant'),
+export const validateOrderDetails = queryField('validateOrderDetails', {
+  type: nonNull('ValidateOrderDetailsType'),
   args: {
-    input: nonNull(RestaurantInput),
+    input: nonNull(ValidateOrderDetailsInput),
   },
   async resolve(_, { input }, ctx) {
     const restaurant = await ctx.prisma.restaurant.findUnique({

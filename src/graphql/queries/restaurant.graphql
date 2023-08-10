@@ -1,5 +1,5 @@
-query Restaurant($restaurantId: String!, $orderTime: String) {
-  restaurant(restaurantId: $restaurantId, orderTime: $orderTime) {
+query Restaurant($input: RestaurantInput!) {
+  restaurant(input: $input) {
     name
     menu {
       category
@@ -25,5 +25,10 @@ query Restaurant($restaurantId: String!, $orderTime: String) {
     timezone
     isOpenNow
     isOrderTimeValid
+    isDeliveryAddressValid
+    isPickUp
+    deliveryAddress
+    deliveryAddressAdditionalInfo
+    deliveryDetails
   }
 }

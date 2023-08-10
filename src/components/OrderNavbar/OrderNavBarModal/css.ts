@@ -2,15 +2,20 @@ import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
 import colors from '../../../../css/colors';
+import queries from '../../../../css/queries';
 
 const useStyles = createUseStyles({
   orderNavbarModal: {
     background: colors.white,
-    width: '80vw',
-    maxHeight: '80vh',
     overflow: 'auto',
-    maxWidth: base(50),
+    width: '95vw',
+    maxHeight: '80vh',
     borderRadius: base(2),
+
+    [queries.s]: {
+      width: '80vw',
+      maxWidth: base(50),
+    },
   },
 
   orderNavbarModalContent: {
@@ -21,6 +26,9 @@ const useStyles = createUseStyles({
   orderNavbarModalButton: {
     height: base(6),
     marginTop: base(2),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   orderNavbarModalError: {

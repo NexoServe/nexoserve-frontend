@@ -1,7 +1,33 @@
-query ValidateOrderDetails($dateTime: String!, $restaurantId: String!) {
-  validateOrderDetails(dateTime: $dateTime, restaurantId: $restaurantId) {
+query ValidateOrderDetails($input: ValidateOrderDetailsInput!) {
+  validateOrderDetails(input: $input) {
+    menu {
+      category
+      foods {
+        id
+        description
+        image
+        name
+        price
+        sizes {
+          price
+        }
+      }
+    }
+    openingHours {
+      dayOfWeek
+      time {
+        opens_at
+        closes_at
+      }
+    }
     currentDateTime
-    isDateTimeValid
     timezone
+    isOpenNow
+    isOrderTimeValid
+    isDeliveryAddressValid
+    isPickUp
+    deliveryAddress
+    deliveryAddressAdditionalInfo
+    deliveryDetails
   }
 }

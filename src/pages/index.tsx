@@ -21,6 +21,10 @@ import ShoppingCartModal from '../components/ShoppingCart/ShoppingCartModal/Shop
 import { FoodMenuAtom } from '../state/FoodModalState';
 import {
   OrderDateAtom,
+  OrderDeliveryAdditionalAddressInfoAtom,
+  OrderDeliveryAddressAtom,
+  OrderDeliveryDetailsAtom,
+  OrderIsPickUpAtom,
   OrderOpeningHoursAtom,
   OrderTimeAtom,
 } from '../state/OrderNavbar';
@@ -32,28 +36,57 @@ const Home: NextPage = () => {
   const [, setMenu] = useRecoilState(FoodMenuAtom);
   const [, setOrderTime] = useRecoilState(OrderTimeAtom);
   const [, setOrderDate] = useRecoilState(OrderDateAtom);
+  const [, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
+  const [, setDeliveryAddress] = useRecoilState(OrderDeliveryAddressAtom);
+  const [, setAdditionalAddressInfo] = useRecoilState(
+    OrderDeliveryAdditionalAddressInfoAtom,
+  );
+  const [, setDeliveryDetails] = useRecoilState(OrderDeliveryDetailsAtom);
 
   const classes = useStyles();
 
-  const orderTimeLocalStorage = localStorage.getItem('orderTime');
-  console.log('orderTimeLocalStorage', orderTimeLocalStorage);
+  const orderTimeStorage = localStorage.getItem('orderTime');
+  const orderIsPickUpStorage = localStorage.getItem('isPickUp');
+  const orderDeliveryAddressStorage = localStorage.getItem('deliveryAddress');
+  const orderDeliveryAddressAdditionalInfoStorage = localStorage.getItem(
+    'deliveryAddiotionalInfo',
+  );
+  const orderDeliveryDetails = localStorage.getItem('deliveryDetails');
 
   let orderTimeParsed: { label: string; value: string } | null = null;
+  let orderIsPickUpParsed: boolean;
+  let orderDeliveryAddressParsed: string;
+  let orderDeliveryAddressAdditionalInfoParsed: string;
+  let orderDeliveryDetailsParsed: string;
+
   try {
-    orderTimeParsed = JSON.parse(orderTimeLocalStorage as string);
+    orderTimeParsed = JSON.parse(orderTimeStorage as string);
+    orderDeliveryAddressParsed = JSON.parse(
+      orderDeliveryAddressStorage as string,
+    );
+    orderIsPickUpParsed = JSON.parse(orderIsPickUpStorage as string);
+    orderDeliveryAddressAdditionalInfoParsed = JSON.parse(
+      orderDeliveryAddressAdditionalInfoStorage as string,
+    );
+    orderDeliveryDetailsParsed = JSON.parse(orderDeliveryDetails as string);
   } catch (error) {
     // localStorage.removeItem('orderTime');
   }
-
-  console.log('orderTimeParsed', orderTimeParsed);
 
   const [restaurantQuery, { data, loading, error }] = useRestaurantLazyQuery();
 
   useEffect(() => {
     restaurantQuery({
       variables: {
-        restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
-        orderTime: orderTimeParsed ? orderTimeParsed?.value : 'ASAP',
+        input: {
+          restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
+          orderTime: orderTimeParsed ? orderTimeParsed?.value : 'ASAP',
+          isPickUp: orderIsPickUpParsed,
+          deliveryAddress: orderDeliveryAddressParsed,
+          deliveryAddressAdditionalInfo:
+            orderDeliveryAddressAdditionalInfoParsed,
+          deliveryDetails: orderDeliveryDetailsParsed,
+        },
       },
     });
   }, []);
@@ -98,6 +131,32 @@ const Home: NextPage = () => {
                 ),
           value: dateTimeWithZone,
         }));
+      }
+      if (data.restaurant.isDeliveryAddressValid) {
+        if (!data.restaurant.isPickUp) {
+          setIsPickUp(false);
+          setDeliveryAddress(data.restaurant.deliveryAddress as string);
+          console.log(
+            'data.restaurant.deliveryAddressAdditionalInfo',
+            data.restaurant.deliveryAddressAdditionalInfo,
+          );
+          if (
+            data.restaurant.deliveryAddressAdditionalInfo !== undefined &&
+            data.restaurant.deliveryAddressAdditionalInfo !== null
+          ) {
+            setAdditionalAddressInfo(
+              data.restaurant.deliveryAddressAdditionalInfo,
+            );
+          }
+          if (data.restaurant.deliveryDetails) {
+            setDeliveryDetails(data.restaurant.deliveryDetails as string);
+          }
+        }
+      } else {
+        setIsPickUp(true);
+        localStorage.removeItem('deliveryAddress');
+        localStorage.removeItem('deliveryAddiotionalInfo');
+        localStorage.removeItem('deliveryDetails');
       }
     }
   }, [data]);
@@ -147,7 +206,7 @@ export const getServerSideProps = async ({
 }: GetServerSidePropsContext) => {
   const apolloClient = initializeApollo({ ctx: { req, prisma } });
 
-  //TODO: add ssr
+  // TODO: add ssr
   // await apolloClient.query({ query: FoodsDocument });
 
   return addApolloState(apolloClient, {

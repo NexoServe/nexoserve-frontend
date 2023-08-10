@@ -4,6 +4,7 @@ import { DateTime, Interval } from 'luxon';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { useValidateOrderDetailsLazyQuery } from '../../../../generated/graphql';
+import { FoodMenuAtom } from '../../../state/FoodModalState';
 import {
   OrderDateAtom,
   OrderDeliveryAdditionalAddressInfoAtom,
@@ -39,13 +40,13 @@ const OrderNavBarModal = ({
 
   const [orderTime, setOrderTime] = useRecoilState(OrderTimeAtom);
   const [orderDate, setOrderDate] = useRecoilState(OrderDateAtom);
-
+  const [, setMenu] = useRecoilState(FoodMenuAtom);
   const [orderDateState, setOrderDateState] = useState<OrderTime>();
   const [orderTimeState, setOrderTimeState] = useState<OrderTime>();
   const [isAddressValid, setIsAddressValid] = useState<null | boolean>(null);
-  const [, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
+  const [isPickUp, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
   const deliveryAddress = useRecoilValue(OrderDeliveryAddressAtom);
-  const additionalAddressInfo = useRecoilValue(
+  const deliveryAdditionalAddressInfo = useRecoilValue(
     OrderDeliveryAdditionalAddressInfoAtom,
   );
   const deliveryDetails = useRecoilValue(OrderDeliveryDetailsAtom);
@@ -247,8 +248,15 @@ const OrderNavBarModal = ({
 
     const res = await validateOrderDetails({
       variables: {
-        restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
-        dateTime: orderTimeState?.label === 'ASAP' ? 'ASAP' : value.toString(),
+        input: {
+          restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
+          orderTime:
+            orderTimeState?.label === 'ASAP' ? 'ASAP' : value.toString(),
+          isPickUp: isPickUp,
+          deliveryAddress: deliveryAddress,
+          deliveryAddressAdditionalInfo: deliveryAdditionalAddressInfo,
+          deliveryDetails: deliveryDetails,
+        },
       },
     });
 
@@ -256,8 +264,10 @@ const OrderNavBarModal = ({
       return;
     }
 
+    setMenu(res.data.validateOrderDetails.menu);
+
     setOpeningHours({
-      isOrderTimeValid: res.data.validateOrderDetails.isDateTimeValid,
+      isOrderTimeValid: res.data.validateOrderDetails.isOrderTimeValid,
       isOpenNow: openingHours?.isOpenNow as boolean,
       currentDateTime: res.data.validateOrderDetails.currentDateTime as string,
       openingHours: openingHours?.openingHours ?? [],
@@ -268,6 +278,7 @@ const OrderNavBarModal = ({
       label: orderTimeState?.label as string,
       value: value,
     });
+
     setOrderDate({
       label: orderDateState?.label as string,
       value: value,
@@ -281,13 +292,16 @@ const OrderNavBarModal = ({
       }),
     );
 
-    if (type === 'delivery') {
+    if (
+      res.data.validateOrderDetails.isDeliveryAddressValid &&
+      type === 'delivery'
+    ) {
       setIsPickUp(false);
       localStorage.setItem('isPickUp', JSON.stringify(false));
       localStorage.setItem('deliveryAddress', JSON.stringify(deliveryAddress));
       localStorage.setItem(
-        'additionalAddressInfo',
-        JSON.stringify(additionalAddressInfo),
+        'deliveryAddiotionalInfo',
+        JSON.stringify(deliveryAdditionalAddressInfo),
       );
       localStorage.setItem('deliveryDetails', JSON.stringify(deliveryDetails));
     } else {
