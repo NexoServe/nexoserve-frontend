@@ -15,6 +15,7 @@ import usePlacesAutocomplete, {
 } from 'use-places-autocomplete';
 
 import '@reach/combobox/styles.css';
+import { base } from '../../../../css/base';
 import {
   OrderDeliveryAdditionalAddressInfoAtom,
   OrderDeliveryAddressAtom,
@@ -155,8 +156,9 @@ const OrderNavBarModalDelivery = ({
           />
         </label>
 
-        <div>
-          {isAddressValid === false && 'The address is not within the radius'}
+        <div className={classes.orderNavbarDeliveryAddressError}>
+          {isAddressValid === false &&
+            'Sorry, we cannot deliver to this address. Please enter a different address.'}
         </div>
 
         <ComboboxPopover className={classes.orderNavbarDeliveryAddressPopover}>
@@ -180,6 +182,7 @@ const OrderNavBarModalDelivery = ({
         onChange={(e) => setAdditionalAddressInfo(e.target.value)}
         placeholder="Ste, Apt, Floor (Max 50 characters)"
         maxLength={50}
+        style={{ marginTop: base(1) }}
       />
 
       <TextArea

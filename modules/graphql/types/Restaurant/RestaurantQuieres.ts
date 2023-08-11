@@ -82,8 +82,6 @@ export const RestaurantQuery = queryField('restaurant', {
       restaurant.timezone,
     );
 
-    console.log('address', input.deliveryAddress);
-
     const latLng: LatLng = {
       lat: 42.64959,
       lng: -73.807041,
@@ -103,7 +101,7 @@ export const RestaurantQuery = queryField('restaurant', {
       currentDateTime: timeZonedTime.toString(),
       timezone: restaurant.timezone,
       isOpenNow,
-      isOrderTimeValid: isOrderTimeValid.isDateTimeValid,
+      isOrderTimeValid: isOrderTimeValid.isOrderTimeValid,
       isDeliveryAddressValid: isAdressValid,
       isPickUp: input.isPickUp,
       deliveryAddress: isAdressValid ? input.deliveryAddress : null,

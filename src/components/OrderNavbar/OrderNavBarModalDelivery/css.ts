@@ -10,11 +10,16 @@ const useStyles = createUseStyles({
     flexDirection: 'column',
     fontSize: '16px',
     lineHeight: '18px',
-    marginBottom: base(2),
   },
 
   orderNavbarInputLabelRequired: {
     color: colors.red,
+  },
+
+  orderNavbarDeliveryAddressError: {
+    color: colors.red,
+    padding: `${base(1)} 0`,
+    lineHeight: '18px',
   },
 
   orderNavbarDeliveryAddressInput: {

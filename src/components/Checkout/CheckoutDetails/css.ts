@@ -14,9 +14,9 @@ const useStyles = createUseStyles({
   },
 
   checkoutDetailsContentItem: {
+    width: '100%',
     display: 'grid',
     gridTemplateColumns: '40px 1fr 60px',
-    alignItems: 'center',
     paddingBottom: base(2),
   },
 
@@ -49,6 +49,8 @@ const useStyles = createUseStyles({
       fontSize: '16px',
       opacity: 0.8,
       marginBottom: base(0.75),
+      textAlign: 'left',
+      lineHeight: '18px',
     },
   },
 
@@ -57,6 +59,7 @@ const useStyles = createUseStyles({
     textDecoration: 'underline',
     marginLeft: base(1),
     marginTop: base(1),
+    textAlign: 'left',
   },
 
   checkoutDetailsButton: {
@@ -68,7 +71,7 @@ const useStyles = createUseStyles({
     width: '100%',
     justifyContent: 'flex-end',
 
-    '& button': {
+    '& div': {
       fontWeight: 600,
       fontSize: '16px',
     },

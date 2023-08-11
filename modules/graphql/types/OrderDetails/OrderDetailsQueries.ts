@@ -103,7 +103,7 @@ export const validateOrderDetails = queryField('validateOrderDetails', {
       currentDateTime: timeZonedTime.toString(),
       timezone: restaurant.timezone,
       isOpenNow,
-      isOrderTimeValid: isOrderTimeValid.isDateTimeValid,
+      isOrderTimeValid: isOrderTimeValid.isOrderTimeValid,
       isDeliveryAddressValid: isAdressValid,
       isPickUp: input.isPickUp,
       deliveryAddress: isAdressValid ? input.deliveryAddress : null,

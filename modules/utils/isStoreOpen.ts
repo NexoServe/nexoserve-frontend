@@ -14,10 +14,7 @@ function isStoreOpen(
     return false;
   }
 
-  const currentTimeOfDay = time.toFormat('HH:mm');
-  const currentDateTime = DateTime.fromFormat(currentTimeOfDay, 'HH:mm', {
-    zone: timezone,
-  });
+  const currentDateTime = time.setZone(timezone);
 
   for (const time of currentDayHours.time) {
     const opens = DateTime.fromFormat(time?.opens_at as string, 'HH:mm', {

@@ -1,31 +1,39 @@
 import { OpeningHour } from '@prisma/client';
 import { DateTime } from 'luxon';
 
-import { ValidateOrderDetailsType } from '../../generated/graphql';
 import getOpeningHoursByDay from '../../src/utils/getOpeningHoursByDay';
 
 import isStoreOpen from './isStoreOpen';
+
+interface IIsTimeValid {
+  isOrderTimeValid: boolean;
+  currentDateTime: string;
+  timezone: string;
+}
 
 const isTimeValid = (
   openingHours: OpeningHour[],
   dateTime: DateTime | string | null | undefined,
   timezone: string,
-): ValidateOrderDetailsType => {
+): IIsTimeValid => {
   const openingHoursByDay = getOpeningHoursByDay(openingHours);
 
   const nowUTC = DateTime.utc();
   const timeZonedTime = nowUTC.setZone(timezone);
+  // const timeZonedTime = DateTime.fromISO(
+  //   '2023-08-11T09:00:15.381-04:00',
+  // ).setZone(timezone);
 
   if (dateTime === 'ASAP') {
     if (isStoreOpen(openingHoursByDay, timeZonedTime, timezone) === true) {
       return {
-        isDateTimeValid: true,
+        isOrderTimeValid: true,
         currentDateTime: timeZonedTime.toString(),
         timezone: timezone,
       };
     } else {
       return {
-        isDateTimeValid: false,
+        isOrderTimeValid: false,
         currentDateTime: timeZonedTime.toString(),
         timezone: timezone,
       };
@@ -43,7 +51,7 @@ const isTimeValid = (
 
   if (differenceInMinutes < 15) {
     return {
-      isDateTimeValid: false,
+      isOrderTimeValid: false,
       currentDateTime: timeZonedTime.toString(),
       timezone: timezone,
     };
@@ -51,7 +59,7 @@ const isTimeValid = (
 
   if (datetimeInRestaurantTimezone < timeZonedTime) {
     return {
-      isDateTimeValid: false,
+      isOrderTimeValid: false,
       currentDateTime: timeZonedTime.toString(),
       timezone: timezone,
     };
@@ -65,14 +73,14 @@ const isTimeValid = (
 
   if (!isOpen) {
     return {
-      isDateTimeValid: false,
+      isOrderTimeValid: false,
       currentDateTime: timeZonedTime.toString(),
       timezone: timezone,
     };
   }
 
   return {
-    isDateTimeValid: true,
+    isOrderTimeValid: true,
     currentDateTime: timeZonedTime.toString(),
     timezone: timezone,
   };

@@ -58,6 +58,8 @@ const CheckoutPayment = () => {
     fetchValidateShoppingCart();
   }, [shoppingCart, shoppingCartTip]);
 
+  if (shoppingCart.length === 0) return <></>;
+
   return (
     <>
       <RoundBorder styleClass={classes.checkoutPayment}>
