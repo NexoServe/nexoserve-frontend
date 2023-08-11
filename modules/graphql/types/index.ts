@@ -3,6 +3,7 @@ export * from './Food';
 export * from './FoodSize';
 export * from './Item';
 export * from './ItemSize';
+export * from './Location';
 export * from './OpeningHours';
 export * from './Order';
 export * from './OrderDetails';

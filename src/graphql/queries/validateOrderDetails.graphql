@@ -1,5 +1,10 @@
 query ValidateOrderDetails($input: ValidateOrderDetailsInput!) {
   validateOrderDetails(input: $input) {
+    address
+    location {
+      latitude
+      longitude
+    }
     menu {
       category
       foods {

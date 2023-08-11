@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import classNames from 'classnames';
 import { AnimatePresence } from 'framer-motion';
@@ -9,7 +9,6 @@ import { OrderOpeningHoursAtom } from '../../../state/OrderNavbar';
 import { ModalPopUp } from '../../Modal/Modal';
 import SvgIcons from '../../SvgIcons';
 import OrderInfoModal from '../OrderInfoModal/OrderInfoModal';
-import OrderNavBarModal from '../OrderNavBarModal/OrderNavBarModal';
 
 import useStyles from './css';
 
@@ -17,15 +16,6 @@ const OrderInfo = () => {
   const openingHours = useRecoilValue(OrderOpeningHoursAtom);
   const classes = useStyles();
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [showTimeModal, setShowTimeModal] = useState(false);
-
-  useEffect(() => {
-    if (!openingHours?.isOrderTimeValid) {
-      setShowTimeModal(true);
-    } else {
-      setShowTimeModal(false);
-    }
-  }, [openingHours]);
 
   const times = openingHours?.openingHours.map((item, index, arr) => {
     let closingTime;
@@ -112,27 +102,6 @@ const OrderInfo = () => {
             onClose={() => setShowInfoModal(false)}
           >
             <OrderInfoModal setModal={setShowInfoModal} />
-          </ModalPopUp>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {showTimeModal && (
-          <ModalPopUp
-            showModal={showTimeModal}
-            onClose={() => {
-              console.log();
-            }}
-          >
-            <OrderNavBarModal
-              headerText="Date and Time"
-              setModal={setShowInfoModal}
-              error={
-                !openingHours?.isOpenNow
-                  ? "Sorry, we're currently closed. You can still place an order in advanced"
-                  : 'Sorry, the previous selected order time is not valid anymore. Please select a new one.'
-              }
-            />
           </ModalPopUp>
         )}
       </AnimatePresence>

@@ -149,6 +149,18 @@ export type ItemSizeInput = {
   price: Scalars['Float'];
 };
 
+export type Location = {
+  __typename?: 'Location';
+  id?: Maybe<Scalars['String']>;
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
+};
+
+export type LocationInput = {
+  latitude?: InputMaybe<Scalars['Float']>;
+  longitude?: InputMaybe<Scalars['Float']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   CheckoutCalculateMut: Checkout;
@@ -244,6 +256,7 @@ export type QueryValidateShoppingCartArgs = {
 
 export type Restaurant = {
   __typename?: 'Restaurant';
+  address: Scalars['String'];
   currentDateTime: Scalars['String'];
   deliveryAddress?: Maybe<Scalars['String']>;
   deliveryAddressAdditionalInfo?: Maybe<Scalars['String']>;
@@ -252,6 +265,7 @@ export type Restaurant = {
   isOpenNow: Scalars['Boolean'];
   isOrderTimeValid: Scalars['Boolean'];
   isPickUp: Scalars['Boolean'];
+  location: Location;
   menu: Array<FoodsByCategory>;
   name: Scalars['String'];
   openingHours: Array<DayOutput>;
@@ -350,6 +364,7 @@ export type ValidateOrderDetailsInput = {
 
 export type ValidateOrderDetailsType = {
   __typename?: 'ValidateOrderDetailsType';
+  address: Scalars['String'];
   currentDateTime: Scalars['String'];
   deliveryAddress?: Maybe<Scalars['String']>;
   deliveryAddressAdditionalInfo?: Maybe<Scalars['String']>;
@@ -358,6 +373,7 @@ export type ValidateOrderDetailsType = {
   isOpenNow: Scalars['Boolean'];
   isOrderTimeValid: Scalars['Boolean'];
   isPickUp: Scalars['Boolean'];
+  location: Location;
   menu: Array<FoodsByCategory>;
   openingHours: Array<DayOutput>;
   timezone: Scalars['String'];
@@ -402,14 +418,14 @@ export type RestaurantQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'Restaurant', name: string, currentDateTime: string, timezone: string, isOpenNow: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null, menu: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> } };
+export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'Restaurant', name: string, address: string, currentDateTime: string, timezone: string, isOpenNow: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> } };
 
 export type ValidateOrderDetailsQueryVariables = Exact<{
   input: ValidateOrderDetailsInput;
 }>;
 
 
-export type ValidateOrderDetailsQuery = { __typename?: 'Query', validateOrderDetails: { __typename?: 'ValidateOrderDetailsType', currentDateTime: string, timezone: string, isOpenNow: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null, menu: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> } };
+export type ValidateOrderDetailsQuery = { __typename?: 'Query', validateOrderDetails: { __typename?: 'ValidateOrderDetailsType', address: string, currentDateTime: string, timezone: string, isOpenNow: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> } };
 
 export type ValidateShoppingCartQueryVariables = Exact<{
   input: Array<InputMaybe<ShoppingCartInput>> | InputMaybe<ShoppingCartInput>;
@@ -658,6 +674,11 @@ export const RestaurantDocument = gql`
     query Restaurant($input: RestaurantInput!) {
   restaurant(input: $input) {
     name
+    address
+    location {
+      latitude
+      longitude
+    }
     menu {
       category
       foods {
@@ -721,6 +742,11 @@ export type RestaurantQueryResult = Apollo.QueryResult<RestaurantQuery, Restaura
 export const ValidateOrderDetailsDocument = gql`
     query ValidateOrderDetails($input: ValidateOrderDetailsInput!) {
   validateOrderDetails(input: $input) {
+    address
+    location {
+      latitude
+      longitude
+    }
     menu {
       category
       foods {

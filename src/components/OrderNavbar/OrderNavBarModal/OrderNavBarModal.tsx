@@ -1,5 +1,6 @@
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 
+import { AnimatePresence } from 'framer-motion';
 import { DateTime, Interval } from 'luxon';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -19,6 +20,7 @@ import getHourAndMinute from '../../../utils/getHourAndMintue';
 import Button from '../../Button/Button';
 import Dropdown from '../../Dropdown/Dropdown';
 import Loader from '../../Loader/Loader';
+import { ModalPopUp } from '../../Modal/Modal';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import OrderNavBarModalDelivery from '../OrderNavBarModalDelivery/OrderNavBarModalDelivery';
 
@@ -31,8 +33,12 @@ const OrderNavBarModal = ({
   type,
   error,
 }: IOrderNavBarModal) => {
-  const [validateOrderDetails, { loading }] =
-    useValidateOrderDetailsLazyQuery();
+  const [validateOrderDetails, { loading, data }] =
+    useValidateOrderDetailsLazyQuery({
+      fetchPolicy: 'no-cache',
+    });
+
+  const [showInvalidTimeModal, setShowInvalidTimeModal] = useState(false);
 
   const [openingHours, setOpeningHours] = useRecoilState(OrderOpeningHoursAtom);
 
@@ -267,6 +273,11 @@ const OrderNavBarModal = ({
     setMenu(res.data.validateOrderDetails.menu);
 
     setOpeningHours({
+      address: res.data.validateOrderDetails.address,
+      location: {
+        latitude: res.data.validateOrderDetails.location.latitude,
+        longitude: res.data.validateOrderDetails.location.longitude,
+      },
       isOrderTimeValid: res.data.validateOrderDetails.isOrderTimeValid,
       isOpenNow: openingHours?.isOpenNow as boolean,
       currentDateTime: res.data.validateOrderDetails.currentDateTime as string,
@@ -311,6 +322,18 @@ const OrderNavBarModal = ({
 
     setModal(false);
   };
+
+  useEffect(() => {
+    if (error) {
+      console.log('here');
+      setOrderTimeState({
+        label: 'ASAP',
+        value: null,
+      });
+    }
+  }, [error]);
+
+  console.log('ORDER TIME', orderTime);
 
   return (
     <form onSubmit={handleSubmit} className={classes.orderNavbarModal}>
@@ -364,6 +387,27 @@ const OrderNavBarModal = ({
           )}
         </Button>
       </div>
+
+      <AnimatePresence>
+        {showInvalidTimeModal && (
+          <ModalPopUp
+            showModal={showInvalidTimeModal}
+            onClose={() => {
+              console.log();
+            }}
+          >
+            <OrderNavBarModal
+              headerText="Date and Time"
+              setModal={setShowInvalidTimeModal}
+              error={
+                !data?.validateOrderDetails?.isOpenNow
+                  ? "Sorry, we're currently closed. You can still place an order in advanced"
+                  : 'Sorry, we need a little extra time. Please select a new time.'
+              }
+            />
+          </ModalPopUp>
+        )}
+      </AnimatePresence>
     </form>
   );
 };

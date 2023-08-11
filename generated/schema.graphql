@@ -127,6 +127,17 @@ input ItemSizeInput {
   price: Float!
 }
 
+type Location {
+  id: String
+  latitude: Float
+  longitude: Float
+}
+
+input LocationInput {
+  latitude: Float
+  longitude: Float
+}
+
 type Mutation {
   CheckoutCalculateMut(input: [ShoppingCartInput]!, paymentMethodId: String!): Checkout!
   addOpeningHours(openingHours: [DayInput!]!, restaurantId: String!): Boolean
@@ -166,6 +177,7 @@ type Query {
 }
 
 type Restaurant {
+  address: String!
   currentDateTime: String!
   deliveryAddress: String
   deliveryAddressAdditionalInfo: String
@@ -174,6 +186,7 @@ type Restaurant {
   isOpenNow: Boolean!
   isOrderTimeValid: Boolean!
   isPickUp: Boolean!
+  location: Location!
   menu: [FoodsByCategory!]!
   name: String!
   openingHours: [DayOutput!]!
@@ -265,6 +278,7 @@ input ValidateOrderDetailsInput {
 }
 
 type ValidateOrderDetailsType {
+  address: String!
   currentDateTime: String!
   deliveryAddress: String
   deliveryAddressAdditionalInfo: String
@@ -273,6 +287,7 @@ type ValidateOrderDetailsType {
   isOpenNow: Boolean!
   isOrderTimeValid: Boolean!
   isPickUp: Boolean!
+  location: Location!
   menu: [FoodsByCategory!]!
   openingHours: [DayOutput!]!
   timezone: String!

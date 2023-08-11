@@ -32,12 +32,20 @@ async function main() {
   await prisma.foodCategory.deleteMany({});
   await prisma.openingHour.deleteMany({});
   await prisma.closedDay.deleteMany({});
+  await prisma.location.deleteMany({});
   await prisma.restaurant.deleteMany({});
 
   const restaurant = await prisma.restaurant.create({
     data: {
       name: "Igli's Pizza",
       timezone: 'America/New_York',
+      address: '349 Whitehall road, Albany, NY, 12208',
+      location: {
+        create: {
+          latitude: 42.64959,
+          longitude: -73.807041,
+        },
+      },
     },
   });
 

@@ -22,9 +22,6 @@ function isAddressOutOfRange(
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distance = R * c;
 
-  console.log('distance', distance);
-  console.log('radius', radius);
-
   if (distance <= radius) {
     return true;
   } else {
@@ -32,7 +29,7 @@ function isAddressOutOfRange(
   }
 }
 
-export const isValidAddress = async (
+export const validateAddress = async (
   deliveryAddress: string,
   restaurantAddress: LatLng,
 ) => {

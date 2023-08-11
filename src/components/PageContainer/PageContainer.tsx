@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { AnimatePresence } from 'framer-motion';
 import { DateTime } from 'luxon';
@@ -17,10 +17,13 @@ import {
 } from '../../state/OrderNavbar';
 import Loader from '../Loader/Loader';
 import { ModalPopUp } from '../Modal/Modal';
+import OrderNavBarModal from '../OrderNavbar/OrderNavBarModal/OrderNavBarModal';
 
 import { IPageContainer } from './types';
 
 const PageContainer = ({ children }: IPageContainer) => {
+  const [showInvalidTimeModal, setShowInvalidTimeModal] = useState(false);
+
   const [, setOpeningHours] = useRecoilState(OrderOpeningHoursAtom);
   const [, setMenu] = useRecoilState(FoodMenuAtom);
   const [, setOrderTime] = useRecoilState(OrderTimeAtom);
@@ -60,7 +63,9 @@ const PageContainer = ({ children }: IPageContainer) => {
     // localStorage.removeItem('orderTime');
   }
 
-  const [restaurantQuery, { data, loading, error }] = useRestaurantLazyQuery();
+  const [restaurantQuery, { data, loading, error }] = useRestaurantLazyQuery({
+    fetchPolicy: 'no-cache',
+  });
 
   useEffect(() => {
     restaurantQuery({
@@ -82,7 +87,18 @@ const PageContainer = ({ children }: IPageContainer) => {
     if (!loading && !error && data?.restaurant) {
       setMenu(data?.restaurant.menu);
 
+      if (!data.restaurant?.isOrderTimeValid) {
+        setShowInvalidTimeModal(true);
+      } else {
+        setShowInvalidTimeModal(false);
+      }
+
       setOpeningHours({
+        address: data?.restaurant.address,
+        location: {
+          latitude: data?.restaurant.location.latitude,
+          longitude: data?.restaurant.location.longitude,
+        },
         openingHours: data?.restaurant.openingHours,
         isOpenNow: data?.restaurant.isOpenNow,
         currentDateTime: data?.restaurant.currentDateTime,
@@ -158,7 +174,32 @@ const PageContainer = ({ children }: IPageContainer) => {
         )}
       </AnimatePresence>
     );
-  return <div>{children}</div>;
+  return (
+    <div>
+      {children}
+
+      <AnimatePresence>
+        {showInvalidTimeModal && (
+          <ModalPopUp
+            showModal={showInvalidTimeModal}
+            onClose={() => {
+              console.log();
+            }}
+          >
+            <OrderNavBarModal
+              headerText="Date and Time"
+              setModal={setShowInvalidTimeModal}
+              error={
+                !data?.restaurant?.isOpenNow
+                  ? "Sorry, we're currently closed. You can still place an order in advanced"
+                  : 'Sorry, we need a little extra time. Please select a new time.'
+              }
+            />
+          </ModalPopUp>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 };
 
 export default PageContainer;

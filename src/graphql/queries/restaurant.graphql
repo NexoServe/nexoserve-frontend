@@ -1,6 +1,11 @@
 query Restaurant($input: RestaurantInput!) {
   restaurant(input: $input) {
     name
+    address
+    location {
+      latitude
+      longitude
+    }
     menu {
       category
       foods {

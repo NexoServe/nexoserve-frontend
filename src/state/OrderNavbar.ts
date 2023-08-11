@@ -8,7 +8,14 @@ export type OrderTime = {
   label: string;
 };
 
+type Location = {
+  latitude: number | null | undefined;
+  longitude: number | null | undefined;
+};
+
 interface IOrderOpeningHours {
+  address: string;
+  location: Location;
   openingHours: DayOutput[];
   timezone: string;
   currentDateTime: string;
