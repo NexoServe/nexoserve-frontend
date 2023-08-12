@@ -18,6 +18,7 @@ model Restaurant {
   closedDays   ClosedDay[]
   menu         Food[]
   address      String
+  radius       Float      //in meters
   location     Location?
 }
 

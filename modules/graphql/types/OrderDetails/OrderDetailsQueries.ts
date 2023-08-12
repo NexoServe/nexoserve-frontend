@@ -39,6 +39,7 @@ export const validateOrderDetails = queryField('validateOrderDetails', {
         lat: restaurant.location?.latitude as number,
         lng: restaurant.location?.longitude as number,
       },
+      restaurant.radius,
     );
 
     return {
@@ -48,6 +49,7 @@ export const validateOrderDetails = queryField('validateOrderDetails', {
         latitude: restaurant.location?.latitude as number,
         longitude: restaurant.location?.longitude as number,
       },
+      radius: restaurant.radius,
       menu: menu,
       timezone: restaurant.timezone,
       openingHours: validateOrderTime.openingHoursByDay,

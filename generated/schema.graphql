@@ -190,6 +190,7 @@ type Restaurant {
   menu: [FoodsByCategory!]!
   name: String!
   openingHours: [DayOutput!]!
+  radius: Float!
   timezone: String!
 }
 
@@ -290,5 +291,6 @@ type ValidateOrderDetailsType {
   location: Location!
   menu: [FoodsByCategory!]!
   openingHours: [DayOutput!]!
+  radius: Float!
   timezone: String!
 }

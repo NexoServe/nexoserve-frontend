@@ -40,6 +40,11 @@ async function main() {
       name: "Igli's Pizza",
       timezone: 'America/New_York',
       address: '349 Whitehall road, Albany, NY, 12208',
+      radius:
+        5 *
+        parseFloat(
+          process.env.NEXT_PUBLIC_MILES_TO_METERS_MULTIPLIER as string,
+        ),
       location: {
         create: {
           latitude: 42.64959,

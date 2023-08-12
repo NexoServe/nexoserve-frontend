@@ -32,6 +32,7 @@ function isAddressOutOfRange(
 export const validateAddress = async (
   deliveryAddress: string,
   restaurantAddress: LatLng,
+  radius: number,
 ) => {
   try {
     const response = await axios.get(
@@ -69,15 +70,10 @@ export const validateAddress = async (
         return false;
       }
 
-      console.log(
-        'deliveryGeocodeResponse.data.results[0].geometry.location',
-        deliveryGeocodeResponse.data.results[0].geometry.location,
-      );
-
       const isAddressOutOfRangeBool = isAddressOutOfRange(
         deliveryGeocodeResponse.data.results[0].geometry.location,
         restaurantAddress,
-        10 * 1609.34,
+        radius,
       );
 
       return isAddressOutOfRangeBool;

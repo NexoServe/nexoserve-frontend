@@ -16,6 +16,7 @@ type Location = {
 interface IOrderOpeningHours {
   address: string;
   location: Location;
+  radius: number;
   openingHours: DayOutput[];
   timezone: string;
   currentDateTime: string;

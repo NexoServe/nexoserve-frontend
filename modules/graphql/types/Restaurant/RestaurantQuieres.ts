@@ -39,6 +39,7 @@ export const RestaurantQuery = queryField('restaurant', {
         lat: restaurant.location?.latitude as number,
         lng: restaurant.location?.longitude as number,
       },
+      restaurant.radius,
     );
 
     return {
@@ -48,6 +49,7 @@ export const RestaurantQuery = queryField('restaurant', {
         latitude: restaurant.location?.latitude as number,
         longitude: restaurant.location?.longitude as number,
       },
+      radius: restaurant.radius,
       menu: menu,
       timezone: restaurant.timezone,
       openingHours: validateOrderTime.openingHoursByDay,

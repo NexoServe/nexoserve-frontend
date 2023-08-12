@@ -258,7 +258,7 @@ const OrderNavBarModal = ({
           restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
           orderTime:
             orderTimeState?.label === 'ASAP' ? 'ASAP' : value.toString(),
-          isPickUp: isPickUp,
+          isPickUp: type === 'delivery' ? false : true,
           deliveryAddress: deliveryAddress,
           deliveryAddressAdditionalInfo: deliveryAdditionalAddressInfo,
           deliveryDetails: deliveryDetails,
@@ -278,6 +278,7 @@ const OrderNavBarModal = ({
         latitude: res.data.validateOrderDetails.location.latitude,
         longitude: res.data.validateOrderDetails.location.longitude,
       },
+      radius: res.data.validateOrderDetails.radius,
       isOrderTimeValid: res.data.validateOrderDetails.isOrderTimeValid,
       isOpenNow: openingHours?.isOpenNow as boolean,
       currentDateTime: res.data.validateOrderDetails.currentDateTime as string,

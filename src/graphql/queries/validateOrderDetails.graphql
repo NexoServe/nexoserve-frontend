@@ -5,6 +5,7 @@ query ValidateOrderDetails($input: ValidateOrderDetailsInput!) {
       latitude
       longitude
     }
+    radius
     menu {
       category
       foods {

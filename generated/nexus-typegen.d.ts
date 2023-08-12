@@ -211,6 +211,7 @@ export interface NexusGenObjects {
     menu: NexusGenRootTypes['FoodsByCategory'][]; // [FoodsByCategory!]!
     name: string; // String!
     openingHours: NexusGenRootTypes['DayOutput'][]; // [DayOutput!]!
+    radius: number; // Float!
     timezone: string; // String!
   }
   SelectedItem: { // root type
@@ -265,6 +266,7 @@ export interface NexusGenObjects {
     location: NexusGenRootTypes['Location']; // Location!
     menu: NexusGenRootTypes['FoodsByCategory'][]; // [FoodsByCategory!]!
     openingHours: NexusGenRootTypes['DayOutput'][]; // [DayOutput!]!
+    radius: number; // Float!
     timezone: string; // String!
   }
 }
@@ -386,6 +388,7 @@ export interface NexusGenFieldTypes {
     menu: NexusGenRootTypes['FoodsByCategory'][]; // [FoodsByCategory!]!
     name: string; // String!
     openingHours: NexusGenRootTypes['DayOutput'][]; // [DayOutput!]!
+    radius: number; // Float!
     timezone: string; // String!
   }
   SelectedItem: { // field return type
@@ -440,6 +443,7 @@ export interface NexusGenFieldTypes {
     location: NexusGenRootTypes['Location']; // Location!
     menu: NexusGenRootTypes['FoodsByCategory'][]; // [FoodsByCategory!]!
     openingHours: NexusGenRootTypes['DayOutput'][]; // [DayOutput!]!
+    radius: number; // Float!
     timezone: string; // String!
   }
 }
@@ -551,6 +555,7 @@ export interface NexusGenFieldTypeNames {
     menu: 'FoodsByCategory'
     name: 'String'
     openingHours: 'DayOutput'
+    radius: 'Float'
     timezone: 'String'
   }
   SelectedItem: { // field return type name
@@ -605,6 +610,7 @@ export interface NexusGenFieldTypeNames {
     location: 'Location'
     menu: 'FoodsByCategory'
     openingHours: 'DayOutput'
+    radius: 'Float'
     timezone: 'String'
   }
 }

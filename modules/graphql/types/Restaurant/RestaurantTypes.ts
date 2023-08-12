@@ -6,6 +6,7 @@ export const Restaurant = objectType({
     t.nonNull.string('name');
     t.nonNull.string('address');
     t.nonNull.field('location', { type: 'Location' });
+    t.nonNull.float('radius');
     t.nonNull.list.nonNull.field('openingHours', { type: 'DayOutput' });
     t.nonNull.list.nonNull.field('menu', { type: 'FoodsByCategory' });
     t.nonNull.string('currentDateTime');

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   Combobox,
@@ -7,8 +7,9 @@ import {
   ComboboxOption,
   ComboboxPopover,
 } from '@reach/combobox';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import usePlacesAutocomplete, {
+  getDetails,
   getGeocode,
   getLatLng,
   LatLng,
@@ -20,6 +21,7 @@ import {
   OrderDeliveryAdditionalAddressInfoAtom,
   OrderDeliveryAddressAtom,
   OrderDeliveryDetailsAtom,
+  OrderOpeningHoursAtom,
 } from '../../../state/OrderNavbar';
 import Input from '../../Input/Input';
 import TextArea from '../../TextArea/TextArea';
@@ -53,9 +55,7 @@ const OrderNavBarModalDelivery = ({
 }: IOrderNavBarModalDelivery) => {
   const [address, setAddress] = useState('');
 
-  const [deliveryAddress, setDeliveryAddress] = useRecoilState(
-    OrderDeliveryAddressAtom,
-  );
+  const [, setDeliveryAddress] = useRecoilState(OrderDeliveryAddressAtom);
   const [additionalAddressInfo, setAdditionalAddressInfo] = useRecoilState(
     OrderDeliveryAdditionalAddressInfoAtom,
   );
@@ -63,28 +63,9 @@ const OrderNavBarModalDelivery = ({
     OrderDeliveryDetailsAtom,
   );
 
+  const openingHours = useRecoilValue(OrderOpeningHoursAtom);
+
   const classes = useStyles();
-
-  const adminAddress = '349 whitehall road albany ny 12208';
-  const radius = 10 * 1609.34; // 10 miles in meters
-  const [adminLocation, setAdminLocation] = useState<null | LatLng>(null);
-
-  useEffect(() => {
-    if (deliveryAddress) {
-      setAddress(deliveryAddress);
-      setIsAddressValid(true);
-    }
-
-    // Get the lat/lng of the admin address
-    getGeocode({ address: adminAddress })
-      .then((results) => getLatLng(results[0]))
-      .then((latLng) => {
-        setAdminLocation(latLng);
-      })
-      .catch((error) => {
-        console.log('Error: ', error);
-      });
-  }, []);
 
   const {
     ready,
@@ -94,15 +75,12 @@ const OrderNavBarModalDelivery = ({
   } = usePlacesAutocomplete({
     requestOptions: {
       componentRestrictions: { country: 'us' },
-      // location: adminLocation,
-      // radius: 20 * 1609.34, // 20 miles in meters
     },
   });
 
-  console.log('data', data);
+  const descriptionToPlaceIdMap = useRef<Record<string, string>>({}); // To get the placeId from the description
 
   const handleSelect = async (address: string) => {
-    console.log('address', address);
     setValue(address, false);
     clearSuggestions();
 
@@ -110,15 +88,34 @@ const OrderNavBarModalDelivery = ({
     try {
       const results = await getGeocode({ address });
       const latLng = await getLatLng(results[0]);
-      const distance = getDistance(adminLocation as LatLng, latLng);
+      const distance = getDistance(
+        {
+          lat: openingHours?.location.latitude as number,
+          lng: openingHours?.location.longitude as number,
+        },
+        latLng,
+      );
 
-      console.log('distance', distance);
-      console.log('radius', radius);
-      if (distance <= radius) {
-        console.log('The address is within the radius');
+      setAddress(address);
+
+      if (distance <= (openingHours?.radius as number)) {
+        const placeId = descriptionToPlaceIdMap.current[address];
+
+        const zipCodeComponent = await getDetails({
+          placeId: placeId,
+          fields: ['address_components'],
+        });
+        const zipCode = zipCodeComponent.address_components.find(
+          (component: any) => component.types.includes('postal_code'),
+        );
+
+        const formattedAddress = address.replace(
+          /, USA$/,
+          ` ${zipCode.long_name}`,
+        );
+
         setIsAddressValid(true);
-        setDeliveryAddress(address);
-        setAddress(address);
+        setDeliveryAddress(formattedAddress);
       } else {
         console.log('The address is not within the radius');
         setIsAddressValid(false);
@@ -143,7 +140,7 @@ const OrderNavBarModalDelivery = ({
           </div>
 
           <ComboboxInput
-            defaultValue={address}
+            defaultValue={''}
             value={address}
             onChange={(e) => {
               setAddress(e.target.value);
@@ -164,13 +161,16 @@ const OrderNavBarModalDelivery = ({
         <ComboboxPopover className={classes.orderNavbarDeliveryAddressPopover}>
           <ComboboxList>
             {status === 'OK' &&
-              data.map(({ place_id, description }) => (
-                <ComboboxOption
-                  className={classes.orderNavbarDeliveryAddressOption}
-                  key={place_id}
-                  value={description}
-                />
-              ))}
+              data.map(({ place_id, description }) => {
+                descriptionToPlaceIdMap.current[description] = place_id;
+                return (
+                  <ComboboxOption
+                    className={classes.orderNavbarDeliveryAddressOption}
+                    key={place_id}
+                    value={description}
+                  />
+                );
+              })}
           </ComboboxList>
         </ComboboxPopover>
       </Combobox>

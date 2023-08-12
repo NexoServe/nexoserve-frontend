@@ -44,7 +44,7 @@ const PageContainer = ({ children }: IPageContainer) => {
   const orderDeliveryDetails = localStorage.getItem('deliveryDetails');
 
   let orderTimeParsed: { label: string; value: string } | null = null;
-  let orderIsPickUpParsed: boolean;
+
   let orderDeliveryAddressParsed: string;
   let orderDeliveryAddressAdditionalInfoParsed: string;
   let orderDeliveryDetailsParsed: string;
@@ -54,7 +54,7 @@ const PageContainer = ({ children }: IPageContainer) => {
     orderDeliveryAddressParsed = JSON.parse(
       orderDeliveryAddressStorage as string,
     );
-    orderIsPickUpParsed = JSON.parse(orderIsPickUpStorage as string);
+
     orderDeliveryAddressAdditionalInfoParsed = JSON.parse(
       orderDeliveryAddressAdditionalInfoStorage as string,
     );
@@ -67,13 +67,15 @@ const PageContainer = ({ children }: IPageContainer) => {
     fetchPolicy: 'no-cache',
   });
 
+  console.log('orderIsPickUpParsed', orderIsPickUpStorage);
+
   useEffect(() => {
     restaurantQuery({
       variables: {
         input: {
           restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
           orderTime: orderTimeParsed ? orderTimeParsed?.value : 'ASAP',
-          isPickUp: orderIsPickUpParsed ? orderIsPickUpParsed : true,
+          isPickUp: orderIsPickUpStorage === 'true' ? true : false,
           deliveryAddress: orderDeliveryAddressParsed,
           deliveryAddressAdditionalInfo:
             orderDeliveryAddressAdditionalInfoParsed,
@@ -99,6 +101,7 @@ const PageContainer = ({ children }: IPageContainer) => {
           latitude: data?.restaurant.location.latitude,
           longitude: data?.restaurant.location.longitude,
         },
+        radius: data?.restaurant.radius,
         openingHours: data?.restaurant.openingHours,
         isOpenNow: data?.restaurant.isOpenNow,
         currentDateTime: data?.restaurant.currentDateTime,
@@ -135,6 +138,11 @@ const PageContainer = ({ children }: IPageContainer) => {
           value: dateTimeWithZone,
         }));
       }
+
+      console.log(
+        'data.restaurant.isDeliveryAddressValid',
+        data.restaurant.isDeliveryAddressValid,
+      );
       if (data.restaurant.isDeliveryAddressValid) {
         if (!data.restaurant.isPickUp) {
           setIsPickUp(false);
@@ -191,7 +199,7 @@ const PageContainer = ({ children }: IPageContainer) => {
               setModal={setShowInvalidTimeModal}
               error={
                 !data?.restaurant?.isOpenNow
-                  ? "Sorry, we're currently closed. You can still place an order in advanced"
+                  ? "Sorry, we're currently closed. You can still place an order in advanced."
                   : 'Sorry, we need a little extra time. Please select a new time.'
               }
             />
