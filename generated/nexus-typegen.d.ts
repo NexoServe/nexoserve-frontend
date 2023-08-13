@@ -213,10 +213,12 @@ export interface NexusGenObjects {
   }
   RestaurantType: { // root type
     address: string; // String!
+    deliveryOffset: number; // Int!
     location: NexusGenRootTypes['Location']; // Location!
     menu: NexusGenRootTypes['FoodsByCategory'][]; // [FoodsByCategory!]!
     name: string; // String!
     openingHours: NexusGenRootTypes['DayOutput'][]; // [DayOutput!]!
+    pickUpOffset: number; // Int!
     radius: number; // Float!
     timezone: string; // String!
   }
@@ -340,7 +342,6 @@ export interface NexusGenFieldTypes {
     addOpeningHours: boolean | null; // Boolean
     createFood: NexusGenRootTypes['Food']; // Food!
     createOrder: NexusGenRootTypes['Order']; // Order!
-    createRestaurant: boolean | null; // Boolean
   }
   OpeningHour: { // field return type
     closeTime: string; // String!
@@ -384,10 +385,12 @@ export interface NexusGenFieldTypes {
   }
   RestaurantType: { // field return type
     address: string; // String!
+    deliveryOffset: number; // Int!
     location: NexusGenRootTypes['Location']; // Location!
     menu: NexusGenRootTypes['FoodsByCategory'][]; // [FoodsByCategory!]!
     name: string; // String!
     openingHours: NexusGenRootTypes['DayOutput'][]; // [DayOutput!]!
+    pickUpOffset: number; // Int!
     radius: number; // Float!
     timezone: string; // String!
   }
@@ -501,7 +504,6 @@ export interface NexusGenFieldTypeNames {
     addOpeningHours: 'Boolean'
     createFood: 'Food'
     createOrder: 'Order'
-    createRestaurant: 'Boolean'
   }
   OpeningHour: { // field return type name
     closeTime: 'String'
@@ -545,10 +547,12 @@ export interface NexusGenFieldTypeNames {
   }
   RestaurantType: { // field return type name
     address: 'String'
+    deliveryOffset: 'Int'
     location: 'Location'
     menu: 'FoodsByCategory'
     name: 'String'
     openingHours: 'DayOutput'
+    pickUpOffset: 'Int'
     radius: 'Float'
     timezone: 'String'
   }
@@ -613,11 +617,6 @@ export interface NexusGenArgTypes {
     }
     createOrder: { // args
       input: NexusGenInputs['CreateOrderInput']; // CreateOrderInput!
-    }
-    createRestaurant: { // args
-      name: string; // String!
-      restaurantId: string; // String!
-      timezone: string; // String!
     }
   }
   Query: {

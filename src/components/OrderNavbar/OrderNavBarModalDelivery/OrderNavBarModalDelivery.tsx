@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   Combobox,
@@ -55,7 +55,9 @@ const OrderNavBarModalDelivery = ({
 }: IOrderNavBarModalDelivery) => {
   const [address, setAddress] = useState('');
 
-  const [, setDeliveryAddress] = useRecoilState(OrderDeliveryAddressAtom);
+  const [deliveryAddress, setDeliveryAddress] = useRecoilState(
+    OrderDeliveryAddressAtom,
+  );
   const [additionalAddressInfo, setAdditionalAddressInfo] = useRecoilState(
     OrderDeliveryAdditionalAddressInfoAtom,
   );
@@ -67,6 +69,13 @@ const OrderNavBarModalDelivery = ({
 
   const classes = useStyles();
 
+  useEffect(() => {
+    if (deliveryAddress) {
+      setIsAddressValid(true);
+      setAddress(deliveryAddress);
+    }
+  }, [deliveryAddress]);
+
   const {
     ready,
     suggestions: { status, data },
@@ -77,6 +86,8 @@ const OrderNavBarModalDelivery = ({
       componentRestrictions: { country: 'us' },
     },
   });
+
+  console.log('data', data);
 
   const descriptionToPlaceIdMap = useRef<Record<string, string>>({}); // To get the placeId from the description
 
@@ -100,7 +111,7 @@ const OrderNavBarModalDelivery = ({
 
       if (distance <= (restaurantDetails?.radius as number)) {
         const placeId = descriptionToPlaceIdMap.current[address];
-
+        console.log('address', address);
         const zipCodeComponent = await getDetails({
           placeId: placeId,
           fields: ['address_components'],
@@ -109,13 +120,17 @@ const OrderNavBarModalDelivery = ({
           (component: any) => component.types.includes('postal_code'),
         );
 
-        const formattedAddress = address.replace(
-          /, USA$/,
-          ` ${zipCode.long_name}`,
-        );
+        if (address.endsWith(`${zipCode.long_name}, USA`)) {
+          setDeliveryAddress(address);
+        } else {
+          const formattedAddress = address.replace(
+            /, USA$/,
+            ` ${zipCode.long_name}`,
+          );
+          setDeliveryAddress(formattedAddress);
+        }
 
         setIsAddressValid(true);
-        setDeliveryAddress(formattedAddress);
       } else {
         console.log('The address is not within the radius');
         setIsAddressValid(false);
@@ -161,7 +176,8 @@ const OrderNavBarModalDelivery = ({
         <ComboboxPopover className={classes.orderNavbarDeliveryAddressPopover}>
           <ComboboxList>
             {status === 'OK' &&
-              data.map(({ place_id, description }) => {
+              data.map(({ place_id, description, terms }) => {
+                console.log('terms', terms);
                 descriptionToPlaceIdMap.current[description] = place_id;
                 return (
                   <ComboboxOption

@@ -18,6 +18,7 @@ const validateTime = (
   openingHours: OpeningHour[],
   dateTime: DateTime | string | null | undefined,
   timezone: string,
+  offset: number,
 ): IIsTimeValid => {
   const openingHoursByDay = getOpeningHoursByDay(openingHours);
 
@@ -55,7 +56,7 @@ const validateTime = (
     'minutes',
   ).minutes;
 
-  if (differenceInMinutes < 15) {
+  if (differenceInMinutes < offset) {
     return {
       isOrderTimeValid: false,
       currentDateTime: timeZonedTime.toString(),

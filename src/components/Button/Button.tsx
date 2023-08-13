@@ -12,8 +12,6 @@ const Button = ({
 }: ButtonType) => {
   const styles = useStyles();
 
-  console.log('disabled', disabled);
-
   return (
     <button
       className={classNames(styleClass, styles.button)}

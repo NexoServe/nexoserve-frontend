@@ -8,6 +8,8 @@ query ValidateOrderDetails($input: ValidateOrderDetailsInput!) {
         longitude
       }
       radius
+      pickUpOffset
+      deliveryOffset
       menu {
         category
         foods {

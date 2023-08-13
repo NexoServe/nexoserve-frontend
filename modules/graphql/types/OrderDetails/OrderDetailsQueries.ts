@@ -31,7 +31,10 @@ export const validateOrderDetails = queryField('validateOrderDetails', {
       openingHours,
       input.orderTime as string,
       restaurant.timezone,
+      input.isPickUp ? restaurant.pickUpOffset : restaurant.deliveryOffset,
     );
+
+    console.log('validateOrderTime', validateOrderTime);
 
     const validateOrderAddress = await validateAddress(
       input.deliveryAddress as string,
@@ -50,6 +53,8 @@ export const validateOrderDetails = queryField('validateOrderDetails', {
           latitude: restaurant.location?.latitude as number,
           longitude: restaurant.location?.longitude as number,
         },
+        pickUpOffset: restaurant.pickUpOffset,
+        deliveryOffset: restaurant.deliveryOffset,
         radius: restaurant.radius,
         openingHours: validateOrderTime.openingHoursByDay,
         menu: menu,

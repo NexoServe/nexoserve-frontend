@@ -45,6 +45,8 @@ async function main() {
         parseFloat(
           process.env.NEXT_PUBLIC_MILES_TO_METERS_MULTIPLIER as string,
         ),
+      pickUpOffset: 15,
+      deliveryOffset: 30,
       location: {
         create: {
           latitude: 42.64959,

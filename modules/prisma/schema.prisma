@@ -11,15 +11,17 @@ datasource db {
 }
 
 model Restaurant {
-  id           String      @id @default(uuid())
-  name         String
-  timezone     String      
-  openingHours OpeningHour[]
-  closedDays   ClosedDay[]
-  menu         Food[]
-  address      String
-  radius       Float      //in meters
-  location     Location?
+  id             String      @id @default(uuid())
+  name           String
+  timezone       String      
+  openingHours   OpeningHour[]
+  closedDays     ClosedDay[]
+  menu           Food[]
+  address        String
+  radius         Float      //in meters
+  location       Location?
+  pickUpOffset   Int        //in minutes only 15 multiples
+  deliveryOffset Int        //in minutes only 15 multiples
 }
 
 model Location {

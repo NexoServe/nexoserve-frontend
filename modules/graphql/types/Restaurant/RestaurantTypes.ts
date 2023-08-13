@@ -8,6 +8,8 @@ export const RestaurantType = objectType({
     t.nonNull.field('location', { type: 'Location' });
     t.nonNull.float('radius');
     t.nonNull.string('timezone');
+    t.nonNull.int('pickUpOffset');
+    t.nonNull.int('deliveryOffset');
     t.nonNull.list.nonNull.field('openingHours', { type: 'DayOutput' });
     t.nonNull.list.nonNull.field('menu', { type: 'FoodsByCategory' });
   },

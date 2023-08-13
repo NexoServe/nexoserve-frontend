@@ -8,6 +8,8 @@ query Restaurant($input: RestaurantInput!) {
         longitude
       }
       radius
+      pickUpOffset
+      deliveryOffset
       menu {
         category
         foods {

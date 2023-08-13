@@ -43,7 +43,13 @@ export const OrderDeliveryAdditionalAddressInfoAtom = atom<string | undefined>({
   key: 'OrderDeliveryAdditionalAddressInfoAtom',
   default: undefined,
 });
+
 export const OrderDeliveryDetailsAtom = atom<string | undefined>({
   key: 'OrderDeliveryDetailsAtom',
   default: undefined,
+});
+
+export const OrderShowInvalidTimeModalAtom = atom<boolean>({
+  key: 'OrderShowInvalidTimeModalAtom',
+  default: false,
 });

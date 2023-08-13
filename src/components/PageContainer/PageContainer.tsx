@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { AnimatePresence } from 'framer-motion';
 import { DateTime } from 'luxon';
@@ -13,6 +13,7 @@ import {
   OrderDeliveryDetailsAtom,
   OrderDetailsAtom,
   OrderIsPickUpAtom,
+  OrderShowInvalidTimeModalAtom,
   OrderTimeAtom,
 } from '../../state/OrderNavbar';
 import { RestaurantDetailsAtom } from '../../state/RestaurantState';
@@ -23,10 +24,12 @@ import OrderNavBarModal from '../OrderNavbar/OrderNavBarModal/OrderNavBarModal';
 import { IPageContainer } from './types';
 
 const PageContainer = ({ children }: IPageContainer) => {
-  const [showInvalidTimeModal, setShowInvalidTimeModal] = useState(false);
+  const [showInvalidTimeModal, setShowInvalidTimeModal] = useRecoilState(
+    OrderShowInvalidTimeModalAtom,
+  );
 
   const [, setRestaurantDetails] = useRecoilState(RestaurantDetailsAtom);
-  const [, setOrderDetails] = useRecoilState(OrderDetailsAtom);
+  const [orderDetails, setOrderDetails] = useRecoilState(OrderDetailsAtom);
   const [, setMenu] = useRecoilState(FoodMenuAtom);
   const [, setOrderTime] = useRecoilState(OrderTimeAtom);
   const [, setOrderDate] = useRecoilState(OrderDateAtom);
@@ -36,6 +39,12 @@ const PageContainer = ({ children }: IPageContainer) => {
     OrderDeliveryAdditionalAddressInfoAtom,
   );
   const [, setDeliveryDetails] = useRecoilState(OrderDeliveryDetailsAtom);
+
+  useEffect(() => {
+    if (orderDetails?.isOrderTimeValid === false) {
+      setShowInvalidTimeModal(true);
+    }
+  }, [orderDetails?.isOrderTimeValid, setShowInvalidTimeModal]);
 
   const orderTimeStorage = localStorage.getItem('orderTime');
   const orderIsPickUpStorage = localStorage.getItem('isPickUp');
@@ -91,14 +100,22 @@ const PageContainer = ({ children }: IPageContainer) => {
     if (!loading && !error && data?.restaurant) {
       setMenu(data?.restaurant.restaurantDetails.menu);
 
-      if (!data.restaurant.orderDetails.isOrderTimeValid) {
-        setShowInvalidTimeModal(true);
-      } else {
-        setShowInvalidTimeModal(false);
-      }
+      // if (!data.restaurant.orderDetails.isOrderTimeValid) {
+      //   setShowInvalidTimeModal(true);
+      // } else {
+      //   setShowInvalidTimeModal(false);
+      // }
 
       setRestaurantDetails(data.restaurant.restaurantDetails);
       setOrderDetails(data.restaurant.orderDetails);
+
+      if (data.restaurant.orderDetails.isPickUp) {
+        setIsPickUp(true);
+        localStorage.setItem('isPickUp', JSON.stringify(true));
+      } else {
+        setIsPickUp(false);
+        localStorage.setItem('isPickUp', JSON.stringify(false));
+      }
 
       if (data.restaurant.orderDetails.isOrderTimeValid && orderTimeParsed) {
         setOrderTime({
@@ -134,20 +151,12 @@ const PageContainer = ({ children }: IPageContainer) => {
         }));
       }
 
-      console.log(
-        'data.restaurant.isDeliveryAddressValid',
-        data.restaurant.orderDetails.isDeliveryAddressValid,
-      );
       if (data.restaurant.orderDetails.isDeliveryAddressValid) {
         if (!data.restaurant.orderDetails.isPickUp) {
-          setIsPickUp(false);
           setDeliveryAddress(
             data.restaurant.orderDetails.deliveryAddress as string,
           );
-          console.log(
-            'data.restaurant.deliveryAddressAdditionalInfo',
-            data.restaurant.orderDetails.deliveryAddressAdditionalInfo,
-          );
+
           if (
             data.restaurant.orderDetails.deliveryAddressAdditionalInfo !==
               undefined &&
@@ -164,7 +173,6 @@ const PageContainer = ({ children }: IPageContainer) => {
           }
         }
       } else {
-        setIsPickUp(true);
         localStorage.removeItem('deliveryAddress');
         localStorage.removeItem('deliveryAddiotionalInfo');
         localStorage.removeItem('deliveryDetails');

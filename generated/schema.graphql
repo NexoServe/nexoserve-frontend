@@ -143,7 +143,6 @@ type Mutation {
   addOpeningHours(openingHours: [DayInput!]!, restaurantId: String!): Boolean
   createFood(input: CreateFoodInput!, restaurantId: String!): Food!
   createOrder(input: CreateOrderInput!): Order!
-  createRestaurant(name: String!, restaurantId: String!, timezone: String!): Boolean
 }
 
 type OpeningHour {
@@ -203,10 +202,12 @@ type RestaurantOutput {
 
 type RestaurantType {
   address: String!
+  deliveryOffset: Int!
   location: Location!
   menu: [FoodsByCategory!]!
   name: String!
   openingHours: [DayOutput!]!
+  pickUpOffset: Int!
   radius: Float!
   timezone: String!
 }

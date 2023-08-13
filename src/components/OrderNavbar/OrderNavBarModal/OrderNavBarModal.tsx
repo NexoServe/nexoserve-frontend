@@ -1,6 +1,5 @@
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 
-import { AnimatePresence } from 'framer-motion';
 import { DateTime, Interval } from 'luxon';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -21,12 +20,27 @@ import getHourAndMinute from '../../../utils/getHourAndMintue';
 import Button from '../../Button/Button';
 import Dropdown from '../../Dropdown/Dropdown';
 import Loader from '../../Loader/Loader';
-import { ModalPopUp } from '../../Modal/Modal';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import OrderNavBarModalDelivery from '../OrderNavBarModalDelivery/OrderNavBarModalDelivery';
 
 import useStyles from './css';
 import { IOrderNavBarModal } from './types';
+
+function roundToNearest(dateTime: DateTime, minutesArray: number[]) {
+  const currentMinutes = dateTime.minute;
+  let closest = minutesArray[0];
+  let difference = Math.abs(currentMinutes - closest);
+
+  for (let i = 1; i < minutesArray.length; i++) {
+    const newDifference = Math.abs(currentMinutes - minutesArray[i]);
+    if (newDifference < difference) {
+      difference = newDifference;
+      closest = minutesArray[i];
+    }
+  }
+
+  return dateTime.set({ minute: closest, second: 0, millisecond: 0 });
+}
 
 const OrderNavBarModal = ({
   setModal,
@@ -34,12 +48,9 @@ const OrderNavBarModal = ({
   type,
   error,
 }: IOrderNavBarModal) => {
-  const [validateOrderDetails, { loading, data }] =
-    useValidateOrderDetailsLazyQuery({
-      fetchPolicy: 'no-cache',
-    });
-
-  const [showInvalidTimeModal, setShowInvalidTimeModal] = useState(false);
+  const [validateOrderDetails, { loading }] = useValidateOrderDetailsLazyQuery({
+    fetchPolicy: 'no-cache',
+  });
 
   const [restaurantDetails, setRestaurantDetails] = useRecoilState(
     RestaurantDetailsAtom,
@@ -54,7 +65,7 @@ const OrderNavBarModal = ({
   const [orderDateState, setOrderDateState] = useState<OrderTime>();
   const [orderTimeState, setOrderTimeState] = useState<OrderTime>();
   const [isAddressValid, setIsAddressValid] = useState<null | boolean>(null);
-  const [, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
+  const [isPickUp, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
   const deliveryAddress = useRecoilValue(OrderDeliveryAddressAtom);
   const deliveryAdditionalAddressInfo = useRecoilValue(
     OrderDeliveryAdditionalAddressInfoAtom,
@@ -137,8 +148,6 @@ const OrderNavBarModal = ({
     }
   }, []);
 
-  console.log('orderDateState', orderDateState);
-
   const dayHours =
     restaurantDetails?.openingHours.find(
       (hours) =>
@@ -175,10 +184,30 @@ const OrderNavBarModal = ({
       },
     );
 
-    const timeInterval = Interval.fromDateTimes(
+    console.log(
+      'OFFSET',
+      isPickUp
+        ? restaurantDetails.pickUpOffset
+        : restaurantDetails.deliveryOffset,
+    );
+
+    const offsetMinutes = isPickUp
+      ? restaurantDetails.pickUpOffset
+      : restaurantDetails.deliveryOffset;
+
+    const offsetOpeningTime = openingTime.plus({ minutes: offsetMinutes });
+
+    const roundedOpeningTime = roundToNearest(
       openingTime.toFormat('hh:mm a') === '12:00 AM'
         ? openingTime
-        : openingTime.plus({ minutes: 15 }),
+        : offsetOpeningTime,
+      [0, 10, 15, 30, 45],
+    );
+
+    console.log('roundedOpeningTime', roundedOpeningTime.toFormat('hh:mm a'));
+
+    const timeInterval = Interval.fromDateTimes(
+      roundedOpeningTime,
       closingTime,
     );
 
@@ -192,7 +221,15 @@ const OrderNavBarModal = ({
     orderDateState?.value?.weekdayLong?.toLowerCase() ===
     now.weekdayLong?.toLowerCase()
   ) {
-    intervals = intervals.filter((interval) => (interval as DateTime) > now);
+    intervals = intervals.filter(
+      (interval) =>
+        (interval as DateTime) >
+        now.plus({
+          minutes: isPickUp
+            ? restaurantDetails.pickUpOffset
+            : restaurantDetails.deliveryOffset,
+        }),
+    );
   }
 
   // Format the intervals
@@ -239,6 +276,18 @@ const OrderNavBarModal = ({
     }
   }, [orderDateState]);
 
+  useEffect(() => {
+    if (
+      !formattedIntervals?.find(
+        (interval) => interval.label === orderTime?.label,
+      )
+    ) {
+      setOrderTimeState({
+        label: 'ASAP',
+        value: now,
+      });
+    }
+  }, []);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -262,7 +311,7 @@ const OrderNavBarModal = ({
           restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
           orderTime:
             orderTimeState?.label === 'ASAP' ? 'ASAP' : value.toString(),
-          isPickUp: type === 'delivery' ? false : true,
+          isPickUp: isPickUp,
           deliveryAddress: deliveryAddress,
           deliveryAddressAdditionalInfo: deliveryAdditionalAddressInfo,
           deliveryDetails: deliveryDetails,
@@ -271,12 +320,26 @@ const OrderNavBarModal = ({
     });
 
     if (!res.data) {
+      //TODO: 404 page
       return;
     }
 
     setRestaurantDetails(res.data.validateOrderDetails.restaurantDetails);
     setOrderDetails(res.data.validateOrderDetails.orderDetails);
     setMenu(res.data.validateOrderDetails.restaurantDetails.menu);
+
+    console.log(
+      'res.data.validateOrderDetails.orderDetails.isOrderTimeValid',
+      !res.data.validateOrderDetails.orderDetails.isOrderTimeValid,
+    );
+
+    if (res.data.validateOrderDetails.orderDetails.isPickUp) {
+      setIsPickUp(true);
+      localStorage.setItem('isPickUp', JSON.stringify(true));
+    } else {
+      setIsPickUp(false);
+      localStorage.setItem('isPickUp', JSON.stringify(false));
+    }
 
     setOrderTime({
       label: orderTimeState?.label as string,
@@ -298,10 +361,8 @@ const OrderNavBarModal = ({
 
     if (
       res.data.validateOrderDetails.orderDetails.isDeliveryAddressValid &&
-      type === 'delivery'
+      !res.data.validateOrderDetails.orderDetails.isPickUp
     ) {
-      setIsPickUp(false);
-      localStorage.setItem('isPickUp', JSON.stringify(false));
       localStorage.setItem('deliveryAddress', JSON.stringify(deliveryAddress));
       localStorage.setItem(
         'deliveryAddiotionalInfo',
@@ -318,15 +379,12 @@ const OrderNavBarModal = ({
 
   useEffect(() => {
     if (error) {
-      console.log('here');
       setOrderTimeState({
         label: 'ASAP',
         value: null,
       });
     }
   }, [error]);
-
-  console.log('ORDER TIME', orderTime);
 
   return (
     <form onSubmit={handleSubmit} className={classes.orderNavbarModal}>
@@ -380,27 +438,6 @@ const OrderNavBarModal = ({
           )}
         </Button>
       </div>
-
-      <AnimatePresence>
-        {showInvalidTimeModal && (
-          <ModalPopUp
-            showModal={showInvalidTimeModal}
-            onClose={() => {
-              console.log();
-            }}
-          >
-            <OrderNavBarModal
-              headerText="Date and Time"
-              setModal={setShowInvalidTimeModal}
-              error={
-                !data?.validateOrderDetails.orderDetails.isOpenNow
-                  ? "Sorry, we're currently closed. You can still place an order in advanced"
-                  : 'Sorry, we need a little extra time. Please select a new time.'
-              }
-            />
-          </ModalPopUp>
-        )}
-      </AnimatePresence>
     </form>
   );
 };

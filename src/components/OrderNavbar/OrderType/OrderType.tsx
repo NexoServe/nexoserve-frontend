@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilState } from 'recoil';
@@ -21,7 +21,14 @@ const OrderType = () => {
   const [showDeliveryModal, setShowDeliveryModal] = useState(false);
   const classes = useStyles();
 
-  const [isPickUp, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
+  const [, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
+  const [isPickUpState, setIsPickUpState] = useState(true);
+
+  const isPickUpStorage = localStorage.getItem('isPickUp');
+
+  useEffect(() => {
+    setIsPickUpState(isPickUpStorage === 'true');
+  }, [isPickUpStorage]);
 
   const onClose = () => {
     setShowDeliveryModal(false);
@@ -29,6 +36,7 @@ const OrderType = () => {
 
   const handlePickUpClick = () => {
     setIsPickUp(true);
+    setIsPickUpState(true);
     localStorage.setItem('isPickUp', 'true');
   };
 
@@ -38,7 +46,7 @@ const OrderType = () => {
         <div className={classes.orderTypeToggle}>
           <motion.div
             className={classes.orderTypeSlider}
-            animate={isPickUp ? 'pickUp' : 'delivery'}
+            animate={isPickUpState ? 'pickUp' : 'delivery'}
             transition={{ duration: 0.025, ease: 'easeInOut' }}
             variants={variants}
           />
@@ -56,6 +64,7 @@ const OrderType = () => {
           <button
             onClick={() => {
               setShowDeliveryModal(true);
+              setIsPickUp(false);
             }}
             className={classes.orderTypeToggleButton}
           >

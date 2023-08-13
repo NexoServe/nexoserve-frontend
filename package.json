@@ -25,7 +25,8 @@
     "postinstall": "husky install",
     "commit": "cz",
     "generate": "graphql-codegen --config codegen.yml",
-    "seed": "ts-node ./modules/prisma/seed.ts"
+    "seed": "ts-node ./modules/prisma/seed.ts",
+    "delete": "ts-node ./modules/prisma/delete.ts"
   },
   "prisma": {
     "schema": "modules/prisma/schema.prisma"

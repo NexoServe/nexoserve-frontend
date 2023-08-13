@@ -5,7 +5,8 @@ import { motion } from 'framer-motion';
 import { DateTime } from 'luxon';
 import { useRecoilValue } from 'recoil';
 
-import { OrderOpeningHoursAtom } from '../../../state/OrderNavbar';
+import { OrderDetailsAtom } from '../../../state/OrderNavbar';
+import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import Divider from '../../Divider/Divider';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 
@@ -13,12 +14,13 @@ import useStyles from './css';
 import { IOrderInfoModal } from './types';
 
 const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
-  const openingHours = useRecoilValue(OrderOpeningHoursAtom);
+  const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
+  const orderDetails = useRecoilValue(OrderDetailsAtom);
 
   const [isPickUp, setIsPickUp] = useState(true);
   const classes = useStyles();
 
-  const times = openingHours?.openingHours.map((item, index, arr) => {
+  const times = restaurantDetails?.openingHours.map((item, index, arr) => {
     let closingTime;
 
     // If 'closes_at' is '23:59', use the 'closes_at' of the next day's first time slot
@@ -39,8 +41,6 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
       closes_at: closingTime,
     };
   });
-
-  console.log('times', times);
 
   return (
     <div className={classes.orderInfoModal}>
@@ -99,9 +99,9 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
               {times?.map((item, i) => {
                 const isSameDay =
                   DateTime.fromISO(
-                    openingHours?.currentDateTime as string,
+                    orderDetails?.currentDateTime as string,
                   ).weekdayLong?.toLowerCase() === item.dayOfWeek;
-                console.log('isSameDay', isSameDay);
+
                 return (
                   <div
                     key={i}
