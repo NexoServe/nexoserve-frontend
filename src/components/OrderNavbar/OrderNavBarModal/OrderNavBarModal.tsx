@@ -278,9 +278,9 @@ const OrderNavBarModal = ({
 
   useEffect(() => {
     if (
-      !formattedIntervals?.find(
+      formattedIntervals?.find(
         (interval) => interval.label === orderTime?.label,
-      )
+      ) === undefined
     ) {
       setOrderTimeState({
         label: 'ASAP',
@@ -288,6 +288,7 @@ const OrderNavBarModal = ({
       });
     }
   }, []);
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
