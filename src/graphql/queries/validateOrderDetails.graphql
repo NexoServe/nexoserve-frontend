@@ -1,39 +1,44 @@
 query ValidateOrderDetails($input: ValidateOrderDetailsInput!) {
   validateOrderDetails(input: $input) {
-    address
-    location {
-      latitude
-      longitude
-    }
-    radius
-    menu {
-      category
-      foods {
-        id
-        description
-        image
-        name
-        price
-        sizes {
+    restaurantDetails {
+      name
+      address
+      location {
+        latitude
+        longitude
+      }
+      radius
+      menu {
+        category
+        foods {
+          id
+          description
+          image
+          name
           price
+          sizes {
+            price
+          }
         }
       }
-    }
-    openingHours {
-      dayOfWeek
-      time {
-        opens_at
-        closes_at
+      openingHours {
+        dayOfWeek
+        time {
+          opens_at
+          closes_at
+        }
       }
+      timezone
     }
-    currentDateTime
-    timezone
-    isOpenNow
-    isOrderTimeValid
-    isDeliveryAddressValid
-    isPickUp
-    deliveryAddress
-    deliveryAddressAdditionalInfo
-    deliveryDetails
+    orderDetails {
+      currentDateTime
+      isOpenNow
+      isOrderTimeValid
+      isDeliveryAddressValid
+      isPickUp
+      deliveryAddress
+      deliveryAddressAdditionalInfo
+      deliveryDetails
+    }
   }
 }

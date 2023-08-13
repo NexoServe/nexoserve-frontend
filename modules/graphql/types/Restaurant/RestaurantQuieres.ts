@@ -7,7 +7,7 @@ import validateTime from '../../../utils/validateTime';
 import { RestaurantInput } from './RestaurantTypes';
 
 export const RestaurantQuery = queryField('restaurant', {
-  type: nonNull('Restaurant'),
+  type: nonNull('RestaurantOutput'),
   args: {
     input: nonNull(RestaurantInput),
   },
@@ -43,26 +43,30 @@ export const RestaurantQuery = queryField('restaurant', {
     );
 
     return {
-      name: restaurant.name,
-      address: restaurant.address,
-      location: {
-        latitude: restaurant.location?.latitude as number,
-        longitude: restaurant.location?.longitude as number,
+      restaurantDetails: {
+        name: restaurant.name,
+        address: restaurant.address,
+        location: {
+          latitude: restaurant.location?.latitude as number,
+          longitude: restaurant.location?.longitude as number,
+        },
+        radius: restaurant.radius,
+        openingHours: validateOrderTime.openingHoursByDay,
+        menu: menu,
+        timezone: restaurant.timezone,
       },
-      radius: restaurant.radius,
-      menu: menu,
-      timezone: restaurant.timezone,
-      openingHours: validateOrderTime.openingHoursByDay,
-      currentDateTime: validateOrderTime.currentDateTime,
-      isOpenNow: validateOrderTime.isOpenNow,
-      isOrderTimeValid: validateOrderTime.isOrderTimeValid,
-      isDeliveryAddressValid: validateOrderAddress,
-      isPickUp: input.isPickUp,
-      deliveryAddress: validateOrderAddress ? input.deliveryAddress : null,
-      deliveryAddressAdditionalInfo: validateOrderAddress
-        ? input.deliveryAddressAdditionalInfo
-        : null,
-      deliveryDetails: validateOrderAddress ? input.deliveryDetails : null,
+      orderDetails: {
+        currentDateTime: validateOrderTime.currentDateTime,
+        isOpenNow: validateOrderTime.isOpenNow,
+        isOrderTimeValid: validateOrderTime.isOrderTimeValid,
+        isDeliveryAddressValid: validateOrderAddress,
+        isPickUp: input.isPickUp,
+        deliveryAddress: validateOrderAddress ? input.deliveryAddress : null,
+        deliveryAddressAdditionalInfo: validateOrderAddress
+          ? input.deliveryAddressAdditionalInfo
+          : null,
+        deliveryDetails: validateOrderAddress ? input.deliveryDetails : null,
+      },
     };
   },
 });

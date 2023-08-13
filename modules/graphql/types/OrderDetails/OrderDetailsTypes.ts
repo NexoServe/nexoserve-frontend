@@ -1,15 +1,9 @@
 import { inputObjectType, objectType } from 'nexus';
 
-export const ValidateOrderDetailsType = objectType({
-  name: 'ValidateOrderDetailsType',
+export const OrderDetailsType = objectType({
+  name: 'OrderDetailsType',
   definition(t) {
-    t.nonNull.string('address');
-    t.nonNull.field('location', { type: 'Location' });
-    t.nonNull.float('radius');
-    t.nonNull.list.nonNull.field('openingHours', { type: 'DayOutput' });
-    t.nonNull.list.nonNull.field('menu', { type: 'FoodsByCategory' });
     t.nonNull.string('currentDateTime');
-    t.nonNull.string('timezone');
     t.nonNull.boolean('isOpenNow');
     t.nonNull.boolean('isOrderTimeValid');
     t.nonNull.boolean('isDeliveryAddressValid');
@@ -17,6 +11,14 @@ export const ValidateOrderDetailsType = objectType({
     t.string('deliveryAddressAdditionalInfo');
     t.string('deliveryDetails');
     t.nonNull.boolean('isPickUp');
+  },
+});
+
+export const ValidateOrderDetailsOutput = objectType({
+  name: 'ValidateOrderDetailsOutput',
+  definition(t) {
+    t.nonNull.field('restaurantDetails', { type: 'RestaurantType' });
+    t.nonNull.field('orderDetails', { type: 'OrderDetailsType' });
   },
 });
 

@@ -5,7 +5,8 @@ import { AnimatePresence } from 'framer-motion';
 import { DateTime } from 'luxon';
 import { useRecoilValue } from 'recoil';
 
-import { OrderOpeningHoursAtom } from '../../../state/OrderNavbar';
+import { OrderDetailsAtom } from '../../../state/OrderNavbar';
+import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import { ModalPopUp } from '../../Modal/Modal';
 import SvgIcons from '../../SvgIcons';
 import OrderInfoModal from '../OrderInfoModal/OrderInfoModal';
@@ -13,11 +14,14 @@ import OrderInfoModal from '../OrderInfoModal/OrderInfoModal';
 import useStyles from './css';
 
 const OrderInfo = () => {
-  const openingHours = useRecoilValue(OrderOpeningHoursAtom);
   const classes = useStyles();
+
+  const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
+  const orderDetails = useRecoilValue(OrderDetailsAtom);
+
   const [showInfoModal, setShowInfoModal] = useState(false);
 
-  const times = openingHours?.openingHours.map((item, index, arr) => {
+  const times = restaurantDetails?.openingHours.map((item, index, arr) => {
     let closingTime;
 
     // If 'closes_at' is '23:59', use the 'closes_at' of the next day's first time slot
@@ -41,8 +45,8 @@ const OrderInfo = () => {
 
   let displayMessage = '';
 
-  if (openingHours) {
-    const currentDateTime = DateTime.fromISO(openingHours.currentDateTime);
+  if (orderDetails) {
+    const currentDateTime = DateTime.fromISO(orderDetails.currentDateTime);
     const currentDayOfWeek = currentDateTime.toFormat('cccc').toLowerCase();
 
     // Find today's hours
@@ -50,7 +54,7 @@ const OrderInfo = () => {
       (item) => item.dayOfWeek === currentDayOfWeek,
     );
 
-    if (openingHours.isOpenNow) {
+    if (orderDetails.isOpenNow) {
       // If the store is open, display "Open until ___"
       displayMessage = `Open until ${DateTime.fromISO(
         todayHours?.closes_at as string,
@@ -89,7 +93,7 @@ const OrderInfo = () => {
           <div className={classes.orderInfoStatusText}>{displayMessage}</div>
           <div
             className={classNames(classes.orderInfoStatusIcon, {
-              [classes.orderInfoStatusIconClosed]: !openingHours?.isOpenNow,
+              [classes.orderInfoStatusIconClosed]: !orderDetails?.isOpenNow,
             })}
           ></div>
         </div>

@@ -11,11 +11,12 @@ import {
   OrderDeliveryAdditionalAddressInfoAtom,
   OrderDeliveryAddressAtom,
   OrderDeliveryDetailsAtom,
+  OrderDetailsAtom,
   OrderIsPickUpAtom,
-  OrderOpeningHoursAtom,
   OrderTime,
   OrderTimeAtom,
 } from '../../../state/OrderNavbar';
+import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import getHourAndMinute from '../../../utils/getHourAndMintue';
 import Button from '../../Button/Button';
 import Dropdown from '../../Dropdown/Dropdown';
@@ -40,7 +41,10 @@ const OrderNavBarModal = ({
 
   const [showInvalidTimeModal, setShowInvalidTimeModal] = useState(false);
 
-  const [openingHours, setOpeningHours] = useRecoilState(OrderOpeningHoursAtom);
+  const [restaurantDetails, setRestaurantDetails] = useRecoilState(
+    RestaurantDetailsAtom,
+  );
+  const [orderDetails, setOrderDetails] = useRecoilState(OrderDetailsAtom);
 
   const classes = useStyles();
 
@@ -50,15 +54,15 @@ const OrderNavBarModal = ({
   const [orderDateState, setOrderDateState] = useState<OrderTime>();
   const [orderTimeState, setOrderTimeState] = useState<OrderTime>();
   const [isAddressValid, setIsAddressValid] = useState<null | boolean>(null);
-  const [isPickUp, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
+  const [, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
   const deliveryAddress = useRecoilValue(OrderDeliveryAddressAtom);
   const deliveryAdditionalAddressInfo = useRecoilValue(
     OrderDeliveryAdditionalAddressInfoAtom,
   );
   const deliveryDetails = useRecoilValue(OrderDeliveryDetailsAtom);
 
-  const now = DateTime.fromISO(openingHours?.currentDateTime as string).setZone(
-    openingHours?.timezone,
+  const now = DateTime.fromISO(orderDetails?.currentDateTime as string).setZone(
+    restaurantDetails?.timezone,
   );
 
   const days: OrderTime[] = [];
@@ -71,7 +75,7 @@ const OrderNavBarModal = ({
     });
   }
 
-  const openingHoursForDay = openingHours?.openingHours.find(
+  const openingHoursForDay = restaurantDetails?.openingHours.find(
     (day) => day.dayOfWeek === now.weekdayLong?.toLowerCase(),
   );
 
@@ -80,7 +84,7 @@ const OrderNavBarModal = ({
       interval?.opens_at as string,
       'HH:mm',
       {
-        zone: openingHours?.timezone,
+        zone: restaurantDetails?.timezone,
       },
     ).set({
       day: now.day,
@@ -92,7 +96,7 @@ const OrderNavBarModal = ({
       interval?.closes_at as string,
       'HH:mm',
       {
-        zone: openingHours?.timezone,
+        zone: restaurantDetails?.timezone,
       },
     ).set({
       day: now.day,
@@ -127,7 +131,7 @@ const OrderNavBarModal = ({
           orderDate?.label === 'Today'
             ? now
             : DateTime.fromISO(orderDate?.value.toString()).setZone(
-                openingHours?.timezone,
+                restaurantDetails?.timezone,
               ),
       });
     }
@@ -136,7 +140,7 @@ const OrderNavBarModal = ({
   console.log('orderDateState', orderDateState);
 
   const dayHours =
-    openingHours?.openingHours.find(
+    restaurantDetails?.openingHours.find(
       (hours) =>
         hours.dayOfWeek.toLowerCase() ===
         orderDateState?.value?.weekdayLong?.toLowerCase(),
@@ -154,7 +158,7 @@ const OrderNavBarModal = ({
         minute: parseInt(period?.opens_at?.split(':')[1] as string),
       },
       {
-        zone: openingHours?.timezone,
+        zone: restaurantDetails?.timezone,
       },
     );
 
@@ -167,7 +171,7 @@ const OrderNavBarModal = ({
         minute: parseInt(period?.closes_at?.split(':')[1] as string),
       },
       {
-        zone: openingHours?.timezone,
+        zone: restaurantDetails?.timezone,
       },
     );
 
@@ -198,7 +202,7 @@ const OrderNavBarModal = ({
   }));
 
   if (
-    openingHours?.isOpenNow &&
+    orderDetails?.isOpenNow &&
     formattedIntervals &&
     formattedIntervals.length > 0 &&
     !allHoursAreInThePast &&
@@ -207,7 +211,7 @@ const OrderNavBarModal = ({
     formattedIntervals[0].label = 'ASAP';
   }
 
-  if (formattedIntervals.length === 0 && openingHours?.isOpenNow) {
+  if (formattedIntervals.length === 0 && orderDetails?.isOpenNow) {
     formattedIntervals.push({
       value: now,
       label: 'ASAP',
@@ -270,21 +274,9 @@ const OrderNavBarModal = ({
       return;
     }
 
-    setMenu(res.data.validateOrderDetails.menu);
-
-    setOpeningHours({
-      address: res.data.validateOrderDetails.address,
-      location: {
-        latitude: res.data.validateOrderDetails.location.latitude,
-        longitude: res.data.validateOrderDetails.location.longitude,
-      },
-      radius: res.data.validateOrderDetails.radius,
-      isOrderTimeValid: res.data.validateOrderDetails.isOrderTimeValid,
-      isOpenNow: openingHours?.isOpenNow as boolean,
-      currentDateTime: res.data.validateOrderDetails.currentDateTime as string,
-      openingHours: openingHours?.openingHours ?? [],
-      timezone: res.data.validateOrderDetails.timezone as string,
-    });
+    setRestaurantDetails(res.data.validateOrderDetails.restaurantDetails);
+    setOrderDetails(res.data.validateOrderDetails.orderDetails);
+    setMenu(res.data.validateOrderDetails.restaurantDetails.menu);
 
     setOrderTime({
       label: orderTimeState?.label as string,
@@ -305,7 +297,7 @@ const OrderNavBarModal = ({
     );
 
     if (
-      res.data.validateOrderDetails.isDeliveryAddressValid &&
+      res.data.validateOrderDetails.orderDetails.isDeliveryAddressValid &&
       type === 'delivery'
     ) {
       setIsPickUp(false);
@@ -401,7 +393,7 @@ const OrderNavBarModal = ({
               headerText="Date and Time"
               setModal={setShowInvalidTimeModal}
               error={
-                !data?.validateOrderDetails?.isOpenNow
+                !data?.validateOrderDetails.orderDetails.isOpenNow
                   ? "Sorry, we're currently closed. You can still place an order in advanced"
                   : 'Sorry, we need a little extra time. Please select a new time.'
               }

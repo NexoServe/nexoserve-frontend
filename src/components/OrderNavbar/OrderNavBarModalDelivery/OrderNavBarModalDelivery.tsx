@@ -21,8 +21,8 @@ import {
   OrderDeliveryAdditionalAddressInfoAtom,
   OrderDeliveryAddressAtom,
   OrderDeliveryDetailsAtom,
-  OrderOpeningHoursAtom,
 } from '../../../state/OrderNavbar';
+import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import Input from '../../Input/Input';
 import TextArea from '../../TextArea/TextArea';
 
@@ -63,7 +63,7 @@ const OrderNavBarModalDelivery = ({
     OrderDeliveryDetailsAtom,
   );
 
-  const openingHours = useRecoilValue(OrderOpeningHoursAtom);
+  const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
 
   const classes = useStyles();
 
@@ -90,15 +90,15 @@ const OrderNavBarModalDelivery = ({
       const latLng = await getLatLng(results[0]);
       const distance = getDistance(
         {
-          lat: openingHours?.location.latitude as number,
-          lng: openingHours?.location.longitude as number,
+          lat: restaurantDetails?.location.latitude as number,
+          lng: restaurantDetails?.location.longitude as number,
         },
         latLng,
       );
 
       setAddress(address);
 
-      if (distance <= (openingHours?.radius as number)) {
+      if (distance <= (restaurantDetails?.radius as number)) {
         const placeId = descriptionToPlaceIdMap.current[address];
 
         const zipCodeComponent = await getDetails({

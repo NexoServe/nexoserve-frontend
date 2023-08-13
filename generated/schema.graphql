@@ -160,6 +160,17 @@ type Order {
   total: Float
 }
 
+type OrderDetailsType {
+  currentDateTime: String!
+  deliveryAddress: String
+  deliveryAddressAdditionalInfo: String
+  deliveryDetails: String
+  isDeliveryAddressValid: Boolean!
+  isOpenNow: Boolean!
+  isOrderTimeValid: Boolean!
+  isPickUp: Boolean!
+}
+
 type OrderItem {
   food: Food
   id: String
@@ -171,27 +182,9 @@ type Query {
   foodById(id: String!): Food
   foods: [Food]!
   foodsByCategory: [FoodsByCategory]!
-  restaurant(input: RestaurantInput!): Restaurant!
-  validateOrderDetails(input: ValidateOrderDetailsInput!): ValidateOrderDetailsType!
+  restaurant(input: RestaurantInput!): RestaurantOutput!
+  validateOrderDetails(input: ValidateOrderDetailsInput!): ValidateOrderDetailsOutput!
   validateShoppingCart(input: [ShoppingCartInput]!): ShoppingCart!
-}
-
-type Restaurant {
-  address: String!
-  currentDateTime: String!
-  deliveryAddress: String
-  deliveryAddressAdditionalInfo: String
-  deliveryDetails: String
-  isDeliveryAddressValid: Boolean!
-  isOpenNow: Boolean!
-  isOrderTimeValid: Boolean!
-  isPickUp: Boolean!
-  location: Location!
-  menu: [FoodsByCategory!]!
-  name: String!
-  openingHours: [DayOutput!]!
-  radius: Float!
-  timezone: String!
 }
 
 input RestaurantInput {
@@ -201,6 +194,21 @@ input RestaurantInput {
   isPickUp: Boolean!
   orderTime: String!
   restaurantId: String!
+}
+
+type RestaurantOutput {
+  orderDetails: OrderDetailsType!
+  restaurantDetails: RestaurantType!
+}
+
+type RestaurantType {
+  address: String!
+  location: Location!
+  menu: [FoodsByCategory!]!
+  name: String!
+  openingHours: [DayOutput!]!
+  radius: Float!
+  timezone: String!
 }
 
 type SelectedItem {
@@ -278,19 +286,7 @@ input ValidateOrderDetailsInput {
   restaurantId: String!
 }
 
-type ValidateOrderDetailsType {
-  address: String!
-  currentDateTime: String!
-  deliveryAddress: String
-  deliveryAddressAdditionalInfo: String
-  deliveryDetails: String
-  isDeliveryAddressValid: Boolean!
-  isOpenNow: Boolean!
-  isOrderTimeValid: Boolean!
-  isPickUp: Boolean!
-  location: Location!
-  menu: [FoodsByCategory!]!
-  openingHours: [DayOutput!]!
-  radius: Float!
-  timezone: String!
+type ValidateOrderDetailsOutput {
+  orderDetails: OrderDetailsType!
+  restaurantDetails: RestaurantType!
 }

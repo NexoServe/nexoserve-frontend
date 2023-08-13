@@ -11,10 +11,11 @@ import {
   OrderDeliveryAdditionalAddressInfoAtom,
   OrderDeliveryAddressAtom,
   OrderDeliveryDetailsAtom,
+  OrderDetailsAtom,
   OrderIsPickUpAtom,
-  OrderOpeningHoursAtom,
   OrderTimeAtom,
 } from '../../state/OrderNavbar';
+import { RestaurantDetailsAtom } from '../../state/RestaurantState';
 import Loader from '../Loader/Loader';
 import { ModalPopUp } from '../Modal/Modal';
 import OrderNavBarModal from '../OrderNavbar/OrderNavBarModal/OrderNavBarModal';
@@ -24,7 +25,8 @@ import { IPageContainer } from './types';
 const PageContainer = ({ children }: IPageContainer) => {
   const [showInvalidTimeModal, setShowInvalidTimeModal] = useState(false);
 
-  const [, setOpeningHours] = useRecoilState(OrderOpeningHoursAtom);
+  const [, setRestaurantDetails] = useRecoilState(RestaurantDetailsAtom);
+  const [, setOrderDetails] = useRecoilState(OrderDetailsAtom);
   const [, setMenu] = useRecoilState(FoodMenuAtom);
   const [, setOrderTime] = useRecoilState(OrderTimeAtom);
   const [, setOrderDate] = useRecoilState(OrderDateAtom);
@@ -87,29 +89,18 @@ const PageContainer = ({ children }: IPageContainer) => {
 
   useMemo(() => {
     if (!loading && !error && data?.restaurant) {
-      setMenu(data?.restaurant.menu);
+      setMenu(data?.restaurant.restaurantDetails.menu);
 
-      if (!data.restaurant?.isOrderTimeValid) {
+      if (!data.restaurant.orderDetails.isOrderTimeValid) {
         setShowInvalidTimeModal(true);
       } else {
         setShowInvalidTimeModal(false);
       }
 
-      setOpeningHours({
-        address: data?.restaurant.address,
-        location: {
-          latitude: data?.restaurant.location.latitude,
-          longitude: data?.restaurant.location.longitude,
-        },
-        radius: data?.restaurant.radius,
-        openingHours: data?.restaurant.openingHours,
-        isOpenNow: data?.restaurant.isOpenNow,
-        currentDateTime: data?.restaurant.currentDateTime,
-        isOrderTimeValid: data?.restaurant.isOrderTimeValid,
-        timezone: data?.restaurant.timezone,
-      });
+      setRestaurantDetails(data.restaurant.restaurantDetails);
+      setOrderDetails(data.restaurant.orderDetails);
 
-      if (data.restaurant.isOrderTimeValid && orderTimeParsed) {
+      if (data.restaurant.orderDetails.isOrderTimeValid && orderTimeParsed) {
         setOrderTime({
           label: orderTimeParsed?.label,
           value: DateTime.fromISO(orderTimeParsed?.value as string),
@@ -118,12 +109,16 @@ const PageContainer = ({ children }: IPageContainer) => {
         const isToday = DateTime.fromISO(
           orderTimeParsed?.value as string,
         ).hasSame(
-          DateTime.fromISO(data?.restaurant.currentDateTime as string),
+          DateTime.fromISO(
+            data?.restaurant.orderDetails.currentDateTime as string,
+          ),
           'day',
         );
 
         const dateTime = DateTime.fromISO(orderTimeParsed?.value as string);
-        const dateTimeWithZone = dateTime.setZone(data.restaurant.timezone);
+        const dateTimeWithZone = dateTime.setZone(
+          data.restaurant.restaurantDetails.timezone,
+        );
 
         setOrderDate((prevState) => ({
           ...prevState,
@@ -141,26 +136,31 @@ const PageContainer = ({ children }: IPageContainer) => {
 
       console.log(
         'data.restaurant.isDeliveryAddressValid',
-        data.restaurant.isDeliveryAddressValid,
+        data.restaurant.orderDetails.isDeliveryAddressValid,
       );
-      if (data.restaurant.isDeliveryAddressValid) {
-        if (!data.restaurant.isPickUp) {
+      if (data.restaurant.orderDetails.isDeliveryAddressValid) {
+        if (!data.restaurant.orderDetails.isPickUp) {
           setIsPickUp(false);
-          setDeliveryAddress(data.restaurant.deliveryAddress as string);
+          setDeliveryAddress(
+            data.restaurant.orderDetails.deliveryAddress as string,
+          );
           console.log(
             'data.restaurant.deliveryAddressAdditionalInfo',
-            data.restaurant.deliveryAddressAdditionalInfo,
+            data.restaurant.orderDetails.deliveryAddressAdditionalInfo,
           );
           if (
-            data.restaurant.deliveryAddressAdditionalInfo !== undefined &&
-            data.restaurant.deliveryAddressAdditionalInfo !== null
+            data.restaurant.orderDetails.deliveryAddressAdditionalInfo !==
+              undefined &&
+            data.restaurant.orderDetails.deliveryAddressAdditionalInfo !== null
           ) {
             setAdditionalAddressInfo(
-              data.restaurant.deliveryAddressAdditionalInfo,
+              data.restaurant.orderDetails.deliveryAddressAdditionalInfo,
             );
           }
-          if (data.restaurant.deliveryDetails) {
-            setDeliveryDetails(data.restaurant.deliveryDetails as string);
+          if (data.restaurant.orderDetails.deliveryDetails) {
+            setDeliveryDetails(
+              data.restaurant.orderDetails.deliveryDetails as string,
+            );
           }
         }
       } else {
@@ -198,7 +198,7 @@ const PageContainer = ({ children }: IPageContainer) => {
               headerText="Date and Time"
               setModal={setShowInvalidTimeModal}
               error={
-                !data?.restaurant?.isOpenNow
+                !data?.restaurant.orderDetails.isOpenNow
                   ? "Sorry, we're currently closed. You can still place an order in advanced."
                   : 'Sorry, we need a little extra time. Please select a new time.'
               }
