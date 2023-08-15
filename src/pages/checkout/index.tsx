@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import CheckoutContact from '../../components/Checkout/CheckoutContact/CheckoutContact';
 import CheckoutDetails from '../../components/Checkout/CheckoutDetails/CheckoutDetails';
@@ -12,6 +13,14 @@ import useStyles from './css';
 
 const Checkout = () => {
   const classes = useStyles();
+  const router = useRouter();
+
+  const shoppingCartStorage = localStorage.getItem('shoppingCartItems');
+
+  if (!shoppingCartStorage) {
+    router.push('/');
+    return <div></div>;
+  }
 
   return (
     <PageContainer>
