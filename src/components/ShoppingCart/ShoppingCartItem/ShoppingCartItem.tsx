@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { base } from '../../../../css/base';
+import { Maybe, SelectedItem } from '../../../../generated/graphql';
 import {
   FoodModalAtom,
   FoodModalSelectedItemsAtom,
@@ -18,7 +19,7 @@ import FoodModal from '../../Food/FoodModal/FoodModal';
 import SvgIcons from '../../SvgIcons';
 
 import useStyles from './css';
-import { IShoppingCartItem } from './types';
+import { IShoppingCartItem, ItemSizeGrouped } from './types';
 
 const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
   const [showUpdateFoodModal, setShowUpdateFoodModal] = useState(false);
@@ -73,6 +74,33 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
     });
   };
 
+  const selectedItems: Maybe<SelectedItem>[] = [];
+
+  const groupMap = new Map<string, ItemSizeGrouped>();
+
+  shoppingCartItem.selectedItems?.forEach((selectedItem) => {
+    const itemSizeName = selectedItem?.itemSize?.name;
+    const existingGroup = groupMap.get(itemSizeName as string);
+
+    if (!itemSizeName) {
+      selectedItems.push(selectedItem);
+      return;
+    }
+
+    if (existingGroup) {
+      existingGroup.selectedItems.push(selectedItem);
+    } else {
+      groupMap.set(itemSizeName, {
+        itemSizeName: itemSizeName,
+        selectedItems: [selectedItem],
+      });
+    }
+  });
+
+  const selectedItemGroupedByItemSize = Array.from(groupMap.values()).sort(
+    (a, b) => a.itemSizeName.localeCompare(b.itemSizeName),
+  );
+
   return (
     <>
       <motion.div
@@ -117,15 +145,34 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
                   </div>
                 ) : null}
 
-                {shoppingCartItem?.selectedItems?.map((selectedItem) => (
+                {selectedItems?.map((selectedItem) => (
                   <div
                     key={selectedItem?.id}
                     className={classes.shoppingCartItemDetailsItem}
                   >
-                    {/* <span>2</span> */}
                     {selectedItem?.name}
                   </div>
                 ))}
+
+                {selectedItemGroupedByItemSize.length > 0 &&
+                  selectedItemGroupedByItemSize.map((group, i) => (
+                    <div key={i}>
+                      <div className={classes.shoppingCartItemDetailsItemSize}>
+                        {group?.itemSizeName}
+                      </div>
+
+                      {group?.selectedItems?.map((selectedItem) => (
+                        <div
+                          className={
+                            classes.shoppingCartItemDetailsItemSizeItem
+                          }
+                          key={selectedItem?.id}
+                        >
+                          {selectedItem?.name}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
               </div>
               <div className={classes.shoppingCartItemDeleteButton}>
                 <button
