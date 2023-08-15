@@ -78,8 +78,6 @@ const PageContainer = ({ children }: IPageContainer) => {
     fetchPolicy: 'no-cache',
   });
 
-  console.log('orderIsPickUpParsed', orderIsPickUpStorage);
-
   useEffect(() => {
     restaurantQuery({
       variables: {

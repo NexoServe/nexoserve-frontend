@@ -18,6 +18,11 @@ export const OrderIsPickUpAtom = atom<boolean>({
   default: true,
 });
 
+export const OrderIsPickUpStateAtom = atom<boolean>({
+  key: 'OrderIsPickUpStateAtom',
+  default: true,
+});
+
 export const OrderTimeAtom = atom<OrderTime | undefined>({
   key: 'OrderTimeAtom',
   default: {

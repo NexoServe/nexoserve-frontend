@@ -1,18 +1,22 @@
 import { useState } from 'react';
 
 import { AnimatePresence } from 'framer-motion';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { base } from '../../../../css/base';
 import {
   OrderDateAtom,
   OrderDeliveryAdditionalAddressInfoAtom,
   OrderDeliveryAddressAtom,
   OrderDeliveryDetailsAtom,
   OrderIsPickUpAtom,
+  OrderIsPickUpStateAtom,
   OrderTimeAtom,
 } from '../../../state/OrderNavbar';
+import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import { ModalPopUp } from '../../Modal/Modal';
 import OrderNavBarModal from '../../OrderNavbar/OrderNavBarModal/OrderNavBarModal';
+import OrderType from '../../OrderNavbar/OrderType/OrderType';
 import RoundBorder from '../../RoundBorder/RoundBorder';
 import SvgIcons from '../../SvgIcons';
 import CheckoutHeader from '../CheckoutHeader/CheckoutHeader';
@@ -20,11 +24,12 @@ import CheckoutHeader from '../CheckoutHeader/CheckoutHeader';
 import useStyles from './css';
 
 const CheckoutDetails = () => {
+  const classes = useStyles();
   const [showTimeModal, setShowTimeModal] = useState(false);
   const [showAddressModal, setShowAddressModal] = useState(false);
-  const classes = useStyles();
 
-  const isPickUp = useRecoilValue(OrderIsPickUpAtom);
+  const [, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
+  const isPickUpState = useRecoilValue(OrderIsPickUpStateAtom);
   const orderTime = useRecoilValue(OrderTimeAtom);
   const orderDate = useRecoilValue(OrderDateAtom);
   const deliveryAddress = useRecoilValue(OrderDeliveryAddressAtom);
@@ -33,53 +38,80 @@ const CheckoutDetails = () => {
   );
   const deliveryDetails = useRecoilValue(OrderDeliveryDetailsAtom);
 
+  const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
+
   return (
     <>
       <RoundBorder styleClass={classes.checkoutDetails}>
-        <CheckoutHeader
-          title={isPickUp ? 'Pickup Details' : 'Delivery Details'}
-        />
+        <CheckoutHeader title={'Order Details'} />
         <div>
+          <div className={classes.checkoutDetailsOrderType}>
+            <OrderType isCheckout={true} />
+          </div>
           <button
-            onClick={() => setShowAddressModal(true)}
+            onClick={() => {
+              if (!isPickUpState) {
+                setShowAddressModal(true);
+                setIsPickUp(false);
+              }
+            }}
             className={classes.checkoutDetailsContentItem}
+            style={{
+              cursor: isPickUpState ? 'default' : 'pointer',
+            }}
           >
             <div className={classes.checkoutDetailsHeader}>
               <SvgIcons
-                name={isPickUp ? 'pickUp' : 'car'}
+                name={isPickUpState ? 'pickUp' : 'car'}
                 width="40"
                 height="20"
               />
               <h3 className={classes.checkoutDetailsContentItemTitle}>
-                {isPickUp ? 'Pick Up' : 'Delivery'} Address:
+                {isPickUpState ? 'Pick Up' : 'Delivery'} Address:
               </h3>
             </div>
+
             <div className={classes.checkoutDetailsBody}>
               <div>
-                {isPickUp
+                {isPickUpState
                   ? '349 Whitehall road, Albany, NY, USA, 12208'
                   : deliveryAddress}
               </div>
-              {!isPickUp && (
+              {!isPickUpState && (
                 <>
                   <div>{deliveryAdditionalAddressInfo}</div>
                   <div>{deliveryDetails}</div>
                 </>
               )}
             </div>
-            {isPickUp && (
-              <div className={classes.checkoutDetailsLink}>
-                <a>Get Direction</a>
+            {!isPickUpState && (
+              <div className={classes.checkoutDetailsButton}>
+                <div>Edit</div>
               </div>
             )}
-
-            <div className={classes.checkoutDetailsButton}>
-              <div>Edit</div>
-            </div>
           </button>
+          {isPickUpState && (
+            <div className={classes.checkoutDetailsLink}>
+              <a
+                href={`https://www.google.com/maps/place/${restaurantDetails?.address.replace(
+                  / /g,
+                  '+',
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Get directions
+              </a>
+            </div>
+          )}
+
           <button
             onClick={() => setShowTimeModal(true)}
             className={classes.checkoutDetailsContentItem}
+            style={{
+              marginTop: base(3),
+              marginBottom: base(2),
+            }}
           >
             <div className={classes.checkoutDetailsHeader}>
               <div className={classes.checkoutDetailsIcon}>

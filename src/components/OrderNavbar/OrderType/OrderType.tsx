@@ -4,25 +4,31 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 
 import { base } from '../../../../css/base';
-import { OrderIsPickUpAtom } from '../../../state/OrderNavbar';
+import {
+  OrderIsPickUpAtom,
+  OrderIsPickUpStateAtom,
+} from '../../../state/OrderNavbar';
 import { ModalPopUp } from '../../Modal/Modal';
 import RoundBorder from '../../RoundBorder/RoundBorder';
 import SvgIcons from '../../SvgIcons';
 import OrderNavBarModal from '../OrderNavBarModal/OrderNavBarModal';
 
 import useStyles from './css';
+import { IOrderType } from './types';
 
 const variants = {
   pickUp: { x: 0 },
   delivery: { x: '100%' },
 };
 
-const OrderType = () => {
+const OrderType = ({ isCheckout = false }: IOrderType) => {
   const [showDeliveryModal, setShowDeliveryModal] = useState(false);
   const classes = useStyles();
 
   const [, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
-  const [isPickUpState, setIsPickUpState] = useState(true);
+  const [isPickUpState, setIsPickUpState] = useRecoilState(
+    OrderIsPickUpStateAtom,
+  );
 
   const isPickUpStorage = localStorage.getItem('isPickUp');
 
@@ -42,7 +48,16 @@ const OrderType = () => {
 
   return (
     <>
-      <RoundBorder styleClass={classes.orderType}>
+      <RoundBorder
+        style={
+          isCheckout
+            ? {
+                width: '100%',
+              }
+            : undefined
+        }
+        styleClass={classes.orderType}
+      >
         <div className={classes.orderTypeToggle}>
           <motion.div
             className={classes.orderTypeSlider}
@@ -54,11 +69,13 @@ const OrderType = () => {
             onClick={handlePickUpClick}
             className={classes.orderTypeToggleButton}
           >
-            <SvgIcons
-              styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconPickUp}`}
-              name="pickUp"
-              width={base(2.5)}
-            />
+            {!isCheckout && (
+              <SvgIcons
+                styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconPickUp}`}
+                name="pickUp"
+                width={base(2.5)}
+              />
+            )}
             Pick Up
           </button>
           <button
@@ -69,10 +86,12 @@ const OrderType = () => {
             className={classes.orderTypeToggleButton}
           >
             Delivery
-            <SvgIcons
-              styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconDelivery}`}
-              name="delivery"
-            />
+            {!isCheckout && (
+              <SvgIcons
+                styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconDelivery}`}
+                name="delivery"
+              />
+            )}
           </button>
         </div>
       </RoundBorder>

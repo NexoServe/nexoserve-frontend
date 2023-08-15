@@ -18,7 +18,9 @@ const useStyles = createUseStyles({
   },
 
   orderInfoModalContentInner: {
-    display: 'flex',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: base(2),
     justifyContent: 'space-between',
   },
 
@@ -43,6 +45,7 @@ const useStyles = createUseStyles({
     paddingBottom: base(0.5),
     color: colors.darkGray,
     opacity: 0.8,
+    textAlign: 'right',
   },
 
   orderInfoModalContentDirections: {
@@ -50,6 +53,7 @@ const useStyles = createUseStyles({
     padding: `${base(1)} 0`,
     display: 'block',
     marginBottom: base(1.5),
+    textAlign: 'right',
   },
 
   orderInfoModalHoursTitle: {

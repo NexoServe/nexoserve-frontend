@@ -24,23 +24,8 @@ import ModalHeader from '../../ModalHeader/ModalHeader';
 import OrderNavBarModalDelivery from '../OrderNavBarModalDelivery/OrderNavBarModalDelivery';
 
 import useStyles from './css';
+import { roundToNearest } from './helpers';
 import { IOrderNavBarModal } from './types';
-
-function roundToNearest(dateTime: DateTime, minutesArray: number[]) {
-  const currentMinutes = dateTime.minute;
-  let closest = minutesArray[0];
-  let difference = Math.abs(currentMinutes - closest);
-
-  for (let i = 1; i < minutesArray.length; i++) {
-    const newDifference = Math.abs(currentMinutes - minutesArray[i]);
-    if (newDifference < difference) {
-      difference = newDifference;
-      closest = minutesArray[i];
-    }
-  }
-
-  return dateTime.set({ minute: closest, second: 0, millisecond: 0 });
-}
 
 const OrderNavBarModal = ({
   setModal,
@@ -75,15 +60,28 @@ const OrderNavBarModal = ({
   const now = DateTime.fromISO(orderDetails?.currentDateTime as string).setZone(
     restaurantDetails?.timezone,
   );
-
   const days: OrderTime[] = [];
 
-  for (let i = 0; i < 7; i++) {
+  let dayCount = 0;
+  let i = 0;
+
+  while (dayCount < 7) {
     const day = now.plus({ days: i });
-    days.push({
-      value: day,
-      label: day.toFormat('EEE, MMM dd'),
-    });
+    const dayOfWeek = day.toFormat('cccc').toLowerCase(); // 'cccc' will give full weekday name in lowercase
+
+    const dayDetails = restaurantDetails.openingHours.find(
+      (item) => item.dayOfWeek === dayOfWeek,
+    );
+
+    if (dayDetails && dayDetails.time.length > 0) {
+      days.push({
+        value: day,
+        label: day.toFormat('EEE, MMM dd'),
+      });
+      dayCount++;
+    }
+
+    i++;
   }
 
   const openingHoursForDay = restaurantDetails?.openingHours.find(
@@ -123,9 +121,9 @@ const OrderNavBarModal = ({
     return now > closingTime;
   });
 
-  if (allHoursAreInThePast) {
+  if (allHoursAreInThePast && orderDetails.isOpenNow) {
     days.shift();
-  } else {
+  } else if (orderDetails.isOpenNow) {
     days[0].label = 'Today';
   }
 
@@ -184,13 +182,6 @@ const OrderNavBarModal = ({
       },
     );
 
-    console.log(
-      'OFFSET',
-      isPickUp
-        ? restaurantDetails.pickUpOffset
-        : restaurantDetails.deliveryOffset,
-    );
-
     const offsetMinutes = isPickUp
       ? restaurantDetails.pickUpOffset
       : restaurantDetails.deliveryOffset;
@@ -203,8 +194,6 @@ const OrderNavBarModal = ({
         : offsetOpeningTime,
       [0, 10, 15, 30, 45],
     );
-
-    console.log('roundedOpeningTime', roundedOpeningTime.toFormat('hh:mm a'));
 
     const timeInterval = Interval.fromDateTimes(
       roundedOpeningTime,
@@ -282,12 +271,23 @@ const OrderNavBarModal = ({
         (interval) => interval.label === orderTime?.label,
       ) === undefined
     ) {
-      setOrderTimeState({
-        label: 'ASAP',
-        value: now,
-      });
+      if (!orderDateState?.value) {
+        return;
+      }
+
+      if (orderDateState?.value > now) {
+        setOrderTimeState({
+          label: formattedIntervals?.[0]?.label as string,
+          value: formattedIntervals?.[0]?.value,
+        });
+      } else {
+        setOrderTimeState({
+          label: 'ASAP',
+          value: now,
+        });
+      }
     }
-  }, []);
+  }, [orderDateState]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -328,11 +328,6 @@ const OrderNavBarModal = ({
     setRestaurantDetails(res.data.validateOrderDetails.restaurantDetails);
     setOrderDetails(res.data.validateOrderDetails.orderDetails);
     setMenu(res.data.validateOrderDetails.restaurantDetails.menu);
-
-    console.log(
-      'res.data.validateOrderDetails.orderDetails.isOrderTimeValid',
-      !res.data.validateOrderDetails.orderDetails.isOrderTimeValid,
-    );
 
     if (res.data.validateOrderDetails.orderDetails.isPickUp) {
       setIsPickUp(true);

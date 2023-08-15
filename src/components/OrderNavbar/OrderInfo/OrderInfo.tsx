@@ -12,6 +12,11 @@ import SvgIcons from '../../SvgIcons';
 import OrderInfoModal from '../OrderInfoModal/OrderInfoModal';
 
 import useStyles from './css';
+import {
+  getNextDateFromDayOfWeek,
+  getNextOpeningDay,
+  getRestaurantOpeningHours,
+} from './helpers';
 
 const OrderInfo = () => {
   const classes = useStyles();
@@ -21,27 +26,12 @@ const OrderInfo = () => {
 
   const [showInfoModal, setShowInfoModal] = useState(false);
 
-  const times = restaurantDetails?.openingHours.map((item, index, arr) => {
-    let closingTime;
+  const now = DateTime.fromISO(orderDetails?.currentDateTime);
+  const currentDay = now.toFormat('EEEE').toLowerCase();
 
-    // If 'closes_at' is '23:59', use the 'closes_at' of the next day's first time slot
-    if (item.time[item.time.length - 1].closes_at === '23:59') {
-      const nextDayIndex = (index + 1) % arr.length;
-      closingTime = arr[nextDayIndex].time[0].closes_at;
-    } else {
-      // If 'closes_at' is not '23:59', use the 'closes_at' of the current day's last time slot
-      closingTime = item.time[item.time.length - 1].closes_at;
-    }
-
-    // Check if there's a second 'opens_at', otherwise use the first
-    const openingTime = item.time[1]?.opens_at ?? item.time[0].opens_at;
-
-    return {
-      dayOfWeek: item.dayOfWeek,
-      opens_at: openingTime,
-      closes_at: closingTime,
-    };
-  });
+  const restaurantOpeningHours = getRestaurantOpeningHours(
+    restaurantDetails?.openingHours,
+  );
 
   let displayMessage = '';
 
@@ -50,7 +40,7 @@ const OrderInfo = () => {
     const currentDayOfWeek = currentDateTime.toFormat('cccc').toLowerCase();
 
     // Find today's hours
-    const todayHours = times?.find(
+    const todayHours = restaurantOpeningHours?.find(
       (item) => item.dayOfWeek === currentDayOfWeek,
     );
 
@@ -60,23 +50,33 @@ const OrderInfo = () => {
         todayHours?.closes_at as string,
       ).toFormat('hh:mm a')}`;
     } else {
-      // If the store is closed...
-
-      // Find tomorrow's day of week and hours
-      const tomorrowDateTime = currentDateTime.plus({ days: 1 });
-      const tomorrowDayOfWeek = tomorrowDateTime.toFormat('cccc').toLowerCase();
-      const tomorrowHours = times?.find(
-        (item) => item.dayOfWeek === tomorrowDayOfWeek,
+      const nextOpeningDay = getNextOpeningDay(
+        currentDay,
+        restaurantDetails?.openingHours,
       );
 
-      // Check if tomorrow is still the same day (e.g., before midnight)
-      if (currentDayOfWeek === tomorrowDayOfWeek) {
-        displayMessage = `Opens today at ${DateTime.fromISO(
-          tomorrowHours?.opens_at as string,
+      const tomorrowDayOfWeek = DateTime.fromISO(orderDetails.currentDateTime)
+        .plus({ days: 1 })
+        .toFormat('cccc')
+        .toLowerCase();
+
+      if (
+        nextOpeningDay?.dayOfWeek.toLowerCase() ===
+        tomorrowDayOfWeek.toLowerCase()
+      ) {
+        displayMessage = `Opens tomorrow at ${DateTime.fromISO(
+          nextOpeningDay?.time?.[0]?.opens_at as string,
         ).toFormat('hh:mm a')}`;
       } else {
-        displayMessage = `Opens tomorrow at ${DateTime.fromISO(
-          tomorrowHours?.opens_at as string,
+        const nextOpeningDate = getNextDateFromDayOfWeek(
+          now,
+          nextOpeningDay?.dayOfWeek as string,
+        );
+
+        displayMessage = `Opens ${nextOpeningDate.toFormat(
+          'MMMM dd yyyy',
+        )} at ${DateTime.fromISO(
+          nextOpeningDay?.time[0].opens_at as string,
         ).toFormat('hh:mm a')}`;
       }
     }

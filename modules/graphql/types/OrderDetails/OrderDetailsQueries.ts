@@ -34,8 +34,6 @@ export const validateOrderDetails = queryField('validateOrderDetails', {
       input.isPickUp ? restaurant.pickUpOffset : restaurant.deliveryOffset,
     );
 
-    console.log('validateOrderTime', validateOrderTime);
-
     const validateOrderAddress = await validateAddress(
       input.deliveryAddress as string,
       {

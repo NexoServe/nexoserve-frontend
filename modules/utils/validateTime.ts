@@ -23,6 +23,7 @@ const validateTime = (
   const openingHoursByDay = getOpeningHoursByDay(openingHours);
 
   const nowUTC = DateTime.utc();
+  // const nowUTC = DateTime.fromISO('2023-08-17T10:30:00.000');
   const timeZonedTime = nowUTC.setZone(timezone);
 
   const isOpenNow = isStoreOpen(openingHoursByDay, timeZonedTime, timezone);
@@ -50,7 +51,6 @@ const validateTime = (
   const orderDateTime = DateTime.fromISO(dateTime as string);
   const orderDateTimeZoned = orderDateTime.setZone(timezone);
 
-  // Check if selected time is at least 15 min after current time
   const differenceInMinutes = orderDateTimeZoned.diff(
     timeZonedTime,
     'minutes',

@@ -16,13 +16,25 @@ function isStoreOpen(
 
   const currentDateTime = time.setZone(timezone);
 
-  for (const time of currentDayHours.time) {
-    const opens = DateTime.fromFormat(time?.opens_at as string, 'HH:mm', {
+  for (const timeObj of currentDayHours.time) {
+    let opens = DateTime.fromFormat(timeObj?.opens_at as string, 'HH:mm', {
       zone: timezone,
     });
 
-    let closes = DateTime.fromFormat(time?.closes_at as string, 'HH:mm', {
+    opens = opens.set({
+      year: currentDateTime.year,
+      month: currentDateTime.month,
+      day: currentDateTime.day,
+    });
+
+    let closes = DateTime.fromFormat(timeObj?.closes_at as string, 'HH:mm', {
       zone: timezone,
+    });
+
+    closes = closes.set({
+      year: currentDateTime.year,
+      month: currentDateTime.month,
+      day: currentDateTime.day,
     });
 
     if (closes < opens) {
