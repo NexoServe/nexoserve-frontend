@@ -9,14 +9,31 @@ import useStyles from '../../css/app';
 import { useApollo } from '../../lib/apolloClient';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  if (process.env.NODE_ENV === 'development') {
-    console.error = (messages, ...rest) => {
-      if (messages?.message?.includes('Duplicate atom key')) {
-        return;
+  const classes = useStyles();
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Tab') {
+        document.body.classList.add('keyboard-navigation');
       }
-      console.warn(messages, ...rest);
     };
-  }
+
+    const handleMouseDown = () => {
+      document.body.classList.remove('keyboard-navigation');
+    };
+
+    if (typeof window !== 'undefined') {
+      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('mousedown', handleMouseDown);
+    }
+
+    return () => {
+      if (typeof window !== 'undefined') {
+        document.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('mousedown', handleMouseDown);
+      }
+    };
+  }, []);
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
@@ -34,8 +51,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       });
     }
   }, []);
-
-  const classes = useStyles();
 
   useEffect(() => {
     const style = document.getElementById('server-side-styles');
