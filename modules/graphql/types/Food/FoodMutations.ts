@@ -1,4 +1,4 @@
-import { extendType, nonNull } from 'nexus';
+import { extendType, nonNull, stringArg } from 'nexus';
 
 import { CreateFoodInput } from '.';
 
@@ -9,8 +9,9 @@ export const CreateFoodMutation = extendType({
       type: 'Food',
       args: {
         input: nonNull(CreateFoodInput),
+        restaurantId: nonNull(stringArg()),
       },
-      async resolve(_parent, { input }, ctx) {
+      async resolve(_parent, { input, restaurantId }, ctx) {
         const existingCategory = await ctx.prisma.foodCategory.findUnique({
           where: { name: input.category },
         });
@@ -43,6 +44,7 @@ export const CreateFoodMutation = extendType({
             },
           },
           data: {
+            restaurantId: restaurantId,
             name: input?.name,
             description: input?.description,
             price: input.price,

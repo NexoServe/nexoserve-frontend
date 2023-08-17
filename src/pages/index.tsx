@@ -6,6 +6,8 @@ import prisma from '../../lib/prisma';
 import Container from '../components/Container/Container';
 import FoodList from '../components/Food/FoodList/FoodList';
 import Navbar from '../components/Navbar/Navbar';
+import OrderNavbar from '../components/OrderNavbar/OrderNavbar/OrderNavbar';
+import PageContainer from '../components/PageContainer/PageContainer';
 import ShoppingCart from '../components/ShoppingCart/ShoppingCart/ShoppingCart';
 import ShoppingCartButton from '../components/ShoppingCart/ShoppingCartButton/ShoppingCartButton';
 import ShoppingCartModal from '../components/ShoppingCart/ShoppingCartModal/ShoppingCartModal';
@@ -15,34 +17,8 @@ import useStyles from './index/css';
 const Home: NextPage = () => {
   const classes = useStyles();
 
-  // const { data } = useFoodsQuery({
-  //   notifyOnNetworkStatusChange: true,
-  // });
-
-  // const [createLink, {}] = useCreateLinkMutation({
-  //   variables: {
-  //     title: `hey`,
-  //     url: `hey`,
-  //     imageUrl: `hey`,
-  //     category: `hey`,
-  //     description: `hey`,
-  //   },
-  //   update(cache, { data }) {
-  //     const { links }: any = cache.readQuery({
-  //       query: LinksDocument,
-  //     });
-
-  //     cache.writeQuery({
-  //       query: LinksDocument,
-  //       data: {
-  //         links: [...links, data?.createLink],
-  //       },
-  //     });
-  //   },
-  // });
-
   return (
-    <div>
+    <PageContainer>
       <Head>
         <title>TypeScript starter for Next.js</title>
         <meta
@@ -54,6 +30,7 @@ const Home: NextPage = () => {
 
       <main>
         <Navbar />
+        <OrderNavbar />
         <Container>
           <div className={classes.indexConatiner}>
             <FoodList />
@@ -63,7 +40,7 @@ const Home: NextPage = () => {
           </div>
         </Container>
       </main>
-    </div>
+    </PageContainer>
   );
 };
 
@@ -72,7 +49,7 @@ export const getServerSideProps = async ({
 }: GetServerSidePropsContext) => {
   const apolloClient = initializeApollo({ ctx: { req, prisma } });
 
-  //TODO: add ssr
+  // TODO: add ssr
   // await apolloClient.query({ query: FoodsDocument });
 
   return addApolloState(apolloClient, {

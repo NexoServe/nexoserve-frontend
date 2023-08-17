@@ -13,7 +13,8 @@ export const data: CreateFoodInput[] = [
     description: 'Classic cheese or create your own pizza.',
     price: null,
     category: 'Traditional Pizza',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     sizes: [
       {
         id: uuid(),
@@ -1224,7 +1225,8 @@ export const data: CreateFoodInput[] = [
     description: 'A sauceless pie topped with mozzarella, and garlic & oil',
     price: null,
     category: 'Traditional Pizza',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     sizes: [
       {
         id: uuid(),
@@ -2435,7 +2437,8 @@ export const data: CreateFoodInput[] = [
     description: 'Pepperoni, sausage, meatballs, and ham.',
     price: null,
     category: 'Speciality Pizza',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     sizes: [
       {
         id: uuid(),
@@ -3646,7 +3649,8 @@ export const data: CreateFoodInput[] = [
     description: 'Mushrooms, green peppers, black olives, onions, and chicken.',
     price: null,
     category: 'Speciality Pizza',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     sizes: [
       {
         id: uuid(),
@@ -4857,7 +4861,8 @@ export const data: CreateFoodInput[] = [
     description: 'Mushrooms, green peppers, onions and black olives.',
     price: null,
     category: 'Speciality Pizza',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     sizes: [
       {
         id: uuid(),
@@ -6068,7 +6073,8 @@ export const data: CreateFoodInput[] = [
     description: 'Basil and fresh mozzarella.',
     price: null,
     category: 'Speciality Pizza',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     sizes: [
       {
         id: uuid(),
@@ -7280,7 +7286,8 @@ export const data: CreateFoodInput[] = [
       'Pepperoni, green peppers, onions, mushrooms, olives, ham, and sausage.',
     price: null,
     category: 'Speciality Pizza',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     sizes: [
       {
         id: uuid(),
@@ -8491,7 +8498,8 @@ export const data: CreateFoodInput[] = [
     description: 'Pepperoni, sausage, meatballs, and ham.',
     price: null,
     category: 'Speciality Sicilian Pizza',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     sizes: [
       {
         id: uuid(),
@@ -9703,7 +9711,8 @@ export const data: CreateFoodInput[] = [
       'Pepperoni, green peppers, onions, mushrooms, olives, ham, and sausage.',
     price: null,
     category: 'Speciality Sicilian Pizza',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     sizes: [
       {
         id: uuid(),
@@ -10914,7 +10923,8 @@ export const data: CreateFoodInput[] = [
     description: 'Mushrooms, green peppers, onions and black olives.',
     price: null,
     category: 'Speciality Sicilian Pizza',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     sizes: [
       {
         id: uuid(),
@@ -12125,7 +12135,8 @@ export const data: CreateFoodInput[] = [
     description: 'Mushrooms, green peppers, onions and black olives.',
     price: null,
     category: 'Speciality Sicilian Pizza',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     sizes: [
       {
         id: uuid(),
@@ -13336,7 +13347,8 @@ export const data: CreateFoodInput[] = [
     description: 'Served with celery or blue cheese and some other stuff',
     price: 8.99,
     category: 'Appetizers',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     addOns: [
       {
         id: uuid(),
@@ -13412,7 +13424,8 @@ export const data: CreateFoodInput[] = [
     description: 'Served with celery or blue cheese and some other stuff',
     price: 8.99,
     category: 'Appetizers',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     addOns: [
       {
         id: uuid(),
@@ -13488,7 +13501,8 @@ export const data: CreateFoodInput[] = [
     description: 'Served with celery or blue cheese and some other stuff',
     price: 8.99,
     category: 'Appetizers',
-    image: 'https://api.api-ninjas.com/v1/randomimage?category=food',
+    image:
+      'https://us-east-menu-images.s3.amazonaws.com/5d46bc85-e417-4500-9b15-261892a45c8f_Chicken_Bacon_ranch.webp',
     addOns: [
       {
         id: uuid(),

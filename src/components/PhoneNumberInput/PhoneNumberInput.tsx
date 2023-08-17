@@ -22,7 +22,6 @@ const PhoneNumberInput = () => {
   );
 
   const handleChange = (value: string) => {
-    console.log('value', value);
     setPhone(value);
     const phoneNumber = parsePhoneNumberFromString(value, 'US');
     setPhoneError(phoneNumber && phoneNumber.isValid() ? false : true);

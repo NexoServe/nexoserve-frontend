@@ -88,6 +88,19 @@ const useStyles = createUseStyles({
     },
   },
 
+  shoppingCartItemDetailsItemSize: {
+    fontSize: '14px',
+    fontWeight: 600,
+    marginTop: base(1.5),
+    paddingBottom: base(0.5),
+  },
+
+  shoppingCartItemDetailsItemSizeItem: {
+    paddingLeft: base(1),
+    paddingTop: base(0.5),
+    paddingBottom: base(0.5),
+  },
+
   shoppingCartItemDeleteButton: {
     gridColumn: '3/4',
     gridRow: '1/4',

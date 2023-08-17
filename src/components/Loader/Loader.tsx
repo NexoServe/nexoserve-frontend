@@ -6,8 +6,6 @@ import { ILoader } from './types';
 const Loader = ({ styleClass, scale = 1, width, height }: ILoader) => {
   const classes = useStyles();
 
-  console.log('scale', scale);
-
   return (
     <div className={styleClass}>
       <motion.div

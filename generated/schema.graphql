@@ -73,6 +73,16 @@ input CreateOrderItemInput {
   items: [String!]!
 }
 
+input DayInput {
+  dayOfWeek: String!
+  time: [TimeInput!]!
+}
+
+type DayOutput {
+  dayOfWeek: String!
+  time: [TimeOutput!]!
+}
+
 type Food {
   addOns: [AddOn]
   description: String
@@ -117,16 +127,56 @@ input ItemSizeInput {
   price: Float!
 }
 
+type Location {
+  id: String
+  latitude: Float
+  longitude: Float
+}
+
+input LocationInput {
+  latitude: Float
+  longitude: Float
+}
+
 type Mutation {
-  CheckoutCalculateMut(input: [ShoppingCartInput]!, paymentMethodId: String!): Checkout!
-  createFood(input: CreateFoodInput!): Food!
+  CheckoutCalculateMut(orderDetails: OrderDetailsInput!, paymentMethodId: String!, shoppingCart: [ShoppingCartInput]!): Checkout!
+  addOpeningHours(openingHours: [DayInput!]!, restaurantId: String!): Boolean
+  createFood(input: CreateFoodInput!, restaurantId: String!): Food!
   createOrder(input: CreateOrderInput!): Order!
+}
+
+type OpeningHour {
+  closeTime: String!
+  dayOfWeek: String!
+  id: Int!
+  openTime: String!
+  restaurantId: Int!
 }
 
 type Order {
   id: String
   orderItems: [OrderItem]
   total: Float
+}
+
+input OrderDetailsInput {
+  deliveryAddress: String
+  deliveryAddressAdditionalInfo: String
+  deliveryDetails: String
+  isPickUp: Boolean!
+  orderTime: String!
+  restaurantId: String!
+}
+
+type OrderDetailsType {
+  currentDateTime: String!
+  deliveryAddress: String
+  deliveryAddressAdditionalInfo: String
+  deliveryDetails: String
+  isDeliveryAddressValid: Boolean!
+  isOpenNow: Boolean!
+  isOrderTimeValid: Boolean!
+  isPickUp: Boolean!
 }
 
 type OrderItem {
@@ -140,7 +190,26 @@ type Query {
   foodById(id: String!): Food
   foods: [Food]!
   foodsByCategory: [FoodsByCategory]!
+  restaurant(input: OrderDetailsInput!): RestaurantOutput!
+  validateOrderDetails(input: OrderDetailsInput!): ValidateOrderDetailsOutput!
   validateShoppingCart(input: [ShoppingCartInput]!): ShoppingCart!
+}
+
+type RestaurantOutput {
+  orderDetails: OrderDetailsType!
+  restaurantDetails: RestaurantType!
+}
+
+type RestaurantType {
+  address: String!
+  deliveryOffset: Int!
+  location: Location!
+  menu: [FoodsByCategory!]!
+  name: String!
+  openingHours: [DayOutput!]!
+  pickUpOffset: Int!
+  radius: Float!
+  timezone: String!
 }
 
 type SelectedItem {
@@ -197,4 +266,19 @@ type SimpleFoodSize {
   id: String
   name: String
   price: Float
+}
+
+input TimeInput {
+  closes_at: String
+  opens_at: String
+}
+
+type TimeOutput {
+  closes_at: String
+  opens_at: String
+}
+
+type ValidateOrderDetailsOutput {
+  orderDetails: OrderDetailsType!
+  restaurantDetails: RestaurantType!
 }

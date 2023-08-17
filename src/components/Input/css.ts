@@ -9,7 +9,7 @@ const useStyles = createUseStyles({
     flexDirection: 'column',
     fontSize: '16px',
     lineHeight: '18px',
-    marginBottom: base(0.75),
+    marginBottom: base(2),
   },
 
   inputLabelRequired: {

@@ -1,8 +1,13 @@
 mutation CheckoutCalculateMut(
-  $input: [ShoppingCartInput]!
+  $shoppingCart: [ShoppingCartInput]!
   $paymentMethodId: String!
+  $orderDetails: OrderDetailsInput!
 ) {
-  CheckoutCalculateMut(input: $input, paymentMethodId: $paymentMethodId) {
+  CheckoutCalculateMut(
+    shoppingCart: $shoppingCart
+    paymentMethodId: $paymentMethodId
+    orderDetails: $orderDetails
+  ) {
     id
     total
     clientSecret

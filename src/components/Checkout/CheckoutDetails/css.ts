@@ -13,11 +13,22 @@ const useStyles = createUseStyles({
     },
   },
 
+  checkoutDetailsOrderType: {
+    height: base(6),
+    marginTop: base(1),
+    marginBottom: base(1),
+    display: 'flex',
+    justifyContent: 'flex-start',
+
+    [queries.s]: {
+      marginBottom: base(4),
+    },
+  },
+
   checkoutDetailsContentItem: {
+    width: '100%',
     display: 'grid',
     gridTemplateColumns: '40px 1fr 60px',
-    alignItems: 'center',
-    paddingBottom: base(2),
   },
 
   checkoutDetailsHeader: {
@@ -39,6 +50,7 @@ const useStyles = createUseStyles({
     fontWeight: 500,
     margin: 0,
     marginLeft: base(1),
+    textAlign: 'left',
   },
 
   checkoutDetailsBody: {
@@ -49,14 +61,17 @@ const useStyles = createUseStyles({
       fontSize: '16px',
       opacity: 0.8,
       marginBottom: base(0.75),
+      textAlign: 'left',
+      lineHeight: '18px',
     },
   },
 
   checkoutDetailsLink: {
     gridColumn: '2/3',
     textDecoration: 'underline',
-    marginLeft: base(1),
+    marginLeft: base(5),
     marginTop: base(1),
+    textAlign: 'left',
   },
 
   checkoutDetailsButton: {
@@ -68,7 +83,7 @@ const useStyles = createUseStyles({
     width: '100%',
     justifyContent: 'flex-end',
 
-    '& button': {
+    '& div': {
       fontWeight: 600,
       fontSize: '16px',
     },

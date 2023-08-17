@@ -10,18 +10,63 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Restaurant {
+  id             String      @id @default(uuid())
+  name           String
+  timezone       String      
+  openingHours   OpeningHour[]
+  closedDays     ClosedDay[]
+  menu           Food[]
+  address        String
+  radius         Float      //in meters
+  location       Location?
+  pickUpOffset   Int        //in minutes only 15 multiples
+  deliveryOffset Int        //in minutes only 15 multiples
+}
+
+model Location {
+  id           String      @id @default(uuid())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  latitude     Float
+  longitude    Float
+  restaurantId String       @unique
+  restaurant   Restaurant   @relation(fields: [restaurantId], references: [id])
+}
+
+model OpeningHour {
+  id              String      @id @default(uuid())
+  dayOfWeek       String   // "Monday", "Tuesday", ..., "Sunday"
+  openTime        String?  // "HH:MM" format
+  closeTime       String?   // "HH:MM" format
+  restaurantId    String
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [id])
+}
+
+model ClosedDay {
+  id              String      @id @default(uuid())
+  date            DateTime 
+  reason          String?  // Optional field to explain why the restaurant is closed
+  recurring       Boolean  // Indicates whether this closed day recurs annually
+  restaurantId    String
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [id])
+}
+
+
 model Food {
-  id          String      @id @default(uuid())
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  name        String
-  description String?
-  image       String?
-  categoryId  String?
-  category    FoodCategory? @relation(fields: [categoryId], references: [id])
-  sizes       FoodSize[]
-  price       Float?
-  addOns      AddOn[]
+  id              String        @id @default(uuid())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  name            String
+  description     String?
+  image           String?
+  restaurantId    String        
+  restaurant      Restaurant    @relation(fields: [restaurantId], references: [id])
+  categoryId      String?
+  category        FoodCategory? @relation(fields: [categoryId], references: [id])
+  sizes           FoodSize[]
+  price           Float?
+  addOns          AddOn[]
   // orderItems  OrderItem[]
 }
 
@@ -75,7 +120,6 @@ model ItemSize {
   default    Boolean?     @default(false)
   items      Item[]
 }
-
 
 
 // model OrderItem {

@@ -3,6 +3,11 @@ import { createUseStyles } from 'react-jss';
 import zIndex from '../../../css/zIndex';
 
 const useStyles = createUseStyles({
+  modalOverlay: {
+    zIndex: zIndex.modal,
+    position: 'relative',
+  },
+
   modal: {
     position: 'fixed',
     width: '100%',
@@ -15,6 +20,7 @@ const useStyles = createUseStyles({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+    zIndex: zIndex.modal,
   },
 
   modalClose: {

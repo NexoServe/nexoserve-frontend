@@ -1,0 +1,46 @@
+query Restaurant($input: OrderDetailsInput!) {
+  restaurant(input: $input) {
+    restaurantDetails {
+      name
+      address
+      location {
+        latitude
+        longitude
+      }
+      radius
+      pickUpOffset
+      deliveryOffset
+      menu {
+        category
+        foods {
+          id
+          description
+          image
+          name
+          price
+          sizes {
+            price
+          }
+        }
+      }
+      openingHours {
+        dayOfWeek
+        time {
+          opens_at
+          closes_at
+        }
+      }
+      timezone
+    }
+    orderDetails {
+      currentDateTime
+      isOpenNow
+      isOrderTimeValid
+      isDeliveryAddressValid
+      isPickUp
+      deliveryAddress
+      deliveryAddressAdditionalInfo
+      deliveryDetails
+    }
+  }
+}

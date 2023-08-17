@@ -21,7 +21,7 @@ const useStyles = createUseStyles({
       maxHeight: '70vh',
       height: '70vh',
       position: 'sticky',
-      top: base(3),
+      top: base(16),
     },
   },
 

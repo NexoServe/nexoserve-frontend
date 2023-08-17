@@ -89,6 +89,17 @@ export type CreateOrderItemInput = {
   items: Array<Scalars['String']>;
 };
 
+export type DayInput = {
+  dayOfWeek: Scalars['String'];
+  time: Array<TimeInput>;
+};
+
+export type DayOutput = {
+  __typename?: 'DayOutput';
+  dayOfWeek: Scalars['String'];
+  time: Array<TimeOutput>;
+};
+
 export type Food = {
   __typename?: 'Food';
   addOns?: Maybe<Array<Maybe<AddOn>>>;
@@ -138,22 +149,43 @@ export type ItemSizeInput = {
   price: Scalars['Float'];
 };
 
+export type Location = {
+  __typename?: 'Location';
+  id?: Maybe<Scalars['String']>;
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
+};
+
+export type LocationInput = {
+  latitude?: InputMaybe<Scalars['Float']>;
+  longitude?: InputMaybe<Scalars['Float']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   CheckoutCalculateMut: Checkout;
+  addOpeningHours?: Maybe<Scalars['Boolean']>;
   createFood: Food;
   createOrder: Order;
 };
 
 
 export type MutationCheckoutCalculateMutArgs = {
-  input: Array<InputMaybe<ShoppingCartInput>>;
+  orderDetails: OrderDetailsInput;
   paymentMethodId: Scalars['String'];
+  shoppingCart: Array<InputMaybe<ShoppingCartInput>>;
+};
+
+
+export type MutationAddOpeningHoursArgs = {
+  openingHours: Array<DayInput>;
+  restaurantId: Scalars['String'];
 };
 
 
 export type MutationCreateFoodArgs = {
   input: CreateFoodInput;
+  restaurantId: Scalars['String'];
 };
 
 
@@ -161,11 +193,41 @@ export type MutationCreateOrderArgs = {
   input: CreateOrderInput;
 };
 
+export type OpeningHour = {
+  __typename?: 'OpeningHour';
+  closeTime: Scalars['String'];
+  dayOfWeek: Scalars['String'];
+  id: Scalars['Int'];
+  openTime: Scalars['String'];
+  restaurantId: Scalars['Int'];
+};
+
 export type Order = {
   __typename?: 'Order';
   id?: Maybe<Scalars['String']>;
   orderItems?: Maybe<Array<Maybe<OrderItem>>>;
   total?: Maybe<Scalars['Float']>;
+};
+
+export type OrderDetailsInput = {
+  deliveryAddress?: InputMaybe<Scalars['String']>;
+  deliveryAddressAdditionalInfo?: InputMaybe<Scalars['String']>;
+  deliveryDetails?: InputMaybe<Scalars['String']>;
+  isPickUp: Scalars['Boolean'];
+  orderTime: Scalars['String'];
+  restaurantId: Scalars['String'];
+};
+
+export type OrderDetailsType = {
+  __typename?: 'OrderDetailsType';
+  currentDateTime: Scalars['String'];
+  deliveryAddress?: Maybe<Scalars['String']>;
+  deliveryAddressAdditionalInfo?: Maybe<Scalars['String']>;
+  deliveryDetails?: Maybe<Scalars['String']>;
+  isDeliveryAddressValid: Scalars['Boolean'];
+  isOpenNow: Scalars['Boolean'];
+  isOrderTimeValid: Scalars['Boolean'];
+  isPickUp: Scalars['Boolean'];
 };
 
 export type OrderItem = {
@@ -181,6 +243,8 @@ export type Query = {
   foodById?: Maybe<Food>;
   foods: Array<Maybe<Food>>;
   foodsByCategory: Array<Maybe<FoodsByCategory>>;
+  restaurant: RestaurantOutput;
+  validateOrderDetails: ValidateOrderDetailsOutput;
   validateShoppingCart: ShoppingCart;
 };
 
@@ -190,8 +254,37 @@ export type QueryFoodByIdArgs = {
 };
 
 
+export type QueryRestaurantArgs = {
+  input: OrderDetailsInput;
+};
+
+
+export type QueryValidateOrderDetailsArgs = {
+  input: OrderDetailsInput;
+};
+
+
 export type QueryValidateShoppingCartArgs = {
   input: Array<InputMaybe<ShoppingCartInput>>;
+};
+
+export type RestaurantOutput = {
+  __typename?: 'RestaurantOutput';
+  orderDetails: OrderDetailsType;
+  restaurantDetails: RestaurantType;
+};
+
+export type RestaurantType = {
+  __typename?: 'RestaurantType';
+  address: Scalars['String'];
+  deliveryOffset: Scalars['Int'];
+  location: Location;
+  menu: Array<FoodsByCategory>;
+  name: Scalars['String'];
+  openingHours: Array<DayOutput>;
+  pickUpOffset: Scalars['Int'];
+  radius: Scalars['Float'];
+  timezone: Scalars['String'];
 };
 
 export type SelectedItem = {
@@ -255,9 +348,27 @@ export type SimpleFoodSize = {
   price?: Maybe<Scalars['Float']>;
 };
 
+export type TimeInput = {
+  closes_at?: InputMaybe<Scalars['String']>;
+  opens_at?: InputMaybe<Scalars['String']>;
+};
+
+export type TimeOutput = {
+  __typename?: 'TimeOutput';
+  closes_at?: Maybe<Scalars['String']>;
+  opens_at?: Maybe<Scalars['String']>;
+};
+
+export type ValidateOrderDetailsOutput = {
+  __typename?: 'ValidateOrderDetailsOutput';
+  orderDetails: OrderDetailsType;
+  restaurantDetails: RestaurantType;
+};
+
 export type CheckoutCalculateMutMutationVariables = Exact<{
-  input: Array<InputMaybe<ShoppingCartInput>> | InputMaybe<ShoppingCartInput>;
+  shoppingCart: Array<InputMaybe<ShoppingCartInput>> | InputMaybe<ShoppingCartInput>;
   paymentMethodId: Scalars['String'];
+  orderDetails: OrderDetailsInput;
 }>;
 
 
@@ -289,6 +400,20 @@ export type FoodsByCategoryQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type FoodsByCategoryQuery = { __typename?: 'Query', foodsByCategory: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null } | null> };
 
+export type RestaurantQueryVariables = Exact<{
+  input: OrderDetailsInput;
+}>;
+
+
+export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'RestaurantOutput', restaurantDetails: { __typename?: 'RestaurantType', name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, timezone: string, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNow: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
+
+export type ValidateOrderDetailsQueryVariables = Exact<{
+  input: OrderDetailsInput;
+}>;
+
+
+export type ValidateOrderDetailsQuery = { __typename?: 'Query', validateOrderDetails: { __typename?: 'ValidateOrderDetailsOutput', restaurantDetails: { __typename?: 'RestaurantType', name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, timezone: string, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNow: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
+
 export type ValidateShoppingCartQueryVariables = Exact<{
   input: Array<InputMaybe<ShoppingCartInput>> | InputMaybe<ShoppingCartInput>;
 }>;
@@ -315,8 +440,12 @@ export const AddOnFieldsFragmentDoc = gql`
 }
     `;
 export const CheckoutCalculateMutDocument = gql`
-    mutation CheckoutCalculateMut($input: [ShoppingCartInput]!, $paymentMethodId: String!) {
-  CheckoutCalculateMut(input: $input, paymentMethodId: $paymentMethodId) {
+    mutation CheckoutCalculateMut($shoppingCart: [ShoppingCartInput]!, $paymentMethodId: String!, $orderDetails: OrderDetailsInput!) {
+  CheckoutCalculateMut(
+    shoppingCart: $shoppingCart
+    paymentMethodId: $paymentMethodId
+    orderDetails: $orderDetails
+  ) {
     id
     total
     clientSecret
@@ -339,8 +468,9 @@ export type CheckoutCalculateMutMutationFn = Apollo.MutationFunction<CheckoutCal
  * @example
  * const [checkoutCalculateMutMutation, { data, loading, error }] = useCheckoutCalculateMutMutation({
  *   variables: {
- *      input: // value for 'input'
+ *      shoppingCart: // value for 'shoppingCart'
  *      paymentMethodId: // value for 'paymentMethodId'
+ *      orderDetails: // value for 'orderDetails'
  *   },
  * });
  */
@@ -532,6 +662,158 @@ export function useFoodsByCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type FoodsByCategoryQueryHookResult = ReturnType<typeof useFoodsByCategoryQuery>;
 export type FoodsByCategoryLazyQueryHookResult = ReturnType<typeof useFoodsByCategoryLazyQuery>;
 export type FoodsByCategoryQueryResult = Apollo.QueryResult<FoodsByCategoryQuery, FoodsByCategoryQueryVariables>;
+export const RestaurantDocument = gql`
+    query Restaurant($input: OrderDetailsInput!) {
+  restaurant(input: $input) {
+    restaurantDetails {
+      name
+      address
+      location {
+        latitude
+        longitude
+      }
+      radius
+      pickUpOffset
+      deliveryOffset
+      menu {
+        category
+        foods {
+          id
+          description
+          image
+          name
+          price
+          sizes {
+            price
+          }
+        }
+      }
+      openingHours {
+        dayOfWeek
+        time {
+          opens_at
+          closes_at
+        }
+      }
+      timezone
+    }
+    orderDetails {
+      currentDateTime
+      isOpenNow
+      isOrderTimeValid
+      isDeliveryAddressValid
+      isPickUp
+      deliveryAddress
+      deliveryAddressAdditionalInfo
+      deliveryDetails
+    }
+  }
+}
+    `;
+
+/**
+ * __useRestaurantQuery__
+ *
+ * To run a query within a React component, call `useRestaurantQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRestaurantQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRestaurantQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRestaurantQuery(baseOptions: Apollo.QueryHookOptions<RestaurantQuery, RestaurantQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RestaurantQuery, RestaurantQueryVariables>(RestaurantDocument, options);
+      }
+export function useRestaurantLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RestaurantQuery, RestaurantQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RestaurantQuery, RestaurantQueryVariables>(RestaurantDocument, options);
+        }
+export type RestaurantQueryHookResult = ReturnType<typeof useRestaurantQuery>;
+export type RestaurantLazyQueryHookResult = ReturnType<typeof useRestaurantLazyQuery>;
+export type RestaurantQueryResult = Apollo.QueryResult<RestaurantQuery, RestaurantQueryVariables>;
+export const ValidateOrderDetailsDocument = gql`
+    query ValidateOrderDetails($input: OrderDetailsInput!) {
+  validateOrderDetails(input: $input) {
+    restaurantDetails {
+      name
+      address
+      location {
+        latitude
+        longitude
+      }
+      radius
+      pickUpOffset
+      deliveryOffset
+      menu {
+        category
+        foods {
+          id
+          description
+          image
+          name
+          price
+          sizes {
+            price
+          }
+        }
+      }
+      openingHours {
+        dayOfWeek
+        time {
+          opens_at
+          closes_at
+        }
+      }
+      timezone
+    }
+    orderDetails {
+      currentDateTime
+      isOpenNow
+      isOrderTimeValid
+      isDeliveryAddressValid
+      isPickUp
+      deliveryAddress
+      deliveryAddressAdditionalInfo
+      deliveryDetails
+    }
+  }
+}
+    `;
+
+/**
+ * __useValidateOrderDetailsQuery__
+ *
+ * To run a query within a React component, call `useValidateOrderDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useValidateOrderDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useValidateOrderDetailsQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useValidateOrderDetailsQuery(baseOptions: Apollo.QueryHookOptions<ValidateOrderDetailsQuery, ValidateOrderDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ValidateOrderDetailsQuery, ValidateOrderDetailsQueryVariables>(ValidateOrderDetailsDocument, options);
+      }
+export function useValidateOrderDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ValidateOrderDetailsQuery, ValidateOrderDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ValidateOrderDetailsQuery, ValidateOrderDetailsQueryVariables>(ValidateOrderDetailsDocument, options);
+        }
+export type ValidateOrderDetailsQueryHookResult = ReturnType<typeof useValidateOrderDetailsQuery>;
+export type ValidateOrderDetailsLazyQueryHookResult = ReturnType<typeof useValidateOrderDetailsLazyQuery>;
+export type ValidateOrderDetailsQueryResult = Apollo.QueryResult<ValidateOrderDetailsQuery, ValidateOrderDetailsQueryVariables>;
 export const ValidateShoppingCartDocument = gql`
     query ValidateShoppingCart($input: [ShoppingCartInput]!) {
   validateShoppingCart(input: $input) {

@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { data } from '../../data/foods';
+import { openingHours } from '../../data/openingHours';
 import prisma from '../../lib/prisma';
 
 const getCategoryID = async (name: string) => {
@@ -29,6 +30,42 @@ async function main() {
   await prisma.item.deleteMany({});
   await prisma.foodSize.deleteMany({});
   await prisma.foodCategory.deleteMany({});
+  await prisma.openingHour.deleteMany({});
+  await prisma.closedDay.deleteMany({});
+  await prisma.location.deleteMany({});
+  await prisma.restaurant.deleteMany({});
+
+  const restaurant = await prisma.restaurant.create({
+    data: {
+      name: "Igli's Pizza",
+      timezone: 'America/New_York',
+      address: '349 Whitehall road, Albany, NY, 12208',
+      radius:
+        5 *
+        parseFloat(
+          process.env.NEXT_PUBLIC_MILES_TO_METERS_MULTIPLIER as string,
+        ),
+      pickUpOffset: 15,
+      deliveryOffset: 30,
+      location: {
+        create: {
+          latitude: 42.64959,
+          longitude: -73.807041,
+        },
+      },
+    },
+  });
+
+  await prisma.openingHour.createMany({
+    data: openingHours.flatMap((hours) =>
+      hours.time.map((time) => ({
+        dayOfWeek: hours.dayOfWeek,
+        openTime: time.opens_at,
+        closeTime: time.closes_at,
+        restaurantId: restaurant.id,
+      })),
+    ),
+  });
 
   await prisma.foodCategory.createMany({
     data: [
@@ -50,8 +87,10 @@ async function main() {
           id: uuidv4(),
           name: input?.name,
           description: input?.description,
+          image: input?.image,
           price: input.price,
           categoryId: categoryId,
+          restaurantId: restaurant.id,
           sizes: {
             connectOrCreate: input.sizes?.map((size) => ({
               where: {

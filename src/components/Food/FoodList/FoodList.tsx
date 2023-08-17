@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
 import { AnimatePresence } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
 
-import { useFoodsByCategoryQuery } from '../../../../generated/graphql';
+import { FoodMenuAtom } from '../../../state/FoodModalState';
 import FoodCard from '../FoodCard/FoodCard';
 import FoodModal from '../FoodModal/FoodModal';
 
@@ -10,9 +11,7 @@ import useStyles from './css';
 import { SimpleFoodType } from './types';
 
 const FoodList = () => {
-  const { data } = useFoodsByCategoryQuery({
-    notifyOnNetworkStatusChange: true,
-  });
+  const menu = useRecoilValue(FoodMenuAtom);
 
   const classes = useStyles();
 
@@ -26,7 +25,7 @@ const FoodList = () => {
 
   return (
     <div>
-      {data?.foodsByCategory?.map((foodByCategory) => (
+      {menu.map((foodByCategory) => (
         <div key={foodByCategory?.category} className={classes.foodList}>
           <h2 className={classes.foodListCategory}>
             {foodByCategory?.category}
