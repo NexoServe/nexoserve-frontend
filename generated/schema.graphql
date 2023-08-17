@@ -139,7 +139,7 @@ input LocationInput {
 }
 
 type Mutation {
-  CheckoutCalculateMut(input: [ShoppingCartInput]!, paymentMethodId: String!): Checkout!
+  CheckoutCalculateMut(orderDetails: OrderDetailsInput!, paymentMethodId: String!, shoppingCart: [ShoppingCartInput]!): Checkout!
   addOpeningHours(openingHours: [DayInput!]!, restaurantId: String!): Boolean
   createFood(input: CreateFoodInput!, restaurantId: String!): Food!
   createOrder(input: CreateOrderInput!): Order!
@@ -157,6 +157,15 @@ type Order {
   id: String
   orderItems: [OrderItem]
   total: Float
+}
+
+input OrderDetailsInput {
+  deliveryAddress: String
+  deliveryAddressAdditionalInfo: String
+  deliveryDetails: String
+  isPickUp: Boolean!
+  orderTime: String!
+  restaurantId: String!
 }
 
 type OrderDetailsType {
@@ -181,18 +190,9 @@ type Query {
   foodById(id: String!): Food
   foods: [Food]!
   foodsByCategory: [FoodsByCategory]!
-  restaurant(input: RestaurantInput!): RestaurantOutput!
-  validateOrderDetails(input: ValidateOrderDetailsInput!): ValidateOrderDetailsOutput!
+  restaurant(input: OrderDetailsInput!): RestaurantOutput!
+  validateOrderDetails(input: OrderDetailsInput!): ValidateOrderDetailsOutput!
   validateShoppingCart(input: [ShoppingCartInput]!): ShoppingCart!
-}
-
-input RestaurantInput {
-  deliveryAddress: String
-  deliveryAddressAdditionalInfo: String
-  deliveryDetails: String
-  isPickUp: Boolean!
-  orderTime: String!
-  restaurantId: String!
 }
 
 type RestaurantOutput {
@@ -276,15 +276,6 @@ input TimeInput {
 type TimeOutput {
   closes_at: String
   opens_at: String
-}
-
-input ValidateOrderDetailsInput {
-  deliveryAddress: String
-  deliveryAddressAdditionalInfo: String
-  deliveryDetails: String
-  isPickUp: Boolean!
-  orderTime: String!
-  restaurantId: String!
 }
 
 type ValidateOrderDetailsOutput {

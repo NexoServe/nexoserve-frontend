@@ -30,7 +30,7 @@ import { IOrderNavBarModal } from './types';
 const OrderNavBarModal = ({
   setModal,
   headerText,
-  type,
+  type = 'pickup',
   error,
 }: IOrderNavBarModal) => {
   const [validateOrderDetails, { loading }] = useValidateOrderDetailsLazyQuery({
@@ -182,9 +182,10 @@ const OrderNavBarModal = ({
       },
     );
 
-    const offsetMinutes = isPickUp
-      ? restaurantDetails.pickUpOffset
-      : restaurantDetails.deliveryOffset;
+    const offsetMinutes =
+      type === 'pickup'
+        ? restaurantDetails.pickUpOffset
+        : restaurantDetails.deliveryOffset;
 
     const offsetOpeningTime = openingTime.plus({ minutes: offsetMinutes });
 
@@ -306,6 +307,13 @@ const OrderNavBarModal = ({
       minute: hourMinutes ? hourMinutes?.minute : now.minute,
     });
 
+    if (orderTimeState?.label === 'ASAP' && !orderDetails?.isOpenNow) {
+      setOrderTimeState({
+        label: formattedIntervals?.[0]?.label as string,
+        value: formattedIntervals?.[0]?.value,
+      });
+    }
+
     const res = await validateOrderDetails({
       variables: {
         input: {
@@ -415,15 +423,14 @@ const OrderNavBarModal = ({
           label="Time"
           onChange={(e) => setOrderTimeState(e as OrderTime)}
           defaultValue={formattedIntervals[0]}
-          value={
-            orderTimeState?.value === null
-              ? formattedIntervals[0]
-              : orderTimeState
-          }
+          value={orderTimeState?.value === null ? null : orderTimeState}
         />
 
         <Button
-          disabled={!isAddressValid && type === 'delivery'}
+          disabled={
+            (!isAddressValid && type === 'delivery') ||
+            (!orderDetails.isOpenNow && orderTimeState?.label === 'ASAP')
+          }
           type="submit"
           styleClass={classes.orderNavbarModalButton}
         >

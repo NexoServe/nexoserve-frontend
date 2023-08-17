@@ -22,8 +22,8 @@ export const ValidateOrderDetailsOutput = objectType({
   },
 });
 
-export const ValidateOrderDetailsInput = inputObjectType({
-  name: 'ValidateOrderDetailsInput',
+export const OrderDetailsInput = inputObjectType({
+  name: 'OrderDetailsInput',
   definition(t) {
     t.nonNull.string('restaurantId');
     t.nonNull.string('orderTime');

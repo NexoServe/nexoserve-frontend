@@ -4,12 +4,12 @@ import { getRestaurantAndMenu } from '../../../utils/getRestaurantAndMenu';
 import { validateAddress } from '../../../utils/validateAddress';
 import validateTime from '../../../utils/validateTime';
 
-import { ValidateOrderDetailsInput } from './OrderDetailsTypes';
+import { OrderDetailsInput } from './OrderDetailsTypes';
 
 export const validateOrderDetails = queryField('validateOrderDetails', {
   type: nonNull('ValidateOrderDetailsOutput'),
   args: {
-    input: nonNull(ValidateOrderDetailsInput),
+    input: nonNull(OrderDetailsInput),
   },
   async resolve(_, { input }, ctx) {
     const { restaurant, menu } = await getRestaurantAndMenu(

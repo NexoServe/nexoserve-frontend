@@ -40,12 +40,6 @@ const PageContainer = ({ children }: IPageContainer) => {
   );
   const [, setDeliveryDetails] = useRecoilState(OrderDeliveryDetailsAtom);
 
-  useEffect(() => {
-    if (orderDetails?.isOrderTimeValid === false) {
-      setShowInvalidTimeModal(true);
-    }
-  }, [orderDetails?.isOrderTimeValid, setShowInvalidTimeModal]);
-
   const orderTimeStorage = localStorage.getItem('orderTime');
   const orderIsPickUpStorage = localStorage.getItem('isPickUp');
   const orderDeliveryAddressStorage = localStorage.getItem('deliveryAddress');
@@ -77,6 +71,17 @@ const PageContainer = ({ children }: IPageContainer) => {
   const [restaurantQuery, { data, loading, error }] = useRestaurantLazyQuery({
     fetchPolicy: 'no-cache',
   });
+
+  useEffect(() => {
+    if (orderDetails?.isOrderTimeValid === false) {
+      setShowInvalidTimeModal({
+        type: 'pickup',
+        errorMessages: data?.restaurant.orderDetails.isOpenNow
+          ? "Sorry, we're currently closed. You can still place an order in advanced."
+          : 'Sorry, we need a little extra time. Please select a new time.',
+      });
+    }
+  }, [orderDetails?.isOrderTimeValid, setShowInvalidTimeModal]);
 
   useEffect(() => {
     restaurantQuery({
@@ -195,19 +200,16 @@ const PageContainer = ({ children }: IPageContainer) => {
       <AnimatePresence>
         {showInvalidTimeModal && (
           <ModalPopUp
-            showModal={showInvalidTimeModal}
+            showModal={showInvalidTimeModal ? true : false}
             onClose={() => {
               console.log();
             }}
           >
             <OrderNavBarModal
               headerText="Date and Time"
-              setModal={setShowInvalidTimeModal}
-              error={
-                !data?.restaurant.orderDetails.isOpenNow
-                  ? "Sorry, we're currently closed. You can still place an order in advanced."
-                  : 'Sorry, we need a little extra time. Please select a new time.'
-              }
+              setModal={() => setShowInvalidTimeModal(undefined)}
+              type={showInvalidTimeModal.type}
+              error={showInvalidTimeModal.errorMessages}
             />
           </ModalPopUp>
         )}

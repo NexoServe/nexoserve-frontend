@@ -5,7 +5,12 @@ import { OrderDetailsType } from '../../generated/graphql';
 
 export type OrderTime = {
   value: DateTime | null;
-  label: string;
+  label: string | null;
+};
+
+type InvalidTimeModalType = {
+  type: 'pickup' | 'delivery';
+  errorMessages: string;
 };
 
 export const OrderDetailsAtom = atom<OrderDetailsType>({
@@ -27,7 +32,7 @@ export const OrderTimeAtom = atom<OrderTime | undefined>({
   key: 'OrderTimeAtom',
   default: {
     value: null,
-    label: 'ASAP',
+    label: null,
   },
 });
 
@@ -54,7 +59,9 @@ export const OrderDeliveryDetailsAtom = atom<string | undefined>({
   default: undefined,
 });
 
-export const OrderShowInvalidTimeModalAtom = atom<boolean>({
+export const OrderShowInvalidTimeModalAtom = atom<
+  InvalidTimeModalType | undefined
+>({
   key: 'OrderShowInvalidTimeModalAtom',
-  default: false,
+  default: undefined,
 });

@@ -1,4 +1,4 @@
-query ValidateOrderDetails($input: ValidateOrderDetailsInput!) {
+query ValidateOrderDetails($input: OrderDetailsInput!) {
   validateOrderDetails(input: $input) {
     restaurantDetails {
       name

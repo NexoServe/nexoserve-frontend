@@ -22,6 +22,14 @@ import {
   isCheckoutContactIncompleteAtom,
 } from '../../../state/CheckoutState';
 import {
+  OrderDeliveryAdditionalAddressInfoAtom,
+  OrderDeliveryAddressAtom,
+  OrderDeliveryDetailsAtom,
+  OrderIsPickUpAtom,
+  OrderShowInvalidTimeModalAtom,
+  OrderTimeAtom,
+} from '../../../state/OrderNavbar';
+import {
   ShoppingCartTipAtom,
   ShoppingCartTotalAtom,
 } from '../../../state/ShoppingCartState';
@@ -36,6 +44,9 @@ export default function CheckoutForm() {
   const elements = useElements();
   const classes = useStyles();
 
+  const [, setShowInvalidTimeModal] = useRecoilState(
+    OrderShowInvalidTimeModalAtom,
+  );
   const shoppingCartTotal = useRecoilValue(ShoppingCartTotalAtom);
   const firstName = useRecoilValue(CheckoutFirstNameAtom);
   const [, setFirstNameError] = useRecoilState(CheckoutFirstNameErrorAtom);
@@ -52,6 +63,14 @@ export default function CheckoutForm() {
   const [, setIsCheckoutContactIncomplete] = useRecoilState(
     isCheckoutContactIncompleteAtom,
   );
+
+  const orderTime = useRecoilValue(OrderTimeAtom);
+  const isPickUp = useRecoilValue(OrderIsPickUpAtom);
+  const deliveryAddress = useRecoilValue(OrderDeliveryAddressAtom);
+  const additionalAddressInfo = useRecoilValue(
+    OrderDeliveryAdditionalAddressInfoAtom,
+  );
+  const deliveryDetails = useRecoilValue(OrderDeliveryDetailsAtom);
 
   const [message, setMessage] = useState<string | null | undefined>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -123,10 +142,18 @@ export default function CheckoutForm() {
     try {
       const res = await checkoutCalculateMut({
         variables: {
-          input: getShoppingCartInput({
+          shoppingCart: getShoppingCartInput({
             shoppingCartTip: shoppingCartTip,
           }),
           paymentMethodId: paymentMethod.id,
+          orderDetails: {
+            restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
+            isPickUp: isPickUp,
+            orderTime: orderTime?.value?.toString() as string,
+            deliveryAddress: deliveryAddress as string,
+            deliveryDetails: deliveryDetails as string,
+            deliveryAddressAdditionalInfo: additionalAddressInfo as string,
+          },
         },
         context: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
@@ -162,11 +189,26 @@ export default function CheckoutForm() {
           // Actions handled, show success message
         }
       }
-    } catch (error) {
-      setMessage(
-        'Something went wrong with your payment. Please try again or try a different method of payment.',
-      );
+    } catch (error: any) {
+      if (error?.message === 'Invalid order time') {
+        setShowInvalidTimeModal({
+          errorMessages:
+            'We need a little extra time to prepare your order. Please select a later time.',
+          type: 'pickup',
+        });
+      } else if (error.message === 'Invalid delivery address') {
+        setShowInvalidTimeModal({
+          errorMessages:
+            'The address that you have selected is not valid. Please select a different address.',
+          type: 'delivery',
+        });
+      } else {
+        setMessage(
+          'Something went wrong with your payment. Please try again or try a different method of payment.',
+        );
+      }
     }
+
     setMessage(null);
     setIsLoading(false);
   };

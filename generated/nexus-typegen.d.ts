@@ -71,7 +71,7 @@ export interface NexusGenInputs {
     latitude?: number | null; // Float
     longitude?: number | null; // Float
   }
-  RestaurantInput: { // input type
+  OrderDetailsInput: { // input type
     deliveryAddress?: string | null; // String
     deliveryAddressAdditionalInfo?: string | null; // String
     deliveryDetails?: string | null; // String
@@ -96,14 +96,6 @@ export interface NexusGenInputs {
   TimeInput: { // input type
     closes_at?: string | null; // String
     opens_at?: string | null; // String
-  }
-  ValidateOrderDetailsInput: { // input type
-    deliveryAddress?: string | null; // String
-    deliveryAddressAdditionalInfo?: string | null; // String
-    deliveryDetails?: string | null; // String
-    isPickUp: boolean; // Boolean!
-    orderTime: string; // String!
-    restaurantId: string; // String!
   }
 }
 
@@ -604,8 +596,9 @@ export interface NexusGenFieldTypeNames {
 export interface NexusGenArgTypes {
   Mutation: {
     CheckoutCalculateMut: { // args
-      input: Array<NexusGenInputs['ShoppingCartInput'] | null>; // [ShoppingCartInput]!
+      orderDetails: NexusGenInputs['OrderDetailsInput']; // OrderDetailsInput!
       paymentMethodId: string; // String!
+      shoppingCart: Array<NexusGenInputs['ShoppingCartInput'] | null>; // [ShoppingCartInput]!
     }
     addOpeningHours: { // args
       openingHours: NexusGenInputs['DayInput'][]; // [DayInput!]!
@@ -624,10 +617,10 @@ export interface NexusGenArgTypes {
       id: string; // String!
     }
     restaurant: { // args
-      input: NexusGenInputs['RestaurantInput']; // RestaurantInput!
+      input: NexusGenInputs['OrderDetailsInput']; // OrderDetailsInput!
     }
     validateOrderDetails: { // args
-      input: NexusGenInputs['ValidateOrderDetailsInput']; // ValidateOrderDetailsInput!
+      input: NexusGenInputs['OrderDetailsInput']; // OrderDetailsInput!
     }
     validateShoppingCart: { // args
       input: Array<NexusGenInputs['ShoppingCartInput'] | null>; // [ShoppingCartInput]!

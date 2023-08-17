@@ -3,13 +3,12 @@ import { nonNull, queryField } from 'nexus';
 import { getRestaurantAndMenu } from '../../../utils/getRestaurantAndMenu';
 import { validateAddress } from '../../../utils/validateAddress';
 import validateTime from '../../../utils/validateTime';
-
-import { RestaurantInput } from './RestaurantTypes';
+import { OrderDetailsInput } from '../OrderDetails';
 
 export const RestaurantQuery = queryField('restaurant', {
   type: nonNull('RestaurantOutput'),
   args: {
-    input: nonNull(RestaurantInput),
+    input: nonNull(OrderDetailsInput),
   },
   async resolve(_, { input }, ctx) {
     const { restaurant, menu } = await getRestaurantAndMenu(

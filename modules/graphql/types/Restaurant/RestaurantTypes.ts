@@ -1,4 +1,4 @@
-import { inputObjectType, objectType } from 'nexus';
+import { objectType } from 'nexus';
 
 export const RestaurantType = objectType({
   name: 'RestaurantType',
@@ -20,17 +20,5 @@ export const RestaurantOutput = objectType({
   definition(t) {
     t.nonNull.field('restaurantDetails', { type: 'RestaurantType' });
     t.nonNull.field('orderDetails', { type: 'OrderDetailsType' });
-  },
-});
-
-export const RestaurantInput = inputObjectType({
-  name: 'RestaurantInput',
-  definition(t) {
-    t.nonNull.string('restaurantId');
-    t.nonNull.string('orderTime');
-    t.nonNull.boolean('isPickUp');
-    t.string('deliveryAddress');
-    t.string('deliveryAddressAdditionalInfo');
-    t.string('deliveryDetails');
   },
 });

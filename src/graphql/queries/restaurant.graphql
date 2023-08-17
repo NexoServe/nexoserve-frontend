@@ -1,4 +1,4 @@
-query Restaurant($input: RestaurantInput!) {
+query Restaurant($input: OrderDetailsInput!) {
   restaurant(input: $input) {
     restaurantDetails {
       name
