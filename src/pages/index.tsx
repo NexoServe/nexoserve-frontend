@@ -1,8 +1,7 @@
-import { GetServerSidePropsContext, NextPage } from 'next';
+import { NextPage } from 'next';
 import Head from 'next/head';
 
 import { addApolloState, initializeApollo } from '../../lib/apolloClient';
-import prisma from '../../lib/prisma';
 import Container from '../components/Container/Container';
 import FoodList from '../components/Food/FoodList/FoodList';
 import Navbar from '../components/Navbar/Navbar';
@@ -44,10 +43,8 @@ const Home: NextPage = () => {
   );
 };
 
-export const getServerSideProps = async ({
-  req,
-}: GetServerSidePropsContext) => {
-  const apolloClient = initializeApollo({ ctx: { req, prisma } });
+export const getServerSideProps = async () => {
+  const apolloClient = initializeApollo();
 
   // TODO: add ssr
   // await apolloClient.query({ query: FoodsDocument });

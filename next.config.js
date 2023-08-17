@@ -1,4 +1,6 @@
-/** @type {import('next').NextConfig} */
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -6,7 +8,6 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'us-east-menu-images.s3.amazonaws.com',
-        port: '',
         pathname: '/**',
       },
     ],
