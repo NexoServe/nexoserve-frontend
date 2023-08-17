@@ -87,6 +87,7 @@ async function main() {
           id: uuidv4(),
           name: input?.name,
           description: input?.description,
+          image: input?.image,
           price: input.price,
           categoryId: categoryId,
           restaurantId: restaurant.id,

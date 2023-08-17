@@ -1,7 +1,5 @@
 import Image from 'next/image';
 
-import Pizza from '../../../assets/pizza_1.png';
-
 import useStyles from './css';
 import { IFoodCard } from './types';
 
@@ -11,14 +9,15 @@ const FoodCard = ({ food, activeFoodClick }: IFoodCard) => {
   return (
     <button className={classes.foodCard} onClick={() => activeFoodClick(food)}>
       <div className={classes.foodCardImgContainer}>
-        <Image
-          src={Pizza}
-          layout="fill"
-          objectFit="cover"
-          alt="pizza"
-          placeholder="blur"
-          className={classes.foodCardImg}
-        />
+        {food?.image && (
+          <Image
+            src={food?.image}
+            layout="fill"
+            objectFit="cover"
+            alt={food?.name || undefined}
+            className={classes.foodCardImg}
+          />
+        )}
       </div>
       <div className={classes.foodCardContent}>
         <h3 className={classes.foodCardContentName}>{food?.name}</h3>
