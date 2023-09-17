@@ -55,16 +55,14 @@ const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
       });
     } else if (data) {
       const shoppingCartValidated: ShoppingCartItem[] =
-        data?.validateShoppingCart.shoppingCartItems.map(
-          (shoppingCartItem) => ({
-            food: shoppingCartItem?.food,
-            orderItemId: shoppingCartItem?.orderItemId as string,
-            quantity: shoppingCartItem?.quantity as number,
-            selectedItems: shoppingCartItem?.selectedItems,
-            selectedSize: shoppingCartItem?.selectedSize,
-            price: shoppingCartItem?.price as number,
-          }),
-        );
+        data?.validateShoppingCart.orderItems.map((shoppingCartItem) => ({
+          food: shoppingCartItem?.food,
+          orderItemId: shoppingCartItem?.id as string,
+          quantity: shoppingCartItem?.quantity as number,
+          selectedItems: shoppingCartItem?.items,
+          selectedSize: shoppingCartItem?.foodSize,
+          price: shoppingCartItem?.total as number,
+        }));
 
       setShoppingCart(shoppingCartValidated || []);
 

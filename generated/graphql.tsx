@@ -24,24 +24,32 @@ export type AddOn = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type AddOnSimple = {
+  __typename?: 'AddOnSimple';
+  id?: Maybe<Scalars['String']>;
+  isRequired?: Maybe<Scalars['Boolean']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type AddressType = {
+  __typename?: 'AddressType';
+  city: Scalars['String'];
+  country: Scalars['String'];
+  formattedAddress: Scalars['String'];
+  id: Scalars['String'];
+  location: Location;
+  order: OrderType;
+  state: Scalars['String'];
+  street: Scalars['String'];
+  suiteAptFloor: Scalars['String'];
+  zip: Scalars['String'];
+};
+
 export type BaseFood = {
   __typename?: 'BaseFood';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  name: Scalars['String'];
   price?: Maybe<Scalars['Float']>;
-};
-
-export type Checkout = {
-  __typename?: 'Checkout';
-  clientSecret?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
-  total?: Maybe<Scalars['Float']>;
-};
-
-export type CheckoutCalculateInput = {
-  id?: InputMaybe<Scalars['String']>;
-  orders?: InputMaybe<Array<CreateOrderInput>>;
 };
 
 export type CreateAddOnInput = {
@@ -77,16 +85,28 @@ export type CreateItemInput = {
 };
 
 export type CreateOrderInput = {
-  foodId: Scalars['String'];
+  deliveryAddress?: InputMaybe<Scalars['String']>;
+  deliveryDetails?: InputMaybe<Scalars['String']>;
+  guestEmail?: InputMaybe<Scalars['String']>;
+  guestFirstName?: InputMaybe<Scalars['String']>;
+  guestLastName?: InputMaybe<Scalars['String']>;
+  guestPhone?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
-  itemIds: Array<InputMaybe<Scalars['String']>>;
-  quantity: Scalars['Int'];
+  isPickUp: Scalars['Boolean'];
+  isTipPercentage: Scalars['Boolean'];
+  orderItems: Array<OrderItemInput>;
+  orderTime: Scalars['String'];
+  restaurantId: Scalars['String'];
+  suiteAptFloor?: InputMaybe<Scalars['String']>;
+  tip: Scalars['Float'];
 };
 
-export type CreateOrderItemInput = {
-  foodId: Scalars['String'];
-  id?: InputMaybe<Scalars['String']>;
-  items: Array<Scalars['String']>;
+export type CreateOrderOutput = {
+  __typename?: 'CreateOrderOutput';
+  clientSecret?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  total?: Maybe<Scalars['Float']>;
 };
 
 export type DayInput = {
@@ -127,24 +147,47 @@ export type FoodsByCategory = {
 
 export type Item = {
   __typename?: 'Item';
-  addOns?: Maybe<Array<Maybe<AddOn>>>;
-  id?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
   itemSizes?: Maybe<Array<Maybe<ItemSize>>>;
-  name?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Float']>;
+  name: Scalars['String'];
+  price: Scalars['Float'];
 };
 
 export type ItemSize = {
   __typename?: 'ItemSize';
   default?: Maybe<Scalars['Boolean']>;
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Float']>;
+  id: Scalars['String'];
+  name: Scalars['String'];
+  price: Scalars['Float'];
 };
 
 export type ItemSizeInput = {
   default?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  price: Scalars['Float'];
+};
+
+export type ItemSizeWithItem = {
+  __typename?: 'ItemSizeWithItem';
+  default?: Maybe<Scalars['Boolean']>;
+  id: Scalars['String'];
+  item: Item;
+  name: Scalars['String'];
+  price: Scalars['Float'];
+};
+
+export type ItemWithSizeInput = {
+  addOnName: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  itemSizeId?: InputMaybe<Scalars['String']>;
+};
+
+export type ItemWithSizeType = {
+  __typename?: 'ItemWithSizeType';
+  addOnName: Scalars['String'];
+  id: Scalars['String'];
+  itemSize?: Maybe<ItemSize>;
   name: Scalars['String'];
   price: Scalars['Float'];
 };
@@ -163,34 +206,20 @@ export type LocationInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  CheckoutCalculateMut: Checkout;
+  CreateOrder: CreateOrderOutput;
   addOpeningHours?: Maybe<Scalars['Boolean']>;
-  createFood: Food;
-  createOrder: Order;
 };
 
 
-export type MutationCheckoutCalculateMutArgs = {
-  orderDetails: OrderDetailsInput;
+export type MutationCreateOrderArgs = {
+  order: CreateOrderInput;
   paymentMethodId: Scalars['String'];
-  shoppingCart: Array<InputMaybe<ShoppingCartInput>>;
 };
 
 
 export type MutationAddOpeningHoursArgs = {
   openingHours: Array<DayInput>;
   restaurantId: Scalars['String'];
-};
-
-
-export type MutationCreateFoodArgs = {
-  input: CreateFoodInput;
-  restaurantId: Scalars['String'];
-};
-
-
-export type MutationCreateOrderArgs = {
-  input: CreateOrderInput;
 };
 
 export type OpeningHour = {
@@ -200,13 +229,6 @@ export type OpeningHour = {
   id: Scalars['Int'];
   openTime: Scalars['String'];
   restaurantId: Scalars['Int'];
-};
-
-export type Order = {
-  __typename?: 'Order';
-  id?: Maybe<Scalars['String']>;
-  orderItems?: Maybe<Array<Maybe<OrderItem>>>;
-  total?: Maybe<Scalars['Float']>;
 };
 
 export type OrderDetailsInput = {
@@ -230,11 +252,48 @@ export type OrderDetailsType = {
   isPickUp: Scalars['Boolean'];
 };
 
-export type OrderItem = {
-  __typename?: 'OrderItem';
-  food?: Maybe<Food>;
-  id?: Maybe<Scalars['String']>;
-  items?: Maybe<Array<Maybe<Item>>>;
+export type OrderItemInput = {
+  foodId: Scalars['String'];
+  foodSizeId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  items?: InputMaybe<Array<InputMaybe<ItemWithSizeInput>>>;
+  quantity: Scalars['Int'];
+};
+
+export type OrderItemOutput = {
+  __typename?: 'OrderItemOutput';
+  food: SimpleFood;
+  foodSize?: Maybe<FoodSize>;
+  id: Scalars['String'];
+  items?: Maybe<Array<Maybe<ItemWithSizeType>>>;
+  quantity: Scalars['Int'];
+  total: Scalars['Float'];
+};
+
+export type OrderItemType = {
+  __typename?: 'OrderItemType';
+  food: SimpleFood;
+  foodSize?: Maybe<FoodSize>;
+  id: Scalars['String'];
+  items?: Maybe<Array<Maybe<ItemWithSizeType>>>;
+  quantity: Scalars['Int'];
+  total: Scalars['Float'];
+};
+
+export type OrderType = {
+  __typename?: 'OrderType';
+  address?: Maybe<AddressType>;
+  guestEmail?: Maybe<Scalars['String']>;
+  guestFirstName?: Maybe<Scalars['String']>;
+  guestLastName?: Maybe<Scalars['String']>;
+  guestPhone?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  orderItems?: Maybe<Array<OrderItemType>>;
+  subTotal: Scalars['Float'];
+  tax: Scalars['Float'];
+  tip: Scalars['Float'];
+  total: Scalars['Float'];
+  user?: Maybe<UserType>;
 };
 
 export type Query = {
@@ -243,6 +302,7 @@ export type Query = {
   foodById?: Maybe<Food>;
   foods: Array<Maybe<Food>>;
   foodsByCategory: Array<Maybe<FoodsByCategory>>;
+  orders: Array<OrderType>;
   restaurant: RestaurantOutput;
   validateOrderDetails: ValidateOrderDetailsOutput;
   validateShoppingCart: ShoppingCart;
@@ -265,7 +325,7 @@ export type QueryValidateOrderDetailsArgs = {
 
 
 export type QueryValidateShoppingCartArgs = {
-  input: Array<InputMaybe<ShoppingCartInput>>;
+  order: CreateOrderInput;
 };
 
 export type RestaurantOutput = {
@@ -278,41 +338,24 @@ export type RestaurantType = {
   __typename?: 'RestaurantType';
   address: Scalars['String'];
   deliveryOffset: Scalars['Int'];
+  id: Scalars['String'];
   location: Location;
   menu: Array<FoodsByCategory>;
   name: Scalars['String'];
   openingHours: Array<DayOutput>;
+  phone: Scalars['String'];
   pickUpOffset: Scalars['Int'];
   radius: Scalars['Float'];
   timezone: Scalars['String'];
 };
 
-export type SelectedItem = {
-  __typename?: 'SelectedItem';
-  addOnName: Scalars['String'];
-  id: Scalars['String'];
-  itemSize?: Maybe<ItemSize>;
-  name?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Float']>;
-};
-
 export type ShoppingCart = {
   __typename?: 'ShoppingCart';
   grandTotal?: Maybe<Scalars['Float']>;
-  shoppingCartItems: Array<Maybe<ShoppingCartItem>>;
+  orderItems: Array<Maybe<OrderItemType>>;
   subTotal: Scalars['Float'];
   tax?: Maybe<Scalars['Float']>;
   tip?: Maybe<Scalars['Float']>;
-};
-
-export type ShoppingCartInput = {
-  foodId: Scalars['String'];
-  foodSizeId?: InputMaybe<Scalars['String']>;
-  isTipPercentage?: InputMaybe<Scalars['Boolean']>;
-  items: Array<InputMaybe<ShoppingCartItemInput>>;
-  orderItemId: Scalars['String'];
-  quantity: Scalars['Int'];
-  tip?: InputMaybe<Scalars['Float']>;
 };
 
 export type ShoppingCartItem = {
@@ -321,20 +364,14 @@ export type ShoppingCartItem = {
   orderItemId: Scalars['String'];
   price: Scalars['Float'];
   quantity: Scalars['Int'];
-  selectedItems?: Maybe<Array<Maybe<SelectedItem>>>;
+  selectedItems?: Maybe<Array<Maybe<ItemWithSizeType>>>;
   selectedSize?: Maybe<FoodSize>;
-};
-
-export type ShoppingCartItemInput = {
-  addOnName: Scalars['String'];
-  itemId: Scalars['String'];
-  itemSizeId?: InputMaybe<Scalars['String']>;
 };
 
 export type SimpleFood = {
   __typename?: 'SimpleFood';
   description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
@@ -359,67 +396,68 @@ export type TimeOutput = {
   opens_at?: Maybe<Scalars['String']>;
 };
 
+export type UserType = {
+  __typename?: 'UserType';
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  id: Scalars['String'];
+  lastName: Scalars['String'];
+  phone: Scalars['String'];
+};
+
 export type ValidateOrderDetailsOutput = {
   __typename?: 'ValidateOrderDetailsOutput';
   orderDetails: OrderDetailsType;
   restaurantDetails: RestaurantType;
 };
 
-export type CheckoutCalculateMutMutationVariables = Exact<{
-  shoppingCart: Array<InputMaybe<ShoppingCartInput>> | InputMaybe<ShoppingCartInput>;
-  paymentMethodId: Scalars['String'];
-  orderDetails: OrderDetailsInput;
-}>;
-
-
-export type CheckoutCalculateMutMutation = { __typename?: 'Mutation', CheckoutCalculateMut: { __typename?: 'Checkout', id?: string | null, total?: number | null, clientSecret?: string | null, status?: string | null } };
-
 export type CreateOrderMutationVariables = Exact<{
-  createOrderInput: CreateOrderInput;
+  order: CreateOrderInput;
+  paymentMethodId: Scalars['String'];
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'Order', id?: string | null, total?: number | null, orderItems?: Array<{ __typename: 'OrderItem', id?: string | null } | null> | null } };
+export type CreateOrderMutation = { __typename?: 'Mutation', CreateOrder: { __typename?: 'CreateOrderOutput', id?: string | null, total?: number | null, clientSecret?: string | null, status?: string | null } };
 
-export type AddOnFieldsFragment = { __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null };
+export type AddOnFieldsFragment = { __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id: string, name: string, price: number, itemSizes?: Array<{ __typename?: 'ItemSize', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null };
 
 export type FoodByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type FoodByIdQuery = { __typename?: 'Query', foodById?: { __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null };
+export type FoodByIdQuery = { __typename?: 'Query', foodById?: { __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id: string, name: string, price: number, itemSizes?: Array<{ __typename?: 'ItemSize', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id: string, name: string, price: number, itemSizes?: Array<{ __typename?: 'ItemSize', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null };
 
 export type FoodsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id?: string | null, name?: string | null, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> };
+export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'Food', id?: string | null, name?: string | null, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id: string, name: string, price: number, itemSizes?: Array<{ __typename?: 'ItemSize', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOn', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id: string, name: string, price: number, itemSizes?: Array<{ __typename?: 'ItemSize', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> };
 
 export type FoodsByCategoryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FoodsByCategoryQuery = { __typename?: 'Query', foodsByCategory: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null } | null> };
+export type FoodsByCategoryQuery = { __typename?: 'Query', foodsByCategory: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id: string, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null } | null> };
 
 export type RestaurantQueryVariables = Exact<{
   input: OrderDetailsInput;
 }>;
 
 
-export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'RestaurantOutput', restaurantDetails: { __typename?: 'RestaurantType', name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, timezone: string, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNow: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
+export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'RestaurantOutput', restaurantDetails: { __typename?: 'RestaurantType', name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, timezone: string, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id: string, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNow: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
 
 export type ValidateOrderDetailsQueryVariables = Exact<{
   input: OrderDetailsInput;
 }>;
 
 
-export type ValidateOrderDetailsQuery = { __typename?: 'Query', validateOrderDetails: { __typename?: 'ValidateOrderDetailsOutput', restaurantDetails: { __typename?: 'RestaurantType', name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, timezone: string, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id?: string | null, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNow: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
+export type ValidateOrderDetailsQuery = { __typename?: 'Query', validateOrderDetails: { __typename?: 'ValidateOrderDetailsOutput', restaurantDetails: { __typename?: 'RestaurantType', name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, timezone: string, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategory', category: string, foods?: Array<{ __typename?: 'SimpleFood', id: string, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNow: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
 
 export type ValidateShoppingCartQueryVariables = Exact<{
-  input: Array<InputMaybe<ShoppingCartInput>> | InputMaybe<ShoppingCartInput>;
+  order: CreateOrderInput;
 }>;
 
 
-export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', grandTotal?: number | null, subTotal: number, tax?: number | null, tip?: number | null, shoppingCartItems: Array<{ __typename?: 'ShoppingCartItem', orderItemId: string, price: number, quantity: number, food?: { __typename?: 'SimpleFood', id?: string | null, name?: string | null, price?: number | null } | null, selectedSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, selectedItems?: Array<{ __typename?: 'SelectedItem', id: string, name?: string | null, price?: number | null, addOnName: string, itemSize?: { __typename?: 'ItemSize', id?: string | null, name?: string | null, price?: number | null } | null } | null> | null } | null> } };
+export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', subTotal: number, tax?: number | null, tip?: number | null, grandTotal?: number | null, orderItems: Array<{ __typename?: 'OrderItemType', id: string, total: number, quantity: number, food: { __typename?: 'SimpleFood', id: string, name?: string | null, price?: number | null }, foodSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, items?: Array<{ __typename?: 'ItemWithSizeType', id: string, name: string, price: number, addOnName: string, itemSize?: { __typename?: 'ItemSize', id: string, name: string, price: number } | null } | null> | null } | null> } };
 
 export const AddOnFieldsFragmentDoc = gql`
     fragment AddOnFields on AddOn {
@@ -439,57 +477,13 @@ export const AddOnFieldsFragmentDoc = gql`
   }
 }
     `;
-export const CheckoutCalculateMutDocument = gql`
-    mutation CheckoutCalculateMut($shoppingCart: [ShoppingCartInput]!, $paymentMethodId: String!, $orderDetails: OrderDetailsInput!) {
-  CheckoutCalculateMut(
-    shoppingCart: $shoppingCart
-    paymentMethodId: $paymentMethodId
-    orderDetails: $orderDetails
-  ) {
+export const CreateOrderDocument = gql`
+    mutation CreateOrder($order: CreateOrderInput!, $paymentMethodId: String!) {
+  CreateOrder(order: $order, paymentMethodId: $paymentMethodId) {
     id
     total
     clientSecret
     status
-  }
-}
-    `;
-export type CheckoutCalculateMutMutationFn = Apollo.MutationFunction<CheckoutCalculateMutMutation, CheckoutCalculateMutMutationVariables>;
-
-/**
- * __useCheckoutCalculateMutMutation__
- *
- * To run a mutation, you first call `useCheckoutCalculateMutMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCheckoutCalculateMutMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [checkoutCalculateMutMutation, { data, loading, error }] = useCheckoutCalculateMutMutation({
- *   variables: {
- *      shoppingCart: // value for 'shoppingCart'
- *      paymentMethodId: // value for 'paymentMethodId'
- *      orderDetails: // value for 'orderDetails'
- *   },
- * });
- */
-export function useCheckoutCalculateMutMutation(baseOptions?: Apollo.MutationHookOptions<CheckoutCalculateMutMutation, CheckoutCalculateMutMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CheckoutCalculateMutMutation, CheckoutCalculateMutMutationVariables>(CheckoutCalculateMutDocument, options);
-      }
-export type CheckoutCalculateMutMutationHookResult = ReturnType<typeof useCheckoutCalculateMutMutation>;
-export type CheckoutCalculateMutMutationResult = Apollo.MutationResult<CheckoutCalculateMutMutation>;
-export type CheckoutCalculateMutMutationOptions = Apollo.BaseMutationOptions<CheckoutCalculateMutMutation, CheckoutCalculateMutMutationVariables>;
-export const CreateOrderDocument = gql`
-    mutation CreateOrder($createOrderInput: CreateOrderInput!) {
-  createOrder(input: $createOrderInput) {
-    id
-    total
-    orderItems {
-      id
-      __typename
-    }
   }
 }
     `;
@@ -508,7 +502,8 @@ export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrderMutation,
  * @example
  * const [createOrderMutation, { data, loading, error }] = useCreateOrderMutation({
  *   variables: {
- *      createOrderInput: // value for 'createOrderInput'
+ *      order: // value for 'order'
+ *      paymentMethodId: // value for 'paymentMethodId'
  *   },
  * });
  */
@@ -815,25 +810,25 @@ export type ValidateOrderDetailsQueryHookResult = ReturnType<typeof useValidateO
 export type ValidateOrderDetailsLazyQueryHookResult = ReturnType<typeof useValidateOrderDetailsLazyQuery>;
 export type ValidateOrderDetailsQueryResult = Apollo.QueryResult<ValidateOrderDetailsQuery, ValidateOrderDetailsQueryVariables>;
 export const ValidateShoppingCartDocument = gql`
-    query ValidateShoppingCart($input: [ShoppingCartInput]!) {
-  validateShoppingCart(input: $input) {
-    grandTotal
+    query ValidateShoppingCart($order: CreateOrderInput!) {
+  validateShoppingCart(order: $order) {
     subTotal
     tax
     tip
-    shoppingCartItems {
-      orderItemId
+    grandTotal
+    orderItems {
+      id
       food {
         id
         name
         price
       }
-      selectedSize {
+      foodSize {
         id
         name
         price
       }
-      selectedItems {
+      items {
         id
         name
         price
@@ -844,7 +839,7 @@ export const ValidateShoppingCartDocument = gql`
           price
         }
       }
-      price
+      total
       quantity
     }
   }
@@ -863,7 +858,7 @@ export const ValidateShoppingCartDocument = gql`
  * @example
  * const { data, loading, error } = useValidateShoppingCartQuery({
  *   variables: {
- *      input: // value for 'input'
+ *      order: // value for 'order'
  *   },
  * });
  */

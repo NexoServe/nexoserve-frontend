@@ -1,22 +1,22 @@
-query ValidateShoppingCart($input: [ShoppingCartInput]!) {
-  validateShoppingCart(input: $input) {
-    grandTotal
+query ValidateShoppingCart($order: CreateOrderInput!) {
+  validateShoppingCart(order: $order) {
     subTotal
     tax
     tip
-    shoppingCartItems {
-      orderItemId
+    grandTotal
+    orderItems {
+      id
       food {
         id
         name
         price
       }
-      selectedSize {
+      foodSize {
         id
         name
         price
       }
-      selectedItems {
+      items {
         id
         name
         price
@@ -27,7 +27,7 @@ query ValidateShoppingCart($input: [ShoppingCartInput]!) {
           price
         }
       }
-      price
+      total
       quantity
     }
   }

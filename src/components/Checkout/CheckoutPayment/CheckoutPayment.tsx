@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 
 import colors from '../../../../css/colors';
 import { useValidateShoppingCartLazyQuery } from '../../../../generated/graphql';
+import { OrderIsPickUpAtom, OrderTimeAtom } from '../../../state/OrderNavbar';
 import {
   ShoppingCartAtom,
   ShoppingCartTipAtom,
@@ -22,6 +23,8 @@ const CheckoutPayment = () => {
   const shoppingCart = useRecoilValue(ShoppingCartAtom);
 
   const shoppingCartTip = useRecoilValue(ShoppingCartTipAtom);
+  const isPickUp = useRecoilValue(OrderIsPickUpAtom);
+  const orderTime = useRecoilValue(OrderTimeAtom);
 
   const [validateShoppingCart, { data }] = useValidateShoppingCartLazyQuery();
 
@@ -33,9 +36,14 @@ const CheckoutPayment = () => {
         try {
           await validateShoppingCart({
             variables: {
-              input: getShoppingCartInput({
-                shoppingCartTip: shoppingCartTip,
-              }),
+              order: {
+                restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
+                isPickUp: isPickUp,
+                orderTime: orderTime?.value?.toString() as string,
+                orderItems: getShoppingCartInput(),
+                tip: shoppingCartTip.tip,
+                isTipPercentage: shoppingCartTip.isTipPercentage,
+              },
             },
             context: {
               Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,

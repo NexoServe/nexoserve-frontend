@@ -1,10 +1,8 @@
-mutation CreateOrder($createOrderInput: CreateOrderInput!) {
-  createOrder(input: $createOrderInput) {
+mutation CreateOrder($order: CreateOrderInput!, $paymentMethodId: String!) {
+  CreateOrder(order: $order, paymentMethodId: $paymentMethodId) {
     id
     total
-    orderItems {
-      id
-      __typename
-    }
+    clientSecret
+    status
   }
 }

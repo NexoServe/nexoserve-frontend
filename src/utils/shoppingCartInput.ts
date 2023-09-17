@@ -1,15 +1,10 @@
 import {
-  ShoppingCartInput,
+  ItemWithSizeInput,
+  OrderItemInput,
   ShoppingCartItem,
-  ShoppingCartItemInput,
 } from '../../generated/graphql';
-import { ShoppingCartTipType } from '../state/ShoppingCartState';
 
-type FetchShoppingCartType = {
-  shoppingCartTip: ShoppingCartTipType;
-};
-
-const getShoppingCartInput = ({ shoppingCartTip }: FetchShoppingCartType) => {
+const getShoppingCartInput = (): OrderItemInput[] => {
   const shoppingCartItems = localStorage.getItem('shoppingCartItems');
 
   let shoppingCartItemsParsed: ShoppingCartItem[] = [];
@@ -38,23 +33,24 @@ const getShoppingCartInput = ({ shoppingCartTip }: FetchShoppingCartType) => {
     }
   });
 
-  const shoppingCartInput: ShoppingCartInput[] = shoppingCartItemsParsed?.map(
+  const shoppingCartInput: OrderItemInput[] = shoppingCartItemsParsed?.map(
     (item) => {
-      return {
-        orderItemId: item?.orderItemId,
+      const orderItem: OrderItemInput = {
+        id: item?.orderItemId as string,
         foodId: item?.food?.id as string,
         foodSizeId: item?.selectedSize?.id,
         items: item?.selectedItems?.map((selectedItem) => {
-          return {
-            itemId: selectedItem?.id as string,
+          const item: ItemWithSizeInput = {
+            id: selectedItem?.id as string,
             itemSizeId: selectedItem?.itemSize?.id as string,
             addOnName: selectedItem?.addOnName as string,
           };
-        }) as ShoppingCartItemInput[],
+          return item;
+        }) as ItemWithSizeInput[],
         quantity: item?.quantity,
-        isTipPercentage: shoppingCartTip.isTipPercentage,
-        tip: shoppingCartTip.tip,
       };
+
+      return orderItem;
     },
   );
 

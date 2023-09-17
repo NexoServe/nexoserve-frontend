@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { SelectedItem } from '../../../../generated/graphql';
+import { ItemWithSizeType } from '../../../../generated/graphql';
 import {
   ShoppingCartAtom,
   ShoppingCartTotalAtom,
@@ -34,7 +34,7 @@ const ShoppingCarCheckoutButton = () => {
             selectedSize: item.selectedSize,
             quantity: item.quantity,
           },
-          item?.selectedItems as SelectedItem[],
+          item?.selectedItems as ItemWithSizeType[],
         );
       });
 

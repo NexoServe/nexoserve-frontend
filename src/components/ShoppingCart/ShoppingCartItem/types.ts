@@ -1,6 +1,9 @@
 import { Maybe } from 'graphql/jsutils/Maybe';
 
-import { SelectedItem, ShoppingCartItem } from '../../../../generated/graphql';
+import {
+  ItemWithSizeType,
+  ShoppingCartItem,
+} from '../../../../generated/graphql';
 
 export interface IShoppingCartItem {
   shoppingCartItem: ShoppingCartItem;
@@ -8,5 +11,5 @@ export interface IShoppingCartItem {
 
 export type ItemSizeGrouped = {
   itemSizeName: string;
-  selectedItems: Maybe<SelectedItem>[];
+  selectedItems: Maybe<ItemWithSizeType>[];
 };

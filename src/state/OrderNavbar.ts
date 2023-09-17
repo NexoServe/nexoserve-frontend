@@ -32,7 +32,7 @@ export const OrderTimeAtom = atom<OrderTime | undefined>({
   key: 'OrderTimeAtom',
   default: {
     value: null,
-    label: null,
+    label: 'ASAP',
   },
 });
 

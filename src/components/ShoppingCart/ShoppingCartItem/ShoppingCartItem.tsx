@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { base } from '../../../../css/base';
-import { Maybe, SelectedItem } from '../../../../generated/graphql';
+import { ItemWithSizeType, Maybe } from '../../../../generated/graphql';
 import {
   FoodModalAtom,
   FoodModalSelectedItemsAtom,
@@ -74,7 +74,7 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
     });
   };
 
-  const selectedItems: Maybe<SelectedItem>[] = [];
+  const selectedItems: Maybe<ItemWithSizeType>[] = [];
 
   const groupMap = new Map<string, ItemSizeGrouped>();
 

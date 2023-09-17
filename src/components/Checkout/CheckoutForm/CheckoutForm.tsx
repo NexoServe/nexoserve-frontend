@@ -9,7 +9,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import SkeletonLoader from 'tiny-skeleton-loader-react';
 
 import colors from '../../../../css/colors';
-import { useCheckoutCalculateMutMutation } from '../../../../generated/graphql';
+import { useCreateOrderMutation } from '../../../../generated/graphql';
 import {
   CheckoutEmailAtom,
   CheckoutEmailErrorAtom,
@@ -75,7 +75,7 @@ export default function CheckoutForm() {
   const [message, setMessage] = useState<string | null | undefined>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [checkoutCalculateMut] = useCheckoutCalculateMutMutation();
+  const [createOrder] = useCreateOrderMutation();
   const shoppingCartTip = useRecoilValue(ShoppingCartTipAtom);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -115,7 +115,7 @@ export default function CheckoutForm() {
     // @ts-expect-error: unsupported types
     const { error: submitError } = await elements.submit();
     if (submitError) {
-      setMessage(submitError.message);
+      setMessage(submitError?.message);
       setIsLoading(false);
       return;
     }
@@ -134,37 +134,41 @@ export default function CheckoutForm() {
     if (error) {
       // This point is only reached if there's an immediate error when
       // creating the PaymentMethod. Show the error to your customer (for example, payment details incomplete)
-      setMessage(submitError.message);
+      setMessage(submitError?.message);
       setIsLoading(false);
       return;
     }
 
     try {
-      const res = await checkoutCalculateMut({
+      const res = await createOrder({
         variables: {
-          shoppingCart: getShoppingCartInput({
-            shoppingCartTip: shoppingCartTip,
-          }),
-          paymentMethodId: paymentMethod.id,
-          orderDetails: {
+          order: {
             restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
-            isPickUp: isPickUp,
+            isPickUp,
             orderTime: orderTime?.value?.toString() as string,
-            deliveryAddress: deliveryAddress as string,
-            deliveryDetails: deliveryDetails as string,
-            deliveryAddressAdditionalInfo: additionalAddressInfo as string,
+            orderItems: getShoppingCartInput(),
+            tip: shoppingCartTip.tip,
+            isTipPercentage: shoppingCartTip.isTipPercentage,
+            deliveryAddress,
+            suiteAptFloor: additionalAddressInfo,
+            deliveryDetails,
+            guestFirstName: firstName,
+            guestLastName: lastName,
+            guestEmail: email,
+            guestPhone: phone,
           },
+          paymentMethodId: paymentMethod?.id,
         },
         context: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`,
         },
       });
 
-      if (res.data?.CheckoutCalculateMut.status === 'requires_action') {
+      if (res.data?.CreateOrder.status === 'requires_action') {
         // Use Stripe.js to handle the required next action
         // @ts-expect-error: unsupported types
         const { error, paymentIntent } = await stripe.handleNextAction({
-          clientSecret: res.data.CheckoutCalculateMut.clientSecret,
+          clientSecret: res.data.CreateOrder.clientSecret,
         });
 
         if (paymentIntent.last_payment_error) {
@@ -209,7 +213,7 @@ export default function CheckoutForm() {
       }
     }
 
-    setMessage(null);
+    // setMessage(null);
     setIsLoading(false);
   };
 
