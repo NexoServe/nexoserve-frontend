@@ -46,11 +46,11 @@ const FoodList = () => {
       ))}
 
       <AnimatePresence>
-        {showModal && (
+        {showModal && activeFood && (
           <FoodModal
             showModal={showModal}
             setShowModal={setShowModal}
-            foodId={activeFood?.id as string}
+            foodId={activeFood.id}
             type="create"
           />
         )}

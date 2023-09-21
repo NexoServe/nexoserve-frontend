@@ -238,7 +238,9 @@ const FoodModal = ({
     }
   };
 
-  if (!data) return null;
+  if (error) {
+    console.log('error', error);
+  }
 
   return (
     <ModalPopUp showModal={showModal} onClose={() => onClose()}>
@@ -246,7 +248,7 @@ const FoodModal = ({
         <FoodModalNav
           loading={loading}
           onClick={onClose}
-          name={data?.foodById?.name}
+          name={data?.foodById.name}
         />
 
         <FoodModalCloseButton onClick={onClose} />
@@ -256,7 +258,7 @@ const FoodModal = ({
           className={classes.foodModalForm}
           id="foodModal"
         >
-          {loading || error ? (
+          {loading || !data ? (
             <Loader styleClass={classes.foodModalLoader} />
           ) : (
             <FoodModalBody

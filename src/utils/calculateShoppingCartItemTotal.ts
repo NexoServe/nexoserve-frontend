@@ -1,9 +1,9 @@
 import { ItemWithSizeType } from '../../generated/graphql';
-import { FoodModalType, SelectedItemType } from '../state/FoodModalState';
+import { FoodModalType } from '../state/FoodModalState';
 
 const calculateShoppingCartItemTotal = (
   foodModal: FoodModalType,
-  selectedItems: SelectedItemType[] | ItemWithSizeType[],
+  selectedItems: ItemWithSizeType[] | ItemWithSizeType[],
 ) => {
   let foodPrice: number = foodModal.food?.price as number;
 

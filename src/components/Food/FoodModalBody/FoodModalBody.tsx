@@ -16,9 +16,9 @@ import FoodModalHeader from '../FoodModalHeader/FoodModalHeader';
 import FoodSize from '../FoodSize/FoodSize';
 
 import useStyles from './css';
-import { IFoodModalHeader } from './types';
+import { IFoodModalBody } from './types';
 
-const FoodModalBody = ({ food, showModal, type }: IFoodModalHeader) => {
+const FoodModalBody = ({ food, showModal, type }: IFoodModalBody) => {
   const classes = useStyles();
 
   const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);

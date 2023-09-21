@@ -1,4 +1,4 @@
-fragment AddOnFields on AddOn {
+fragment AddOnFields on AddOnType {
   id
   name
   isRequired

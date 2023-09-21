@@ -3,18 +3,10 @@ import { atom, selector } from 'recoil';
 import {
   FoodsByCategoryType,
   FoodWithSizesType,
-  ItemSizeType,
+  ItemWithSizeType,
 } from '../../generated/graphql';
 import { AddOnType } from '../components/Food/FoodAddOn/types';
 import { FoodSizeType } from '../components/Food/FoodSize/types';
-
-export type SelectedItemType = {
-  id: string | null | undefined;
-  price: number | null | undefined;
-  name: string | null | undefined;
-  itemSize: ItemSizeType | null | undefined;
-  addOnName: string | null | undefined;
-};
 
 export type FoodModalType = {
   food: FoodWithSizesType | null | undefined;
@@ -37,7 +29,7 @@ export const FoodModalAddOnRequiredAtom = atom<AddOnType | undefined | null>({
   default: undefined,
 });
 
-export const FoodModalSelectedItemsAtom = atom<SelectedItemType[]>({
+export const FoodModalSelectedItemsAtom = atom<ItemWithSizeType[]>({
   key: 'FoodModalSelectedItemsAtom',
   default: [],
 });
