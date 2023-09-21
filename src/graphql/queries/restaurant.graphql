@@ -1,6 +1,8 @@
 query Restaurant($input: OrderDetailsInput!) {
   restaurant(input: $input) {
     restaurantDetails {
+      id
+      phone
       name
       address
       location {

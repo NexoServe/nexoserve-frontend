@@ -1,6 +1,8 @@
 query ValidateOrderDetails($input: OrderDetailsInput!) {
   validateOrderDetails(input: $input) {
     restaurantDetails {
+      id
+      phone
       name
       address
       location {

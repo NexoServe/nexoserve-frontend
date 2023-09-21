@@ -341,6 +341,7 @@ const OrderNavBarModal = ({
       setIsPickUp(true);
       localStorage.setItem('isPickUp', JSON.stringify(true));
     } else {
+      console.log('HERE');
       setIsPickUp(false);
       localStorage.setItem('isPickUp', JSON.stringify(false));
     }
@@ -361,6 +362,11 @@ const OrderNavBarModal = ({
         label: orderTimeState?.label,
         value: orderTimeState?.label === 'ASAP' ? 'ASAP' : value,
       }),
+    );
+
+    console.log(
+      'res.data.validateOrderDetails.orderDetails.isDeliveryAddressValid',
+      res.data.validateOrderDetails.orderDetails.isDeliveryAddressValid,
     );
 
     if (

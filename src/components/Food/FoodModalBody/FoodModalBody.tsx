@@ -31,7 +31,7 @@ const FoodModalBody = ({ data, showModal, type }: IFoodModalHeader) => {
       setFoodModal({
         ...foodModal,
         food: {
-          id: data?.foodById?.id,
+          id: data.foodById.id,
           name: data?.foodById?.name,
           description: data?.foodById?.description,
           price: data?.foodById?.price || data?.foodById?.sizes?.[0]?.price,

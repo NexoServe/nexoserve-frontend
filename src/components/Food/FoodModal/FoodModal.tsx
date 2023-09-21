@@ -236,6 +236,8 @@ const FoodModal = ({
     }
   };
 
+  if (!data) return null;
+
   return (
     <ModalPopUp showModal={showModal} onClose={() => onClose()}>
       <div className={classes.foodModal}>
