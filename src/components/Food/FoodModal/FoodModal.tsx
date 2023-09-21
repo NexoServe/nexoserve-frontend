@@ -37,6 +37,8 @@ const FoodModal = ({
     },
     notifyOnNetworkStatusChange: true,
   });
+
+  console.log('loading', loading);
   const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
     ShoppingCartTotalAtom,
   );
@@ -257,7 +259,11 @@ const FoodModal = ({
           {loading || error ? (
             <Loader styleClass={classes.foodModalLoader} />
           ) : (
-            <FoodModalBody data={data} showModal={showModal} type={type} />
+            <FoodModalBody
+              food={data.foodById}
+              showModal={showModal}
+              type={type}
+            />
           )}
         </form>
       </div>

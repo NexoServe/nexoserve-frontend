@@ -1,3 +1,4 @@
+import { ItemSizeType } from '../../../../generated/graphql';
 import Checkbox from '../../Checkbox/Checkbox';
 import { IFoodItemStyle } from '../FoodItem/types';
 import FoodItemSize from '../FoodItemSize/FoodItemSize';
@@ -39,7 +40,7 @@ const FoodItemRegularStyle = ({
             addOn={addOn}
             item={item}
             key={itemSize?.id}
-            itemSize={itemSize}
+            itemSize={itemSize as ItemSizeType}
           />
         ))}
       </div>

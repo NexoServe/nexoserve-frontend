@@ -1,9 +1,11 @@
 import { atom, selector } from 'recoil';
 
-import { FoodsByCategory } from '../../generated/graphql';
+import {
+  FoodsByCategoryType,
+  FoodWithSizesType,
+  ItemSizeType,
+} from '../../generated/graphql';
 import { AddOnType } from '../components/Food/FoodAddOn/types';
-import { ItemSizeType } from '../components/Food/FoodItemSize/types';
-import { SimpleFoodType } from '../components/Food/FoodList/types';
 import { FoodSizeType } from '../components/Food/FoodSize/types';
 
 export type SelectedItemType = {
@@ -15,12 +17,12 @@ export type SelectedItemType = {
 };
 
 export type FoodModalType = {
-  food: SimpleFoodType | null | undefined;
+  food: FoodWithSizesType | null | undefined;
   selectedSize: FoodSizeType | undefined;
   quantity: number;
 };
 
-export const FoodMenuAtom = atom<FoodsByCategory[]>({
+export const FoodMenuAtom = atom<FoodsByCategoryType[]>({
   key: 'FoodMenuAtom',
   default: [],
 });

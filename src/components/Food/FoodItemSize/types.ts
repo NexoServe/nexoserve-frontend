@@ -1,5 +1,6 @@
 import { ChangeEventHandler } from 'react';
 
+import { ItemSizeType } from '../../../../generated/graphql';
 import { AddOnType } from '../FoodAddOn/types';
 import { ItemType } from '../FoodItem/types';
 
@@ -15,7 +16,3 @@ export interface IFoodItemSizeStyle {
   onChange: ChangeEventHandler<HTMLInputElement> | undefined;
   isChecked: boolean;
 }
-
-export type ItemSizeType = NonNullable<
-  NonNullable<ItemType>['itemSizes']
->[number];

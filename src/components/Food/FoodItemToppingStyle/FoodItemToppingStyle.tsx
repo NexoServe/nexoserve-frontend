@@ -1,3 +1,4 @@
+import { ItemSizeType } from '../../../../generated/graphql';
 import Checkbox from '../../Checkbox/Checkbox';
 import Divider from '../../Divider/Divider';
 import { IFoodItemStyle } from '../FoodItem/types';
@@ -41,7 +42,7 @@ const FoodItemToppingStyle = ({
               addOn={addOn}
               item={item}
               key={itemSize?.id}
-              itemSize={itemSize}
+              itemSize={itemSize as ItemSizeType}
             />
           ))}
         </div>
