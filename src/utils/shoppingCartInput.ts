@@ -14,17 +14,18 @@ const getShoppingCartInput = (): OrderItemInput[] => {
     localStorage.removeItem('shoppingCartItems');
   }
 
-  shoppingCartItemsParsed?.filter((item) => {
+  const validItems = shoppingCartItemsParsed?.filter((item) => {
     if (typeof item === 'object' && !Array.isArray(item)) {
       // TODO: Find a better way to validate this
-      const requiredProperties = [
-        'orderItemId',
-        'food',
-        'quantity',
-        'selectedOptions',
-        'selectedSize',
-      ];
+      const requiredProperties = ['orderItemId', 'food', 'quantity'];
       if (!requiredProperties.every((prop) => item.hasOwnProperty(prop))) {
+        return false;
+      }
+
+      if (
+        item.hasOwnProperty('selectedOptions') &&
+        !Array.isArray(item.selectedOptions)
+      ) {
         return false;
       }
 
@@ -33,6 +34,10 @@ const getShoppingCartInput = (): OrderItemInput[] => {
       return false;
     }
   });
+  console.log('validItems', validItems);
+
+  localStorage.setItem('shoppingCartItems', JSON.stringify(validItems));
+  console.log('shoppingCartItemsParsed', shoppingCartItemsParsed);
 
   const shoppingCartInput: OrderItemInput[] = shoppingCartItemsParsed?.map(
     (item) => {

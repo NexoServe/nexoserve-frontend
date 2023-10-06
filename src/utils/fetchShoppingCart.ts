@@ -41,17 +41,18 @@ const fetchShoppingCart = ({
 
   console.log('shoppingCartItemsParsed', shoppingCartItemsParsed);
 
-  shoppingCartItemsParsed?.filter((item) => {
+  const validItems = shoppingCartItemsParsed?.filter((item) => {
     if (typeof item === 'object' && !Array.isArray(item)) {
       // TODO: Find a better way to validate this
-      const requiredProperties = [
-        'orderItemId',
-        'food',
-        'quantity',
-        'selectedOptions',
-        'selectedSize',
-      ];
+      const requiredProperties = ['orderItemId', 'food', 'quantity'];
       if (!requiredProperties.every((prop) => item.hasOwnProperty(prop))) {
+        return false;
+      }
+
+      if (
+        item.hasOwnProperty('selectedOptions') &&
+        !Array.isArray(item.selectedOptions)
+      ) {
         return false;
       }
 
@@ -60,6 +61,8 @@ const fetchShoppingCart = ({
       return false;
     }
   });
+
+  localStorage.setItem('shoppingCartItems', JSON.stringify(validItems));
 
   const shoppingCartInput = getShoppingCartInput();
 
