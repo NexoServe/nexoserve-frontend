@@ -67,6 +67,7 @@ export type CreateFoodInput = {
   image?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   price?: InputMaybe<Scalars['Float']>;
+  restaurantId: Scalars['String'];
   sizes?: InputMaybe<Array<CreateFoodSizeInput>>;
 };
 
