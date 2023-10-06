@@ -3,7 +3,7 @@ import { atom, selector } from 'recoil';
 import {
   FoodsByCategoryType,
   FoodWithSizesType,
-  ItemWithSizeType,
+  OptionWithSizeType,
 } from '../../generated/graphql';
 import { AddOnType } from '../components/Food/FoodAddOn/types';
 import { FoodSizeType } from '../components/Food/FoodSize/types';
@@ -29,8 +29,8 @@ export const FoodModalAddOnRequiredAtom = atom<AddOnType | undefined | null>({
   default: undefined,
 });
 
-export const FoodModalSelectedItemsAtom = atom<ItemWithSizeType[]>({
-  key: 'FoodModalSelectedItemsAtom',
+export const FoodModalSelectedOptionsAtom = atom<OptionWithSizeType[]>({
+  key: 'FoodModalSelectedOptionsAtom',
   default: [],
 });
 
@@ -58,7 +58,7 @@ export const foodModalTotalSelector = selector({
   get: ({ get }) => {
     const foodModal = get(FoodModalAtom);
     if (foodModal.food) {
-      const selectedItems = get(FoodModalSelectedItemsAtom);
+      const selectedOptions = get(FoodModalSelectedOptionsAtom);
 
       let foodPrice: number = foodModal.food?.price as number;
 
@@ -66,11 +66,11 @@ export const foodModalTotalSelector = selector({
         foodPrice = foodModal.selectedSize.price ?? 0;
       }
 
-      if (selectedItems) {
-        selectedItems.forEach((selectedItem) => {
-          const itemPrice =
-            selectedItem.itemSize?.price || selectedItem.price || 0;
-          foodPrice += itemPrice;
+      if (selectedOptions) {
+        selectedOptions.forEach((selectedOption) => {
+          const optionPrice =
+            selectedOption.optionSize?.price || selectedOption.price || 0;
+          foodPrice += optionPrice;
         });
       }
 

@@ -1,9 +1,9 @@
-import { ItemWithSizeType } from '../../generated/graphql';
+import { OptionWithSizeType } from '../../generated/graphql';
 import { FoodModalType } from '../state/FoodModalState';
 
 const calculateShoppingCartItemTotal = (
   foodModal: FoodModalType,
-  selectedItems: ItemWithSizeType[] | ItemWithSizeType[],
+  selectedOptions: OptionWithSizeType[] | OptionWithSizeType[],
 ) => {
   let foodPrice: number = foodModal.food?.price as number;
 
@@ -11,10 +11,11 @@ const calculateShoppingCartItemTotal = (
     foodPrice = foodModal.selectedSize.price ?? 0;
   }
 
-  if (selectedItems) {
-    selectedItems.forEach((selectedItem) => {
-      const itemPrice = selectedItem.itemSize?.price || selectedItem.price || 0;
-      foodPrice += itemPrice;
+  if (selectedOptions) {
+    selectedOptions.forEach((selectedOption) => {
+      const optionPrice =
+        selectedOption.optionSize?.price || selectedOption.price || 0;
+      foodPrice += optionPrice;
     });
   }
 

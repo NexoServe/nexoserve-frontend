@@ -9,7 +9,7 @@ import {
   FoodModalAddOnsAtom,
   FoodModalAtom,
   FoodModalPriceAtom,
-  FoodModalSelectedItemsAtom,
+  FoodModalSelectedOptionsAtom,
 } from '../../../state/FoodModalState';
 import {
   ShoppingCartAtom,
@@ -60,8 +60,8 @@ const FoodModal = ({
   const [requiredAddOn, setRequiredAddOn] = useRecoilState(
     FoodModalAddOnRequiredAtom,
   );
-  const [selectedItems, setSelectedItems] = useRecoilState(
-    FoodModalSelectedItemsAtom,
+  const [selectedOptions, setSelectedOptions] = useRecoilState(
+    FoodModalSelectedOptionsAtom,
   );
   const [foodModalPrice, setFoodModalPrice] =
     useRecoilState(FoodModalPriceAtom);
@@ -74,17 +74,19 @@ const FoodModal = ({
       quantity: 1,
     });
     setAddOns(undefined);
-    setSelectedItems([]);
+    setSelectedOptions([]);
     setRequiredAddOn(undefined);
     setFoodModalPrice(0);
     document.body.style.overflow = 'unset';
   };
 
   useMemo(() => {
-    if (selectedItems.some((item) => item.addOnName === requiredAddOn?.name)) {
+    if (
+      selectedOptions.some((option) => option.addOnName === requiredAddOn?.name)
+    ) {
       setRequiredAddOn(undefined);
     }
-  }, [selectedItems, requiredAddOn, setRequiredAddOn]);
+  }, [selectedOptions, requiredAddOn, setRequiredAddOn]);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -94,7 +96,9 @@ const FoodModal = ({
     );
 
     const requiredAddOn = requiredAddOns?.find((addOn) => {
-      return !selectedItems.some((item) => item.addOnName === addOn?.name);
+      return !selectedOptions.some(
+        (option) => option.addOnName === addOn?.name,
+      );
     });
 
     if (requiredAddOn) {
@@ -114,22 +118,18 @@ const FoodModal = ({
         ...shoppingCart,
         {
           orderItemId: orderItemId,
-          food: {
-            id: foodModal.food?.id as string,
-            name: foodModal.food?.name as string,
-            price: foodModal.food?.price as number,
-          },
+          food: foodModal.food,
           quantity: foodModal.quantity,
           selectedSize: foodModal.selectedSize,
-          selectedItems: selectedItems.map((item) => ({
-            id: item.id as string,
-            name: item.name as string,
-            price: item.price as number,
-            addOnName: item.addOnName as string,
-            itemSize: {
-              id: item.itemSize?.id as string,
-              name: item.itemSize?.name as string,
-              price: item.itemSize?.price as number,
+          selectedOptions: selectedOptions.map((option) => ({
+            id: option.id,
+            name: option.name,
+            price: option.price,
+            addOnName: option.addOnName as string,
+            optionSize: {
+              id: option.optionSize?.id as string,
+              name: option.optionSize?.name as string,
+              price: option.optionSize?.price as number,
             },
           })),
           price: foodModalPrice,
@@ -157,15 +157,15 @@ const FoodModal = ({
           name: foodModal.selectedSize?.name as string,
           price: foodModal.selectedSize?.price as number,
         },
-        selectedItems: selectedItems.map((item) => ({
-          id: item.id as string,
-          name: item.name as string,
-          price: item.price as number,
-          addOnName: item.addOnName as string,
-          itemSize: {
-            id: item.itemSize?.id as string,
-            name: item.itemSize?.name as string,
-            price: item.itemSize?.price as number,
+        selectedOptions: selectedOptions.map((option) => ({
+          id: option.id as string,
+          name: option.name as string,
+          price: option.price as number,
+          addOnName: option.addOnName as string,
+          optionSize: {
+            id: option.optionSize?.id as string,
+            name: option.optionSize?.name as string,
+            price: option.optionSize?.price as number,
           },
         })),
         price: foodModalPrice,
@@ -209,15 +209,15 @@ const FoodModal = ({
               },
               quantity: foodModal.quantity,
               selectedSize: foodModal.selectedSize,
-              selectedItems: selectedItems.map((item) => ({
-                id: item.id as string,
-                name: item.name as string,
-                price: item.price as number,
-                addOnName: item.addOnName as string,
-                itemSize: {
-                  id: item.itemSize?.id as string,
-                  name: item.itemSize?.name as string,
-                  price: item.itemSize?.price as number,
+              selectedOptions: selectedOptions.map((option) => ({
+                id: option.id as string,
+                name: option.name as string,
+                price: option.price as number,
+                addOnName: option.addOnName as string,
+                optionSize: {
+                  id: option.optionSize?.id as string,
+                  name: option.optionSize?.name as string,
+                  price: option.optionSize?.price as number,
                 },
               })),
               price: foodModalPrice,

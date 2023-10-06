@@ -27,8 +27,8 @@ export type AddOnType = {
   foods?: Maybe<Array<Maybe<FoodType>>>;
   id?: Maybe<Scalars['String']>;
   isRequired?: Maybe<Scalars['Boolean']>;
-  items?: Maybe<Array<Maybe<Item>>>;
   name?: Maybe<Scalars['String']>;
+  options?: Maybe<Array<Maybe<OptionType>>>;
 };
 
 export type AddressType = {
@@ -55,8 +55,8 @@ export type BaseFood = {
 export type CreateAddOnInput = {
   id?: InputMaybe<Scalars['String']>;
   isRequired: Scalars['Boolean'];
-  items: Array<CreateItemInput>;
   name: Scalars['String'];
+  options: Array<CreateOptionInput>;
 };
 
 export type CreateFoodInput = {
@@ -77,10 +77,10 @@ export type CreateFoodSizeInput = {
   price: Scalars['Float'];
 };
 
-export type CreateItemInput = {
+export type CreateOptionInput = {
   id?: InputMaybe<Scalars['String']>;
-  itemSizes?: InputMaybe<Array<ItemSizeInput>>;
   name: Scalars['String'];
+  optionSizes?: InputMaybe<Array<OptionSizeInput>>;
   price: Scalars['Float'];
 };
 
@@ -155,53 +155,6 @@ export type FoodsByCategoryType = {
   foods?: Maybe<Array<FoodWithSizesType>>;
 };
 
-export type Item = {
-  __typename?: 'Item';
-  id: Scalars['String'];
-  itemSizes?: Maybe<Array<Maybe<ItemSizeType>>>;
-  name: Scalars['String'];
-  price?: Maybe<Scalars['Float']>;
-};
-
-export type ItemSizeInput = {
-  default?: InputMaybe<Scalars['Boolean']>;
-  id?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-  price: Scalars['Float'];
-};
-
-export type ItemSizeType = {
-  __typename?: 'ItemSizeType';
-  default?: Maybe<Scalars['Boolean']>;
-  id: Scalars['String'];
-  name: Scalars['String'];
-  price: Scalars['Float'];
-};
-
-export type ItemSizeWithItem = {
-  __typename?: 'ItemSizeWithItem';
-  default?: Maybe<Scalars['Boolean']>;
-  id: Scalars['String'];
-  item: Item;
-  name: Scalars['String'];
-  price: Scalars['Float'];
-};
-
-export type ItemWithSizeInput = {
-  addOnName: Scalars['String'];
-  id?: InputMaybe<Scalars['String']>;
-  itemSizeId?: InputMaybe<Scalars['String']>;
-};
-
-export type ItemWithSizeType = {
-  __typename?: 'ItemWithSizeType';
-  addOnName: Scalars['String'];
-  id: Scalars['String'];
-  itemSize?: Maybe<ItemSizeType>;
-  name: Scalars['String'];
-  price?: Maybe<Scalars['Float']>;
-};
-
 export type Location = {
   __typename?: 'Location';
   id?: Maybe<Scalars['String']>;
@@ -241,6 +194,53 @@ export type OpeningHour = {
   restaurantId: Scalars['Int'];
 };
 
+export type OptionSizeInput = {
+  default?: InputMaybe<Scalars['Boolean']>;
+  id?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  price: Scalars['Float'];
+};
+
+export type OptionSizeType = {
+  __typename?: 'OptionSizeType';
+  default?: Maybe<Scalars['Boolean']>;
+  id: Scalars['String'];
+  name: Scalars['String'];
+  price: Scalars['Float'];
+};
+
+export type OptionSizeWithOption = {
+  __typename?: 'OptionSizeWithOption';
+  default?: Maybe<Scalars['Boolean']>;
+  id: Scalars['String'];
+  name: Scalars['String'];
+  option: OptionType;
+  price: Scalars['Float'];
+};
+
+export type OptionType = {
+  __typename?: 'OptionType';
+  id: Scalars['String'];
+  name: Scalars['String'];
+  optionSizes?: Maybe<Array<Maybe<OptionSizeType>>>;
+  price?: Maybe<Scalars['Float']>;
+};
+
+export type OptionWithSizeInput = {
+  addOnName: Scalars['String'];
+  id?: InputMaybe<Scalars['String']>;
+  optionSizeId?: InputMaybe<Scalars['String']>;
+};
+
+export type OptionWithSizeType = {
+  __typename?: 'OptionWithSizeType';
+  addOnName: Scalars['String'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  optionSize?: Maybe<OptionSizeType>;
+  price?: Maybe<Scalars['Float']>;
+};
+
 export type OrderDetailsInput = {
   deliveryAddress?: InputMaybe<Scalars['String']>;
   deliveryAddressAdditionalInfo?: InputMaybe<Scalars['String']>;
@@ -266,7 +266,7 @@ export type OrderItemInput = {
   foodId: Scalars['String'];
   foodSizeId?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
-  items?: InputMaybe<Array<InputMaybe<ItemWithSizeInput>>>;
+  options?: InputMaybe<Array<InputMaybe<OptionWithSizeInput>>>;
   quantity: Scalars['Int'];
 };
 
@@ -275,7 +275,7 @@ export type OrderItemOutput = {
   food: FoodWithSizesType;
   foodSize?: Maybe<FoodSize>;
   id: Scalars['String'];
-  items?: Maybe<Array<Maybe<ItemWithSizeType>>>;
+  options?: Maybe<Array<Maybe<OptionWithSizeType>>>;
   quantity: Scalars['Int'];
   total: Scalars['Float'];
 };
@@ -285,7 +285,7 @@ export type OrderItemType = {
   food: FoodWithSizesType;
   foodSize?: Maybe<FoodSize>;
   id: Scalars['String'];
-  items?: Maybe<Array<Maybe<ItemWithSizeType>>>;
+  options?: Maybe<Array<Maybe<OptionWithSizeType>>>;
   quantity: Scalars['Int'];
   total: Scalars['Float'];
 };
@@ -375,7 +375,7 @@ export type ShoppingCartItem = {
   orderItemId: Scalars['String'];
   price: Scalars['Float'];
   quantity: Scalars['Int'];
-  selectedItems?: Maybe<Array<Maybe<ItemWithSizeType>>>;
+  selectedOptions?: Maybe<Array<Maybe<OptionWithSizeType>>>;
   selectedSize?: Maybe<FoodSize>;
 };
 
@@ -430,19 +430,19 @@ export type CreateOrderMutationVariables = Exact<{
 
 export type CreateOrderMutation = { __typename?: 'Mutation', CreateOrder: { __typename?: 'CreateOrderOutput', id?: string | null, total?: number | null, clientSecret?: string | null, status?: string | null } };
 
-export type AddOnFieldsFragment = { __typename?: 'AddOnType', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id: string, name: string, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSizeType', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null };
+export type AddOnFieldsFragment = { __typename?: 'AddOnType', id?: string | null, name?: string | null, isRequired?: boolean | null, options?: Array<{ __typename?: 'OptionType', id: string, name: string, price?: number | null, optionSizes?: Array<{ __typename?: 'OptionSizeType', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null };
 
 export type FoodByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type FoodByIdQuery = { __typename?: 'Query', foodById: { __typename?: 'FoodType', id: string, name: string, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOnType', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id: string, name: string, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSizeType', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOnType', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id: string, name: string, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSizeType', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null } | null> | null } };
+export type FoodByIdQuery = { __typename?: 'Query', foodById: { __typename?: 'FoodType', id: string, name: string, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOnType', id?: string | null, name?: string | null, isRequired?: boolean | null, options?: Array<{ __typename?: 'OptionType', id: string, name: string, price?: number | null, optionSizes?: Array<{ __typename?: 'OptionSizeType', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOnType', id?: string | null, name?: string | null, isRequired?: boolean | null, options?: Array<{ __typename?: 'OptionType', id: string, name: string, price?: number | null, optionSizes?: Array<{ __typename?: 'OptionSizeType', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null } | null> | null } };
 
 export type FoodsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'FoodType', id: string, name: string, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOnType', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id: string, name: string, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSizeType', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOnType', id?: string | null, name?: string | null, isRequired?: boolean | null, items?: Array<{ __typename?: 'Item', id: string, name: string, price?: number | null, itemSizes?: Array<{ __typename?: 'ItemSizeType', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> };
+export type FoodsQuery = { __typename?: 'Query', foods: Array<{ __typename?: 'FoodType', id: string, name: string, description?: string | null, image?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null, addOns?: Array<{ __typename?: 'AddOnType', id?: string | null, name?: string | null, isRequired?: boolean | null, options?: Array<{ __typename?: 'OptionType', id: string, name: string, price?: number | null, optionSizes?: Array<{ __typename?: 'OptionSizeType', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> | null, addOns?: Array<{ __typename?: 'AddOnType', id?: string | null, name?: string | null, isRequired?: boolean | null, options?: Array<{ __typename?: 'OptionType', id: string, name: string, price?: number | null, optionSizes?: Array<{ __typename?: 'OptionSizeType', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null } | null> | null } | null> };
 
 export type FoodsByCategoryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -468,18 +468,18 @@ export type ValidateShoppingCartQueryVariables = Exact<{
 }>;
 
 
-export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', subTotal: number, tax?: number | null, tip?: number | null, grandTotal?: number | null, orderItems: Array<{ __typename?: 'OrderItemType', id: string, total: number, quantity: number, food: { __typename?: 'FoodWithSizesType', id: string, name?: string | null, price?: number | null }, foodSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, items?: Array<{ __typename?: 'ItemWithSizeType', id: string, name: string, price?: number | null, addOnName: string, itemSize?: { __typename?: 'ItemSizeType', id: string, name: string, price: number } | null } | null> | null } | null> } };
+export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', subTotal: number, tax?: number | null, tip?: number | null, grandTotal?: number | null, orderItems: Array<{ __typename?: 'OrderItemType', id: string, total: number, quantity: number, food: { __typename?: 'FoodWithSizesType', id: string, name?: string | null, price?: number | null }, foodSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, options?: Array<{ __typename?: 'OptionWithSizeType', id: string, name: string, price?: number | null, addOnName: string, optionSize?: { __typename?: 'OptionSizeType', id: string, name: string, price: number } | null } | null> | null } | null> } };
 
 export const AddOnFieldsFragmentDoc = gql`
     fragment AddOnFields on AddOnType {
   id
   name
   isRequired
-  items {
+  options {
     id
     name
     price
-    itemSizes {
+    optionSizes {
       id
       name
       price
@@ -843,12 +843,12 @@ export const ValidateShoppingCartDocument = gql`
         name
         price
       }
-      items {
+      options {
         id
         name
         price
         addOnName
-        itemSize {
+        optionSize {
           id
           name
           price

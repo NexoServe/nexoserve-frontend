@@ -3,21 +3,21 @@ import { createUseStyles } from 'react-jss';
 import { base } from '../../../../css/base';
 
 const useStyles = createUseStyles({
-  foodItemToppingStyleSize: {
+  foodOptionToppingStyleSize: {
     display: 'flex',
     alignItems: 'center',
     opacity: 0.4,
   },
 
-  foodItemToppingStyleSizeActive: {
+  foodOptionToppingStyleSizeActive: {
     opacity: 1,
   },
 
-  foodItemToppingStyleSizeLabel: {
+  foodOptionToppingStyleSizeLabel: {
     cursor: 'pointer',
   },
 
-  foodItemToppingStyleSizeIcon: {
+  foodOptionToppingStyleSizeIcon: {
     display: 'flex',
     flexDirection: 'column',
     minWidth: base(4),
@@ -29,15 +29,15 @@ const useStyles = createUseStyles({
     },
   },
 
-  foodItemToppingStyleSizePrice: {
+  foodOptionToppingStyleSizePrice: {
     fontWeight: 600,
   },
 
-  foodItemToppingStyleSizeIconMiddle: {
+  foodOptionToppingStyleSizeIconMiddle: {
     alignItems: 'center',
   },
 
-  foodItemToppingStyleSizeIconLast: {
+  foodOptionToppingStyleSizeIconLast: {
     alignItems: 'flex-end',
 
     '& svg': {
@@ -45,7 +45,7 @@ const useStyles = createUseStyles({
     },
   },
 
-  foodItemToppingStyleSizeInput: {
+  foodOptionToppingStyleSizeInput: {
     opacity: 0,
     position: 'absolute',
     overflow: 'hidden',

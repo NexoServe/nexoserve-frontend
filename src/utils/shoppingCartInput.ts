@@ -1,5 +1,5 @@
 import {
-  ItemWithSizeInput,
+  OptionWithSizeInput,
   OrderItemInput,
   ShoppingCartItem,
 } from '../../generated/graphql';
@@ -16,11 +16,12 @@ const getShoppingCartInput = (): OrderItemInput[] => {
 
   shoppingCartItemsParsed?.filter((item) => {
     if (typeof item === 'object' && !Array.isArray(item)) {
+      // TODO: Find a better way to validate this
       const requiredProperties = [
         'orderItemId',
         'food',
         'quantity',
-        'selectedItems',
+        'selectedOptions',
         'selectedSize',
       ];
       if (!requiredProperties.every((prop) => item.hasOwnProperty(prop))) {
@@ -39,14 +40,14 @@ const getShoppingCartInput = (): OrderItemInput[] => {
         id: item?.orderItemId as string,
         foodId: item?.food?.id as string,
         foodSizeId: item?.selectedSize?.id,
-        items: item?.selectedItems?.map((selectedItem) => {
-          const item: ItemWithSizeInput = {
-            id: selectedItem?.id as string,
-            itemSizeId: selectedItem?.itemSize?.id as string,
-            addOnName: selectedItem?.addOnName as string,
+        options: item?.selectedOptions?.map((selectedOption) => {
+          const option: OptionWithSizeInput = {
+            id: selectedOption?.id as string,
+            optionSizeId: selectedOption?.optionSize?.id as string,
+            addOnName: selectedOption?.addOnName as string,
           };
-          return item;
-        }) as ItemWithSizeInput[],
+          return option;
+        }) as OptionWithSizeInput[],
         quantity: item?.quantity,
       };
 
