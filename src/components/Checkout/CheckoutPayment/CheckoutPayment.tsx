@@ -34,6 +34,10 @@ const CheckoutPayment = () => {
     const fetchValidateShoppingCart = async () => {
       if (shoppingCart) {
         try {
+          console.log(
+            'process.env.NEXT_PUBLIC_RESTAURANT_ID',
+            process.env.NEXT_PUBLIC_RESTAURANT_ID,
+          );
           await validateShoppingCart({
             variables: {
               order: {

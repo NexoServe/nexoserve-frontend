@@ -43,7 +43,7 @@ const OrderType = ({ isCheckout = false }: IOrderType) => {
   const handlePickUpClick = () => {
     setIsPickUp(true);
     setIsPickUpState(true);
-    localStorage.setItem('isPickUp', 'true');
+    localStorage.setItem('isPickUp', JSON.stringify(true));
   };
 
   return (

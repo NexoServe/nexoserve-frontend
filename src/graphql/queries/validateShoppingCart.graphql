@@ -16,12 +16,12 @@ query ValidateShoppingCart($order: CreateOrderInput!) {
         name
         price
       }
-      items {
+      options {
         id
         name
         price
         addOnName
-        itemSize {
+        optionSize {
           id
           name
           price

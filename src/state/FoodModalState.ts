@@ -1,26 +1,20 @@
 import { atom, selector } from 'recoil';
 
-import { FoodsByCategory } from '../../generated/graphql';
+import {
+  FoodsByCategoryType,
+  FoodWithSizesType,
+  OptionWithSizeType,
+} from '../../generated/graphql';
 import { AddOnType } from '../components/Food/FoodAddOn/types';
-import { ItemSizeType } from '../components/Food/FoodItemSize/types';
-import { SimpleFoodType } from '../components/Food/FoodList/types';
 import { FoodSizeType } from '../components/Food/FoodSize/types';
 
-export type SelectedItemType = {
-  id: string | null | undefined;
-  price: number | null | undefined;
-  name: string | null | undefined;
-  itemSize: ItemSizeType | null | undefined;
-  addOnName: string | null | undefined;
-};
-
 export type FoodModalType = {
-  food: SimpleFoodType | null | undefined;
+  food: FoodWithSizesType | null | undefined;
   selectedSize: FoodSizeType | undefined;
   quantity: number;
 };
 
-export const FoodMenuAtom = atom<FoodsByCategory[]>({
+export const FoodMenuAtom = atom<FoodsByCategoryType[]>({
   key: 'FoodMenuAtom',
   default: [],
 });
@@ -35,8 +29,8 @@ export const FoodModalAddOnRequiredAtom = atom<AddOnType | undefined | null>({
   default: undefined,
 });
 
-export const FoodModalSelectedItemsAtom = atom<SelectedItemType[]>({
-  key: 'FoodModalSelectedItemsAtom',
+export const FoodModalSelectedOptionsAtom = atom<OptionWithSizeType[]>({
+  key: 'FoodModalSelectedOptionsAtom',
   default: [],
 });
 
@@ -64,7 +58,7 @@ export const foodModalTotalSelector = selector({
   get: ({ get }) => {
     const foodModal = get(FoodModalAtom);
     if (foodModal.food) {
-      const selectedItems = get(FoodModalSelectedItemsAtom);
+      const selectedOptions = get(FoodModalSelectedOptionsAtom);
 
       let foodPrice: number = foodModal.food?.price as number;
 
@@ -72,11 +66,11 @@ export const foodModalTotalSelector = selector({
         foodPrice = foodModal.selectedSize.price ?? 0;
       }
 
-      if (selectedItems) {
-        selectedItems.forEach((selectedItem) => {
-          const itemPrice =
-            selectedItem.itemSize?.price || selectedItem.price || 0;
-          foodPrice += itemPrice;
+      if (selectedOptions) {
+        selectedOptions.forEach((selectedOption) => {
+          const optionPrice =
+            selectedOption.optionSize?.price || selectedOption.price || 0;
+          foodPrice += optionPrice;
         });
       }
 

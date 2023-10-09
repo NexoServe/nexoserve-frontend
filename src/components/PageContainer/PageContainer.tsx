@@ -48,6 +48,13 @@ const PageContainer = ({ children }: IPageContainer) => {
   );
   const orderDeliveryDetails = localStorage.getItem('deliveryDetails');
 
+  if (!orderTimeStorage) {
+    localStorage.setItem(
+      'orderTime',
+      JSON.stringify({ label: 'ASAP', value: 'ASAP' }),
+    );
+  }
+
   let orderTimeParsed: { label: string; value: string } | null = null;
 
   let orderDeliveryAddressParsed: string;
@@ -112,12 +119,19 @@ const PageContainer = ({ children }: IPageContainer) => {
       setRestaurantDetails(data.restaurant.restaurantDetails);
       setOrderDetails(data.restaurant.orderDetails);
 
-      if (data.restaurant.orderDetails.isPickUp) {
+      console.log('restaurant', data.restaurant);
+
+      if (data.restaurant.orderDetails.isPickUp === true) {
         setIsPickUp(true);
         localStorage.setItem('isPickUp', JSON.stringify(true));
       } else {
-        setIsPickUp(false);
-        localStorage.setItem('isPickUp', JSON.stringify(false));
+        if (data.restaurant.orderDetails.isDeliveryAddressValid) {
+          setIsPickUp(false);
+          localStorage.setItem('isPickUp', JSON.stringify(false));
+        } else {
+          setIsPickUp(true);
+          localStorage.setItem('isPickUp', JSON.stringify(true));
+        }
       }
 
       if (data.restaurant.orderDetails.isOrderTimeValid && orderTimeParsed) {

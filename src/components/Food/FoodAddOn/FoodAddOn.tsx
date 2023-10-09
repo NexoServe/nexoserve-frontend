@@ -1,7 +1,8 @@
 import { useMemo, useRef } from 'react';
 
-import FoodItem from '../FoodItem/FoodItem';
+import { OptionType } from '../../../../generated/graphql';
 import FoodModalContentHeader from '../FoodModalContentHeader/FoodModalContentHeader';
+import FoodOption from '../FoodOption/FoodOption';
 
 import useStyles from './css';
 import { IFoodAddOn } from './types';
@@ -41,8 +42,12 @@ const FoodAddOn = ({ addOn, isRequiredAddOn }: IFoodAddOn) => {
       ) : null}
 
       <div>
-        {addOn?.items?.map((item) => (
-          <FoodItem key={item?.id} item={item} addOn={addOn} />
+        {addOn?.options?.map((option) => (
+          <FoodOption
+            key={option?.id}
+            option={option as OptionType}
+            addOn={addOn}
+          />
         ))}
       </div>
     </div>

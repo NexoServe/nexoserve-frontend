@@ -4,7 +4,7 @@ import { base } from '../../../../css/base';
 import queries from '../../../../css/queries';
 
 const useStyles = createUseStyles({
-  foodItemToppingStyleDivider: {
+  foodOptionToppingStyleDivider: {
     marginLeft: `-${base(1)}`,
     width: base(10),
 
@@ -13,7 +13,7 @@ const useStyles = createUseStyles({
     },
   },
 
-  foodItemToppingStyle: {
+  foodOptionToppingStyle: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: base(2),
@@ -21,7 +21,7 @@ const useStyles = createUseStyles({
     alignItems: 'center',
   },
 
-  foodItemToppingStyleLabel: {
+  foodOptionToppingStyleLabel: {
     opacity: 0.7,
     cursor: 'pointer',
     padding: `${base(2)} 0`,
@@ -35,11 +35,11 @@ const useStyles = createUseStyles({
     },
   },
 
-  foodItemToppingStyleLabelActive: {
+  foodOptionToppingStyleLabelActive: {
     opacity: 1,
   },
 
-  foodItemToppingStyleInput: {
+  foodOptionToppingStyleInput: {
     opacity: 0,
     position: 'absolute',
     width: 0,
@@ -47,7 +47,7 @@ const useStyles = createUseStyles({
     overflow: 'hidden',
   },
 
-  foodItemToppingStyleSizes: {
+  foodOptionToppingStyleSizes: {
     display: 'flex',
     justifyContent: 'space-between',
   },

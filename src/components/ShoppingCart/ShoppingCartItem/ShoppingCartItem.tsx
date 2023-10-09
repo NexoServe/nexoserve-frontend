@@ -4,10 +4,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { base } from '../../../../css/base';
-import { ItemWithSizeType, Maybe } from '../../../../generated/graphql';
+import { Maybe, OptionWithSizeType } from '../../../../generated/graphql';
 import {
   FoodModalAtom,
-  FoodModalSelectedItemsAtom,
+  FoodModalSelectedOptionsAtom,
   FoodModalSelectedSizeAtom,
 } from '../../../state/FoodModalState';
 import {
@@ -19,7 +19,7 @@ import FoodModal from '../../Food/FoodModal/FoodModal';
 import SvgIcons from '../../SvgIcons';
 
 import useStyles from './css';
-import { IShoppingCartItem, ItemSizeGrouped } from './types';
+import { IShoppingCartItem, OptionSizeGrouped } from './types';
 
 const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
   const [showUpdateFoodModal, setShowUpdateFoodModal] = useState(false);
@@ -29,8 +29,8 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
   const [, setFoodModalSelectedSize] = useRecoilState(
     FoodModalSelectedSizeAtom,
   );
-  const [, setFoodModalSelectedItems] = useRecoilState(
-    FoodModalSelectedItemsAtom,
+  const [, setFoodModalSelectedOptions] = useRecoilState(
+    FoodModalSelectedOptionsAtom,
   );
   const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
   const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
@@ -47,13 +47,13 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
 
     setFoodModalSelectedSize(shoppingCartItem?.selectedSize);
 
-    setFoodModalSelectedItems(
-      shoppingCartItem?.selectedItems?.map((item) => ({
-        addOnName: item?.addOnName as string,
-        id: item?.id,
-        name: item?.name,
-        price: item?.price,
-        itemSize: item?.itemSize,
+    setFoodModalSelectedOptions(
+      shoppingCartItem?.selectedOptions?.map((option) => ({
+        id: option?.id as string,
+        addOnName: option?.addOnName as string,
+        name: option?.name as string,
+        price: option?.price,
+        optionSize: option?.optionSize,
       })) || [],
     );
 
@@ -74,31 +74,31 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
     });
   };
 
-  const selectedItems: Maybe<ItemWithSizeType>[] = [];
+  const selectedOptions: Maybe<OptionWithSizeType>[] = [];
 
-  const groupMap = new Map<string, ItemSizeGrouped>();
+  const groupMap = new Map<string, OptionSizeGrouped>();
 
-  shoppingCartItem.selectedItems?.forEach((selectedItem) => {
-    const itemSizeName = selectedItem?.itemSize?.name;
-    const existingGroup = groupMap.get(itemSizeName as string);
+  shoppingCartItem.selectedOptions?.forEach((selectedOption) => {
+    const optionSizeName = selectedOption?.optionSize?.name;
+    const existingGroup = groupMap.get(optionSizeName as string);
 
-    if (!itemSizeName) {
-      selectedItems.push(selectedItem);
+    if (!optionSizeName) {
+      selectedOptions.push(selectedOption);
       return;
     }
 
     if (existingGroup) {
-      existingGroup.selectedItems.push(selectedItem);
+      existingGroup.selectedOptions.push(selectedOption);
     } else {
-      groupMap.set(itemSizeName, {
-        itemSizeName: itemSizeName,
-        selectedItems: [selectedItem],
+      groupMap.set(optionSizeName, {
+        optionSizeName: optionSizeName,
+        selectedOptions: [selectedOption],
       });
     }
   });
 
-  const selectedItemGroupedByItemSize = Array.from(groupMap.values()).sort(
-    (a, b) => a.itemSizeName.localeCompare(b.itemSizeName),
+  const selectedOptionGroupedByOptionSize = Array.from(groupMap.values()).sort(
+    (a, b) => a.optionSizeName.localeCompare(b.optionSizeName),
   );
 
   return (
@@ -145,30 +145,30 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
                   </div>
                 ) : null}
 
-                {selectedItems?.map((selectedItem) => (
+                {selectedOptions?.map((selectedOption) => (
                   <div
-                    key={selectedItem?.id}
+                    key={selectedOption?.id}
                     className={classes.shoppingCartItemDetailsItem}
                   >
-                    {selectedItem?.name}
+                    {selectedOption?.name}
                   </div>
                 ))}
 
-                {selectedItemGroupedByItemSize.length > 0 &&
-                  selectedItemGroupedByItemSize.map((group, i) => (
+                {selectedOptionGroupedByOptionSize.length > 0 &&
+                  selectedOptionGroupedByOptionSize.map((group, i) => (
                     <div key={i}>
                       <div className={classes.shoppingCartItemDetailsItemSize}>
-                        {group?.itemSizeName}
+                        {group?.optionSizeName}
                       </div>
 
-                      {group?.selectedItems?.map((selectedItem) => (
+                      {group?.selectedOptions?.map((selectedOption) => (
                         <div
                           className={
                             classes.shoppingCartItemDetailsItemSizeItem
                           }
-                          key={selectedItem?.id}
+                          key={selectedOption?.id}
                         >
-                          {selectedItem?.name}
+                          {selectedOption?.name}
                         </div>
                       ))}
                     </div>

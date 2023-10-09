@@ -1,6 +1,6 @@
-import { SimpleFoodType } from '../FoodList/types';
+import { FoodWithSizesType } from '../../../../generated/graphql';
 
 export interface IFoodCard {
-  food: SimpleFoodType;
-  activeFoodClick: (food: SimpleFoodType) => void;
+  food: FoodWithSizesType;
+  activeFoodClick: (food: FoodWithSizesType) => void;
 }

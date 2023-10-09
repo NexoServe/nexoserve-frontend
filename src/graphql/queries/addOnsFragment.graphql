@@ -1,12 +1,12 @@
-fragment AddOnFields on AddOn {
+fragment AddOnFields on AddOnType {
   id
   name
   isRequired
-  items {
+  options {
     id
     name
     price
-    itemSizes {
+    optionSizes {
       id
       name
       price

@@ -3,9 +3,9 @@ import { createUseStyles } from 'react-jss';
 import { base } from '../../../../css/base';
 
 const useStyles = createUseStyles({
-  foodItemRegularStyle: {},
+  foodOptionRegularStyle: {},
 
-  foodItemToppingStyle: {
+  foodOptionToppingStyle: {
     // display: 'grid',
     // gridTemplateColumns: '1fr 1fr',
     // gap: base(2),
@@ -13,7 +13,7 @@ const useStyles = createUseStyles({
     // alignItems: 'center',
   },
 
-  foodItemToppingStyleLabel: {
+  foodOptionToppingStyleLabel: {
     opacity: 0.7,
     cursor: 'pointer',
     marginTop: base(2),
@@ -27,11 +27,11 @@ const useStyles = createUseStyles({
     },
   },
 
-  foodItemToppingStyleLabelActive: {
+  foodOptionToppingStyleLabelActive: {
     opacity: 1,
   },
 
-  foodItemToppingStyleInput: {
+  foodOptionToppingStyleInput: {
     opacity: 0,
     position: 'absolute',
     // width: 0,
@@ -39,7 +39,7 @@ const useStyles = createUseStyles({
     overflow: 'hidden',
   },
 
-  foodItemToppingStyleSizes: {
+  foodOptionToppingStyleSizes: {
     display: 'flex',
     justifyContent: 'space-between',
   },

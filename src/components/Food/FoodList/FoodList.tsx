@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
+import { FoodWithSizesType } from '../../../../generated/graphql';
 import { FoodMenuAtom } from '../../../state/FoodModalState';
 import FoodCard from '../FoodCard/FoodCard';
 import FoodModal from '../FoodModal/FoodModal';
 
 import useStyles from './css';
-import { SimpleFoodType } from './types';
 
 const FoodList = () => {
   const menu = useRecoilValue(FoodMenuAtom);
@@ -16,11 +16,14 @@ const FoodList = () => {
   const classes = useStyles();
 
   const [showModal, setShowModal] = useState(false);
-  const [activeFood, setActiveFood] = useState<SimpleFoodType | null>(null);
+  const [activeFood, setActiveFood] = useState<FoodWithSizesType>();
 
-  const activeFoodClick = (food: SimpleFoodType) => {
-    setActiveFood(food);
+  console.log('showModal', showModal);
+  console.log('activeFood', activeFood);
+
+  const activeFoodClick = (food: FoodWithSizesType) => {
     setShowModal(true);
+    setActiveFood(food);
   };
 
   return (
@@ -43,11 +46,11 @@ const FoodList = () => {
       ))}
 
       <AnimatePresence>
-        {showModal && (
+        {showModal && activeFood && (
           <FoodModal
             showModal={showModal}
             setShowModal={setShowModal}
-            foodId={activeFood?.id as string}
+            foodId={activeFood.id}
             type="create"
           />
         )}

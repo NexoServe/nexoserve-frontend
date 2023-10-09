@@ -1,7 +1,7 @@
-import { FoodByIdQuery } from '../../../../generated/graphql';
+import { FoodType } from '../../../../generated/graphql';
 
-export type IFoodModalHeader = {
-  data: FoodByIdQuery;
+export type IFoodModalBody = {
+  food: FoodType;
   showModal: boolean;
   type: 'create' | 'update';
 };

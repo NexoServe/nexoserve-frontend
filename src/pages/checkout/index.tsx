@@ -6,6 +6,7 @@ import CheckoutDetails from '../../components/Checkout/CheckoutDetails/CheckoutD
 import CheckoutOrder from '../../components/Checkout/CheckoutOrder/CheckoutOrder';
 import CheckoutPayment from '../../components/Checkout/CheckoutPayment/CheckoutPayment';
 import Container from '../../components/Container/Container';
+import InfoModal from '../../components/InfoModal/InfoModal';
 import Navbar from '../../components/Navbar/Navbar';
 import PageContainer from '../../components/PageContainer/PageContainer';
 
@@ -16,8 +17,9 @@ const Checkout = () => {
   const router = useRouter();
 
   const shoppingCartStorage = localStorage.getItem('shoppingCartItems');
+  const orderTimeStorage = localStorage.getItem('orderTime');
 
-  if (!shoppingCartStorage) {
+  if (!shoppingCartStorage || !orderTimeStorage) {
     router.push('/');
     return <div></div>;
   }
@@ -43,6 +45,7 @@ const Checkout = () => {
           </div>
         </Container>
       </main>
+      <InfoModal />
     </PageContainer>
   );
 };
