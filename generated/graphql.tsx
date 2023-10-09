@@ -13,6 +13,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** JSON custom scalar type */
+  JSON: any;
 };
 
 export type AddOnSimple = {
@@ -104,10 +106,16 @@ export type CreateOrderInput = {
 
 export type CreateOrderOutput = {
   __typename?: 'CreateOrderOutput';
-  clientSecret?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['String']>;
-  status?: Maybe<Scalars['String']>;
-  total?: Maybe<Scalars['Float']>;
+  clientSecret: Scalars['String'];
+  orderId: Scalars['String'];
+  stripeStatus: Scalars['String'];
+  total: Scalars['Float'];
+};
+
+export type CreateOrderResponse = {
+  __typename?: 'CreateOrderResponse';
+  data?: Maybe<CreateOrderOutput>;
+  error?: Maybe<ErrorType>;
 };
 
 export type DayInput = {
@@ -119,6 +127,22 @@ export type DayOutput = {
   __typename?: 'DayOutput';
   dayOfWeek: Scalars['String'];
   time: Array<TimeOutput>;
+};
+
+export enum ErrorCodes {
+  InvalidDeliveryAddress = 'INVALID_DELIVERY_ADDRESS',
+  InvalidOrderTime = 'INVALID_ORDER_TIME',
+  StripePaymentError = 'STRIPE_PAYMENT_ERROR'
+}
+
+export type ErrorType = {
+  __typename?: 'ErrorType';
+  /** A unique error code. */
+  code?: Maybe<Scalars['String']>;
+  /** Additional data related to the error. */
+  data?: Maybe<Scalars['JSON']>;
+  /** A human-readable error message. */
+  message?: Maybe<Scalars['String']>;
 };
 
 export type FoodSize = {
@@ -170,7 +194,7 @@ export type LocationInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  CreateOrder: CreateOrderOutput;
+  CreateOrder: CreateOrderResponse;
   addOpeningHours?: Maybe<Scalars['Boolean']>;
 };
 
@@ -429,7 +453,7 @@ export type CreateOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', CreateOrder: { __typename?: 'CreateOrderOutput', id?: string | null, total?: number | null, clientSecret?: string | null, status?: string | null } };
+export type CreateOrderMutation = { __typename?: 'Mutation', CreateOrder: { __typename?: 'CreateOrderResponse', data?: { __typename?: 'CreateOrderOutput', orderId: string, total: number, clientSecret: string, stripeStatus: string } | null, error?: { __typename?: 'ErrorType', code?: string | null, message?: string | null, data?: any | null } | null } };
 
 export type AddOnFieldsFragment = { __typename?: 'AddOnType', id?: string | null, name?: string | null, isRequired?: boolean | null, options?: Array<{ __typename?: 'OptionType', id: string, name: string, price?: number | null, optionSizes?: Array<{ __typename?: 'OptionSizeType', id: string, name: string, price: number, default?: boolean | null } | null> | null } | null> | null };
 
@@ -492,10 +516,17 @@ export const AddOnFieldsFragmentDoc = gql`
 export const CreateOrderDocument = gql`
     mutation CreateOrder($order: CreateOrderInput!, $paymentMethodId: String!) {
   CreateOrder(order: $order, paymentMethodId: $paymentMethodId) {
-    id
-    total
-    clientSecret
-    status
+    data {
+      orderId
+      total
+      clientSecret
+      stripeStatus
+    }
+    error {
+      code
+      message
+      data
+    }
   }
 }
     `;

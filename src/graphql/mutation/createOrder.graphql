@@ -1,8 +1,15 @@
 mutation CreateOrder($order: CreateOrderInput!, $paymentMethodId: String!) {
   CreateOrder(order: $order, paymentMethodId: $paymentMethodId) {
-    id
-    total
-    clientSecret
-    status
+    data {
+      orderId
+      total
+      clientSecret
+      stripeStatus
+    }
+    error {
+      code
+      message
+      data
+    }
   }
 }

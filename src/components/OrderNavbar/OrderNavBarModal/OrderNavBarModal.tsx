@@ -341,7 +341,6 @@ const OrderNavBarModal = ({
       setIsPickUp(true);
       localStorage.setItem('isPickUp', JSON.stringify(true));
     } else {
-      console.log('HERE');
       setIsPickUp(false);
       localStorage.setItem('isPickUp', JSON.stringify(false));
     }

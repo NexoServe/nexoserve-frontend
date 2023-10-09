@@ -9,7 +9,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import SkeletonLoader from 'tiny-skeleton-loader-react';
 
 import colors from '../../../../css/colors';
-import { useCreateOrderMutation } from '../../../../generated/graphql';
+import {
+  ErrorCodes,
+  OrderDetailsType,
+  useCreateOrderMutation,
+} from '../../../../generated/graphql';
 import {
   CheckoutEmailAtom,
   CheckoutEmailErrorAtom,
@@ -21,10 +25,12 @@ import {
   CheckoutPhoneNumberErrorAtom,
   isCheckoutContactIncompleteAtom,
 } from '../../../state/CheckoutState';
+import { InfoModalAtom } from '../../../state/InfoModalState';
 import {
   OrderDeliveryAdditionalAddressInfoAtom,
   OrderDeliveryAddressAtom,
   OrderDeliveryDetailsAtom,
+  OrderDetailsAtom,
   OrderIsPickUpAtom,
   OrderShowInvalidTimeModalAtom,
   OrderTimeAtom,
@@ -43,6 +49,8 @@ export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
   const classes = useStyles();
+
+  const [, setOrderDetails] = useRecoilState(OrderDetailsAtom);
 
   const [, setShowInvalidTimeModal] = useRecoilState(
     OrderShowInvalidTimeModalAtom,
@@ -77,6 +85,7 @@ export default function CheckoutForm() {
 
   const [createOrder] = useCreateOrderMutation();
   const shoppingCartTip = useRecoilValue(ShoppingCartTipAtom);
+  const [, setInfoModalState] = useRecoilState(InfoModalAtom);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -103,38 +112,59 @@ export default function CheckoutForm() {
       return;
     }
 
+    if (!orderTime) {
+      setShowInvalidTimeModal({
+        errorMessages:
+          'Something went wrong. Please pick a time and try again.',
+        type: 'pickup',
+      });
+      return;
+    }
+
     if (!stripe || !elements) {
       // Stripe.js hasn't yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
-    setIsLoading(true);
-
     // Trigger form validation and wallet collection
     // @ts-expect-error: unsupported types
     const { error: submitError } = await elements.submit();
     if (submitError) {
-      setMessage(submitError?.message);
       setIsLoading(false);
       return;
     }
 
-    // Create the PaymentMethod using the details collected by the Payment Element
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      // @ts-expect-error: unsupported types
-      elements,
-      params: {
-        billing_details: {
-          name: `${firstName} ${lastName}`,
-        },
-      },
+    setIsLoading(true);
+    setInfoModalState({
+      showModal: true,
+      title: 'Processing Payment.',
+      infoModalType: 'payment',
     });
 
-    if (error) {
+    // Create the PaymentMethod using the details collected by the Payment Element
+    const { error: createPaymentMethodError, paymentMethod } =
+      await stripe.createPaymentMethod({
+        // @ts-expect-error: unsupported types
+        elements,
+        params: {
+          billing_details: {
+            name: `${firstName} ${lastName}`,
+          },
+        },
+      });
+
+    if (createPaymentMethodError) {
       // This point is only reached if there's an immediate error when
       // creating the PaymentMethod. Show the error to your customer (for example, payment details incomplete)
       setMessage(submitError?.message);
+      setInfoModalState({
+        type: 'error',
+        infoModalType: 'payment',
+        message: submitError?.message,
+        showModal: true,
+        title: 'Payment Error!',
+      });
       setIsLoading(false);
       return;
     }
@@ -145,7 +175,10 @@ export default function CheckoutForm() {
           order: {
             restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
             isPickUp,
-            orderTime: orderTime?.value?.toString() as string,
+            orderTime:
+              orderTime?.label === 'ASAP'
+                ? 'ASAP'
+                : (orderTime?.value?.toString() as string),
             orderItems: getShoppingCartInput(),
             tip: shoppingCartTip.tip,
             isTipPercentage: shoppingCartTip.isTipPercentage,
@@ -164,57 +197,117 @@ export default function CheckoutForm() {
         },
       });
 
-      if (res.data?.CreateOrder.status === 'requires_action') {
+      const createOrderRes = res.data?.CreateOrder;
+
+      if (createOrderRes?.error) {
+        if (createOrderRes.error.code === ErrorCodes.InvalidOrderTime) {
+          const errorData = JSON.parse(createOrderRes.error.data);
+          setInfoModalState({
+            showModal: false,
+          });
+          setOrderDetails(errorData as OrderDetailsType);
+
+          setShowInvalidTimeModal({
+            errorMessages:
+              'We need a little extra time to prepare your order. Please select a later time.',
+            type: 'pickup',
+          });
+        } else if (
+          createOrderRes.error.message === ErrorCodes.InvalidDeliveryAddress
+        ) {
+          setShowInvalidTimeModal({
+            errorMessages:
+              'The address that you have selected is not valid. Please select a different address.',
+            type: 'delivery',
+          });
+        } else if (ErrorCodes.StripePaymentError) {
+          setInfoModalState({
+            type: 'error',
+            infoModalType: 'payment',
+            message: createOrderRes.error?.message,
+            showModal: true,
+            title: 'Payment Error',
+          });
+        }
+
+        setIsLoading(false);
+
+        return;
+      }
+
+      if (createOrderRes?.data?.stripeStatus === 'requires_action') {
         // Use Stripe.js to handle the required next action
-        // @ts-expect-error: unsupported types
-        const { error, paymentIntent } = await stripe.handleNextAction({
-          clientSecret: res.data.CreateOrder.clientSecret,
-        });
+        const { error: handleNextActionError, paymentIntent } =
+          // @ts-expect-error: unsupported types
+          await stripe.handleNextAction({
+            clientSecret: createOrderRes.data.clientSecret,
+          });
 
         if (paymentIntent.last_payment_error) {
-          if (
-            paymentIntent.last_payment_error.decline_code ===
-            'cashapp_customer_request_declined'
-          ) {
-            setMessage(
-              'Your payment was declined, please try another payment.',
-            );
-          } else {
-            setMessage(
-              'Something went wrong with your payment. Please try again or try a different method of payment.',
-            );
-          }
+          setMessage('Your payment was declined, please try another payment.');
+
+          setInfoModalState({
+            showModal: true,
+            infoModalType: 'payment',
+            type: 'error',
+            title: 'Payment Declined',
+            message: paymentIntent.last_payment_error.message,
+          });
+
+          return;
         }
 
-        if (error) {
+        if (paymentIntent.status === 'requires_action') {
+          setInfoModalState({
+            showModal: true,
+            infoModalType: 'payment',
+            type: 'error',
+            title: 'Payment Error',
+            message: 'The customer stopped this payment.',
+          });
+
+          setIsLoading(false);
+          return;
+        }
+
+        if (handleNextActionError || !paymentIntent) {
           // Show error from Stripe.js in payment form
-          setMessage(error.message);
-        } else {
-          // Actions handled, show success message
+          setMessage(handleNextActionError.message);
+          setInfoModalState({
+            type: 'error',
+            infoModalType: 'payment',
+            message: handleNextActionError.message,
+            showModal: true,
+            title: 'Payment Error',
+          });
+
+          setIsLoading(false);
+          return;
         }
       }
+
+      setMessage(null);
     } catch (error: any) {
-      if (error?.message === 'Invalid order time') {
-        setShowInvalidTimeModal({
-          errorMessages:
-            'We need a little extra time to prepare your order. Please select a later time.',
-          type: 'pickup',
-        });
-      } else if (error.message === 'Invalid delivery address') {
-        setShowInvalidTimeModal({
-          errorMessages:
-            'The address that you have selected is not valid. Please select a different address.',
-          type: 'delivery',
-        });
-      } else {
-        setMessage(
-          'Something went wrong with your payment. Please try again or try a different method of payment.',
-        );
-      }
+      setInfoModalState({
+        showModal: true,
+      });
+      return;
     }
 
-    // setMessage(null);
     setIsLoading(false);
+    setInfoModalState({
+      type: 'success',
+      infoModalType: 'payment',
+      showModal: true,
+      title: 'Payment Accepted!',
+      message: 'You are being redirected shortly.',
+    });
+
+    setTimeout(() => {
+      setInfoModalState({
+        showModal: false,
+      });
+    }, 2000);
   };
 
   return (

@@ -15,6 +15,7 @@ const useStyles = createUseStyles({
     borderTopLeftRadius: base(2),
     borderTopRightRadius: base(2),
     position: 'relative',
+    background: colors.white,
 
     [queries.l]: {
       background: colors.white,

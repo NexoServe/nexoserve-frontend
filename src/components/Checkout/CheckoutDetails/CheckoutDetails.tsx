@@ -40,6 +40,8 @@ const CheckoutDetails = () => {
 
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
 
+  console.log('restaurantDetails', restaurantDetails);
+
   return (
     <>
       <RoundBorder styleClass={classes.checkoutDetails}>
