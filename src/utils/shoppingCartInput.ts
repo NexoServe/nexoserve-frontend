@@ -34,10 +34,8 @@ const getShoppingCartInput = (): OrderItemInput[] => {
       return false;
     }
   });
-  console.log('validItems', validItems);
 
   localStorage.setItem('shoppingCartItems', JSON.stringify(validItems));
-  console.log('shoppingCartItemsParsed', shoppingCartItemsParsed);
 
   const shoppingCartInput: OrderItemInput[] = shoppingCartItemsParsed?.map(
     (item) => {

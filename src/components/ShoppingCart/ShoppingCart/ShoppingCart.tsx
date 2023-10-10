@@ -6,6 +6,7 @@ import {
   ShoppingCartItem,
   useValidateShoppingCartLazyQuery,
 } from '../../../../generated/graphql';
+import { InfoModalAtom } from '../../../state/InfoModalState';
 import {
   ShoppingCartAtom,
   ShoppingCartTipAtom,
@@ -27,25 +28,40 @@ const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
     ShoppingCartTotalAtom,
   );
   const shoppingCartTip = useRecoilValue(ShoppingCartTipAtom);
+  const [, setInfoModal] = useRecoilState(InfoModalAtom);
 
-  const [fetchValidateShoppingCart, { data, loading }] =
+  const [fetchValidateShoppingCart, { data, loading, error }] =
     useValidateShoppingCartLazyQuery();
 
   useEffect(() => {
-    if (isCheckout) {
-      fetchShoppingCart({
-        fetchValidateShoppingCart: fetchValidateShoppingCart,
-        shoppingCartTip: shoppingCartTip,
-      });
-    } else {
-      if (shoppingCart.length <= 0) {
+    try {
+      if (isCheckout) {
         fetchShoppingCart({
           fetchValidateShoppingCart: fetchValidateShoppingCart,
           shoppingCartTip: shoppingCartTip,
         });
+      } else {
+        if (shoppingCart.length <= 0) {
+          fetchShoppingCart({
+            fetchValidateShoppingCart: fetchValidateShoppingCart,
+            shoppingCartTip: shoppingCartTip,
+          });
+        }
       }
+    } catch (error) {
+      setInfoModal({
+        showModal: true,
+      });
     }
   }, [shoppingCart, isCheckout, shoppingCartTip]);
+
+  useEffect(() => {
+    if (error) {
+      setInfoModal({
+        showModal: true,
+      });
+    }
+  }, [error]);
 
   useEffect(() => {
     if (loading) {

@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 
 import { AnimatePresence } from 'framer-motion';
 import { DateTime } from 'luxon';
+import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 
 import { useRestaurantLazyQuery } from '../../../generated/graphql';
@@ -24,10 +25,11 @@ import OrderNavBarModal from '../OrderNavbar/OrderNavBarModal/OrderNavBarModal';
 import { IPageContainer } from './types';
 
 const PageContainer = ({ children }: IPageContainer) => {
+  const router = useRouter();
+
   const [showInvalidTimeModal, setShowInvalidTimeModal] = useRecoilState(
     OrderShowInvalidTimeModalAtom,
   );
-
   const [, setRestaurantDetails] = useRecoilState(RestaurantDetailsAtom);
   const [orderDetails, setOrderDetails] = useRecoilState(OrderDetailsAtom);
   const [, setMenu] = useRecoilState(FoodMenuAtom);
@@ -79,6 +81,10 @@ const PageContainer = ({ children }: IPageContainer) => {
     fetchPolicy: 'no-cache',
   });
 
+  if (error) {
+    router.push('/404');
+  }
+
   useEffect(() => {
     if (orderDetails?.isOrderTimeValid === false) {
       setShowInvalidTimeModal({
@@ -107,14 +113,8 @@ const PageContainer = ({ children }: IPageContainer) => {
   }, []);
 
   useMemo(() => {
-    if (!loading && !error && data?.restaurant) {
+    if (!loading && data?.restaurant) {
       setMenu(data?.restaurant.restaurantDetails.menu);
-
-      // if (!data.restaurant.orderDetails.isOrderTimeValid) {
-      //   setShowInvalidTimeModal(true);
-      // } else {
-      //   setShowInvalidTimeModal(false);
-      // }
 
       setRestaurantDetails(data.restaurant.restaurantDetails);
       setOrderDetails(data.restaurant.orderDetails);

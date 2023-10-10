@@ -39,8 +39,6 @@ const fetchShoppingCart = ({
     localStorage.removeItem('shoppingCartItems');
   }
 
-  console.log('shoppingCartItemsParsed', shoppingCartItemsParsed);
-
   const validItems = shoppingCartItemsParsed?.filter((item) => {
     if (typeof item === 'object' && !Array.isArray(item)) {
       // TODO: Find a better way to validate this
@@ -68,18 +66,22 @@ const fetchShoppingCart = ({
 
   if (shoppingCartInput?.length > 0) {
     async function fetchData() {
-      await fetchValidateShoppingCart({
-        variables: {
-          order: {
-            restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
-            orderItems: shoppingCartInput,
-            tip: shoppingCartTip.tip,
-            isTipPercentage: shoppingCartTip.isTipPercentage,
-            isPickUp: isPickUp === 'true',
-            orderTime: orderTimeParsed?.value?.toString() as string,
+      try {
+        await fetchValidateShoppingCart({
+          variables: {
+            order: {
+              restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
+              orderItems: shoppingCartInput,
+              tip: shoppingCartTip.tip,
+              isTipPercentage: shoppingCartTip.isTipPercentage,
+              isPickUp: isPickUp === 'true',
+              orderTime: orderTimeParsed?.value?.toString() as string,
+            },
           },
-        },
-      });
+        });
+      } catch (error: any) {
+        throw new Error(error);
+      }
     }
 
     fetchData();

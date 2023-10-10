@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -6,7 +8,6 @@ import CheckoutDetails from '../../components/Checkout/CheckoutDetails/CheckoutD
 import CheckoutOrder from '../../components/Checkout/CheckoutOrder/CheckoutOrder';
 import CheckoutPayment from '../../components/Checkout/CheckoutPayment/CheckoutPayment';
 import Container from '../../components/Container/Container';
-import InfoModal from '../../components/InfoModal/InfoModal';
 import Navbar from '../../components/Navbar/Navbar';
 import PageContainer from '../../components/PageContainer/PageContainer';
 
@@ -19,10 +20,11 @@ const Checkout = () => {
   const shoppingCartStorage = localStorage.getItem('shoppingCartItems');
   const orderTimeStorage = localStorage.getItem('orderTime');
 
-  if (!shoppingCartStorage || !orderTimeStorage) {
-    router.push('/');
-    return <div></div>;
-  }
+  useEffect(() => {
+    if (!shoppingCartStorage || !orderTimeStorage) {
+      router.push('/');
+    }
+  }, [shoppingCartStorage, orderTimeStorage]);
 
   return (
     <PageContainer>
@@ -45,7 +47,6 @@ const Checkout = () => {
           </div>
         </Container>
       </main>
-      <InfoModal />
     </PageContainer>
   );
 };

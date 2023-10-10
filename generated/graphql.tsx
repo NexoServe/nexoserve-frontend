@@ -195,19 +195,12 @@ export type LocationInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   CreateOrder: CreateOrderResponse;
-  addOpeningHours?: Maybe<Scalars['Boolean']>;
 };
 
 
 export type MutationCreateOrderArgs = {
   order: CreateOrderInput;
   paymentMethodId: Scalars['String'];
-};
-
-
-export type MutationAddOpeningHoursArgs = {
-  openingHours: Array<DayInput>;
-  restaurantId: Scalars['String'];
 };
 
 export type OpeningHour = {
@@ -339,7 +332,6 @@ export type Query = {
   foodsByCategory: Array<Maybe<FoodsByCategoryType>>;
   orders: Array<OrderType>;
   restaurant: RestaurantOutput;
-  test: Scalars['Boolean'];
   validateOrderDetails: ValidateOrderDetailsOutput;
   validateShoppingCart: ShoppingCart;
 };

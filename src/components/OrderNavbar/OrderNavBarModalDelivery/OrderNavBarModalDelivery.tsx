@@ -16,6 +16,7 @@ import usePlacesAutocomplete, {
 
 import '@reach/combobox/styles.css';
 import { base } from '../../../../css/base';
+import { InfoModalAtom } from '../../../state/InfoModalState';
 import {
   OrderDeliveryAdditionalAddressInfoAtom,
   OrderDeliveryAddressAtom,
@@ -32,6 +33,7 @@ import { IOrderNavBarModalDelivery } from './types';
 const OrderNavBarModalDelivery = ({
   setIsAddressValid,
   isAddressValid,
+  setModal,
 }: IOrderNavBarModalDelivery) => {
   const [address, setAddress] = useState('');
 
@@ -45,6 +47,8 @@ const OrderNavBarModalDelivery = ({
     OrderDeliveryDetailsAtom,
   );
 
+  const [, setInfoModal] = useRecoilState(InfoModalAtom);
+
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
 
   const classes = useStyles();
@@ -55,6 +59,41 @@ const OrderNavBarModalDelivery = ({
       setAddress(deliveryAddress);
     }
   }, [deliveryAddress]);
+
+  useEffect(() => {
+    async function checkAPIAvailability() {
+      const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY;
+      const testUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=${apiKey}`;
+
+      try {
+        const response = await fetch(testUrl);
+        const data = await response.json();
+
+        if (
+          data.status === 'REQUEST_DENIED' ||
+          data.status === 'OVER_QUERY_LIMIT' ||
+          data.status === 'INVALID_REQUEST'
+        ) {
+          //TODO: Add Sentry here
+
+          setModal(false);
+          setInfoModal({
+            infoModalType: 'delivery',
+            showModal: true,
+          });
+        }
+      } catch (error) {
+        //TODO: Add Sentry here
+        setModal(false);
+        setInfoModal({
+          infoModalType: 'delivery',
+          showModal: true,
+        });
+      }
+    }
+
+    checkAPIAvailability();
+  }, []);
 
   const {
     ready,
@@ -113,7 +152,10 @@ const OrderNavBarModalDelivery = ({
         setIsAddressValid(false);
       }
     } catch (error) {
-      console.log('Error: ', error);
+      setInfoModal({
+        infoModalType: 'delivery',
+        showModal: true,
+      });
     }
   };
 

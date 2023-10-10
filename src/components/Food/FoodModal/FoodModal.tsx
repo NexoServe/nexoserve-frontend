@@ -11,6 +11,7 @@ import {
   FoodModalPriceAtom,
   FoodModalSelectedOptionsAtom,
 } from '../../../state/FoodModalState';
+import { InfoModalAtom } from '../../../state/InfoModalState';
 import {
   ShoppingCartAtom,
   ShoppingCartTotalAtom,
@@ -38,19 +39,38 @@ const FoodModal = ({
     notifyOnNetworkStatusChange: true,
   });
 
-  console.log('loading', loading);
   const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
     ShoppingCartTotalAtom,
   );
 
+  const [, setInfoModal] = useRecoilState(InfoModalAtom);
+
   useEffect(() => {
     const fetchData = async () => {
       if (showModal) {
-        await getFoodById();
+        try {
+          await getFoodById();
+        } catch (error) {
+          setInfoModal({
+            showModal: true,
+          });
+
+          setShowModal(false);
+        }
       }
     };
     fetchData();
   }, [showModal, getFoodById]);
+
+  useEffect(() => {
+    if (error) {
+      setInfoModal({
+        showModal: true,
+      });
+
+      setShowModal(false);
+    }
+  }, [error]);
 
   const classes = useStyles();
 
@@ -237,10 +257,6 @@ const FoodModal = ({
       onClose();
     }
   };
-
-  if (error) {
-    console.log('error', error);
-  }
 
   return (
     <ModalPopUp showModal={showModal} onClose={() => onClose()}>

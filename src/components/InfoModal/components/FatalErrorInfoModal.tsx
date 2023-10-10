@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import Lottie from 'react-lottie';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -13,7 +11,7 @@ const FatalErrorInfoModal = () => {
   const classes = useStyles();
   const [, setInfoModalState] = useRecoilState(InfoModalAtom);
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
-  const [showMore, setShowMore] = useState(false);
+  // const [showMore, setShowMore] = useState(false);
 
   const onReset = () => {
     localStorage.clear();
@@ -43,18 +41,28 @@ const FatalErrorInfoModal = () => {
         <ol className={classes.infoModalBodyList}>
           <li>Refresh the page and try again.</li>
           <li>
+            Click the {`"Reset"`} button. NOTE: This will remove all the items
+            on your shopping cart.
+            <button
+              onClick={() => onReset()}
+              className={classes.infoModalBodyResetBtn}
+            >
+              Reset
+            </button>
+          </li>
+          <li>
             If the error persists, you can call the restaurant at{' '}
             <a href={`tel:${restaurantDetails.phone}`}>
               {restaurantDetails.phone}
             </a>{' '}
             and place your order over the phone.
           </li>
-          <li>
+          {/* <li>
             Or you can click the {`"Show More"`} button below and scroll to
             learn how you can resolve this error.
-          </li>
+          </li> */}
         </ol>
-
+        {/* 
         <button
           onClick={() => setShowMore(true)}
           className={classes.infoModalBodyShowMoreBtn}
@@ -83,7 +91,7 @@ const FatalErrorInfoModal = () => {
               </li>
             </ol>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );

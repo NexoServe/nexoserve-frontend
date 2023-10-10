@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import colors from '../../../../css/colors';
 import { useValidateShoppingCartLazyQuery } from '../../../../generated/graphql';
+import { InfoModalAtom } from '../../../state/InfoModalState';
 import { OrderIsPickUpAtom, OrderTimeAtom } from '../../../state/OrderNavbar';
 import {
   ShoppingCartAtom,
@@ -26,18 +27,16 @@ const CheckoutPayment = () => {
   const isPickUp = useRecoilValue(OrderIsPickUpAtom);
   const orderTime = useRecoilValue(OrderTimeAtom);
 
-  const [validateShoppingCart, { data }] = useValidateShoppingCartLazyQuery();
+  const [validateShoppingCart, { data, error }] =
+    useValidateShoppingCartLazyQuery();
 
   const [stripePromise, setStripePromise] = useState<Stripe | null>(null);
+  const [, setInfoModal] = useRecoilState(InfoModalAtom);
 
   useEffect(() => {
     const fetchValidateShoppingCart = async () => {
       if (shoppingCart) {
         try {
-          console.log(
-            'process.env.NEXT_PUBLIC_RESTAURANT_ID',
-            process.env.NEXT_PUBLIC_RESTAURANT_ID,
-          );
           await validateShoppingCart({
             variables: {
               order: {
@@ -62,7 +61,10 @@ const CheckoutPayment = () => {
             setStripePromise(stripe);
           }
         } catch (error) {
-          console.error('Error validating shoppingCart:', error);
+          setInfoModal({
+            showModal: true,
+          });
+          return;
         }
       }
     };
@@ -70,7 +72,13 @@ const CheckoutPayment = () => {
     fetchValidateShoppingCart();
   }, [shoppingCart, shoppingCartTip]);
 
-  if (shoppingCart.length === 0) return <></>;
+  useEffect(() => {
+    if (error) {
+      setInfoModal({
+        showModal: true,
+      });
+    }
+  }, [error]);
 
   return (
     <>

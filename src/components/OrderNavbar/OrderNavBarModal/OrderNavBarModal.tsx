@@ -5,6 +5,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { useValidateOrderDetailsLazyQuery } from '../../../../generated/graphql';
 import { FoodMenuAtom } from '../../../state/FoodModalState';
+import { InfoModalAtom } from '../../../state/InfoModalState';
 import {
   OrderDateAtom,
   OrderDeliveryAdditionalAddressInfoAtom,
@@ -33,9 +34,20 @@ const OrderNavBarModal = ({
   type = 'pickup',
   error,
 }: IOrderNavBarModal) => {
-  const [validateOrderDetails, { loading }] = useValidateOrderDetailsLazyQuery({
-    fetchPolicy: 'no-cache',
-  });
+  const [validateOrderDetails, { loading, error: validateOrderDetailsError }] =
+    useValidateOrderDetailsLazyQuery({
+      fetchPolicy: 'no-cache',
+    });
+  const [, setInfoModal] = useRecoilState(InfoModalAtom);
+
+  useEffect(() => {
+    if (validateOrderDetailsError) {
+      setInfoModal({
+        showModal: true,
+      });
+      setModal(false);
+    }
+  }, [validateOrderDetailsError]);
 
   const [restaurantDetails, setRestaurantDetails] = useRecoilState(
     RestaurantDetailsAtom,
@@ -313,77 +325,84 @@ const OrderNavBarModal = ({
         value: formattedIntervals?.[0]?.value,
       });
     }
-
-    const res = await validateOrderDetails({
-      variables: {
-        input: {
-          restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
-          orderTime:
-            orderTimeState?.label === 'ASAP' ? 'ASAP' : value.toString(),
-          isPickUp: isPickUp,
-          deliveryAddress: deliveryAddress,
-          deliveryAddressAdditionalInfo: deliveryAdditionalAddressInfo,
-          deliveryDetails: deliveryDetails,
+    try {
+      const res = await validateOrderDetails({
+        variables: {
+          input: {
+            restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
+            orderTime:
+              orderTimeState?.label === 'ASAP' ? 'ASAP' : value.toString(),
+            isPickUp: isPickUp,
+            deliveryAddress: deliveryAddress,
+            deliveryAddressAdditionalInfo: deliveryAdditionalAddressInfo,
+            deliveryDetails: deliveryDetails,
+          },
         },
-      },
-    });
+      });
 
-    if (!res.data) {
-      //TODO: 404 page
-      return;
-    }
+      if (!res.data) {
+        //TODO: 404 page
+        return;
+      }
 
-    setRestaurantDetails(res.data.validateOrderDetails.restaurantDetails);
-    setOrderDetails(res.data.validateOrderDetails.orderDetails);
-    setMenu(res.data.validateOrderDetails.restaurantDetails.menu);
+      setRestaurantDetails(res.data.validateOrderDetails.restaurantDetails);
+      setOrderDetails(res.data.validateOrderDetails.orderDetails);
+      setMenu(res.data.validateOrderDetails.restaurantDetails.menu);
 
-    if (res.data.validateOrderDetails.orderDetails.isPickUp) {
-      setIsPickUp(true);
-      localStorage.setItem('isPickUp', JSON.stringify(true));
-    } else {
-      setIsPickUp(false);
-      localStorage.setItem('isPickUp', JSON.stringify(false));
-    }
+      if (res.data.validateOrderDetails.orderDetails.isPickUp) {
+        setIsPickUp(true);
+        localStorage.setItem('isPickUp', JSON.stringify(true));
+      } else {
+        setIsPickUp(false);
+        localStorage.setItem('isPickUp', JSON.stringify(false));
+      }
 
-    setOrderTime({
-      label: orderTimeState?.label as string,
-      value: value,
-    });
+      setOrderTime({
+        label: orderTimeState?.label as string,
+        value: value,
+      });
 
-    setOrderDate({
-      label: orderDateState?.label as string,
-      value: value,
-    });
+      setOrderDate({
+        label: orderDateState?.label as string,
+        value: value,
+      });
 
-    localStorage.setItem(
-      'orderTime',
-      JSON.stringify({
-        label: orderTimeState?.label,
-        value: orderTimeState?.label === 'ASAP' ? 'ASAP' : value,
-      }),
-    );
-
-    console.log(
-      'res.data.validateOrderDetails.orderDetails.isDeliveryAddressValid',
-      res.data.validateOrderDetails.orderDetails.isDeliveryAddressValid,
-    );
-
-    if (
-      res.data.validateOrderDetails.orderDetails.isDeliveryAddressValid &&
-      !res.data.validateOrderDetails.orderDetails.isPickUp
-    ) {
-      localStorage.setItem('deliveryAddress', JSON.stringify(deliveryAddress));
       localStorage.setItem(
-        'deliveryAddiotionalInfo',
-        JSON.stringify(deliveryAdditionalAddressInfo),
+        'orderTime',
+        JSON.stringify({
+          label: orderTimeState?.label,
+          value: orderTimeState?.label === 'ASAP' ? 'ASAP' : value,
+        }),
       );
-      localStorage.setItem('deliveryDetails', JSON.stringify(deliveryDetails));
-    } else {
-      setIsPickUp(true);
-      localStorage.setItem('isPickUp', JSON.stringify(true));
-    }
 
-    setModal(false);
+      if (
+        res.data.validateOrderDetails.orderDetails.isDeliveryAddressValid &&
+        !res.data.validateOrderDetails.orderDetails.isPickUp
+      ) {
+        localStorage.setItem(
+          'deliveryAddress',
+          JSON.stringify(deliveryAddress),
+        );
+        localStorage.setItem(
+          'deliveryAddiotionalInfo',
+          JSON.stringify(deliveryAdditionalAddressInfo),
+        );
+        localStorage.setItem(
+          'deliveryDetails',
+          JSON.stringify(deliveryDetails),
+        );
+      } else {
+        setIsPickUp(true);
+        localStorage.setItem('isPickUp', JSON.stringify(true));
+      }
+
+      setModal(false);
+    } catch (error) {
+      setInfoModal({
+        showModal: true,
+      });
+      setModal(false);
+    }
   };
 
   useEffect(() => {
@@ -410,6 +429,7 @@ const OrderNavBarModal = ({
           <OrderNavBarModalDelivery
             setIsAddressValid={setIsAddressValid}
             isAddressValid={isAddressValid}
+            setModal={setModal}
           />
         )}
 
