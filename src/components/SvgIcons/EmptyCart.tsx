@@ -2,21 +2,12 @@ import colors from '../../../css/colors';
 
 import { SvgIconsType } from './types';
 
-const EmptyCart = ({
-  width = '116',
-  height = '116',
-  viewBox = '0 0 1024 1024',
-  fill = 'none',
-  styleClass,
-}: SvgIconsType) => {
+const EmptyCart = ({ styleClass }: SvgIconsType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
-      width={width}
-      height={height}
-      viewBox={viewBox}
-      fill={fill}
+      viewBox="0 0 1024 1024"
       className={styleClass}
     >
       <g strokeWidth="2.0" fill="none" strokeLinecap="butt">

@@ -33,6 +33,7 @@ query Restaurant($input: OrderDetailsInput!) {
         }
       }
       timezone
+      openStatusMessage
     }
     orderDetails {
       currentDateTime
