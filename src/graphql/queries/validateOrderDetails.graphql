@@ -33,6 +33,7 @@ query ValidateOrderDetails($input: OrderDetailsInput!) {
         }
       }
       timezone
+      openStatusMessage
     }
     orderDetails {
       currentDateTime

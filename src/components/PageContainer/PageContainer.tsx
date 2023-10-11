@@ -90,8 +90,8 @@ const PageContainer = ({ children }: IPageContainer) => {
       setShowInvalidTimeModal({
         type: 'pickup',
         errorMessages: data?.restaurant.orderDetails.isOpenNow
-          ? "Sorry, we're currently closed. You can still place an order in advanced."
-          : 'Sorry, we need a little extra time. Please select a new time.',
+          ? 'Sorry, we need a little extra time. Please select a new time.'
+          : "Sorry, we're currently closed. You can still place an order in advanced.",
       });
     }
   }, [orderDetails?.isOrderTimeValid, setShowInvalidTimeModal]);

@@ -82,15 +82,36 @@ const OrderNavBarModal = ({
     const dayOfWeek = day.toFormat('cccc').toLowerCase(); // 'cccc' will give full weekday name in lowercase
 
     const dayDetails = restaurantDetails.openingHours.find(
-      (item) => item.dayOfWeek === dayOfWeek,
+      (item) => item.dayOfWeek.toLowerCase() === dayOfWeek.toLowerCase(),
     );
 
     if (dayDetails && dayDetails.time.length > 0) {
-      days.push({
-        value: day,
-        label: day.toFormat('EEE, MMM dd'),
-      });
-      dayCount++;
+      // Convert the current time to a DateTime object
+
+      // Check each time slot to see if the restaurant has opening hours after the current time
+      let hasOpeningHoursAfterNow = false;
+      for (const slot of dayDetails.time) {
+        const closesAtTime = day.set({
+          year: day.year,
+          month: day.month,
+          day: day.day,
+          hour: parseInt(slot.closes_at?.split(':')[0] as string),
+          minute: parseInt(slot.closes_at?.split(':')[1] as string),
+        });
+
+        if (closesAtTime > now) {
+          hasOpeningHoursAfterNow = true;
+          break;
+        }
+      }
+
+      if (hasOpeningHoursAfterNow) {
+        days.push({
+          value: day,
+          label: day.toFormat('EEE, MMM dd'),
+        });
+        dayCount++;
+      }
     }
 
     i++;
@@ -135,7 +156,7 @@ const OrderNavBarModal = ({
 
   if (allHoursAreInThePast && orderDetails.isOpenNow) {
     days.shift();
-  } else if (orderDetails.isOpenNow) {
+  } else if (days.length > 0 && days[0]?.value?.hasSame(now, 'day')) {
     days[0].label = 'Today';
   }
 
