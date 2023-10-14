@@ -25,7 +25,14 @@ query Restaurant($input: OrderDetailsInput!) {
           }
         }
       }
-      openingHours {
+      pickUpOpeningHours {
+        dayOfWeek
+        time {
+          opens_at
+          closes_at
+        }
+      }
+      deliveryOpeningHours {
         dayOfWeek
         time {
           opens_at
@@ -37,7 +44,8 @@ query Restaurant($input: OrderDetailsInput!) {
     }
     orderDetails {
       currentDateTime
-      isOpenNow
+      isOpenNowPickUp
+      isOpenNowDelivery
       isOrderTimeValid
       isDeliveryAddressValid
       isPickUp

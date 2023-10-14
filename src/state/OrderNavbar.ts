@@ -65,3 +65,18 @@ export const OrderShowInvalidTimeModalAtom = atom<
   key: 'OrderShowInvalidTimeModalAtom',
   default: undefined,
 });
+
+export const ShowTimeModalAtom = atom<boolean>({
+  key: 'ShowTimeModalAtom',
+  default: false,
+});
+
+export const ShowInfoModalAtom = atom<boolean>({
+  key: 'ShowInfoModalAtom',
+  default: false,
+});
+
+export const InfoModalIsPickUpAtom = atom<boolean>({
+  key: 'InfoModalIsPickUpAtom',
+  default: true,
+});

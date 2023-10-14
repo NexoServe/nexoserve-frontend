@@ -1,10 +1,11 @@
-import { useState } from 'react';
-
 import classNames from 'classnames';
 import { AnimatePresence } from 'framer-motion';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { OrderDetailsAtom } from '../../../state/OrderNavbar';
+import {
+  OrderDetailsAtom,
+  ShowInfoModalAtom,
+} from '../../../state/OrderNavbar';
 import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import { ModalPopUp } from '../../Modal/Modal';
 import SvgIcons from '../../SvgIcons';
@@ -18,7 +19,7 @@ const OrderInfo = () => {
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
   const orderDetails = useRecoilValue(OrderDetailsAtom);
 
-  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useRecoilState(ShowInfoModalAtom);
 
   return (
     <>
@@ -33,7 +34,8 @@ const OrderInfo = () => {
           </div>
           <div
             className={classNames(classes.orderInfoStatusIcon, {
-              [classes.orderInfoStatusIconClosed]: !orderDetails?.isOpenNow,
+              [classes.orderInfoStatusIconClosed]:
+                !orderDetails?.isOpenNowPickUp,
             })}
           ></div>
         </div>

@@ -9,7 +9,7 @@ const useStyles = createUseStyles({
     display: 'flex',
     alignItems: 'center',
 
-    [queries.s]: {
+    [queries.xs]: {
       height: base(8),
     },
   },

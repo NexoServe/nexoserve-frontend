@@ -37,6 +37,30 @@ const useStyles = createUseStyles({
     lineHeight: '18px',
     paddingBottom: base(3),
   },
+
+  orderNavbarModalErrorInner: {
+    display: 'flex',
+    marginBottom: base(3),
+
+    '& button': {
+      marginLeft: base(1),
+      marginRight: base(1),
+      padding: `${base(1)} ${base(2)}`,
+      fontSize: '10px',
+
+      [queries.xs]: {
+        fontSize: '13px',
+      },
+
+      [queries.s]: {
+        fontSize: '14px',
+      },
+
+      [queries.m]: {
+        fontSize: '16px',
+      },
+    },
+  },
 });
 
 export default useStyles;

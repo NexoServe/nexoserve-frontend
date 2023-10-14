@@ -22,8 +22,10 @@ const variants = {
 };
 
 const OrderType = ({ isCheckout = false }: IOrderType) => {
-  const [showDeliveryModal, setShowDeliveryModal] = useState(false);
   const classes = useStyles();
+
+  const [showDeliveryModal, setShowDeliveryModal] = useState(false);
+  const [showPickUpModal, setShowPickUpModal] = useState(false);
 
   const [, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
   const [isPickUpState, setIsPickUpState] = useRecoilState(
@@ -38,12 +40,12 @@ const OrderType = ({ isCheckout = false }: IOrderType) => {
 
   const onClose = () => {
     setShowDeliveryModal(false);
+    setShowPickUpModal(false);
   };
 
   const handlePickUpClick = () => {
     setIsPickUp(true);
-    setIsPickUpState(true);
-    localStorage.setItem('isPickUp', JSON.stringify(true));
+    setShowPickUpModal(true);
   };
 
   return (
@@ -81,6 +83,7 @@ const OrderType = ({ isCheckout = false }: IOrderType) => {
           <button
             onClick={() => {
               setShowDeliveryModal(true);
+              setShowDeliveryModal(true);
               setIsPickUp(false);
             }}
             className={classes.orderTypeToggleButton}
@@ -103,6 +106,18 @@ const OrderType = ({ isCheckout = false }: IOrderType) => {
               setModal={setShowDeliveryModal}
               headerText="Delivery Details"
               type="delivery"
+            />
+          </ModalPopUp>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showPickUpModal && (
+          <ModalPopUp showModal={showPickUpModal} onClose={onClose}>
+            <OrderNavBarModal
+              setModal={setShowPickUpModal}
+              headerText="Pick Up Details"
+              type="pickup"
             />
           </ModalPopUp>
         )}

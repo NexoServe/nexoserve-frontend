@@ -87,11 +87,14 @@ const PageContainer = ({ children }: IPageContainer) => {
 
   useEffect(() => {
     if (orderDetails?.isOrderTimeValid === false) {
+      //TODO HANDLE ERROR message
       setShowInvalidTimeModal({
         type: 'pickup',
-        errorMessages: data?.restaurant.orderDetails.isOpenNow
-          ? 'Sorry, we need a little extra time. Please select a new time.'
-          : "Sorry, we're currently closed. You can still place an order in advanced.",
+        errorMessages:
+          data?.restaurant.orderDetails.isOpenNowPickUp ||
+          data?.restaurant.orderDetails.isOpenNowDelivery
+            ? 'Sorry, we need a little extra time. Please select a new time.'
+            : "Sorry, we're currently closed. You can still place an order in advanced.",
       });
     }
   }, [orderDetails?.isOrderTimeValid, setShowInvalidTimeModal]);

@@ -18,7 +18,7 @@ const useStyles = createUseStyles({
     marginLeft: 'auto',
     marginRight: 'auto',
 
-    [queries.s]: {
+    [queries.xs]: {
       maxHeight: base(6),
       padding: base(1),
     },

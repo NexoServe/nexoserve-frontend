@@ -1,9 +1,11 @@
-import { useState } from 'react';
-
 import { AnimatePresence } from 'framer-motion';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { OrderDateAtom, OrderTimeAtom } from '../../../state/OrderNavbar';
+import {
+  OrderDateAtom,
+  OrderTimeAtom,
+  ShowTimeModalAtom,
+} from '../../../state/OrderNavbar';
 import { ModalPopUp } from '../../Modal/Modal';
 import RoundBorder from '../../RoundBorder/RoundBorder';
 import SvgIcons from '../../SvgIcons';
@@ -12,7 +14,7 @@ import OrderNavBarModal from '../OrderNavBarModal/OrderNavBarModal';
 import useStyles from './css';
 
 const OrderTime = () => {
-  const [showTimeModal, setShowTimeModal] = useState(false);
+  const [showTimeModal, setShowTimeModal] = useRecoilState(ShowTimeModalAtom);
 
   const orderTime = useRecoilValue(OrderTimeAtom);
   const orderDate = useRecoilValue(OrderDateAtom);

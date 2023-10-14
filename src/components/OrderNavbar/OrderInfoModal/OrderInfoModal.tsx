@@ -1,11 +1,12 @@
-import { useState } from 'react';
-
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
 import { DateTime } from 'luxon';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { OrderDetailsAtom } from '../../../state/OrderNavbar';
+import {
+  InfoModalIsPickUpAtom,
+  OrderDetailsAtom,
+} from '../../../state/OrderNavbar';
 import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import Divider from '../../Divider/Divider';
 import ModalHeader from '../../ModalHeader/ModalHeader';
@@ -18,16 +19,28 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
   const orderDetails = useRecoilValue(OrderDetailsAtom);
 
-  const [isPickUp, setIsPickUp] = useState(true);
+  const [isPickUp, setIsPickUp] = useRecoilState(InfoModalIsPickUpAtom);
   const classes = useStyles();
 
-  const restaurantOpeningHours = getRestaurantOpeningHours(
-    restaurantDetails?.openingHours,
+  const pickUpOpeningHours = getRestaurantOpeningHours(
+    restaurantDetails?.pickUpOpeningHours,
   );
+
+  const deliveryOpeningHours = getRestaurantOpeningHours(
+    restaurantDetails?.deliveryOpeningHours,
+  );
+
+  console.log('pickUpOpeningHours', pickUpOpeningHours);
 
   return (
     <div className={classes.orderInfoModal}>
-      <ModalHeader text={'Store Info'} onClick={() => setModal(false)} />
+      <ModalHeader
+        text={'Store Info'}
+        onClick={() => {
+          setModal(false);
+          setIsPickUp(true);
+        }}
+      />
       <div className={classes.orderInfoModalContent}>
         <div className={classes.orderInfoModalContentInner}>
           <div>
@@ -85,42 +98,45 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
             </div>
 
             <div className={classes.orderInfoHoursTabContent}>
-              {restaurantOpeningHours?.map((item, i) => {
-                const isSameDay =
-                  DateTime.fromISO(
-                    orderDetails?.currentDateTime as string,
-                  ).weekdayLong?.toLowerCase() === item.dayOfWeek;
+              {(isPickUp ? pickUpOpeningHours : deliveryOpeningHours)?.map(
+                (item, i) => {
+                  const isSameDay =
+                    DateTime.fromISO(
+                      orderDetails?.currentDateTime as string,
+                    ).weekdayLong?.toLowerCase() === item.dayOfWeek;
 
-                return (
-                  <div
-                    key={i}
-                    className={classNames(
-                      classes.orderInfoHoursTabContentItem,
-                      {
-                        [classes.orderInfoHoursTabContentItemActive]: isSameDay,
-                      },
-                    )}
-                  >
-                    <div>{item.dayOfWeek}</div>
-                    <div>
-                      {!item.opens_at ? (
-                        'Closed'
-                      ) : (
-                        <>
-                          {' '}
-                          {DateTime.fromISO(item.opens_at as string).toFormat(
-                            'hh:mm a',
-                          )}{' '}
-                          -{' '}
-                          {DateTime.fromISO(item.closes_at as string).toFormat(
-                            'hh:mm a',
-                          )}
-                        </>
+                  return (
+                    <div
+                      key={i}
+                      className={classNames(
+                        classes.orderInfoHoursTabContentItem,
+                        {
+                          [classes.orderInfoHoursTabContentItemActive]:
+                            isSameDay,
+                        },
                       )}
+                    >
+                      <div>{item.dayOfWeek}</div>
+                      <div>
+                        {!item.opens_at ? (
+                          'Closed'
+                        ) : (
+                          <>
+                            {' '}
+                            {DateTime.fromISO(item.opens_at as string).toFormat(
+                              'hh:mm a',
+                            )}{' '}
+                            -{' '}
+                            {DateTime.fromISO(
+                              item.closes_at as string,
+                            ).toFormat('hh:mm a')}
+                          </>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                },
+              )}
             </div>
           </div>
         </div>

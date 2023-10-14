@@ -28,6 +28,12 @@ const useStyles = createUseStyles({
     cursor: 'pointer',
     width: '100%',
 
+    [queries.xs]: {
+      padding: base(2),
+      maxHeight: base(6),
+      paddingLeft: base(1.25),
+    },
+
     [queries.s]: {
       maxHeight: base(6),
       padding: base(2),

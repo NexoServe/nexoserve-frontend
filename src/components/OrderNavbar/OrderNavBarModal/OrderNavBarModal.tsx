@@ -7,14 +7,18 @@ import { useValidateOrderDetailsLazyQuery } from '../../../../generated/graphql'
 import { FoodMenuAtom } from '../../../state/FoodModalState';
 import { InfoModalAtom } from '../../../state/InfoModalState';
 import {
+  InfoModalIsPickUpAtom,
   OrderDateAtom,
   OrderDeliveryAdditionalAddressInfoAtom,
   OrderDeliveryAddressAtom,
   OrderDeliveryDetailsAtom,
   OrderDetailsAtom,
   OrderIsPickUpAtom,
+  OrderIsPickUpStateAtom,
   OrderTime,
   OrderTimeAtom,
+  ShowInfoModalAtom,
+  ShowTimeModalAtom,
 } from '../../../state/OrderNavbar';
 import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import getHourAndMinute from '../../../utils/getHourAndMintue';
@@ -63,13 +67,32 @@ const OrderNavBarModal = ({
   const [orderTimeState, setOrderTimeState] = useState<OrderTime>();
   const [isAddressValid, setIsAddressValid] = useState<null | boolean>(null);
   const [isPickUp, setIsPickUp] = useRecoilState(OrderIsPickUpAtom);
+  const [, setIsPickUpState] = useRecoilState(OrderIsPickUpStateAtom);
   const deliveryAddress = useRecoilValue(OrderDeliveryAddressAtom);
   const deliveryAdditionalAddressInfo = useRecoilValue(
     OrderDeliveryAdditionalAddressInfoAtom,
   );
   const deliveryDetails = useRecoilValue(OrderDeliveryDetailsAtom);
+  const [, setShowTimeModal] = useRecoilState(ShowTimeModalAtom);
+  const [, setShowInfoModal] = useRecoilState(ShowInfoModalAtom);
+  const [, setInfoModalIsPickUp] = useRecoilState(InfoModalIsPickUpAtom);
 
-  const now = DateTime.fromISO(orderDetails?.currentDateTime as string).setZone(
+  const [deliveryIsClosedForTheDay, setDeliveryIsClosedForTheDay] =
+    useState(false);
+
+  useEffect(() => {
+    if (
+      type === 'delivery' &&
+      !orderDetails.isOpenNowDelivery &&
+      orderDetails.isOpenNowPickUp
+    ) {
+      setDeliveryIsClosedForTheDay(true);
+    } else {
+      setDeliveryIsClosedForTheDay(false);
+    }
+  }, [orderDetails, type]);
+
+  const now = DateTime.fromISO(orderDetails?.currentDateTime).setZone(
     restaurantDetails?.timezone,
   );
   const days: OrderTime[] = [];
@@ -77,11 +100,15 @@ const OrderNavBarModal = ({
   let dayCount = 0;
   let i = 0;
 
+  const openingHours = isPickUp
+    ? restaurantDetails.pickUpOpeningHours
+    : restaurantDetails.deliveryOpeningHours;
+
   while (dayCount < 7) {
     const day = now.plus({ days: i });
     const dayOfWeek = day.toFormat('cccc').toLowerCase(); // 'cccc' will give full weekday name in lowercase
 
-    const dayDetails = restaurantDetails.openingHours.find(
+    const dayDetails = openingHours.find(
       (item) => item.dayOfWeek.toLowerCase() === dayOfWeek.toLowerCase(),
     );
 
@@ -91,17 +118,19 @@ const OrderNavBarModal = ({
       // Check each time slot to see if the restaurant has opening hours after the current time
       let hasOpeningHoursAfterNow = false;
       for (const slot of dayDetails.time) {
-        const closesAtTime = day.set({
-          year: day.year,
-          month: day.month,
-          day: day.day,
-          hour: parseInt(slot.closes_at?.split(':')[0] as string),
-          minute: parseInt(slot.closes_at?.split(':')[1] as string),
-        });
+        if (slot.closes_at) {
+          const closesAtTime = day.set({
+            year: day.year,
+            month: day.month,
+            day: day.day,
+            hour: parseInt(slot.closes_at?.split(':')[0]),
+            minute: parseInt(slot.closes_at?.split(':')[1]),
+          });
 
-        if (closesAtTime > now) {
-          hasOpeningHoursAfterNow = true;
-          break;
+          if (closesAtTime > now) {
+            hasOpeningHoursAfterNow = true;
+            break;
+          }
         }
       }
 
@@ -117,44 +146,41 @@ const OrderNavBarModal = ({
     i++;
   }
 
-  const openingHoursForDay = restaurantDetails?.openingHours.find(
+  const openingHoursForDay = openingHours.find(
     (day) => day.dayOfWeek === now.weekdayLong?.toLowerCase(),
   );
 
   const allHoursAreInThePast = openingHoursForDay?.time.every((interval) => {
-    const openingTime = DateTime.fromFormat(
-      interval?.opens_at as string,
-      'HH:mm',
-      {
+    if (interval.opens_at && interval.closes_at) {
+      const openingTime = DateTime.fromFormat(interval?.opens_at, 'HH:mm', {
         zone: restaurantDetails?.timezone,
-      },
-    ).set({
-      day: now.day,
-      month: now.month,
-      year: now.year,
-    });
+      }).set({
+        day: now.day,
+        month: now.month,
+        year: now.year,
+      });
 
-    let closingTime = DateTime.fromFormat(
-      interval?.closes_at as string,
-      'HH:mm',
-      {
+      let closingTime = DateTime.fromFormat(interval?.closes_at, 'HH:mm', {
         zone: restaurantDetails?.timezone,
-      },
-    ).set({
-      day: now.day,
-      month: now.month,
-      year: now.year,
-    });
+      }).set({
+        day: now.day,
+        month: now.month,
+        year: now.year,
+      });
 
-    // If closingTime is before openingTime, it means the closingTime is on the next day
-    if (closingTime < openingTime) {
-      closingTime = closingTime.plus({ days: 1 });
+      // If closingTime is before openingTime, it means the closingTime is on the next day
+      if (closingTime < openingTime) {
+        closingTime = closingTime.plus({ days: 1 });
+      }
+
+      return now > closingTime;
     }
-
-    return now > closingTime;
   });
 
-  if (allHoursAreInThePast && orderDetails.isOpenNow) {
+  if (
+    allHoursAreInThePast &&
+    (isPickUp ? orderDetails.isOpenNowPickUp : orderDetails.isOpenNowDelivery)
+  ) {
     days.shift();
   } else if (days.length > 0 && days[0]?.value?.hasSame(now, 'day')) {
     days[0].label = 'Today';
@@ -165,6 +191,20 @@ const OrderNavBarModal = ({
       setOrderDateState({
         label: days[0]?.label,
         value: days[0].value,
+      });
+    } else if (!isPickUp && !orderDetails?.isOpenNowDelivery) {
+      setOrderDateState({
+        label: days[0]?.label,
+        value: DateTime.fromISO(days[0]?.value?.toString() as string).setZone(
+          restaurantDetails?.timezone,
+        ),
+      });
+    } else if (isPickUp && !orderDetails?.isOpenNowDelivery) {
+      setOrderDateState({
+        label: days[0]?.label,
+        value: DateTime.fromISO(days[0]?.value?.toString() as string).setZone(
+          restaurantDetails?.timezone,
+        ),
       });
     } else {
       setOrderDateState({
@@ -180,7 +220,7 @@ const OrderNavBarModal = ({
   }, []);
 
   const dayHours =
-    restaurantDetails?.openingHours.find(
+    openingHours.find(
       (hours) =>
         hours.dayOfWeek.toLowerCase() ===
         orderDateState?.value?.weekdayLong?.toLowerCase(),
@@ -189,54 +229,56 @@ const OrderNavBarModal = ({
   let intervals = [];
 
   for (const period of dayHours) {
-    const openingTime = DateTime?.fromObject(
-      {
-        day: orderDateState?.value ? orderDateState.value.day : now.day,
-        month: orderDateState?.value ? orderDateState.value.month : now.month,
-        year: orderDateState?.value ? orderDateState.value.year : now.year,
-        hour: parseInt(period?.opens_at?.split(':')[0] as string),
-        minute: parseInt(period?.opens_at?.split(':')[1] as string),
-      },
-      {
-        zone: restaurantDetails?.timezone,
-      },
-    );
+    if (period.opens_at && period.closes_at) {
+      const openingTime = DateTime?.fromObject(
+        {
+          day: orderDateState?.value ? orderDateState.value.day : now.day,
+          month: orderDateState?.value ? orderDateState.value.month : now.month,
+          year: orderDateState?.value ? orderDateState.value.year : now.year,
+          hour: parseInt(period?.opens_at?.split(':')[0]),
+          minute: parseInt(period?.opens_at?.split(':')[1]),
+        },
+        {
+          zone: restaurantDetails?.timezone,
+        },
+      );
 
-    const closingTime = DateTime?.fromObject(
-      {
-        day: orderDateState?.value ? orderDateState.value.day : now.day,
-        month: orderDateState?.value ? orderDateState.value.month : now.month,
-        year: orderDateState?.value ? orderDateState.value.year : now.year,
-        hour: parseInt(period?.closes_at?.split(':')[0] as string),
-        minute: parseInt(period?.closes_at?.split(':')[1] as string),
-      },
-      {
-        zone: restaurantDetails?.timezone,
-      },
-    );
+      const closingTime = DateTime?.fromObject(
+        {
+          day: orderDateState?.value ? orderDateState.value.day : now.day,
+          month: orderDateState?.value ? orderDateState.value.month : now.month,
+          year: orderDateState?.value ? orderDateState.value.year : now.year,
+          hour: parseInt(period?.closes_at?.split(':')[0]),
+          minute: parseInt(period?.closes_at?.split(':')[1]),
+        },
+        {
+          zone: restaurantDetails?.timezone,
+        },
+      );
 
-    const offsetMinutes =
-      type === 'pickup'
-        ? restaurantDetails.pickUpOffset
-        : restaurantDetails.deliveryOffset;
+      const offsetMinutes =
+        type === 'pickup'
+          ? restaurantDetails.pickUpOffset
+          : restaurantDetails.deliveryOffset;
 
-    const offsetOpeningTime = openingTime.plus({ minutes: offsetMinutes });
+      const offsetOpeningTime = openingTime.plus({ minutes: offsetMinutes });
 
-    const roundedOpeningTime = roundToNearest(
-      openingTime.toFormat('hh:mm a') === '12:00 AM'
-        ? openingTime
-        : offsetOpeningTime,
-      [0, 10, 15, 30, 45],
-    );
+      const roundedOpeningTime = roundToNearest(
+        openingTime.toFormat('hh:mm a') === '12:00 AM'
+          ? openingTime
+          : offsetOpeningTime,
+        [0, 10, 15, 30, 45],
+      );
 
-    const timeInterval = Interval.fromDateTimes(
-      roundedOpeningTime,
-      closingTime,
-    );
+      const timeInterval = Interval.fromDateTimes(
+        roundedOpeningTime,
+        closingTime,
+      );
 
-    intervals.push(
-      ...Array.from(timeInterval.splitBy({ minutes: 15 }), (i) => i.start),
-    );
+      intervals.push(
+        ...Array.from(timeInterval.splitBy({ minutes: 15 }), (i) => i.start),
+      );
+    }
   }
 
   // Remove intervals that have already passed
@@ -262,7 +304,9 @@ const OrderNavBarModal = ({
   }));
 
   if (
-    orderDetails?.isOpenNow &&
+    (isPickUp
+      ? orderDetails.isOpenNowPickUp
+      : orderDetails.isOpenNowDelivery) &&
     formattedIntervals &&
     formattedIntervals.length > 0 &&
     !allHoursAreInThePast &&
@@ -271,7 +315,10 @@ const OrderNavBarModal = ({
     formattedIntervals[0].label = 'ASAP';
   }
 
-  if (formattedIntervals.length === 0 && orderDetails?.isOpenNow) {
+  if (
+    formattedIntervals.length === 0 &&
+    (isPickUp ? orderDetails.isOpenNowPickUp : orderDetails.isOpenNowDelivery)
+  ) {
     formattedIntervals.push({
       value: now,
       label: 'ASAP',
@@ -292,7 +339,7 @@ const OrderNavBarModal = ({
         )
       ) {
         setOrderTimeState({
-          label: formattedIntervals?.[0]?.label as string,
+          label: formattedIntervals?.[0]?.label || null,
           value: formattedIntervals?.[0]?.value,
         });
       }
@@ -311,7 +358,7 @@ const OrderNavBarModal = ({
 
       if (orderDateState?.value > now) {
         setOrderTimeState({
-          label: formattedIntervals?.[0]?.label as string,
+          label: formattedIntervals?.[0]?.label || null,
           value: formattedIntervals?.[0]?.value,
         });
       } else {
@@ -328,8 +375,8 @@ const OrderNavBarModal = ({
 
     let hourMinutes;
 
-    if (orderTimeState?.label !== 'ASAP') {
-      hourMinutes = getHourAndMinute(orderTimeState?.label as string);
+    if (orderTimeState?.label !== 'ASAP' && orderTimeState?.label) {
+      hourMinutes = getHourAndMinute(orderTimeState?.label);
     }
 
     const value = DateTime.fromObject({
@@ -340,9 +387,14 @@ const OrderNavBarModal = ({
       minute: hourMinutes ? hourMinutes?.minute : now.minute,
     });
 
-    if (orderTimeState?.label === 'ASAP' && !orderDetails?.isOpenNow) {
+    if (
+      orderTimeState?.label === 'ASAP' &&
+      !(isPickUp
+        ? orderDetails.isOpenNowPickUp
+        : orderDetails.isOpenNowDelivery)
+    ) {
       setOrderTimeState({
-        label: formattedIntervals?.[0]?.label as string,
+        label: formattedIntervals?.[0]?.label || null,
         value: formattedIntervals?.[0]?.value,
       });
     }
@@ -379,12 +431,12 @@ const OrderNavBarModal = ({
       }
 
       setOrderTime({
-        label: orderTimeState?.label as string,
+        label: orderTimeState?.label || null,
         value: value,
       });
 
       setOrderDate({
-        label: orderDateState?.label as string,
+        label: orderDateState?.label || null,
         value: value,
       });
 
@@ -413,6 +465,7 @@ const OrderNavBarModal = ({
           JSON.stringify(deliveryDetails),
         );
       } else {
+        setIsPickUpState(true);
         setIsPickUp(true);
         localStorage.setItem('isPickUp', JSON.stringify(true));
       }
@@ -445,6 +498,37 @@ const OrderNavBarModal = ({
 
       <div className={classes.orderNavbarModalContent}>
         {error && <div className={classes.orderNavbarModalError}>{error}</div>}
+        {deliveryIsClosedForTheDay && (
+          <div>
+            <div className={classes.orderNavbarModalError}>
+              {`We're`} sorry delivery is closed for the day. You can still
+              place a pick up order or place a delivery order in advanced.
+            </div>
+
+            <div className={classes.orderNavbarModalErrorInner}>
+              <Button
+                onClick={() => {
+                  setIsPickUp(true);
+                  setIsPickUpState(true);
+                  setModal(false);
+                  setShowTimeModal(true);
+                }}
+              >
+                Place Pick Up Order
+              </Button>
+              <Button
+                onClick={() => {
+                  setIsPickUp(true);
+                  setModal(false);
+                  setInfoModalIsPickUp(false);
+                  setShowInfoModal(true);
+                }}
+              >
+                View Delivery Hours
+              </Button>
+            </div>
+          </div>
+        )}
 
         {type === 'delivery' && (
           <OrderNavBarModalDelivery
@@ -475,7 +559,10 @@ const OrderNavBarModal = ({
         <Button
           disabled={
             (!isAddressValid && type === 'delivery') ||
-            (!orderDetails.isOpenNow && orderTimeState?.label === 'ASAP')
+            (!(isPickUp
+              ? orderDetails.isOpenNowPickUp
+              : orderDetails.isOpenNowDelivery) &&
+              orderTimeState?.label === 'ASAP')
           }
           type="submit"
           styleClass={classes.orderNavbarModalButton}
