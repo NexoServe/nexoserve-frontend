@@ -12,6 +12,7 @@ query ValidateOrderDetails($input: OrderDetailsInput!) {
       radius
       pickUpOffset
       deliveryOffset
+      deliveryFee
       menu {
         category
         foods {

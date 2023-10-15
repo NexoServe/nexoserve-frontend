@@ -6,6 +6,7 @@ type ShoppingCartTotalType = {
   subtotal: number;
   tax: number | undefined | null;
   tip: number | undefined | null;
+  deliveryFee: number | undefined | null;
   grandTotal: number | undefined | null;
   isValidated: boolean;
   isLoading: boolean;
@@ -27,6 +28,7 @@ export const ShoppingCartTotalAtom = atom<ShoppingCartTotalType>({
     subtotal: 0,
     tax: undefined,
     tip: undefined,
+    deliveryFee: undefined,
     grandTotal: undefined,
     isValidated: false,
     isLoading: false,

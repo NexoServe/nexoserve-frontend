@@ -48,8 +48,8 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
               {restaurantDetails?.name}
             </div>
             <div className={classes.orderInfoModalContentPhone}>
-              <a href={`tel:${restaurantDetails.phone}`}>
-                {restaurantDetails.phone}
+              <a href={`tel:${restaurantDetails?.phone}`}>
+                {restaurantDetails?.phone}
               </a>
             </div>
           </div>

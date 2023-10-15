@@ -2,6 +2,7 @@ query ValidateShoppingCart($order: CreateOrderInput!) {
   validateShoppingCart(order: $order) {
     subTotal
     tax
+    deliveryFee
     tip
     grandTotal
     orderItems {

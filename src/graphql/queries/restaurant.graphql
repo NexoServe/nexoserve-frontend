@@ -12,6 +12,7 @@ query Restaurant($input: OrderDetailsInput!) {
       radius
       pickUpOffset
       deliveryOffset
+      deliveryFee
       menu {
         category
         foods {

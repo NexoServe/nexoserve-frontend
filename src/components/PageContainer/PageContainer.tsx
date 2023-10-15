@@ -122,8 +122,6 @@ const PageContainer = ({ children }: IPageContainer) => {
       setRestaurantDetails(data.restaurant.restaurantDetails);
       setOrderDetails(data.restaurant.orderDetails);
 
-      console.log('restaurant', data.restaurant);
-
       if (data.restaurant.orderDetails.isPickUp === true) {
         setIsPickUp(true);
         localStorage.setItem('isPickUp', JSON.stringify(true));

@@ -7,6 +7,7 @@ import {
   useValidateShoppingCartLazyQuery,
 } from '../../../../generated/graphql';
 import { InfoModalAtom } from '../../../state/InfoModalState';
+import { OrderIsPickUpStateAtom } from '../../../state/OrderNavbar';
 import {
   ShoppingCartAtom,
   ShoppingCartTipAtom,
@@ -28,6 +29,7 @@ const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
     ShoppingCartTotalAtom,
   );
   const shoppingCartTip = useRecoilValue(ShoppingCartTipAtom);
+  const isPickUp = useRecoilValue(OrderIsPickUpStateAtom);
   const [, setInfoModal] = useRecoilState(InfoModalAtom);
 
   const [fetchValidateShoppingCart, { data, loading, error }] =
@@ -53,7 +55,7 @@ const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
         showModal: true,
       });
     }
-  }, [shoppingCart, isCheckout, shoppingCartTip]);
+  }, [shoppingCart, isCheckout, shoppingCartTip, isPickUp]);
 
   useEffect(() => {
     if (error) {
@@ -92,6 +94,7 @@ const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
         subtotal: data?.validateShoppingCart.subTotal as number,
         grandTotal: data.validateShoppingCart.grandTotal,
         tax: data.validateShoppingCart.tax,
+        deliveryFee: data.validateShoppingCart.deliveryFee,
         tip:
           data.validateShoppingCart.tip === null
             ? 0
