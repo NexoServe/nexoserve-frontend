@@ -40,7 +40,7 @@ const useStyles = createUseStyles({
   navbarLogo: {
     height: base(4),
     width: base(8),
-    background: colors.primary,
+    maxWidth: base(8),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -63,6 +63,7 @@ const useStyles = createUseStyles({
 
   navbarMenuMobile: {
     display: 'flex',
+    paddingRight: base(1),
 
     [queries.l]: {
       display: 'none',

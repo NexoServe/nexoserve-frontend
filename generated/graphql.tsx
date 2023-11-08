@@ -309,21 +309,41 @@ export type OrderItemType = {
   total: Scalars['Float'];
 };
 
+export enum OrderStatusEnum {
+  Accepted = 'ACCEPTED',
+  Cancelled = 'CANCELLED',
+  Completed = 'COMPLETED',
+  Pending = 'PENDING',
+  Rejected = 'REJECTED'
+}
+
 export type OrderType = {
   __typename?: 'OrderType';
   address?: Maybe<AddressType>;
+  deliveryFee?: Maybe<Scalars['Float']>;
+  estimatedCompletionTime: Scalars['String'];
   guestEmail?: Maybe<Scalars['String']>;
   guestFirstName?: Maybe<Scalars['String']>;
   guestLastName?: Maybe<Scalars['String']>;
   guestPhone?: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  isASAP: Scalars['Boolean'];
   orderItems?: Maybe<Array<OrderItemType>>;
+  orderNumber: Scalars['String'];
+  orderStatus: OrderStatusEnum;
+  orderType: OrderTypeEnum;
+  placementTime: Scalars['String'];
   subTotal: Scalars['Float'];
   tax: Scalars['Float'];
   tip: Scalars['Float'];
   total: Scalars['Float'];
   user?: Maybe<UserType>;
 };
+
+export enum OrderTypeEnum {
+  Delivery = 'DELIVERY',
+  Pickup = 'PICKUP'
+}
 
 export type Query = {
   __typename?: 'Query';
@@ -333,6 +353,7 @@ export type Query = {
   foodsByCategory: Array<Maybe<FoodsByCategoryType>>;
   orders: Array<OrderType>;
   restaurant: RestaurantOutput;
+  todaysOrders: Array<OrderType>;
   validateOrderDetails: ValidateOrderDetailsOutput;
   validateShoppingCart: ShoppingCart;
 };
@@ -345,6 +366,11 @@ export type QueryFoodByIdArgs = {
 
 export type QueryRestaurantArgs = {
   input: OrderDetailsInput;
+};
+
+
+export type QueryTodaysOrdersArgs = {
+  restaurantId: Scalars['String'];
 };
 
 

@@ -4,9 +4,12 @@ import { useEffect, useState } from 'react';
 
 import { AnimatePresence } from 'framer-motion';
 import Hamburger from 'hamburger-react';
+import Image from 'next/image';
 
+import { base } from '../../../css/base';
 import breakpoints from '../../../css/breakpoints';
 import colors from '../../../css/colors';
+import Logo from '../../assets/madisons-logo.svg';
 import Container from '../Container/Container';
 import Divider from '../Divider/Divider';
 import Menu from '../Menu/Menu';
@@ -37,7 +40,24 @@ const Navbar = () => {
   return (
     <nav className={classes.navbar}>
       <Container styleClass={classes.navbarContainer}>
-        <div className={classes.navbarLogo}>Logo</div>
+        <div
+          style={{
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            paddingTop: base(1),
+            paddingBottom: base(1),
+          }}
+        >
+          <Image
+            className={classes.navbarLogo}
+            src={Logo}
+            alt="Madisons Logo"
+            style={{
+              scale: 0.5,
+            }}
+          />
+        </div>
         <div className={classes.navbarHamburger}>
           <Hamburger
             direction="right"

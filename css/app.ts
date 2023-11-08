@@ -1,6 +1,6 @@
 import { createUseStyles } from 'react-jss';
 
-import { base, baselinePX, htmlFontSize } from './base';
+import { base, htmlFontSize } from './base';
 import colors from './colors';
 import queries from './queries';
 import { body, h1, h2, h3, h4, h5 } from './type';
@@ -22,7 +22,7 @@ export default createUseStyles({
     html: {
       fontFamily: 'Montserrat, sans-serif',
       fontSize: htmlFontSize,
-      lineHeight: `${baselinePX}px`,
+      lineHeight: `18px`,
       backgroundColor: colors.secondary,
       [queries.m]: {
         fontSize: htmlFontSize,

@@ -3,22 +3,41 @@
 import classNames from 'classnames';
 import Link from 'next/link';
 
+import { base } from '../../../css/base';
+import Button from '../Button/Button';
+
 import useStyles from './css';
 import { IMenu } from './types';
 
 const Menu = ({ styleClass }: IMenu) => {
-  const classes = useStyles();
+  const styles = useStyles();
 
   return (
-    <menu className={classNames(classes.menu, styleClass)}>
-      <div>
+    <menu className={classNames(styles.menu, styleClass)}>
+      <div className={styles.menuLinkWrapper}>
         <Link href="/">
-          <a className={classes.menuLink}>Home</a>
+          <a className={styles.menuLink}>Home</a>
+        </Link>
+      </div>
+      <div className={styles.menuLinkWrapper}>
+        <Link href="/gallery">
+          <a className={styles.menuLink}>Gallery</a>
         </Link>
       </div>
       <div>
-        <Link href="/">
-          <a className={classes.menuLink}>Order Online</a>
+        <Link href="/order">
+          <a className={styles.menuLink}>
+            <Button
+              style={{
+                padding: base(1),
+                paddingLeft: base(2),
+                paddingRight: base(2),
+                fontSize: '16px',
+              }}
+            >
+              Order Online
+            </Button>
+          </a>
         </Link>
       </div>
     </menu>

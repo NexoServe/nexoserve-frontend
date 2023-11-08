@@ -31,7 +31,8 @@ const useStyles = createUseStyles({
     [queries.xs]: {
       padding: base(2),
       maxHeight: base(6),
-      paddingLeft: base(1.25),
+      paddingLeft: base(1),
+      paddingRight: base(1),
     },
 
     [queries.s]: {

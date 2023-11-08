@@ -6,14 +6,18 @@ import CloseFilled from './CloseFilled';
 import CloseFilledWhite from './CloseFilledWhite';
 import Delivery from './Delivery';
 import EmptyCart from './EmptyCart';
+import Facebook from './Facebook';
 import HalfPizza from './HalfPizza';
 import Info from './Info';
+import Instagram from './Instagram';
 import Minus from './Minus';
+import Phone from './Phone';
 import PickUp from './PickUp';
 import Plus from './Plus';
 import { SvgIconsType } from './types';
 import Warning from './Warning';
 import WholePizza from './WholePizza';
+import X from './X';
 
 interface SvgProps extends SvgIconsType {
   name:
@@ -31,7 +35,11 @@ interface SvgProps extends SvgIconsType {
     | 'clock'
     | 'info'
     | 'pickUp'
-    | 'delivery';
+    | 'delivery'
+    | 'x'
+    | 'facebook'
+    | 'instagram'
+    | 'phone';
 }
 
 const SvgIcons = (props: SvgProps) => {
@@ -66,6 +74,14 @@ const SvgIcons = (props: SvgProps) => {
       return <PickUp {...props} />;
     case 'delivery':
       return <Delivery {...props} />;
+    case 'x':
+      return <X {...props} />;
+    case 'facebook':
+      return <Facebook {...props} />;
+    case 'instagram':
+      return <Instagram {...props} />;
+    case 'phone':
+      return <Phone {...props} />;
     default:
       return null;
   }

@@ -13,6 +13,7 @@ const useStyles = createUseStyles({
     display: 'flex',
     flexDirection: 'column',
     margin: 0,
+    paddingLeft: base(1),
 
     [queries.l]: {
       flexDirection: 'row',
@@ -22,12 +23,25 @@ const useStyles = createUseStyles({
     },
   },
 
+  menuLinkWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    [queries.l]: {
+      minHeight: '100%',
+    },
+  },
+
   menuLink: {
-    fontSize: '22px',
+    fontSize: '18px',
     lineHeight: '22px',
     padding: `${base(1)} 0`,
     display: 'block',
     textDecoration: 'none',
+    fontWeight: '500',
+    maxWidth: base(20),
+    margin: `0 auto`,
 
     [queries.l]: {
       fontSize: '16px',
