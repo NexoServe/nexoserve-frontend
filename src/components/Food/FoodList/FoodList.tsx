@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { AnimatePresence } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
@@ -13,13 +13,16 @@ import useStyles from './css';
 const FoodList = () => {
   const menu = useRecoilValue(FoodMenuAtom);
 
+  const sortedMenu = useMemo(() => {
+    if (menu.length > 0) {
+      return [...menu].sort((a, b) => a.order - b.order);
+    }
+  }, [menu]);
+
   const classes = useStyles();
 
   const [showModal, setShowModal] = useState(false);
   const [activeFood, setActiveFood] = useState<FoodWithSizesType>();
-
-  console.log('showModal', showModal);
-  console.log('activeFood', activeFood);
 
   const activeFoodClick = (food: FoodWithSizesType) => {
     setShowModal(true);
@@ -28,7 +31,7 @@ const FoodList = () => {
 
   return (
     <div>
-      {menu.map((foodByCategory) => (
+      {sortedMenu?.map((foodByCategory) => (
         <div key={foodByCategory?.category} className={classes.foodList}>
           <h2 className={classes.foodListCategory}>
             {foodByCategory?.category}

@@ -31,7 +31,11 @@ const FoodOptionRegularStyle = ({
           className={classes.foodOptionToppingStyleInput}
         />
         <p>{option?.name}</p>
-        <div>{option?.price !== 0 ? `$${option?.price?.toFixed(2)}` : '-'}</div>
+        {option?.price && (
+          <div>
+            {option?.price !== 0 ? `$${option?.price?.toFixed(2)}` : '-'}
+          </div>
+        )}
       </label>
 
       <div className={classes.foodOptionToppingStyleSizes}>

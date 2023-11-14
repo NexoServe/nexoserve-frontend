@@ -57,7 +57,10 @@ const FoodModalBody = ({ food, showModal, type }: IFoodModalBody) => {
   }, [food, setFoodModal, showModal, type]);
 
   useEffect(() => {
-    setAddOns(foodModal.selectedSize?.addOns || food?.addOns);
+    setAddOns([
+      ...(foodModal.selectedSize?.addOns || []),
+      ...(food?.addOns || []),
+    ]);
   }, [foodModal, food, showModal, setAddOns]);
 
   return (

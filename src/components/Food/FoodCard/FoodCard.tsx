@@ -25,7 +25,10 @@ const FoodCard = ({ food, activeFoodClick }: IFoodCard) => {
           {food?.description}
         </p>
         <div className={classes.foodCardContentPrice}>
-          ${food.price ? food.price : food?.sizes?.[0]?.price}
+          $
+          {food.price
+            ? food.price.toFixed(2)
+            : food?.sizes?.[0]?.price?.toFixed(2)}
         </div>
       </div>
     </button>
