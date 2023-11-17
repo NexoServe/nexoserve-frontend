@@ -8,15 +8,13 @@ const useStyles = createUseStyles({
   foodModal: {
     position: 'relative',
     overflow: 'hidden',
-    height: '100vh',
-
-    [queries.s]: {
-      height: '80vh',
-    },
+    height: '85vh',
+    width: '95vw',
+    maxWidth: base(50),
   },
 
   foodModalForm: {
-    width: '100vw',
+    width: '95vw',
     maxWidth: base(50),
     background: colors.secondary,
     maxHeight: '100vh',
@@ -27,6 +25,7 @@ const useStyles = createUseStyles({
     marginTop: `-${base(7)}`,
     display: 'flex',
     flexDirection: 'column',
+    borderRadius: base(2),
 
     [queries.s]: {
       height: '80vh',

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import Lottie from 'react-lottie';
 
 import PizzaIcon from '../assets/pizza_icon.png';
@@ -15,6 +16,7 @@ import useStyles from './index/css';
 
 const Home = () => {
   const styles = useStyles();
+  const router = useRouter();
 
   return (
     <>
@@ -27,7 +29,12 @@ const Home = () => {
             fees.
           </div>
           <div className={styles.homeHeroButtonContainer}>
-            <Button styleClass={styles.homeHeroButton}>Order Now</Button>
+            <Button
+              onClick={() => router.push('/order')}
+              styleClass={styles.homeHeroButton}
+            >
+              Order Now
+            </Button>
           </div>
           <div className={styles.homeHeroSocials}>
             <a

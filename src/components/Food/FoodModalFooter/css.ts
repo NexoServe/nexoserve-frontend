@@ -17,6 +17,8 @@ const useStyles = createUseStyles({
     display: 'grid',
     gridTemplateColumns: '0.75fr 1.25fr',
     columnGap: base(1),
+    borderBottomLeftRadius: base(2),
+    borderBottomRightRadius: base(2),
   },
 
   foodModalFooterQuantityContainer: {

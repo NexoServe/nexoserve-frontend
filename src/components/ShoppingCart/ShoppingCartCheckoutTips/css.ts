@@ -16,7 +16,7 @@ const useStyles = createUseStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    paddingTop: base(1),
+    paddingTop: base(2),
     paddingBottom: base(2),
     gap: base(1),
 
@@ -27,7 +27,7 @@ const useStyles = createUseStyles({
 
   shoppingCartCheckoutTip: {
     width: '100%',
-    border: `0.2px solid ${colors.black}`,
+    border: `0.8px solid #00000040`,
     padding: `${base(1)}`,
     borderRadius: base(1),
     fontWeight: 300,

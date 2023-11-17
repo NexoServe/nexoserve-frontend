@@ -48,6 +48,8 @@ const FoodModalContentHeader = ({
           <div
             style={{
               fontSize: '12px',
+              textAlign: 'right',
+              lineHeight: '14px',
             }}
           >
             {maxOptionsSelected === 1

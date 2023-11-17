@@ -19,10 +19,10 @@ const useStyles = createUseStyles({
     padding: `0 ${base(1)}`,
     overflow: 'hidden',
     pointerEvents: 'none',
+    borderTopLeftRadius: base(2),
+    borderTopRightRadius: base(2),
 
     [queries.s]: {
-      borderTopLeftRadius: base(2),
-      borderTopRightRadius: base(2),
       paddingLeft: base(2),
       maxWidth: '500px',
     },

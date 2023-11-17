@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 
-import { addApolloState, initializeApollo } from '../../../lib/apolloClient';
 import Container from '../../components/Container/Container';
 import FoodList from '../../components/Food/FoodList/FoodList';
 import Footer from '../../components/Footer/Footer';
@@ -45,17 +44,6 @@ const Order: NextPage = () => {
       <Footer />
     </>
   );
-};
-
-export const getServerSideProps = async () => {
-  const apolloClient = initializeApollo();
-
-  // TODO: add ssr
-  // await apolloClient.query({ query: FoodsDocument });
-
-  return addApolloState(apolloClient, {
-    props: {},
-  });
 };
 
 export default Order;
