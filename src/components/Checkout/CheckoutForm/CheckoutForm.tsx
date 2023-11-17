@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import SkeletonLoader from 'tiny-skeleton-loader-react';
 
+import { base } from '../../../../css/base';
 import colors from '../../../../css/colors';
 import {
   ErrorCodes,
@@ -326,6 +327,54 @@ export default function CheckoutForm() {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
+      <div style={{}}>
+        <h5
+          style={{
+            fontWeight: 500,
+            marginBottom: base(1),
+          }}
+        >
+          THIS IS A TEST ENVIRONMENT. Use these cards to complete the order.
+        </h5>
+        <div
+          style={{
+            marginBottom: base(1),
+          }}
+        >
+          <span
+            style={{
+              color: colors.green,
+              fontWeight: 500,
+            }}
+          >
+            Accepted Card:
+          </span>{' '}
+          <span>4242 4242 4242 4242</span>
+        </div>
+        <div
+          style={{
+            marginBottom: base(1),
+          }}
+        >
+          <span
+            style={{
+              color: colors.red,
+              fontWeight: 500,
+            }}
+          >
+            Denied Card:
+          </span>{' '}
+          <span>4000 0000 0000 0002</span>
+        </div>
+        <div>Use any, Expiration, CVC and ZIP.</div>
+        <div
+          style={{
+            marginBottom: base(2),
+          }}
+        >
+          Please make sure to test both cards. Thank you :)
+        </div>
+      </div>
       <PaymentElement options={{}} />
 
       <Button
