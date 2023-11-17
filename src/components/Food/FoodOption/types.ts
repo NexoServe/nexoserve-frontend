@@ -13,4 +13,5 @@ export interface IFoodOptionStyle {
   onChange: ChangeEventHandler<HTMLInputElement> | undefined;
   isChecked: boolean;
   addOn: AddOnType;
+  disabled: boolean;
 }

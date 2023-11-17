@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Hamburger from 'hamburger-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { base } from '../../../css/base';
 import breakpoints from '../../../css/breakpoints';
@@ -40,13 +41,15 @@ const Navbar = () => {
   return (
     <nav className={classes.navbar}>
       <Container styleClass={classes.navbarContainer}>
-        <div
+        <Link
+          href="/"
           style={{
             height: '100%',
             display: 'flex',
             alignItems: 'center',
             paddingTop: base(1),
             paddingBottom: base(1),
+            cursor: 'pointer',
           }}
         >
           <Image
@@ -55,9 +58,10 @@ const Navbar = () => {
             alt="Madisons Logo"
             style={{
               scale: 0.5,
+              cursor: 'pointer',
             }}
           />
-        </div>
+        </Link>
         <div className={classes.navbarHamburger}>
           <Hamburger
             direction="right"

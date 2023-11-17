@@ -8,6 +8,7 @@ const useStyles = createUseStyles({
     display: 'grid',
     gridTemplateColumns: '1fr',
     position: 'relative',
+    marginBottom: `-${base(8)}`,
 
     [queries.m]: {
       gap: base(1),
@@ -16,6 +17,7 @@ const useStyles = createUseStyles({
     [queries.l]: {
       gridTemplateColumns: '1fr 1fr',
       gap: base(2),
+      marginBottom: `0`,
     },
 
     [queries.xl]: {

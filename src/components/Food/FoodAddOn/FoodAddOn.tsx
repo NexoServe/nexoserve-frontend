@@ -29,6 +29,7 @@ const FoodAddOn = ({ addOn, isRequiredAddOn }: IFoodAddOn) => {
         name={addOn?.name}
         isRequired={addOn?.isRequired}
         isRequiredAddOn={isRequiredAddOn}
+        maxOptionsSelected={addOn?.maxOptionsSelected}
       />
       {addOn?.name === 'Toppings' ? (
         <div className={classes.foodAddOnToppingHeader}>
@@ -42,13 +43,16 @@ const FoodAddOn = ({ addOn, isRequiredAddOn }: IFoodAddOn) => {
       ) : null}
 
       <div>
-        {addOn?.options?.map((option) => (
-          <FoodOption
-            key={option?.id}
-            option={option as OptionType}
-            addOn={addOn}
-          />
-        ))}
+        {addOn?.options
+          ?.slice()
+          ?.sort((a, b) => (a?.order as number) - (b?.order as number))
+          ?.map((option) => (
+            <FoodOption
+              key={option?.id}
+              option={option as OptionType}
+              addOn={addOn}
+            />
+          ))}
       </div>
     </div>
   );

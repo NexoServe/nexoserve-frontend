@@ -24,6 +24,7 @@ const useStyles = createUseStyles({
       width: '100%',
       margin: 0,
       paddingLeft: base(1),
+      paddingRight: base(1),
     },
   },
 

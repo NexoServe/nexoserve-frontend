@@ -14,6 +14,13 @@ const FoodOptionToppingStyle = ({
 }: IFoodOptionStyle) => {
   const classes = useStyles();
 
+  console.log(
+    'OPTION SIZES',
+    option?.optionSizes
+      ?.slice()
+      ?.sort((a, b) => (a?.order as number) - (b?.order as number)),
+  );
+
   return (
     <>
       <Divider styleClass={classes.foodOptionToppingStyleDivider} />
@@ -37,14 +44,17 @@ const FoodOptionToppingStyle = ({
         </label>
 
         <div className={classes.foodOptionToppingStyleSizes}>
-          {option?.optionSizes?.map((optionSize) => (
-            <FoodOptionSize
-              addOn={addOn}
-              option={option}
-              key={optionSize?.id}
-              optionSize={optionSize as OptionSizeType}
-            />
-          ))}
+          {option?.optionSizes
+            ?.slice()
+            ?.sort((a, b) => (a?.order as number) - (b?.order as number))
+            ?.map((optionSize) => (
+              <FoodOptionSize
+                addOn={addOn}
+                option={option}
+                key={optionSize?.id}
+                optionSize={optionSize as OptionSizeType}
+              />
+            ))}
         </div>
       </div>
     </>

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import { useRecoilState } from 'recoil';
 
@@ -13,6 +13,8 @@ const FoodOption = ({ option, addOn }: IFoodOption) => {
     FoodModalSelectedOptionsAtom,
   );
 
+  const addedDefaultOption = useRef(false);
+
   useEffect(() => {
     if (selectedOptions === undefined) {
       setSelectedOptions([]);
@@ -23,7 +25,7 @@ const FoodOption = ({ option, addOn }: IFoodOption) => {
     if (
       selectedOptions &&
       selectedOptions.find(
-        (selectedOption) => selectedOption?.name === option?.name,
+        (selectedOption) => selectedOption?.id === option?.id,
       )
     ) {
       return true;
@@ -32,15 +34,39 @@ const FoodOption = ({ option, addOn }: IFoodOption) => {
     }
   }, [selectedOptions, option]);
 
+  useEffect(() => {
+    if (
+      option?.default &&
+      !addedDefaultOption.current &&
+      !selectedOptions.some((selectedOption) => selectedOption.id === option.id)
+    ) {
+      addedDefaultOption.current = true; // Mark that the default option is added
+      setSelectedOptions((prevOptions) => [
+        ...prevOptions,
+        {
+          id: option.id,
+          name: option.name,
+          price: option.price,
+          addOnName: addOn?.name as string,
+        },
+      ]);
+    }
+  }, [option, setSelectedOptions, addOn]);
+
+  console.log('selectedOptions', selectedOptions);
+
   const selectOption = () => {
     if (
       selectedOptions.find(
-        (selectedOption) => selectedOption?.name === option?.name,
+        (selectedOption) => selectedOption?.id === option?.id,
       )
     ) {
       const arr = selectedOptions.filter(
-        (selectOption) => selectOption?.name !== option?.name,
+        (selectOption) => selectOption?.id !== option?.id,
       );
+
+      console.log('arr', arr);
+
       setSelectedOptions(arr);
     } else {
       setSelectedOptions([
@@ -58,6 +84,23 @@ const FoodOption = ({ option, addOn }: IFoodOption) => {
     }
   };
 
+  const disabled = useMemo(() => {
+    const addOnSelectedOptions = selectedOptions?.filter(
+      (selectOption) => selectOption?.addOnName === addOn?.name,
+    );
+
+    if (
+      addOn?.maxOptionsSelected &&
+      addOnSelectedOptions.length >= addOn?.maxOptionsSelected &&
+      !addOnSelectedOptions.find(
+        (selectedOption) => selectedOption?.id === option?.id,
+      )
+    ) {
+      return true;
+    }
+    return false;
+  }, [selectedOptions, addOn, option?.id]);
+
   return (
     <>
       {addOn?.name === 'Toppings' ? (
@@ -66,6 +109,7 @@ const FoodOption = ({ option, addOn }: IFoodOption) => {
           onChange={() => selectOption()}
           option={option}
           addOn={addOn}
+          disabled={disabled}
         />
       ) : (
         <FoodOptionRegularStyle
@@ -73,6 +117,7 @@ const FoodOption = ({ option, addOn }: IFoodOption) => {
           onChange={() => selectOption()}
           option={option}
           addOn={addOn}
+          disabled={disabled}
         />
       )}
     </>

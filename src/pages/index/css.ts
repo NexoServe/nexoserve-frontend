@@ -6,10 +6,11 @@ import queries from '../../../css/queries';
 
 const useStyles = createUseStyles({
   homeHeroContainer: {
-    width: '100vw',
+    width: '100%',
     height: `calc(100vh - ${base(6)} - 1px)`,
     backgroundImage: `linear-gradient(180deg, hsla(0, 0%, 100%, 0.9), hsla(0, 0%, 100%, 0.7)), url("https://us-east-menu-images.s3.amazonaws.com/igli_7_put_pizza_on_the_right_4dc04a34-8daf-4f76-85c0-0c904cfe5fbd+(2)+(1).png")`,
     backgroundPosition: '0% 0%, 40% 0%',
+    overflowX: 'hidden',
 
     [queries.s]: {
       backgroundImage:
@@ -44,6 +45,7 @@ const useStyles = createUseStyles({
     paddingBottom: base(20),
     margin: '0 auto',
     position: 'relative',
+    overflowX: 'hidden',
   },
 
   homeHeroTitle: {

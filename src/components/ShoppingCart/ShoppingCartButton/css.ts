@@ -6,8 +6,8 @@ import queries from '../../../../css/queries';
 
 const useStyles = createUseStyles({
   shoppingCartButtonBox: {
-    background: colors.white,
-    position: 'fixed',
+    backgroundColor: colors.secondary,
+    position: 'sticky',
     bottom: 0,
     left: 0,
     width: '100%',

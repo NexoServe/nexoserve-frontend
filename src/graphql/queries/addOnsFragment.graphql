@@ -2,15 +2,19 @@ fragment AddOnFields on AddOnType {
   id
   name
   isRequired
+  maxOptionsSelected
   options {
     id
     name
     price
+    default
+    order
     optionSizes {
       id
       name
       price
       default
+      order
     }
   }
 }

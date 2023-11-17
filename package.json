@@ -28,9 +28,6 @@
     "seed": "ts-node ./modules/prisma/seed.ts",
     "delete": "ts-node ./modules/prisma/delete.ts"
   },
-  "prisma": {
-    "schema": "modules/prisma/schema.prisma"
-  },
   "lint-staged": {
     "./src/**/*.{ts,js,jsx,tsx}": [
       "eslint --ignore-path .gitignore --fix",
@@ -40,7 +37,6 @@
   "dependencies": {
     "@apollo/client": "3.6.8",
     "@graphql-codegen/cli": "2.6.2",
-    "@graphql-codegen/introspection": "2.1.1",
     "@prisma/client": "4.8.0",
     "@reach/combobox": "0.18.0",
     "@stripe/react-stripe-js": "2.1.0",

@@ -25,6 +25,8 @@ const FoodModalNav = ({ name, onClick, loading }: IFoodModalNav) => {
       }
     };
 
+    console.log('tracked', tracked);
+
     container?.addEventListener('scroll', handleScroll);
 
     return () => {

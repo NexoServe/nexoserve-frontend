@@ -5,6 +5,7 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
+import { useRouter } from 'next/router';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import SkeletonLoader from 'tiny-skeleton-loader-react';
 
@@ -36,6 +37,7 @@ import {
   OrderTimeAtom,
 } from '../../../state/OrderNavbar';
 import {
+  ShoppingCartAtom,
   ShoppingCartTipAtom,
   ShoppingCartTotalAtom,
 } from '../../../state/ShoppingCartState';
@@ -49,12 +51,14 @@ export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
   const classes = useStyles();
+  const router = useRouter();
 
   const [, setOrderDetails] = useRecoilState(OrderDetailsAtom);
 
   const [, setShowInvalidTimeModal] = useRecoilState(
     OrderShowInvalidTimeModalAtom,
   );
+  const [, setShoppingCart] = useRecoilState(ShoppingCartAtom);
   const shoppingCartTotal = useRecoilValue(ShoppingCartTotalAtom);
   const firstName = useRecoilValue(CheckoutFirstNameAtom);
   const [, setFirstNameError] = useRecoilState(CheckoutFirstNameErrorAtom);
@@ -307,6 +311,16 @@ export default function CheckoutForm() {
       setInfoModalState({
         showModal: false,
       });
+
+      setShoppingCart([]);
+      localStorage.setItem('shoppingCartItems', JSON.stringify([]));
+      localStorage.setItem(
+        'orderTime',
+        JSON.stringify({ label: 'ASAP', value: 'ASAP' }),
+      );
+      localStorage.setItem('isPickUp', JSON.stringify(true));
+
+      router.push('/confirmation');
     }, 2000);
   };
 

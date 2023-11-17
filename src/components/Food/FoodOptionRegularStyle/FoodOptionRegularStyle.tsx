@@ -10,15 +10,24 @@ const FoodOptionRegularStyle = ({
   onChange,
   isChecked,
   addOn,
+  disabled,
 }: IFoodOptionStyle) => {
   const classes = useStyles();
 
   return (
-    <div className={`${classes.foodOptionRegularStyle}`}>
+    <div
+      className={`${classes.foodOptionRegularStyle}`}
+      style={{
+        opacity: disabled ? 0.5 : 1,
+      }}
+    >
       <label
         className={`${classes.foodOptionToppingStyleLabel} ${
           isChecked ? classes.foodOptionToppingStyleLabelActive : ''
         }`}
+        style={{
+          cursor: disabled ? 'default' : 'pointer',
+        }}
         htmlFor={option?.id || undefined}
       >
         <Checkbox isChecked={isChecked} />
@@ -29,6 +38,10 @@ const FoodOptionRegularStyle = ({
           checked={isChecked}
           onChange={onChange}
           className={classes.foodOptionToppingStyleInput}
+          disabled={disabled}
+          style={{
+            cursor: disabled ? 'default' : 'pointer',
+          }}
         />
         <p>{option?.name}</p>
         {option?.price && (
