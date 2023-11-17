@@ -1,24 +1,22 @@
-import { useState } from 'react';
-
 import { motion } from 'framer-motion';
 
 import { IDraggable } from './types';
 
 const Draggable = ({ onDragDown, children, styleClass }: IDraggable) => {
-  const [isDragging, setIsDragging] = useState(false);
+  // const [isDragging, setIsDragging] = useState(false);
 
-  const handleDragStart = () => {
-    setIsDragging(true);
-    // Additional logic to handle drag start
-  };
+  // const handleDragStart = () => {
+  //   setIsDragging(true);
+  //   // Additional logic to handle drag start
+  // };
 
-  const handleDragEnd = (_: any, info: any) => {
-    setIsDragging(false);
-    if (info.offset.y > 150) {
-      onDragDown();
-    }
-    // Additional logic to handle drag end
-  };
+  // const handleDragEnd = (_: any, info: any) => {
+  //   setIsDragging(false);
+  //   if (info.offset.y > 150) {
+  //     onDragDown();
+  //   }
+  //   // Additional logic to handle drag end
+  // };
 
   return (
     <motion.div
@@ -33,7 +31,6 @@ const Draggable = ({ onDragDown, children, styleClass }: IDraggable) => {
       exit={{ y: '100%', opacity: 0 }}
       transition={{ stiffness: 100 }}
       className={styleClass}
-      style={{ touchAction: isDragging ? 'none' : 'pan-y' }}
     >
       {children}
     </motion.div>
