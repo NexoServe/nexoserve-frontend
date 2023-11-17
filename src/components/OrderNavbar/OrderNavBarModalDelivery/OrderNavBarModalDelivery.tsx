@@ -108,6 +108,23 @@ const OrderNavBarModalDelivery = ({
 
   const descriptionToPlaceIdMap = useRef<Record<string, string>>({}); // To get the placeId from the description
 
+  let lastInputTime = Date.now();
+
+  const handleInputChange = (e: any) => {
+    setAddress(e.target.value);
+    setValue(e.target.value);
+    lastInputTime = Date.now();
+  };
+
+  const detectAutoFill = () => {
+    setTimeout(() => {
+      if (Date.now() - lastInputTime > 1000) {
+        // It's likely an auto-fill, trigger your logic here
+        setValue(address, false);
+      }
+    }, 1000);
+  };
+
   const handleSelect = async (address: string) => {
     setValue(address, false);
     clearSuggestions();
@@ -177,8 +194,8 @@ const OrderNavBarModalDelivery = ({
             defaultValue={''}
             value={address}
             onChange={(e) => {
-              setAddress(e.target.value);
-              setValue(e.target.value);
+              handleInputChange(e);
+              detectAutoFill();
             }}
             disabled={!ready}
             placeholder="Type your address here"

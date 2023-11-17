@@ -29,6 +29,7 @@ const useStyles = createUseStyles({
     width: '100%',
     display: 'grid',
     gridTemplateColumns: '40px 1fr 60px',
+    marginTop: base(3),
   },
 
   checkoutDetailsHeader: {
