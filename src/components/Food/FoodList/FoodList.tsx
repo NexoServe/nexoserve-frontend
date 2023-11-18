@@ -19,8 +19,6 @@ const FoodList = () => {
     }
   }, [menu]);
 
-  console.log('sortedMenu', sortedMenu);
-
   const classes = useStyles();
 
   const [showModal, setShowModal] = useState(false);

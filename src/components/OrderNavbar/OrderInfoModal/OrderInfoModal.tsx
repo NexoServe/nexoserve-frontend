@@ -30,8 +30,6 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
     restaurantDetails?.deliveryOpeningHours,
   );
 
-  console.log('pickUpOpeningHours', pickUpOpeningHours);
-
   return (
     <div className={classes.orderInfoModal}>
       <ModalHeader

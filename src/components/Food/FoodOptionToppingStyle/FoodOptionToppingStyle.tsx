@@ -14,13 +14,6 @@ const FoodOptionToppingStyle = ({
 }: IFoodOptionStyle) => {
   const classes = useStyles();
 
-  console.log(
-    'OPTION SIZES',
-    option?.optionSizes
-      ?.slice()
-      ?.sort((a, b) => (a?.order as number) - (b?.order as number)),
-  );
-
   return (
     <>
       <Divider styleClass={classes.foodOptionToppingStyleDivider} />

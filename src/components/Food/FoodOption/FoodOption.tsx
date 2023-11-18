@@ -53,8 +53,6 @@ const FoodOption = ({ option, addOn }: IFoodOption) => {
     }
   }, [option, setSelectedOptions, addOn]);
 
-  console.log('selectedOptions', selectedOptions);
-
   const selectOption = () => {
     if (
       selectedOptions.find(
@@ -64,8 +62,6 @@ const FoodOption = ({ option, addOn }: IFoodOption) => {
       const arr = selectedOptions.filter(
         (selectOption) => selectOption?.id !== option?.id,
       );
-
-      console.log('arr', arr);
 
       setSelectedOptions(arr);
     } else {
