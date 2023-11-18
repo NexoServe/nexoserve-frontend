@@ -96,7 +96,7 @@ const CheckoutPayment = () => {
                   )
                 : 1,
               currency: 'usd',
-              payment_method_types: ['card', 'cashapp'],
+              payment_method_types: ['card', 'cashapp', 'apple_pay'],
               paymentMethodCreation: 'manual',
               appearance: {
                 theme: 'stripe',

@@ -18,29 +18,35 @@ const Order: NextPage = () => {
 
   return (
     <>
-      <PageContainer>
-        <Head>
-          <title>TypeScript starter for Next.js</title>
-          <meta
-            name="description"
-            content="TypeScript starter for Next.js that includes all you need to build amazing apps"
-          />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
+      <div
+        style={{
+          minHeight: '100vh',
+        }}
+      >
+        <PageContainer>
+          <Head>
+            <title>TypeScript starter for Next.js</title>
+            <meta
+              name="description"
+              content="TypeScript starter for Next.js that includes all you need to build amazing apps"
+            />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
 
-        <main>
-          <Navbar />
-          <OrderNavbar />
-          <Container>
-            <div className={classes.indexConatiner}>
-              <FoodList />
-              <ShoppingCart styleClass={classes.indexShoppingCartDesktop} />
-              <ShoppingCartModal />
-              <ShoppingCartButton />
-            </div>
-          </Container>
-        </main>
-      </PageContainer>
+          <main>
+            <Navbar />
+            <OrderNavbar />
+            <Container>
+              <div className={classes.indexConatiner}>
+                <FoodList />
+                <ShoppingCart styleClass={classes.indexShoppingCartDesktop} />
+                <ShoppingCartModal />
+                <ShoppingCartButton />
+              </div>
+            </Container>
+          </main>
+        </PageContainer>
+      </div>
       <Footer />
     </>
   );
