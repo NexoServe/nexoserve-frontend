@@ -47,17 +47,17 @@ export const ModalPopUp = ({
           initial={{
             backgroundColor: '#00000000',
             opacity: 0,
-            backdropFilter: 'blur(0px)',
+            // backdropFilter: 'blur(0px)',
           }}
           animate={{
             backgroundColor: '#00000099',
             opacity: 1,
-            backdropFilter: 'blur(20px)',
+            // backdropFilter: 'blur(20px)',
           }}
           exit={{
             backgroundColor: '#00000000',
             opacity: 0,
-            backdropFilter: 'blur(0px)',
+            // backdropFilter: 'blur(0px)',
           }}
           transition={{ duration: 0.4, ease: 'easeInOut' }}
           className={classes.modalClose}
