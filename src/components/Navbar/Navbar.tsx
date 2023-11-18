@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { base } from '../../../css/base';
 import breakpoints from '../../../css/breakpoints';
 import colors from '../../../css/colors';
-import Logo from '../../assets/madisons-logo.svg';
+import Logo from '../../assets/labella.svg';
 import Container from '../Container/Container';
 import Divider from '../Divider/Divider';
 import Menu from '../Menu/Menu';
