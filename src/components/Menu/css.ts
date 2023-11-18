@@ -9,7 +9,7 @@ const useStyles = createUseStyles({
     background: colors.white,
     width: '100vw',
     height: '100vh',
-    paddingTop: base(10),
+    paddingTop: base(15),
     display: 'flex',
     flexDirection: 'column',
     margin: 0,
