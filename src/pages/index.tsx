@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Lottie from 'react-lottie';
 
+import { RestaurantDetailsOutput } from '../../generated/graphql';
 import PizzaIcon from '../assets/pizza_icon.png';
 import SaladIcon from '../assets/salad_icon.png';
 import SubIcon from '../assets/sub_icon.png';
@@ -14,7 +15,34 @@ import scrollLottie from '../lottie/scroll.json';
 
 import useStyles from './index/css';
 
-const Home = () => {
+// const GET_RESTAURANT_DETAILS_QUERY = gql`
+//   query RestaurantDetails($restaurantId: String!) {
+//     restaurantDetails(restaurantId: $restaurantId) {
+//       name
+//       logo
+//     }
+//   }
+// `;
+
+// export async function getStaticProps() {
+//   const apolloClient = initializeApollo();
+
+//   const { data } = await apolloClient.query({
+//     query: GET_RESTAURANT_DETAILS_QUERY,
+//     variables: {
+//       restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
+//     },
+//   });
+
+//   return {
+//     props: {
+//       restaurantDetails: data,
+//     },
+//     revalidate: 10, // Optionally, ISR (Incremental Static Regeneration) timeout in seconds
+//   };
+// }
+
+const Home = (props: RestaurantDetailsOutput) => {
   const styles = useStyles();
   const router = useRouter();
 
@@ -141,15 +169,11 @@ const Home = () => {
             <div className={styles.aboutUsContent}>
               <h2 className={styles.aboutUsTitle}>About Us</h2>
               <p className={styles.aboutUsMessage}>
-                Welcome to {`Madison's`} pizza, {`Albany's`} favorite local
-                pizza store located on 846 madison avenue.
-                <br />
-                <br />
-                In the heart of the student area in {`Madison's`} pizza, we use
-                only the freshest ingredients. We have a wide variety of gourmet
-                pizzas, hot & cold subs, deluxe burgers, beef and chicken gyros,
-                specialty rolls, giant calzones, buffalo & boneless wings, and a
-                large selection of fresh salads. Call or order online now.
+                We at LaBella Pizza & Pasta would like to thank you for your
+                support and patronage. We only use the best cheese and fresh
+                dough made on the premises daily. For our sauce, we use only the
+                freshest, whole plum tomatoes and the best spices available. We
+                work hard to meet your needs & your wants.
               </p>
             </div>
 

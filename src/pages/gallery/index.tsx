@@ -16,13 +16,11 @@ import Image19 from '../../assets/madison_19.jpg';
 import Image2 from '../../assets/madison_2.jpeg';
 import Image20 from '../../assets/madison_20.jpg';
 import Image21 from '../../assets/madison_21.jpg';
-import Image22 from '../../assets/madison_22.jpeg';
 import Image23 from '../../assets/madison_23.jpeg';
 import Image24 from '../../assets/madison_24.jpeg';
 import Image25 from '../../assets/madison_25.jpeg';
 import Image26 from '../../assets/madison_26.jpeg';
 import Image27 from '../../assets/madison_27.jpeg';
-import Image28 from '../../assets/madison_28.jpeg';
 import Image3 from '../../assets/madison_3.jpg';
 import Image4 from '../../assets/madison_4.jpg';
 import Image5 from '../../assets/madison_5.jpg';
@@ -208,13 +206,13 @@ const Gallery = () => {
                     alt="Madison Gallery 21"
                   />
                 </div>
-                <div className={styles.galleryImageWrapper}>
+                {/* <div className={styles.galleryImageWrapper}>
                   <Image
                     src={Image22}
                     className={styles.galleryImage}
                     alt="Madison Gallery 22"
                   />
-                </div>
+                </div> */}
                 <div className={styles.galleryImageWrapper}>
                   <Image
                     src={Image23}
@@ -250,13 +248,13 @@ const Gallery = () => {
                     alt="Madison Gallery 27"
                   />
                 </div>
-                <div className={styles.galleryImageWrapper}>
+                {/* <div className={styles.galleryImageWrapper}>
                   <Image
                     src={Image28}
                     className={styles.galleryImage}
                     alt="Madison Gallery 28"
                   />
-                </div>
+                </div> */}
               </Masonry>
             </ResponsiveMasonry>
           </div>

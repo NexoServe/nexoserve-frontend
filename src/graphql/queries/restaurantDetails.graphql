@@ -1,0 +1,5 @@
+query RestaurantDetails($restaurantId: String!) {
+  restaurantDetails(restaurantId: $restaurantId) {
+    name
+  }
+}

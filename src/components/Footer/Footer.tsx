@@ -89,7 +89,7 @@ const Footer = () => {
         </div>
         <div className={styles.footerCopyright}>
           <div className={styles.footerCopyrightText}>
-            Copyright © Reserved by {`Madison's`} Pizza
+            Copyright © Reserved by LaBella Pizza
           </div>
           <div className={styles.footerCopyrightText}>Powered by NexaServe</div>
         </div>

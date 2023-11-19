@@ -309,7 +309,7 @@ const useStyles = createUseStyles({
     alignItems: 'flex-end',
     borderRadius: '8px',
     backgroundImage:
-      'url(https://us-east-menu-images.s3.amazonaws.com/Madison+hamburgers.jpeg)',
+      'url(https://us-east-menu-images.s3.amazonaws.com/labella_small.jpeg)',
     backgroundPosition: '50% 50%',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -322,7 +322,7 @@ const useStyles = createUseStyles({
   largeImage1: {
     borderRadius: '8px',
     backgroundImage:
-      'url(https://us-east-menu-images.s3.amazonaws.com/madison+pizza.jpeg)',
+      'url(https://us-east-menu-images.s3.amazonaws.com/labella_large.png)',
     backgroundPosition: '50% 50%',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -347,7 +347,7 @@ const useStyles = createUseStyles({
   largeImage2: {
     borderRadius: '8px',
     backgroundImage:
-      'url(https://us-east-menu-images.s3.amazonaws.com/madison_worker.jpeg)',
+      'url(https://us-east-menu-images.s3.amazonaws.com/labella_large-2.jpeg)',
     backgroundPosition: '50% 50%',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
