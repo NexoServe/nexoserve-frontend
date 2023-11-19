@@ -2,7 +2,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Lottie from 'react-lottie';
 
-import { RestaurantDetailsOutput } from '../../generated/graphql';
 import PizzaIcon from '../assets/pizza_icon.png';
 import SaladIcon from '../assets/salad_icon.png';
 import SubIcon from '../assets/sub_icon.png';
@@ -42,7 +41,7 @@ import useStyles from './index/css';
 //   };
 // }
 
-const Home = (props: RestaurantDetailsOutput) => {
+const Home = () => {
   const styles = useStyles();
   const router = useRouter();
 
