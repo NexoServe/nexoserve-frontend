@@ -18,6 +18,20 @@ export const ModalPopUp = ({
   const styles = useStyles();
 
   useEffect(() => {
+    // Disable body scroll when modal is open
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    // Cleanup function to reset body overflow
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showModal]);
+
+  useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && onClose) {
         onClose();
