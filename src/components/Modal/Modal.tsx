@@ -38,7 +38,6 @@ export const ModalPopUp = ({
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
-    config: { duration: 200 },
   });
 
   // Transition for the modal content
@@ -46,7 +45,6 @@ export const ModalPopUp = ({
     from: { transform: 'translateY(100%)' },
     enter: { transform: 'translateY(0%)' },
     leave: { transform: 'translateY(100%)' },
-    config: { duration: 200 },
   });
 
   const handleContentClick = (event: React.MouseEvent) => {
