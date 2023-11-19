@@ -1,4 +1,3 @@
-import { AnimatePresence } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import {
@@ -36,19 +35,15 @@ const OrderTime = () => {
         </RoundBorder>
       </button>
 
-      <AnimatePresence>
-        {showTimeModal && (
-          <ModalPopUp
-            showModal={showTimeModal}
-            onClose={() => setShowTimeModal(false)}
-          >
-            <OrderNavBarModal
-              setModal={setShowTimeModal}
-              headerText="Date and Time"
-            />
-          </ModalPopUp>
-        )}
-      </AnimatePresence>
+      <ModalPopUp
+        showModal={showTimeModal}
+        onClose={() => setShowTimeModal(false)}
+      >
+        <OrderNavBarModal
+          setModal={setShowTimeModal}
+          headerText="Date and Time"
+        />
+      </ModalPopUp>
     </>
   );
 };

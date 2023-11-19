@@ -5,5 +5,5 @@ export interface IModalPopUp {
   children: ReactNode;
   styleClass?: string;
   overlayClass?: string;
-  onClose?: () => void;
+  onClose: () => void;
 }

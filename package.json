@@ -71,6 +71,7 @@
     "react-phone-number-input": "3.2.23",
     "react-responsive-masonry": "2.1.7",
     "react-select": "5.7.3",
+    "react-spring": "9.7.3",
     "recoil": "0.7.5",
     "rifm": "0.12.1",
     "stripe": "10.12.0",

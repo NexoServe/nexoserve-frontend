@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { AnimatePresence } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import {
@@ -41,16 +40,12 @@ const OrderInfo = () => {
         </div>
       </button>
 
-      <AnimatePresence>
-        {showInfoModal && (
-          <ModalPopUp
-            showModal={showInfoModal}
-            onClose={() => setShowInfoModal(false)}
-          >
-            <OrderInfoModal setModal={setShowInfoModal} />
-          </ModalPopUp>
-        )}
-      </AnimatePresence>
+      <ModalPopUp
+        showModal={showInfoModal}
+        onClose={() => setShowInfoModal(false)}
+      >
+        <OrderInfoModal setModal={setShowInfoModal} />
+      </ModalPopUp>
     </>
   );
 };

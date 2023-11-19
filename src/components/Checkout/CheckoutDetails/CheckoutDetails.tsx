@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { AnimatePresence } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { base } from '../../../../css/base';
@@ -136,34 +135,26 @@ const CheckoutDetails = () => {
         </div>
       </RoundBorder>
 
-      <AnimatePresence>
-        {showTimeModal && (
-          <ModalPopUp
-            showModal={showTimeModal}
-            onClose={() => setShowTimeModal(false)}
-          >
-            <OrderNavBarModal
-              setModal={setShowTimeModal}
-              headerText="Delivery Details"
-            />
-          </ModalPopUp>
-        )}
-      </AnimatePresence>
+      <ModalPopUp
+        showModal={showTimeModal}
+        onClose={() => setShowTimeModal(false)}
+      >
+        <OrderNavBarModal
+          setModal={setShowTimeModal}
+          headerText="Delivery Details"
+        />
+      </ModalPopUp>
 
-      <AnimatePresence>
-        {showAddressModal && (
-          <ModalPopUp
-            showModal={showAddressModal}
-            onClose={() => setShowAddressModal(false)}
-          >
-            <OrderNavBarModal
-              setModal={setShowAddressModal}
-              headerText="Delivery Details"
-              type="delivery"
-            />
-          </ModalPopUp>
-        )}
-      </AnimatePresence>
+      <ModalPopUp
+        showModal={showAddressModal}
+        onClose={() => setShowAddressModal(false)}
+      >
+        <OrderNavBarModal
+          setModal={setShowAddressModal}
+          headerText="Delivery Details"
+          type="delivery"
+        />
+      </ModalPopUp>
     </>
   );
 };

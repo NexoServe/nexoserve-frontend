@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
-import { motion } from 'framer-motion';
-import Modal from 'react-modal';
+import ReactDOM from 'react-dom';
+import { animated, useTransition } from 'react-spring';
 
-import Draggable from '../Draggable/Draggable';
+import zIndex from '../../../css/zIndex';
 
 import useStyles from './css';
 import { IModalPopUp } from './types';
@@ -12,69 +12,97 @@ import { IModalPopUp } from './types';
 export const ModalPopUp = ({
   showModal,
   children,
-  styleClass,
-  overlayClass,
   onClose,
+  overlayClass,
 }: IModalPopUp) => {
+  const styles = useStyles();
+
   useEffect(() => {
-    if (showModal) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
-    return () => {
-      document.body.style.overflow = 'unset';
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && onClose) {
+        onClose();
+      }
     };
-  }, [showModal]);
 
-  const classes = useStyles();
-  Modal.setAppElement('#__next');
+    // Add event listener for keydown
+    window.addEventListener('keydown', handleEscape);
 
-  return (
-    <Modal
-      isOpen={showModal}
-      onRequestClose={() => (onClose ? onClose() : null)}
-      className={classNames(styleClass, classes.modal)}
-      onAfterClose={() => {
-        onClose ? onClose() : null;
-      }}
-      overlayClassName={classNames(classes.modalOverlay, overlayClass)}
-    >
-      {showModal && (
-        <motion.div
-          key="modal"
-          initial={{
-            backgroundColor: '#00000000',
-            opacity: 0,
-            // backdropFilter: 'blur(0px)',
-          }}
-          animate={{
-            backgroundColor: '#00000099',
-            opacity: 1,
-            // backdropFilter: 'blur(20px)',
-          }}
-          exit={{
-            backgroundColor: '#00000000',
-            opacity: 0,
-            // backdropFilter: 'blur(0px)',
-          }}
-          transition={{ duration: 0.4, ease: 'easeInOut' }}
-          className={classes.modalClose}
-          onClick={(e) => {
-            onClose ? onClose() : null;
-          }}
-        ></motion.div>
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [onClose]);
+
+  // Transition for the background
+  const backgroundTransition = useTransition(showModal, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    config: { duration: 200 },
+  });
+
+  // Transition for the modal content
+  const contentTransition = useTransition(showModal, {
+    from: { transform: 'translateY(100%)' },
+    enter: { transform: 'translateY(0%)' },
+    leave: { transform: 'translateY(100%)' },
+    config: { duration: 200 },
+  });
+
+  const handleContentClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+  };
+
+  const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    // This code runs after component mounts, hence on the client side
+    const element = document.getElementById('__next');
+    setModalRoot(element);
+  }, []);
+
+  if (!modalRoot) return null;
+  return ReactDOM.createPortal(
+    <>
+      {backgroundTransition((style, item) =>
+        item ? (
+          <animated.div
+            style={{
+              ...style,
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              cursor: 'pointer',
+            }}
+            onClick={() => onClose()}
+            className={classNames(overlayClass, styles.modalOverlay)}
+          >
+            {contentTransition((style, item) =>
+              item ? (
+                <animated.div
+                  style={{
+                    ...style,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: `${zIndex.modal} + 1`,
+                  }}
+                  onClick={handleContentClick}
+                >
+                  {children}
+                </animated.div>
+              ) : null,
+            )}
+          </animated.div>
+        ) : null,
       )}
-
-      <Draggable
-        onDragDown={() => {
-          onClose ? onClose() : null;
-        }}
-        styleClass={classes.modalInner}
-      >
-        {children}
-      </Draggable>
-    </Modal>
+    </>,
+    modalRoot, // Render into `#__next`
   );
 };

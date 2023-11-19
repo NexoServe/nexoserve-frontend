@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
 
-import { AnimatePresence } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 
 import breakpoints from '../../../../css/breakpoints';
 import { ShowShoppingCartAtom } from '../../../state/ShoppingCartState';
-import Draggable from '../../Draggable/Draggable';
 import { ModalPopUp } from '../../Modal/Modal';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
@@ -31,21 +29,14 @@ const ShoppingCartModal = () => {
   }, [setShowShoppingCart]);
 
   return (
-    <AnimatePresence>
-      {showShoppingCart && (
-        <ModalPopUp
-          showModal={showShoppingCart}
-          onClose={() => setShowShoppingCart(false)}
-        >
-          <Draggable
-            onDragDown={() => setShowShoppingCart(false)}
-            styleClass={classes.shoppingCartModal}
-          >
-            <ShoppingCart />
-          </Draggable>
-        </ModalPopUp>
-      )}
-    </AnimatePresence>
+    <ModalPopUp
+      showModal={showShoppingCart}
+      onClose={() => setShowShoppingCart(false)}
+    >
+      <div className={classes.shoppingCartModal}>
+        <ShoppingCart />
+      </div>
+    </ModalPopUp>
   );
 };
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 
 import { base } from '../../../../css/base';
@@ -99,29 +99,21 @@ const OrderType = ({ isCheckout = false }: IOrderType) => {
         </div>
       </RoundBorder>
 
-      <AnimatePresence>
-        {showDeliveryModal && (
-          <ModalPopUp showModal={showDeliveryModal} onClose={onClose}>
-            <OrderNavBarModal
-              setModal={setShowDeliveryModal}
-              headerText="Delivery Details"
-              type="delivery"
-            />
-          </ModalPopUp>
-        )}
-      </AnimatePresence>
+      <ModalPopUp showModal={showDeliveryModal} onClose={onClose}>
+        <OrderNavBarModal
+          setModal={setShowDeliveryModal}
+          headerText="Delivery Details"
+          type="delivery"
+        />
+      </ModalPopUp>
 
-      <AnimatePresence>
-        {showPickUpModal && (
-          <ModalPopUp showModal={showPickUpModal} onClose={onClose}>
-            <OrderNavBarModal
-              setModal={setShowPickUpModal}
-              headerText="Pick Up Details"
-              type="pickup"
-            />
-          </ModalPopUp>
-        )}
-      </AnimatePresence>
+      <ModalPopUp showModal={showPickUpModal} onClose={onClose}>
+        <OrderNavBarModal
+          setModal={setShowPickUpModal}
+          headerText="Pick Up Details"
+          type="pickup"
+        />
+      </ModalPopUp>
     </>
   );
 };

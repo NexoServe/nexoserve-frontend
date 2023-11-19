@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-import { AnimatePresence } from 'framer-motion';
 import Hamburger from 'hamburger-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -77,17 +76,13 @@ const Navbar = () => {
 
         <Menu styleClass={classes.navbarMenuDesktop} />
 
-        <AnimatePresence>
-          {showMenu && (
-            <ModalPopUp
-              showModal={showMenu}
-              onClose={() => setShowMenu(false)}
-              overlayClass={classes.navbarModalOverlay}
-            >
-              <Menu styleClass={classes.navbarMenuMobile} />
-            </ModalPopUp>
-          )}
-        </AnimatePresence>
+        <ModalPopUp
+          showModal={showMenu}
+          onClose={() => setShowMenu(false)}
+          overlayClass={classes.navbarModalOverlay}
+        >
+          <Menu styleClass={classes.navbarMenuMobile} />
+        </ModalPopUp>
       </Container>
       <Divider />
     </nav>

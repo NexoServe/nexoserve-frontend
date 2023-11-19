@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 
-import { AnimatePresence } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
 import { FoodWithSizesType } from '../../../../generated/graphql';
@@ -47,17 +46,14 @@ const FoodList = () => {
           </div>
         </div>
       ))}
-
-      <AnimatePresence>
-        {showModal && activeFood && (
-          <FoodModal
-            showModal={showModal}
-            setShowModal={setShowModal}
-            foodId={activeFood.id}
-            type="create"
-          />
-        )}
-      </AnimatePresence>
+      {activeFood && (
+        <FoodModal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          foodId={activeFood.id}
+          type="create"
+        />
+      )}
     </div>
   );
 };

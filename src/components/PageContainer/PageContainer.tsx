@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from 'react';
 
-import { AnimatePresence } from 'framer-motion';
 import { DateTime } from 'luxon';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
@@ -198,38 +197,34 @@ const PageContainer = ({ children }: IPageContainer) => {
     }
   }, [data]);
 
-  if (loading)
-    return (
-      <AnimatePresence>
-        {loading && (
-          <ModalPopUp showModal={loading}>
-            <Loader />
-          </ModalPopUp>
-        )}
-      </AnimatePresence>
-    );
   return (
-    <div>
-      {children}
+    <>
+      <ModalPopUp onClose={() => console.log('first')} showModal={loading}>
+        <Loader />
+      </ModalPopUp>
 
-      <AnimatePresence>
-        {showInvalidTimeModal && (
-          <ModalPopUp
-            showModal={showInvalidTimeModal ? true : false}
-            onClose={() => {
-              console.log();
-            }}
-          >
-            <OrderNavBarModal
-              headerText="Date and Time"
-              setModal={() => setShowInvalidTimeModal(undefined)}
-              type={showInvalidTimeModal.type}
-              error={showInvalidTimeModal.errorMessages}
-            />
-          </ModalPopUp>
-        )}
-      </AnimatePresence>
-    </div>
+      {data && (
+        <div>
+          {children}
+
+          {showInvalidTimeModal && (
+            <ModalPopUp
+              showModal={showInvalidTimeModal ? true : false}
+              onClose={() => {
+                console.log();
+              }}
+            >
+              <OrderNavBarModal
+                headerText="Date and Time"
+                setModal={() => setShowInvalidTimeModal(undefined)}
+                type={showInvalidTimeModal.type}
+                error={showInvalidTimeModal.errorMessages}
+              />
+            </ModalPopUp>
+          )}
+        </div>
+      )}
+    </>
   );
 };
 

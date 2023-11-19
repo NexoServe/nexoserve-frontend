@@ -1,4 +1,3 @@
-import { AnimatePresence } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 
 import { InfoModalAtom } from '../../state/InfoModalState';
@@ -15,21 +14,20 @@ const InfoModal = () => {
   const [infoModalState] = useRecoilState(InfoModalAtom);
 
   return (
-    <AnimatePresence>
-      {infoModalState && (
-        <ModalPopUp showModal={infoModalState.showModal || false}>
-          <div className={classes.infoModal}>
-            {infoModalState.infoModalType === 'payment' ? (
-              <PaymentInfoModal />
-            ) : infoModalState.infoModalType === 'delivery' ? (
-              <DeliveryErrorInfoModal />
-            ) : (
-              <FatalErrorInfoModal />
-            )}
-          </div>
-        </ModalPopUp>
-      )}
-    </AnimatePresence>
+    <ModalPopUp
+      showModal={infoModalState.showModal || false}
+      onClose={() => console.log('first')}
+    >
+      <div className={classes.infoModal}>
+        {infoModalState.infoModalType === 'payment' ? (
+          <PaymentInfoModal />
+        ) : infoModalState.infoModalType === 'delivery' ? (
+          <DeliveryErrorInfoModal />
+        ) : (
+          <FatalErrorInfoModal />
+        )}
+      </div>
+    </ModalPopUp>
   );
 };
 
