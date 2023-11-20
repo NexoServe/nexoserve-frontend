@@ -33,7 +33,7 @@ import {
   OrderDeliveryAddressAtom,
   OrderDeliveryDetailsAtom,
   OrderDetailsAtom,
-  OrderIsPickUpAtom,
+  OrderIsPickUpStateAtom,
   OrderShowInvalidTimeModalAtom,
   OrderTimeAtom,
 } from '../../../state/OrderNavbar';
@@ -78,7 +78,7 @@ export default function CheckoutForm() {
   );
 
   const orderTime = useRecoilValue(OrderTimeAtom);
-  const isPickUp = useRecoilValue(OrderIsPickUpAtom);
+  const isPickUp = useRecoilValue(OrderIsPickUpStateAtom);
   const deliveryAddress = useRecoilValue(OrderDeliveryAddressAtom);
   const additionalAddressInfo = useRecoilValue(
     OrderDeliveryAdditionalAddressInfoAtom,
