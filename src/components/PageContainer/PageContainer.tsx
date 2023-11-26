@@ -199,29 +199,29 @@ const PageContainer = ({ children }: IPageContainer) => {
 
   return (
     <>
-      <ModalPopUp onClose={() => console.log('first')} showModal={loading}>
-        <Loader />
-      </ModalPopUp>
+      {loading && (
+        <ModalPopUp onClose={() => console.log('first')} showModal={loading}>
+          <Loader />
+        </ModalPopUp>
+      )}
 
       {data && (
         <div>
           {children}
 
-          {showInvalidTimeModal && (
-            <ModalPopUp
-              showModal={showInvalidTimeModal ? true : false}
-              onClose={() => {
-                console.log();
-              }}
-            >
-              <OrderNavBarModal
-                headerText="Date and Time"
-                setModal={() => setShowInvalidTimeModal(undefined)}
-                type={showInvalidTimeModal.type}
-                error={showInvalidTimeModal.errorMessages}
-              />
-            </ModalPopUp>
-          )}
+          <ModalPopUp
+            showModal={showInvalidTimeModal ? true : false}
+            onClose={() => {
+              console.log();
+            }}
+          >
+            <OrderNavBarModal
+              headerText="Date and Time"
+              setModal={() => setShowInvalidTimeModal(undefined)}
+              type={showInvalidTimeModal?.type}
+              error={showInvalidTimeModal?.errorMessages}
+            />
+          </ModalPopUp>
         </div>
       )}
     </>

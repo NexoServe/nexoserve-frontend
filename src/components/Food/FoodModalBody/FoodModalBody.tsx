@@ -3,10 +3,12 @@ import { useEffect } from 'react';
 import Image from 'next/image';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { OptionWithSizeType } from '../../../../generated/graphql';
 import {
   FoodModalAddOnRequiredAtom,
   FoodModalAddOnsAtom,
   FoodModalAtom,
+  FoodModalSelectedOptionsAtom,
   FoodModalSelectedSizeAtom,
 } from '../../../state/FoodModalState';
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
@@ -25,6 +27,7 @@ const FoodModalBody = ({ food, showModal, type }: IFoodModalBody) => {
   const foodModalSelectedSize = useRecoilValue(FoodModalSelectedSizeAtom);
   const [addOns, setAddOns] = useRecoilState(FoodModalAddOnsAtom);
   const requiredAddOn = useRecoilValue(FoodModalAddOnRequiredAtom);
+  const [, setSelectedOptions] = useRecoilState(FoodModalSelectedOptionsAtom);
 
   useEffect(() => {
     if (type === 'create') {
@@ -62,6 +65,31 @@ const FoodModalBody = ({ food, showModal, type }: IFoodModalBody) => {
       ...(food?.addOns || []),
     ]);
   }, [foodModal, food, showModal, setAddOns]);
+
+  useEffect(() => {
+    if (type === 'create' && showModal) {
+      const defaultOptions = food.addOns?.flatMap((addOn) =>
+        addOn?.options
+          ?.map((option) => {
+            if (option?.default === true) {
+              const output: OptionWithSizeType = {
+                id: option?.id,
+                name: option?.name,
+                addOnName: addOn?.name as string,
+                default: option?.default,
+                order: option?.order,
+                price: option?.price,
+              };
+
+              return output;
+            }
+          })
+          .filter((option) => option !== undefined),
+      );
+
+      setSelectedOptions((defaultOptions as OptionWithSizeType[]) || []);
+    }
+  }, []);
 
   return (
     <>

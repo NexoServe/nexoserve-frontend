@@ -3,6 +3,7 @@ import { createUseStyles } from 'react-jss';
 import { base } from '../../../css/base';
 import colors from '../../../css/colors';
 import queries from '../../../css/queries';
+import zIndex from '../../../css/zIndex';
 
 const useStyles = createUseStyles({
   modalHeader: {
@@ -14,8 +15,10 @@ const useStyles = createUseStyles({
     alignItems: 'center',
     borderTopLeftRadius: base(2),
     borderTopRightRadius: base(2),
-    position: 'relative',
+    position: 'sticky',
+    top: 0,
     background: colors.white,
+    zIndex: zIndex.header,
 
     [queries.l]: {
       background: colors.white,

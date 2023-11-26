@@ -83,6 +83,7 @@ const FoodModal = ({
   const [selectedOptions, setSelectedOptions] = useRecoilState(
     FoodModalSelectedOptionsAtom,
   );
+
   const [foodModalPrice, setFoodModalPrice] =
     useRecoilState(FoodModalPriceAtom);
 
@@ -94,11 +95,17 @@ const FoodModal = ({
       quantity: 1,
     });
     setAddOns(undefined);
-    setSelectedOptions([]);
     setRequiredAddOn(undefined);
     setFoodModalPrice(0);
+    setSelectedOptions([]);
     document.body.style.overflow = 'unset';
   };
+
+  useEffect(() => {
+    if (!showModal) {
+      onClose();
+    }
+  }, [showModal]);
 
   useMemo(() => {
     if (

@@ -16,7 +16,7 @@ const InfoModal = () => {
   return (
     <ModalPopUp
       showModal={infoModalState.showModal || false}
-      onClose={() => console.log('first')}
+      onClose={() => console.log('')}
     >
       <div className={classes.infoModal}>
         {infoModalState.infoModalType === 'payment' ? (

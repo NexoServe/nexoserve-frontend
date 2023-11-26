@@ -1,13 +1,13 @@
 import {
   OptionWithSizeInput,
   OrderItemInput,
-  ShoppingCartItem,
+  ShoppingCartItemType,
 } from '../../generated/graphql';
 
 const getShoppingCartInput = (): OrderItemInput[] => {
   const shoppingCartItems = localStorage.getItem('shoppingCartItems');
 
-  let shoppingCartItemsParsed: ShoppingCartItem[] = [];
+  let shoppingCartItemsParsed: ShoppingCartItemType[] = [];
   try {
     shoppingCartItemsParsed = JSON.parse(shoppingCartItems as string);
   } catch (error) {

@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-import { ShoppingCartItem } from '../../generated/graphql';
+import { ShoppingCartItemType } from '../../generated/graphql';
 
 type ShoppingCartTotalType = {
   subtotal: number;
@@ -17,7 +17,7 @@ export type ShoppingCartTipType = {
   tip: number;
 };
 
-export const ShoppingCartAtom = atom<ShoppingCartItem[]>({
+export const ShoppingCartAtom = atom<ShoppingCartItemType[]>({
   key: 'ShoppingCartAtom',
   default: [],
 });

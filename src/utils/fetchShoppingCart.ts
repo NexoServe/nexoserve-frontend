@@ -3,7 +3,7 @@ import { LazyQueryExecFunction } from '@apollo/client';
 import {
   CreateOrderInput,
   Exact,
-  ShoppingCartItem,
+  ShoppingCartItemType,
   ValidateShoppingCartQuery,
 } from '../../generated/graphql';
 import { OrderTime } from '../state/OrderNavbar';
@@ -29,7 +29,7 @@ const fetchShoppingCart = ({
   const isPickUp = localStorage.getItem('isPickUp');
   const orderTime = localStorage.getItem('orderTime');
 
-  let shoppingCartItemsParsed: ShoppingCartItem[] = [];
+  let shoppingCartItemsParsed: ShoppingCartItemType[] = [];
   let orderTimeParsed: OrderTime | null = null;
 
   try {

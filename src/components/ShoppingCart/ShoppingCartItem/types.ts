@@ -2,11 +2,12 @@ import { Maybe } from 'graphql/jsutils/Maybe';
 
 import {
   OptionWithSizeType,
-  ShoppingCartItem,
+  ShoppingCartItemType,
 } from '../../../../generated/graphql';
 
 export interface IShoppingCartItem {
-  shoppingCartItem: ShoppingCartItem;
+  shoppingCartItem: ShoppingCartItemType;
+  activeShoppingCartItemClick: (shoppingCartItem: ShoppingCartItemType) => void;
 }
 
 export type OptionSizeGrouped = {

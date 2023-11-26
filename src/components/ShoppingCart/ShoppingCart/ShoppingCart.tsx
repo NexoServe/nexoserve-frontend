@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import {
-  ShoppingCartItem,
+  ShoppingCartItemType,
   useValidateShoppingCartLazyQuery,
 } from '../../../../generated/graphql';
 import { InfoModalAtom } from '../../../state/InfoModalState';
@@ -72,7 +72,7 @@ const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
         isLoading: true,
       });
     } else if (data) {
-      const shoppingCartValidated: ShoppingCartItem[] =
+      const shoppingCartValidated: ShoppingCartItemType[] =
         data?.validateShoppingCart.orderItems.map((shoppingCartItem) => ({
           food: shoppingCartItem?.food,
           orderItemId: shoppingCartItem?.id as string,

@@ -1,9 +1,11 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 
 import { useRecoilValue } from 'recoil';
 
+import { ShoppingCartItemType } from '../../../../generated/graphql';
 import { ShoppingCartAtom } from '../../../state/ShoppingCartState';
 import Divider from '../../Divider/Divider';
+import FoodModal from '../../Food/FoodModal/FoodModal';
 import SvgIcons from '../../SvgIcons';
 import ShoppingCartItem from '../ShoppingCartItem/ShoppingCartItem';
 import ShoppingCartShowDetailsBtn from '../ShoppingCartShowDetailsBtn/ShoppingCartShowDetailsBtn';
@@ -13,6 +15,16 @@ import { IShoppingCartItemList } from './types';
 
 const ShoppingCartItemList = ({ isCheckout }: IShoppingCartItemList) => {
   const shoppingCart = useRecoilValue(ShoppingCartAtom);
+  const [showModal, setShowModal] = useState(false);
+  const [activeShoppingCartItem, setActiveActiveShoppingCartItem] =
+    useState<ShoppingCartItemType>();
+
+  const activeShoppingCartItemClick = (
+    activeShoppingCartItem: ShoppingCartItemType,
+  ) => {
+    setShowModal(true);
+    setActiveActiveShoppingCartItem(activeShoppingCartItem);
+  };
 
   const classes = useStyles();
 
@@ -37,11 +49,24 @@ const ShoppingCartItemList = ({ isCheckout }: IShoppingCartItemList) => {
           />
           {shoppingCart?.map((shoppingCartItem) => (
             <Fragment key={shoppingCartItem.orderItemId}>
-              <ShoppingCartItem shoppingCartItem={shoppingCartItem} />
+              <ShoppingCartItem
+                shoppingCartItem={shoppingCartItem}
+                activeShoppingCartItemClick={activeShoppingCartItemClick}
+              />
               <Divider />
             </Fragment>
           ))}
         </>
+      )}
+
+      {activeShoppingCartItem && (
+        <FoodModal
+          setShowModal={setShowModal}
+          showModal={showModal}
+          foodId={activeShoppingCartItem?.food?.id as string}
+          type="update"
+          orderItemId={activeShoppingCartItem?.orderItemId}
+        />
       )}
     </div>
   );

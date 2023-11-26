@@ -361,6 +361,7 @@ export type Query = {
   foodsByCategory: Array<Maybe<FoodsByCategoryType>>;
   orders: Array<OrderType>;
   restaurant: RestaurantOutput;
+  restaurantDetails: RestaurantDetailsOutput;
   todaysOrders: Array<OrderType>;
   validateOrderDetails: ValidateOrderDetailsOutput;
   validateShoppingCart: ShoppingCart;
@@ -377,6 +378,11 @@ export type QueryRestaurantArgs = {
 };
 
 
+export type QueryRestaurantDetailsArgs = {
+  restaurantId: Scalars['String'];
+};
+
+
 export type QueryTodaysOrdersArgs = {
   restaurantId: Scalars['String'];
 };
@@ -389,6 +395,12 @@ export type QueryValidateOrderDetailsArgs = {
 
 export type QueryValidateShoppingCartArgs = {
   order: CreateOrderInput;
+};
+
+export type RestaurantDetailsOutput = {
+  __typename?: 'RestaurantDetailsOutput';
+  logo: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type RestaurantOutput = {
@@ -425,8 +437,8 @@ export type ShoppingCart = {
   tip?: Maybe<Scalars['Float']>;
 };
 
-export type ShoppingCartItem = {
-  __typename?: 'ShoppingCartItem';
+export type ShoppingCartItemType = {
+  __typename?: 'ShoppingCartItemType';
   food?: Maybe<FoodWithSizesType>;
   orderItemId: Scalars['String'];
   price: Scalars['Float'];

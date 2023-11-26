@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { useRecoilState } from 'recoil';
 
@@ -12,8 +12,6 @@ const FoodOption = ({ option, addOn }: IFoodOption) => {
   const [selectedOptions, setSelectedOptions] = useRecoilState(
     FoodModalSelectedOptionsAtom,
   );
-
-  const addedDefaultOption = useRef(false);
 
   useEffect(() => {
     if (selectedOptions === undefined) {
@@ -33,25 +31,6 @@ const FoodOption = ({ option, addOn }: IFoodOption) => {
       return false;
     }
   }, [selectedOptions, option]);
-
-  useEffect(() => {
-    if (
-      option?.default &&
-      !addedDefaultOption.current &&
-      !selectedOptions.some((selectedOption) => selectedOption.id === option.id)
-    ) {
-      addedDefaultOption.current = true; // Mark that the default option is added
-      setSelectedOptions((prevOptions) => [
-        ...prevOptions,
-        {
-          id: option.id,
-          name: option.name,
-          price: option.price,
-          addOnName: addOn?.name as string,
-        },
-      ]);
-    }
-  }, [option, setSelectedOptions, addOn]);
 
   const selectOption = () => {
     if (

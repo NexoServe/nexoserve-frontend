@@ -2,20 +2,19 @@ import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
 import colors from '../../../../css/colors';
-import queries from '../../../../css/queries';
 
 const useStyles = createUseStyles({
   foodModal: {
     position: 'relative',
     overflow: 'hidden',
     height: '85vh',
+    maxHeight: base(100),
     width: '95vw',
     maxWidth: base(50),
   },
 
   foodModalForm: {
-    width: '95vw',
-    maxWidth: base(50),
+    width: '100%',
     background: colors.secondary,
     maxHeight: '100vh',
     height: '100%',
@@ -26,11 +25,6 @@ const useStyles = createUseStyles({
     display: 'flex',
     flexDirection: 'column',
     borderRadius: base(2),
-
-    [queries.s]: {
-      height: '80vh',
-      borderRadius: base(2),
-    },
   },
 
   foodModalLoader: {

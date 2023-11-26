@@ -6,7 +6,7 @@ import colors from '../../../../css/colors';
 const useStyles = createUseStyles({
   orderInfoModal: {
     background: colors.white,
-    width: '80vw',
+    width: '95vw',
     maxHeight: '80vh',
     overflow: 'auto',
     maxWidth: base(50),

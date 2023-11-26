@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -15,14 +13,15 @@ import {
   ShoppingCartTotalAtom,
   ShowShoppingCartDetailsAtom,
 } from '../../../state/ShoppingCartState';
-import FoodModal from '../../Food/FoodModal/FoodModal';
 import SvgIcons from '../../SvgIcons';
 
 import useStyles from './css';
 import { IShoppingCartItem, OptionSizeGrouped } from './types';
 
-const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
-  const [showUpdateFoodModal, setShowUpdateFoodModal] = useState(false);
+const ShoppingCartItem = ({
+  shoppingCartItem,
+  activeShoppingCartItemClick,
+}: IShoppingCartItem) => {
   const showShoppingCartDetails = useRecoilValue(ShowShoppingCartDetailsAtom);
 
   const [, setFoodModal] = useRecoilState(FoodModalAtom);
@@ -39,6 +38,7 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
   const classes = useStyles();
 
   const updateShoppingCartItem = () => {
+    activeShoppingCartItemClick(shoppingCartItem);
     setFoodModal({
       food: shoppingCartItem?.food,
       selectedSize: shoppingCartItem?.selectedSize,
@@ -56,8 +56,6 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
         optionSize: option?.optionSize,
       })) || [],
     );
-
-    setShowUpdateFoodModal(true);
   };
 
   const removeShoppingCartItem = () => {
@@ -191,18 +189,6 @@ const ShoppingCartItem = ({ shoppingCartItem }: IShoppingCartItem) => {
           )}
         </AnimatePresence>
       </motion.div>
-
-      <AnimatePresence mode="wait">
-        {showUpdateFoodModal && (
-          <FoodModal
-            setShowModal={setShowUpdateFoodModal}
-            showModal={showUpdateFoodModal}
-            foodId={shoppingCartItem?.food?.id as string}
-            type="update"
-            orderItemId={shoppingCartItem?.orderItemId}
-          />
-        )}
-      </AnimatePresence>
     </>
   );
 };
