@@ -39,6 +39,7 @@
     "@graphql-codegen/cli": "2.6.2",
     "@prisma/client": "4.8.0",
     "@reach/combobox": "0.18.0",
+    "@sentry/nextjs": "7.86.0",
     "@stripe/react-stripe-js": "2.1.0",
     "@stripe/stripe-js": "1.38.1",
     "apollo-server-micro": "3.9.0",
