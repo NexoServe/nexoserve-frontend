@@ -17,7 +17,7 @@
     "dev:https": "node server.js",
     "type-check": "tsc --noEmit --incremental",
     "ts:watch": "yarn type-check --watch",
-    "prebuild": "yarn run generate && yarn run codegen",
+    "prebuild": "yarn run codegen && yarn run generate-codegen",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
