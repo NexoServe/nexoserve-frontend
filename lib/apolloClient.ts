@@ -13,16 +13,14 @@ let graphqlUri: string;
 
 type Environment = 'development' | 'production' | 'staging';
 
-const env: Environment = process.env.NODE_ENV as Environment;
-
-console.log('APOLLO env', env);
+const env: Environment = process.env.NEXT_PUBLIC_NODE_ENV as Environment;
 
 if (env === 'development') {
   graphqlUri = 'http://localhost:4000/graphql'; // Development URI
 } else if (env === 'staging') {
-  graphqlUri = 'https://nexoserve-backend-staging.up.railway.app/'; // Staging URI
+  graphqlUri = 'https://nexoserve-backend-staging.up.railway.app/graphql'; // Staging URI
 } else if (env === 'production') {
-  graphqlUri = 'https://nexoserve-backend-production.up.railway.app/'; // Default to Production URI
+  graphqlUri = 'https://nexoserve-backend-production.up.railway.app/graphql'; // Default to Production URI
 }
 
 function createApolloClient() {
