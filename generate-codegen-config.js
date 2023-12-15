@@ -8,6 +8,11 @@ if (!process.env.NODE_ENV) {
   process.exit(1); // Exit the script with an error code
 }
 
+console.log(
+  'process.env.NEXT_PUBLIC_NODE_ENV',
+  process.env.NEXT_PUBLIC_NODE_ENV,
+);
+
 const env = process.env.NODE_ENV;
 require('dotenv').config({ path: `.env.${env}` });
 console.log('env', env);
