@@ -22,9 +22,9 @@ let graphqlUri;
 if (env === 'development') {
   graphqlUri = 'http://localhost:4000/graphql'; // Development URI
 } else if (env === 'staging') {
-  graphqlUri = 'https://nexoserve-backend-staging.up.railway.app/'; // Staging URI
+  graphqlUri = 'https://nexoserve-backend-staging.up.railway.app/graphql'; // Staging URI
 } else if (env === 'production') {
-  graphqlUri = 'https://nexoserve-backend-production.up.railway.app/'; // Default to Production URI
+  graphqlUri = 'https://nexoserve-backend-production.up.railway.app/graphql'; // Default to Production URI
 } else {
   console.error('Invalid NEXT_PUBLIC_NODE_ENV:', env);
   process.exit(1); // Exit the script with an error code
