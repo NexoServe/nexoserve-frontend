@@ -15,8 +15,6 @@ type Environment = 'development' | 'production' | 'staging';
 
 const env: Environment = process.env.NEXT_PUBLIC_NODE_ENV as Environment;
 
-console.log('APOLLO env', env);
-
 if (env === 'development') {
   graphqlUri = 'http://localhost:4000/graphql'; // Development URI
 } else if (env === 'staging') {
