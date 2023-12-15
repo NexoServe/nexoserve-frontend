@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-console.log('process.env', process.env.NODE_ENV);
+console.log('process.env', process.env.NEXT_PUBLIC_NODE_ENV);
 // Check if the NEXT_PUBLIC_NODE_ENV environment variable is set
-if (!process.env.NODE_ENV) {
+if (!process.env.NEXT_PUBLIC_NODE_ENV) {
   console.error('NEXT_PUBLIC_NODE_ENV environment variable is not set.');
   process.exit(1); // Exit the script with an error code
 }
@@ -13,7 +13,7 @@ console.log(
   process.env.NEXT_PUBLIC_NODE_ENV,
 );
 
-const env = process.env.NODE_ENV;
+const env = process.env.NEXT_PUBLIC_NODE_ENV;
 require('dotenv').config({ path: `.env.${env}` });
 console.log('env', env);
 

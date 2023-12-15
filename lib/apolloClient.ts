@@ -13,7 +13,7 @@ let graphqlUri: string;
 
 type Environment = 'development' | 'production' | 'staging';
 
-const env: Environment = process.env.NODE_ENV as Environment;
+const env: Environment = process.env.NEXT_PUBLIC_NODE_ENV as Environment;
 
 console.log('APOLLO env', env);
 
