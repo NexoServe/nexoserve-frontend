@@ -30,6 +30,8 @@ if (env === 'development') {
   process.exit(1); // Exit the script with an error code
 }
 
+console.log('graphqlUri', graphqlUri);
+
 const configContent = `
 overwrite: true
 schema:
