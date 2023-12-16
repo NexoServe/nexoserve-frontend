@@ -94,9 +94,9 @@ const FoodModalBody = ({ food, showModal, type }: IFoodModalBody) => {
   return (
     <>
       <div className={classes.foodModalBodyImage}>
-        {food.image && (
+        {food?.image && (
           <Image
-            src={food.image}
+            src={food?.image}
             alt={food.name || undefined}
             objectFit="cover"
             loading="eager"

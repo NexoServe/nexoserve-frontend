@@ -3,13 +3,13 @@ import { DateTime } from 'luxon';
 import { DayOutput } from '../../../../generated/graphql';
 
 const daysOfWeek = [
-  'monday',
-  'tuesday',
-  'wednesday',
-  'thursday',
-  'friday',
-  'saturday',
-  'sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
 ];
 
 export const getNextOpeningDay = (
@@ -50,7 +50,7 @@ export const getRestaurantOpeningHours = (openingHours: DayOutput[]) => {
     let closingTime;
 
     if (
-      item.time[0].opens_at === '00:00' &&
+      item.time[0]?.opens_at === '00:00' &&
       item.time[index + 1]?.opens_at === null
     ) {
       return {

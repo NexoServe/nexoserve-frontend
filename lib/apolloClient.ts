@@ -24,7 +24,6 @@ if (env === 'development') {
 }
 
 function createApolloClient() {
-  console.log('graphqlUri: ', graphqlUri);
   return new ApolloClient({
     link: new HttpLink({
       uri: graphqlUri,
