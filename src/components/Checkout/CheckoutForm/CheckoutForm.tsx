@@ -185,7 +185,7 @@ export default function CheckoutForm() {
                 ? 'ASAP'
                 : (orderTime?.value?.toString() as string),
             orderItems: getShoppingCartInput(),
-            tip: shoppingCartTip.tip,
+            tip: parseFloat(shoppingCartTip.tip.toFixed(2)),
             isTipPercentage: shoppingCartTip.isTipPercentage,
             deliveryAddress,
             suiteAptFloor: additionalAddressInfo,

@@ -106,10 +106,10 @@ const OrderNavBarModal = ({
 
   while (dayCount < 7) {
     const day = now.plus({ days: i });
-    const dayOfWeek = day.toFormat('cccc').toLowerCase(); // 'cccc' will give full weekday name in lowercase
+    const dayOfWeek = day.toFormat('cccc'); // 'cccc' will give full weekday name in lowercase
 
     const dayDetails = openingHours.find(
-      (item) => item.dayOfWeek.toLowerCase() === dayOfWeek.toLowerCase(),
+      (item) => item.dayOfWeek === dayOfWeek,
     );
 
     if (dayDetails && dayDetails.time.length > 0) {
@@ -147,7 +147,7 @@ const OrderNavBarModal = ({
   }
 
   const openingHoursForDay = openingHours.find(
-    (day) => day.dayOfWeek === now.weekdayLong?.toLowerCase(),
+    (day) => day.dayOfWeek === now.weekdayLong,
   );
 
   const allHoursAreInThePast = openingHoursForDay?.time.every((interval) => {
@@ -221,9 +221,7 @@ const OrderNavBarModal = ({
 
   const dayHours =
     openingHours.find(
-      (hours) =>
-        hours.dayOfWeek.toLowerCase() ===
-        orderDateState?.value?.weekdayLong?.toLowerCase(),
+      (hours) => hours.dayOfWeek === orderDateState?.value?.weekdayLong,
     )?.time || [];
 
   let intervals = [];
@@ -282,10 +280,7 @@ const OrderNavBarModal = ({
   }
 
   // Remove intervals that have already passed
-  if (
-    orderDateState?.value?.weekdayLong?.toLowerCase() ===
-    now.weekdayLong?.toLowerCase()
-  ) {
+  if (orderDateState?.value?.weekdayLong === now.weekdayLong) {
     intervals = intervals.filter(
       (interval) =>
         (interval as DateTime) >

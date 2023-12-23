@@ -36,8 +36,7 @@ export const getNextDateFromDayOfWeek = (
   desiredDayOfWeek: string,
 ): DateTime => {
   const currentDayIndex = currentDate.weekday;
-  const desiredDayIndex =
-    daysOfWeek.indexOf(desiredDayOfWeek.toLowerCase()) + 1;
+  const desiredDayIndex = daysOfWeek.indexOf(desiredDayOfWeek) + 1;
 
   const diff = desiredDayIndex - currentDayIndex;
   const daysToAdd = diff <= 0 ? diff + 7 : diff;

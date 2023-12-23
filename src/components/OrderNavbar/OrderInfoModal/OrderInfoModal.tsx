@@ -99,9 +99,8 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
               {(isPickUp ? pickUpOpeningHours : deliveryOpeningHours)?.map(
                 (item, i) => {
                   const isSameDay =
-                    DateTime.fromISO(
-                      orderDetails?.currentDateTime as string,
-                    ).weekdayLong?.toLowerCase() === item.dayOfWeek;
+                    DateTime.fromISO(orderDetails?.currentDateTime as string)
+                      .weekdayLong === item.dayOfWeek;
 
                   return (
                     <div
