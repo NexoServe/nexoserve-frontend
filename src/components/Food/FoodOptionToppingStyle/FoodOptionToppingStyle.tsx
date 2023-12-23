@@ -39,7 +39,7 @@ const FoodOptionToppingStyle = ({
         <div className={classes.foodOptionToppingStyleSizes}>
           {option?.optionSizes
             ?.slice()
-            ?.sort((a, b) => (a?.order as number) - (b?.order as number))
+            ?.sort((a, b) => (a?.sort as number) - (b?.sort as number))
             ?.map((optionSize) => (
               <FoodOptionSize
                 addOn={addOn}

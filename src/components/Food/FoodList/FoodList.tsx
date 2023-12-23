@@ -14,7 +14,9 @@ const FoodList = () => {
 
   const sortedMenu = useMemo(() => {
     if (menu.length > 0) {
-      return [...menu].sort((a, b) => a.order - b.order);
+      return [...menu].sort(
+        (a, b) => (a?.sort as number) - (b?.sort as number),
+      );
     }
   }, [menu]);
 

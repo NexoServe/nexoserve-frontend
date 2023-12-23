@@ -77,7 +77,7 @@ const FoodModalBody = ({ food, showModal, type }: IFoodModalBody) => {
                 name: option?.name,
                 addOnName: addOn?.name as string,
                 default: option?.default,
-                order: option?.order,
+                sort: option?.sort,
                 price: option?.price,
               };
 
