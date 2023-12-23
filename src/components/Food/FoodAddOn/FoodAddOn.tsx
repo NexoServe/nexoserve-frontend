@@ -45,7 +45,7 @@ const FoodAddOn = ({ addOn, isRequiredAddOn }: IFoodAddOn) => {
       <div>
         {addOn?.options
           ?.slice()
-          ?.sort((a, b) => (a?.order as number) - (b?.order as number))
+          ?.sort((a, b) => (a?.sort as number) - (b?.sort as number))
           ?.map((option) => (
             <FoodOption
               key={option?.id}
