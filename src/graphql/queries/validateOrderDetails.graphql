@@ -15,7 +15,7 @@ query ValidateOrderDetails($input: OrderDetailsInput!) {
       deliveryFee
       menu {
         category
-        order
+        sort
         foods {
           id
           description

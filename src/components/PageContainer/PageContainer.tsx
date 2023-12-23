@@ -200,7 +200,7 @@ const PageContainer = ({ children }: IPageContainer) => {
   return (
     <>
       {loading && (
-        <ModalPopUp onClose={() => console.log('first')} showModal={loading}>
+        <ModalPopUp onClose={() => console.log()} showModal={loading}>
           <Loader />
         </ModalPopUp>
       )}

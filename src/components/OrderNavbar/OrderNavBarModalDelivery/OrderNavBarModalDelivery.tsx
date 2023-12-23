@@ -165,7 +165,6 @@ const OrderNavBarModalDelivery = ({
 
         setIsAddressValid(true);
       } else {
-        console.log('The address is not within the radius');
         setIsAddressValid(false);
       }
     } catch (error) {

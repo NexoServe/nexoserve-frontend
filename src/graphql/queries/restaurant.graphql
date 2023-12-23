@@ -15,7 +15,7 @@ query Restaurant($input: OrderDetailsInput!) {
       deliveryFee
       menu {
         category
-        order
+        sort
         foods {
           id
           description

@@ -8,13 +8,13 @@ fragment AddOnFields on AddOnType {
     name
     price
     default
-    order
+    sort
     optionSizes {
       id
       name
       price
       default
-      order
+      sort
     }
   }
 }
