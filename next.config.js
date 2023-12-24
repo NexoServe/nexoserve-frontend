@@ -4,7 +4,14 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['https://nexoserve-image-bucket.s3.amazonaws.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'nexoserve-image-bucket.s3.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 };
 
