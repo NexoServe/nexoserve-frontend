@@ -28,8 +28,11 @@ module.exports = withSentryConfig(
 
     // Suppresses source map uploading logs during build
     silent: true,
-    org: 'igli',
-    project: 'javascript-nextjs',
+    org: 'NexoServe',
+    project: 'nexoserve-frontend',
+    images: {
+      domains: ['https://nexoserve-image-bucket.s3.amazonaws.com'],
+    },
   },
   {
     // For all available options, see:
