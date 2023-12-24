@@ -4,13 +4,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'nexoserve-image-bucket.s3.amazonaws.com',
-        pathname: '/**',
-      },
-    ],
+    domains: ['https://nexoserve-image-bucket.s3.amazonaws.com'],
   },
 };
 
@@ -30,9 +24,6 @@ module.exports = withSentryConfig(
     silent: true,
     org: 'igli',
     project: 'javascript-nextjs',
-    images: {
-      domains: ['https://nexoserve-image-bucket.s3.amazonaws.com'],
-    },
   },
   {
     // For all available options, see:
