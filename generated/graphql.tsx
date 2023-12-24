@@ -256,8 +256,10 @@ export type OptionWithSizeType = {
 export type OptionsGroupedByAddOnType = {
   __typename?: 'OptionsGroupedByAddOnType';
   addOnName: Scalars['String'];
+  isFoodSizeAddOn?: Maybe<Scalars['Boolean']>;
   options?: Maybe<Array<Maybe<OptionType>>>;
   optionsGroupedByOptionSize?: Maybe<Array<Maybe<OptionsGroupedByOptionSizeType>>>;
+  sort?: Maybe<Scalars['Int']>;
 };
 
 export type OptionsGroupedByOptionSizeType = {
