@@ -97,11 +97,13 @@ const FoodModalBody = ({ food, showModal, type }: IFoodModalBody) => {
         {food?.image && (
           <Image
             src={food?.image}
-            alt={food.name || undefined}
-            objectFit="cover"
+            alt={food.name as string}
             loading="eager"
             width={500}
             height={300}
+            style={{
+              objectFit: 'cover', // cover, contain, none
+            }}
           />
         )}
       </div>

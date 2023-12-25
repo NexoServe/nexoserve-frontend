@@ -56,7 +56,7 @@ const Navbar = () => {
             src={Logo}
             alt="Madisons Logo"
             style={{
-              scale: 0.5,
+              scale: 1,
               cursor: 'pointer',
             }}
           />

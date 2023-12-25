@@ -21,8 +21,8 @@ const ShoppingCartCheckout = () => {
   return (
     <>
       <div className={classes.shoppingCartCheckoutLinkBox}>
-        <Link href={'/'}>
-          <a className={classes.shoppingCartCheckoutLink}>Add Another Item</a>
+        <Link className={classes.shoppingCartCheckoutLink} href={'/'}>
+          Add Another Item
         </Link>
       </div>
 
