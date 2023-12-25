@@ -15,29 +15,27 @@ const Menu = ({ styleClass }: IMenu) => {
   return (
     <menu className={classNames(styles.menu, styleClass)}>
       <div className={styles.menuLinkWrapper}>
-        <Link href="/">
-          <a className={styles.menuLink}>Home</a>
+        <Link className={styles.menuLink} href="/">
+          Home
         </Link>
       </div>
       <div className={styles.menuLinkWrapper}>
-        <Link href="/gallery">
-          <a className={styles.menuLink}>Gallery</a>
+        <Link className={styles.menuLink} href="/gallery">
+          Gallery
         </Link>
       </div>
       <div>
-        <Link href="/order">
-          <a className={styles.menuLink}>
-            <Button
-              style={{
-                padding: base(1),
-                paddingLeft: base(2),
-                paddingRight: base(2),
-                fontSize: '16px',
-              }}
-            >
-              Order Online
-            </Button>
-          </a>
+        <Link className={styles.menuLink} href="/order">
+          <Button
+            style={{
+              padding: base(1),
+              paddingLeft: base(2),
+              paddingRight: base(2),
+              fontSize: '16px',
+            }}
+          >
+            Order Online
+          </Button>
         </Link>
       </div>
     </menu>

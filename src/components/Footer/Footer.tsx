@@ -15,14 +15,14 @@ const Footer = () => {
           <div className={styles.footerCard}>
             <h3 className={styles.footerTitle}>Naivgation</h3>
             <nav className={styles.footerNav}>
-              <Link href="/">
-                <a className={styles.footerNavLink}>Home</a>
+              <Link className={styles.footerNavLink} href="/">
+                Home
               </Link>
-              <Link href="/">
-                <a className={styles.footerNavLink}>Gallery</a>
+              <Link className={styles.footerNavLink} href="/">
+                Gallery
               </Link>
-              <Link href="/">
-                <a className={styles.footerNavLink}>Order Online</a>
+              <Link className={styles.footerNavLink} href="/">
+                Order Online
               </Link>
             </nav>
           </div>

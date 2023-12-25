@@ -12,9 +12,9 @@ const FoodCard = ({ food, activeFoodClick }: IFoodCard) => {
         {food?.image && (
           <Image
             src={food?.image}
-            layout="fill"
+            fill
             objectFit="cover"
-            alt={food?.name || undefined}
+            alt={food?.name as string}
             className={classes.foodCardImg}
           />
         )}
