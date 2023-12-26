@@ -33,8 +33,8 @@ const DeliveryErrorInfoModal = () => {
         <div className={classes.infoModalBodyMessage}>
           Delivery is not available online at this time. Please call the
           restaurant at{' '}
-          <a href={`tel:${restaurantDetails?.phone}`}>
-            {restaurantDetails?.phone}
+          <a href={`tel:${restaurantDetails?.phoneNumbers?.[0]?.number}`}>
+            {restaurantDetails?.phoneNumbers?.[0]?.number}
           </a>{' '}
           and place your order over the phone. NOTE: You can still place a pick
           up order.

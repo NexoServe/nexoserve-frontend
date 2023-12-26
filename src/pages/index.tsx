@@ -2,58 +2,64 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Lottie from 'react-lottie';
 
-import PizzaIcon from '../assets/pizza_icon.png';
-import SaladIcon from '../assets/salad_icon.png';
-import SubIcon from '../assets/sub_icon.png';
+import { RestaurantDetailsQuery } from '../../generated/graphql';
 import Button from '../components/Button/Button';
 import Container from '../components/Container/Container';
 import Footer from '../components/Footer/Footer';
 import Navbar from '../components/Navbar/Navbar';
 import SvgIcons from '../components/SvgIcons';
 import scrollLottie from '../lottie/scroll.json';
+import getRestaurantDetails from '../utils/getRestaurantDetails';
 
 import useStyles from './index/css';
 
-// const GET_RESTAURANT_DETAILS_QUERY = gql`
-//   query RestaurantDetails($restaurantId: String!) {
-//     restaurantDetails(restaurantId: $restaurantId) {
-//       name
-//       logo
-//     }
-//   }
-// `;
+export async function getStaticProps() {
+  const data = await getRestaurantDetails();
 
-// export async function getStaticProps() {
-//   const apolloClient = initializeApollo();
+  return {
+    props: {
+      ...data,
+    },
+  };
+}
 
-//   const { data } = await apolloClient.query({
-//     query: GET_RESTAURANT_DETAILS_QUERY,
-//     variables: {
-//       restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
-//     },
-//   });
-
-//   return {
-//     props: {
-//       restaurantDetails: data,
-//     },
-//     revalidate: 10, // Optionally, ISR (Incremental Static Regeneration) timeout in seconds
-//   };
-// }
-
-const Home = () => {
+const Home = (props: RestaurantDetailsQuery) => {
   const styles = useStyles();
   const router = useRouter();
 
   return (
     <>
-      <Navbar />
-      <div className={styles.homeHeroContainer}>
+      <Navbar
+        logo={props.restaurantDetails.logo}
+        restaurantName={props.restaurantDetails.name}
+      />
+      <div
+        className={styles.homeHeroContainer}
+        // style={{
+        //   backgroundImage: `url(${props.restaurantDetails.hero?.foreground}), url(${props.restaurantDetails.hero?.background})`,
+        // }}
+      >
+        <Image
+          alt="1"
+          src={props.restaurantDetails.hero?.background as string}
+          fill
+          objectFit="cover"
+        />
+        <Image
+          alt="1"
+          src={props.restaurantDetails.hero?.foreground as string}
+          fill
+          objectFit="cover"
+          style={{
+            objectPosition: '40%',
+          }}
+        />
         <div className={styles.homeHero}>
-          <h1 className={styles.homeHeroTitle}>Are you Hungry?</h1>
+          <h1 className={styles.homeHeroTitle}>
+            {props.restaurantDetails.hero?.title}
+          </h1>
           <div className={styles.homeHeroDescription}>
-            Order now on our official website for original prices with no extra
-            fees.
+            {props.restaurantDetails.hero?.description}
           </div>
           <div className={styles.homeHeroButtonContainer}>
             <Button
@@ -64,30 +70,38 @@ const Home = () => {
             </Button>
           </div>
           <div className={styles.homeHeroSocials}>
-            <a
-              className={styles.homeHeroSocial}
-              href="https://twitter.com/i/flow/login?redirect_after_login=%2FAlbanyMadisons"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <SvgIcons name="x" />
-            </a>
-            <a
-              href="https://www.facebook.com/AlbanyMadisonsPizza/"
-              target="_blank"
-              rel="noreferrer"
-              className={styles.homeHeroSocial}
-            >
-              <SvgIcons name="facebook" />
-            </a>
-            <a
-              href="https://www.instagram.com/albanymadisonspizza/"
-              target="_blank"
-              rel="noreferrer"
-              className={styles.homeHeroSocial}
-            >
-              <SvgIcons name="instagram" />
-            </a>
+            {props.restaurantDetails.socialMedia?.xTwitterUrl && (
+              <a
+                className={styles.homeHeroSocial}
+                href={props.restaurantDetails.socialMedia?.xTwitterUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <SvgIcons name="x" />
+              </a>
+            )}
+
+            {props.restaurantDetails.socialMedia?.facebookUrl && (
+              <a
+                href={props.restaurantDetails.socialMedia?.facebookUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={styles.homeHeroSocial}
+              >
+                <SvgIcons name="facebook" />
+              </a>
+            )}
+
+            {props.restaurantDetails.socialMedia?.instagramUrl && (
+              <a
+                href={props.restaurantDetails.socialMedia?.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={styles.homeHeroSocial}
+              >
+                <SvgIcons name="instagram" />
+              </a>
+            )}
           </div>
           <div className={styles.homeHeroScroll}>
             <Lottie
@@ -112,53 +126,21 @@ const Home = () => {
           }}
           className={styles.featuresWrapper}
         >
-          <div className={styles.featureWrapper}>
-            <Image
-              src={PizzaIcon}
-              loading="lazy"
-              alt="salad icon"
-              width={120}
-              height={120}
-            />
-            <h2 className={styles.featureTitle}>Gourmet Pizzas</h2>
-            <p className={styles.featureMessage}>
-              All of our pizza dough is made fresh daily. We import grain from
-              the Mediterranean to unify our prestige flavor and ensure a
-              satisfying taste.
-            </p>
-          </div>
-          <div className={styles.featureWrapper}>
-            <div className="vertical-line"></div>
-            <Image
-              src={SubIcon}
-              loading="lazy"
-              alt="leaf icon"
-              width={120}
-              height={120}
-            />
-            <h2 className={styles.featureTitle}>Delicious Subs</h2>
-            <p className={styles.featureMessage}>
-              Accompanied by your Choice of Trimmings: Lettuce, Tomatoes,
-              Onions, Black Olives, Pickles, Hot Peppers, Provolone or American
-              Cheese.
-            </p>
-          </div>
-          <div className={styles.featureWrapper}>
-            <div className="vertical-line"></div>
-            <Image
-              src={SaladIcon}
-              loading="lazy"
-              alt="truck icon"
-              className="feature-image"
-              width={120}
-              height={120}
-            />
-            <h2 className={styles.featureTitle}>Fresh Salads</h2>
-            <p className={styles.featureMessage}>
-              We use the freshest ingredients in our salads in order to serve
-              you the restaurant quality salads.
-            </p>
-          </div>
+          {props.restaurantDetails?.feature?.items?.map((featureItem) => (
+            <div key={featureItem?.id} className={styles.featureWrapper}>
+              <Image
+                src={featureItem?.image as string}
+                loading="lazy"
+                alt="salad icon"
+                width={120}
+                height={120}
+              />
+              <h2 className={styles.featureTitle}>{featureItem?.title}</h2>
+              <p className={styles.featureMessage}>
+                {featureItem?.description}
+              </p>
+            </div>
+          ))}
         </div>
       </Container>
 
@@ -166,13 +148,11 @@ const Home = () => {
         <Container>
           <div className={styles.aboutUsWrapper}>
             <div className={styles.aboutUsContent}>
-              <h2 className={styles.aboutUsTitle}>About Us</h2>
+              <h2 className={styles.aboutUsTitle}>
+                {props.restaurantDetails.aboutUs?.title}
+              </h2>
               <p className={styles.aboutUsMessage}>
-                We at LaBella Pizza & Pasta would like to thank you for your
-                support and patronage. We only use the best cheese and fresh
-                dough made on the premises daily. For our sauce, we use only the
-                freshest, whole plum tomatoes and the best spices available. We
-                work hard to meet your needs & your wants.
+                {props.restaurantDetails.aboutUs?.description}
               </p>
             </div>
 
@@ -185,7 +165,18 @@ const Home = () => {
                   transformStyle: 'preserve-3d',
                 }}
                 className={styles.largeImage1}
-              ></div>
+              >
+                <Image
+                  src={props.restaurantDetails.aboutUs?.imageOne as string}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                  }}
+                  alt="salad icon"
+                  width={500}
+                  height={500}
+                />
+              </div>
               <div
                 id="w-node-div-block-15-085088a6"
                 data-w-id="Div Block 15"
@@ -196,7 +187,19 @@ const Home = () => {
                   transformStyle: 'preserve-3d',
                 }}
                 className={styles.smallImage1}
-              ></div>
+              >
+                <Image
+                  src={props.restaurantDetails.aboutUs?.imageTwo as string}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'cover',
+                  }}
+                  alt="salad icon"
+                  width={500}
+                  height={500}
+                />
+              </div>
               <div
                 id="w-node-div-block-17-085088a6"
                 data-w-id="Div Block 17"
@@ -207,7 +210,19 @@ const Home = () => {
                   transformStyle: 'preserve-3d',
                 }}
                 className={styles.smallImage2}
-              ></div>
+              >
+                <Image
+                  src={props.restaurantDetails.aboutUs?.imageThree as string}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'cover',
+                  }}
+                  alt="salad icon"
+                  width={500}
+                  height={500}
+                />
+              </div>
               <div
                 data-w-id="Div Block 16"
                 style={{
@@ -217,12 +232,28 @@ const Home = () => {
                   transformStyle: 'preserve-3d',
                 }}
                 className={styles.largeImage2}
-              ></div>
+              >
+                <Image
+                  src={props.restaurantDetails.aboutUs?.imageFour as string}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'cover',
+                  }}
+                  alt="salad icon"
+                  width={500}
+                  height={500}
+                />
+              </div>
             </div>
           </div>
         </Container>
       </div>
-      <Footer />
+      <Footer
+        openingHours={props.restaurantDetails.openingHours}
+        phoneNumbers={props.restaurantDetails.phoneNumbers}
+        restaurantName={props.restaurantDetails.name}
+      />
     </>
   );
 };

@@ -74,6 +74,12 @@ const useStyles = createUseStyles({
     margin: `${base(2)} 0`,
   },
 
+  footerOpeningHourWeekDay: {
+    fontSize: '16px',
+    color: colors.white,
+    paddingRight: base(3),
+  },
+
   footerOpeningHourText: {
     fontSize: '16px',
     color: colors.white,
@@ -89,11 +95,20 @@ const useStyles = createUseStyles({
     display: 'flex',
     alignItems: 'center',
     padding: `${base(1)} 0`,
+    textDecoration: 'none',
+
+    '&:hover': {
+      color: colors.primary,
+    },
   },
 
   footerPhoneNumber: {
     color: colors.white,
     paddingLeft: base(0.5),
+
+    '&:hover': {
+      color: colors.primary,
+    },
   },
 
   footerCopyright: {

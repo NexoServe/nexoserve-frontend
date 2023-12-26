@@ -25,6 +25,7 @@ const useStyles = createUseStyles({
     display: 'flex',
     flexDirection: 'column',
     borderRadius: base(2),
+    overflowX: 'hidden',
   },
 
   foodModalLoader: {

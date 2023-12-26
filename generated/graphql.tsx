@@ -17,6 +17,17 @@ export type Scalars = {
   JSON: any;
 };
 
+export type AboutUsType = {
+  __typename?: 'AboutUsType';
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  imageFour?: Maybe<Scalars['String']>;
+  imageOne?: Maybe<Scalars['String']>;
+  imageThree?: Maybe<Scalars['String']>;
+  imageTwo?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
 export type AddOnSimple = {
   __typename?: 'AddOnSimple';
   id?: Maybe<Scalars['String']>;
@@ -132,6 +143,20 @@ export type ErrorType = {
   message?: Maybe<Scalars['String']>;
 };
 
+export type FeatureItemType = {
+  __typename?: 'FeatureItemType';
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+export type FeatureType = {
+  __typename?: 'FeatureType';
+  id?: Maybe<Scalars['String']>;
+  items?: Maybe<Array<Maybe<FeatureItemType>>>;
+};
+
 export type FoodSize = {
   __typename?: 'FoodSize';
   addOns?: Maybe<Array<Maybe<AddOnType>>>;
@@ -166,6 +191,21 @@ export type FoodsByCategoryType = {
   category: Scalars['String'];
   foods?: Maybe<Array<FoodWithSizesType>>;
   sort?: Maybe<Scalars['Int']>;
+};
+
+export type HeroType = {
+  __typename?: 'HeroType';
+  background?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  foreground?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+export type ImageType = {
+  __typename?: 'ImageType';
+  id?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
 };
 
 export type Location = {
@@ -390,6 +430,12 @@ export type OrderWithOrderItemWithGroupedOptionsType = {
   total: Scalars['Float'];
 };
 
+export type PhoneNumberType = {
+  __typename?: 'PhoneNumberType';
+  id?: Maybe<Scalars['String']>;
+  number?: Maybe<Scalars['String']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   addOns: Array<Maybe<AddOnType>>;
@@ -436,8 +482,15 @@ export type QueryValidateShoppingCartArgs = {
 
 export type RestaurantDetailsOutput = {
   __typename?: 'RestaurantDetailsOutput';
+  aboutUs?: Maybe<AboutUsType>;
+  feature?: Maybe<FeatureType>;
+  gallery?: Maybe<Array<Maybe<ImageType>>>;
+  hero?: Maybe<HeroType>;
   logo: Scalars['String'];
   name: Scalars['String'];
+  openingHours: Array<DayOutput>;
+  phoneNumbers: Array<PhoneNumberType>;
+  socialMedia?: Maybe<SocialMediaType>;
 };
 
 export type RestaurantOutput = {
@@ -457,7 +510,7 @@ export type RestaurantType = {
   menu: Array<FoodsByCategoryType>;
   name: Scalars['String'];
   openStatusMessage: Scalars['String'];
-  phone: Scalars['String'];
+  phoneNumbers: Array<PhoneNumberType>;
   pickUpOffset: Scalars['Int'];
   pickUpOpeningHours: Array<DayOutput>;
   printerMacAddress: Scalars['String'];
@@ -490,6 +543,14 @@ export type SimpleFoodSize = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   price?: Maybe<Scalars['Float']>;
+};
+
+export type SocialMediaType = {
+  __typename?: 'SocialMediaType';
+  facebookUrl?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  instagramUrl?: Maybe<Scalars['String']>;
+  xTwitterUrl?: Maybe<Scalars['String']>;
 };
 
 export type Subscription = {
@@ -551,14 +612,21 @@ export type RestaurantQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'RestaurantOutput', restaurantDetails: { __typename?: 'RestaurantType', id: string, printerMacAddress: string, phone: string, name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, deliveryFee: number, timezone: string, openStatusMessage: string, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategoryType', category: string, sort?: number | null, foods?: Array<{ __typename?: 'FoodWithSizesType', id: string, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, pickUpOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }>, deliveryOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNowPickUp: boolean, isOpenNowDelivery: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
+export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'RestaurantOutput', restaurantDetails: { __typename?: 'RestaurantType', id: string, printerMacAddress: string, name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, deliveryFee: number, timezone: string, openStatusMessage: string, phoneNumbers: Array<{ __typename?: 'PhoneNumberType', id?: string | null, number?: string | null }>, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategoryType', category: string, sort?: number | null, foods?: Array<{ __typename?: 'FoodWithSizesType', id: string, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, pickUpOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }>, deliveryOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNowPickUp: boolean, isOpenNowDelivery: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
+
+export type RestaurantDetailsQueryVariables = Exact<{
+  restaurantId: Scalars['String'];
+}>;
+
+
+export type RestaurantDetailsQuery = { __typename?: 'Query', restaurantDetails: { __typename?: 'RestaurantDetailsOutput', name: string, logo: string, gallery?: Array<{ __typename?: 'ImageType', id?: string | null, url?: string | null } | null> | null, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }>, phoneNumbers: Array<{ __typename?: 'PhoneNumberType', id?: string | null, number?: string | null }>, socialMedia?: { __typename?: 'SocialMediaType', id?: string | null, xTwitterUrl?: string | null, facebookUrl?: string | null, instagramUrl?: string | null } | null, hero?: { __typename?: 'HeroType', id?: string | null, title?: string | null, description?: string | null, background?: string | null, foreground?: string | null } | null, feature?: { __typename?: 'FeatureType', id?: string | null, items?: Array<{ __typename?: 'FeatureItemType', id?: string | null, image?: string | null, title?: string | null, description?: string | null } | null> | null } | null, aboutUs?: { __typename?: 'AboutUsType', id?: string | null, title?: string | null, description?: string | null, imageOne?: string | null, imageTwo?: string | null, imageThree?: string | null, imageFour?: string | null } | null } };
 
 export type ValidateOrderDetailsQueryVariables = Exact<{
   input: OrderDetailsInput;
 }>;
 
 
-export type ValidateOrderDetailsQuery = { __typename?: 'Query', validateOrderDetails: { __typename?: 'ValidateOrderDetailsOutput', restaurantDetails: { __typename?: 'RestaurantType', id: string, printerMacAddress: string, phone: string, name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, deliveryFee: number, timezone: string, openStatusMessage: string, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategoryType', category: string, sort?: number | null, foods?: Array<{ __typename?: 'FoodWithSizesType', id: string, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, pickUpOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }>, deliveryOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNowPickUp: boolean, isOpenNowDelivery: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
+export type ValidateOrderDetailsQuery = { __typename?: 'Query', validateOrderDetails: { __typename?: 'ValidateOrderDetailsOutput', restaurantDetails: { __typename?: 'RestaurantType', id: string, printerMacAddress: string, name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, deliveryFee: number, timezone: string, openStatusMessage: string, phoneNumbers: Array<{ __typename?: 'PhoneNumberType', id?: string | null, number?: string | null }>, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategoryType', category: string, sort?: number | null, foods?: Array<{ __typename?: 'FoodWithSizesType', id: string, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, pickUpOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }>, deliveryOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNowPickUp: boolean, isOpenNowDelivery: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
 
 export type ValidateShoppingCartQueryVariables = Exact<{
   order: CreateOrderInput;
@@ -783,7 +851,10 @@ export const RestaurantDocument = gql`
     restaurantDetails {
       id
       printerMacAddress
-      phone
+      phoneNumbers {
+        id
+        number
+      }
       name
       address
       location {
@@ -867,13 +938,98 @@ export function useRestaurantLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type RestaurantQueryHookResult = ReturnType<typeof useRestaurantQuery>;
 export type RestaurantLazyQueryHookResult = ReturnType<typeof useRestaurantLazyQuery>;
 export type RestaurantQueryResult = Apollo.QueryResult<RestaurantQuery, RestaurantQueryVariables>;
+export const RestaurantDetailsDocument = gql`
+    query RestaurantDetails($restaurantId: String!) {
+  restaurantDetails(restaurantId: $restaurantId) {
+    name
+    logo
+    gallery {
+      id
+      url
+    }
+    openingHours {
+      dayOfWeek
+      time {
+        opens_at
+        closes_at
+      }
+    }
+    phoneNumbers {
+      id
+      number
+    }
+    socialMedia {
+      id
+      xTwitterUrl
+      facebookUrl
+      instagramUrl
+    }
+    hero {
+      id
+      title
+      description
+      background
+      foreground
+    }
+    feature {
+      id
+      items {
+        id
+        image
+        title
+        description
+      }
+    }
+    aboutUs {
+      id
+      title
+      description
+      imageOne
+      imageTwo
+      imageThree
+      imageFour
+    }
+  }
+}
+    `;
+
+/**
+ * __useRestaurantDetailsQuery__
+ *
+ * To run a query within a React component, call `useRestaurantDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRestaurantDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRestaurantDetailsQuery({
+ *   variables: {
+ *      restaurantId: // value for 'restaurantId'
+ *   },
+ * });
+ */
+export function useRestaurantDetailsQuery(baseOptions: Apollo.QueryHookOptions<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>(RestaurantDetailsDocument, options);
+      }
+export function useRestaurantDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>(RestaurantDetailsDocument, options);
+        }
+export type RestaurantDetailsQueryHookResult = ReturnType<typeof useRestaurantDetailsQuery>;
+export type RestaurantDetailsLazyQueryHookResult = ReturnType<typeof useRestaurantDetailsLazyQuery>;
+export type RestaurantDetailsQueryResult = Apollo.QueryResult<RestaurantDetailsQuery, RestaurantDetailsQueryVariables>;
 export const ValidateOrderDetailsDocument = gql`
     query ValidateOrderDetails($input: OrderDetailsInput!) {
   validateOrderDetails(input: $input) {
     restaurantDetails {
       id
       printerMacAddress
-      phone
+      phoneNumbers {
+        id
+        number
+      }
       name
       address
       location {

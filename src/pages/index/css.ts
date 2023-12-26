@@ -8,13 +8,10 @@ const useStyles = createUseStyles({
   homeHeroContainer: {
     width: '100%',
     height: `calc(100vh - ${base(6)} - 1px)`,
-    backgroundImage: `linear-gradient(180deg, hsla(0, 0%, 100%, 0.9), hsla(0, 0%, 100%, 0.7)), url("https://us-east-menu-images.s3.amazonaws.com/igli_7_put_pizza_on_the_right_4dc04a34-8daf-4f76-85c0-0c904cfe5fbd+(2)+(1).png")`,
     backgroundPosition: '0% 0%, 40% 0%',
     overflowX: 'hidden',
 
     [queries.s]: {
-      backgroundImage:
-        'url("https://uploads-ssl.webflow.com/6020f345c078342ed95088a5/60214c3425b362b4335946c3_waves-hero.svg"), url("https://us-east-menu-images.s3.amazonaws.com/igli_7_put_pizza_on_the_right_4dc04a34-8daf-4f76-85c0-0c904cfe5fbd+(2)+(1).png")',
       backgroundPosition: '40% 50%, 50% 0%',
       backgroundSize: 'cover, cover',
       backgroundRepeat: 'no-repeat, no-repeat',
@@ -301,6 +298,17 @@ const useStyles = createUseStyles({
     },
   },
 
+  largeImage1: {
+    borderRadius: '8px',
+    // backgroundImage:
+    //   'url(https://us-east-menu-images.s3.amazonaws.com/labella_large.png)',
+    backgroundPosition: '50% 50%',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    height: '100%',
+    overflow: 'hidden',
+  },
+
   smallImage1: {
     width: '100%',
     height: '244px',
@@ -314,18 +322,22 @@ const useStyles = createUseStyles({
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     alignSelf: 'end',
+    overflow: 'hidden',
 
     [queries.xl]: {
       height: '180px',
     },
   },
-  largeImage1: {
+
+  largeImage2: {
     borderRadius: '8px',
     backgroundImage:
-      'url(https://us-east-menu-images.s3.amazonaws.com/labella_large.png)',
+      'url(https://us-east-menu-images.s3.amazonaws.com/labella_large-2.jpeg)',
     backgroundPosition: '50% 50%',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
+    height: '100%',
+    overflow: 'hidden',
   },
 
   smallImage2: {
@@ -339,18 +351,11 @@ const useStyles = createUseStyles({
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     justifySelf: 'end',
+    overflow: 'hidden',
 
     [queries.xl]: {
       height: '180px',
     },
-  },
-  largeImage2: {
-    borderRadius: '8px',
-    backgroundImage:
-      'url(https://us-east-menu-images.s3.amazonaws.com/labella_large-2.jpeg)',
-    backgroundPosition: '50% 50%',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
   },
 });
 

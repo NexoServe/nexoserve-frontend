@@ -1,17 +1,28 @@
-import { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Lottie from 'react-lottie';
 
+import { RestaurantDetailsQuery } from '../../../generated/graphql';
 import Button from '../../components/Button/Button';
 import Container from '../../components/Container/Container';
 import Footer from '../../components/Footer/Footer';
 import Navbar from '../../components/Navbar/Navbar';
 import * as paymentSuccess from '../../lottie/success.json';
+import getRestaurantDetails from '../../utils/getRestaurantDetails';
 
 import useStyles from './css';
 
-const Order: NextPage = () => {
+export async function getStaticProps() {
+  const data = await getRestaurantDetails();
+
+  return {
+    props: {
+      ...data,
+    },
+  };
+}
+
+const Order = (props: RestaurantDetailsQuery) => {
   const styles = useStyles();
   const router = useRouter();
 
@@ -27,7 +38,10 @@ const Order: NextPage = () => {
       </Head>
 
       <main>
-        <Navbar />
+        <Navbar
+          logo={props.restaurantDetails.logo}
+          restaurantName={props.restaurantDetails.name}
+        />
         <Container>
           <div className={styles.confirmation}>
             <Lottie
@@ -55,7 +69,11 @@ const Order: NextPage = () => {
           </div>
         </Container>
       </main>
-      <Footer />
+      <Footer
+        openingHours={props.restaurantDetails.openingHours}
+        phoneNumbers={props.restaurantDetails.phoneNumbers}
+        restaurantName={props.restaurantDetails.name}
+      />
     </>
   );
 };

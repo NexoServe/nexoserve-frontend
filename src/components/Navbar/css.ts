@@ -12,6 +12,20 @@ const useStyles = createUseStyles({
     zIndex: zIndex.header,
   },
 
+  navbarLogo: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
+    paddingTop: base(1.5),
+    paddingBottom: base(1.5),
+
+    [queries.l]: {
+      paddingTop: base(2),
+      paddingBottom: base(2),
+    },
+  },
+
   navbarContainer: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -35,18 +49,6 @@ const useStyles = createUseStyles({
     alignItems: 'center',
     padding: '0.25rem',
     marginRight: '1rem',
-  },
-
-  navbarLogo: {
-    height: base(4),
-    width: base(8),
-    maxWidth: base(8),
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '22px',
-    fontWeight: '700',
-    borderRadius: base(1),
   },
 
   navbarHamburger: {

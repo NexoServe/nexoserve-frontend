@@ -6,18 +6,17 @@ import Hamburger from 'hamburger-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { base } from '../../../css/base';
 import breakpoints from '../../../css/breakpoints';
 import colors from '../../../css/colors';
-import Logo from '../../assets/labella.svg';
 import Container from '../Container/Container';
 import Divider from '../Divider/Divider';
 import Menu from '../Menu/Menu';
 import { ModalPopUp } from '../Modal/Modal';
 
 import useStyles from './css';
+import { INavbar } from './types';
 
-const Navbar = () => {
+const Navbar = ({ logo, restaurantName }: INavbar) => {
   const classes = useStyles();
   const [showMenu, setShowMenu] = useState(false);
 
@@ -40,27 +39,19 @@ const Navbar = () => {
   return (
     <nav className={classes.navbar}>
       <Container styleClass={classes.navbarContainer}>
-        <Link
-          href="/"
-          style={{
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            paddingTop: base(1),
-            paddingBottom: base(1),
-            cursor: 'pointer',
-          }}
-        >
+        <Link href="/" className={classes.navbarLogo}>
           <Image
-            className={classes.navbarLogo}
-            src={Logo}
-            alt="Madisons Logo"
+            src={logo}
+            alt={restaurantName}
+            width={100}
+            height={40}
             style={{
-              scale: 1,
-              cursor: 'pointer',
+              height: '100%',
+              width: 'auto',
             }}
           />
         </Link>
+
         <div className={classes.navbarHamburger}>
           <Hamburger
             direction="right"
