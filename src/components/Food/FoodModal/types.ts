@@ -6,6 +6,7 @@ export interface IFoodModal {
   setShowModal: (value: React.SetStateAction<boolean>) => void;
   type: 'create' | 'update';
   orderItemId?: string;
+  customInstructionsText?: string;
 }
 
 export type FoodType = NonNullable<FoodByIdQuery>['foodById'];

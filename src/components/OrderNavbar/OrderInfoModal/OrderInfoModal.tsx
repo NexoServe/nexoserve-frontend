@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { DateTime } from 'luxon';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { base } from '../../../../css/base';
 import {
   InfoModalIsPickUpAtom,
   OrderDetailsAtom,
@@ -46,9 +47,18 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
               {restaurantDetails?.name}
             </div>
             <div className={classes.orderInfoModalContentPhone}>
-              <a href={`tel:${restaurantDetails?.phone}`}>
-                {restaurantDetails?.phone}
-              </a>
+              {restaurantDetails?.phoneNumbers?.map((phone, i) => (
+                <a
+                  style={{
+                    paddingTop: base(0.5),
+                    paddingBottom: base(0.5),
+                  }}
+                  key={phone.id}
+                  href={`tel:${phone.number}`}
+                >
+                  {phone.number}
+                </a>
+              ))}
             </div>
           </div>
           <div>

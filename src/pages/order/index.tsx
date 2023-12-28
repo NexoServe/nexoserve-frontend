@@ -1,6 +1,6 @@
-import { NextPage } from 'next';
 import Head from 'next/head';
 
+import { RestaurantDetailsQuery } from '../../../generated/graphql';
 import Container from '../../components/Container/Container';
 import FoodList from '../../components/Food/FoodList/FoodList';
 import Footer from '../../components/Footer/Footer';
@@ -10,10 +10,21 @@ import PageContainer from '../../components/PageContainer/PageContainer';
 import ShoppingCart from '../../components/ShoppingCart/ShoppingCart/ShoppingCart';
 import ShoppingCartButton from '../../components/ShoppingCart/ShoppingCartButton/ShoppingCartButton';
 import ShoppingCartModal from '../../components/ShoppingCart/ShoppingCartModal/ShoppingCartModal';
+import getRestaurantDetails from '../../utils/getRestaurantDetails';
 
 import useStyles from './css';
 
-const Order: NextPage = () => {
+export async function getServerSideProps() {
+  const data = await getRestaurantDetails();
+
+  return {
+    props: {
+      ...data,
+    },
+  };
+}
+
+const Order = (props: RestaurantDetailsQuery) => {
   const classes = useStyles();
 
   return (
@@ -34,7 +45,10 @@ const Order: NextPage = () => {
           </Head>
 
           <main>
-            <Navbar />
+            <Navbar
+              logo={props.restaurantDetails.logo}
+              restaurantName={props.restaurantDetails.name}
+            />
             <OrderNavbar />
             <Container>
               <div className={classes.indexConatiner}>
@@ -47,7 +61,11 @@ const Order: NextPage = () => {
           </main>
         </PageContainer>
       </div>
-      <Footer />
+      <Footer
+        openingHours={props.restaurantDetails.openingHours}
+        phoneNumbers={props.restaurantDetails.phoneNumbers}
+        restaurantName={props.restaurantDetails.name}
+      />
     </>
   );
 };

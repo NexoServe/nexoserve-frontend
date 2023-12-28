@@ -37,6 +37,8 @@ const useStyles = createUseStyles({
     color: colors.black,
     opacity: 1,
     textDecoration: 'underline',
+    display: 'flex',
+    flexDirection: 'column',
   },
 
   orderInfoModalContentAddress: {

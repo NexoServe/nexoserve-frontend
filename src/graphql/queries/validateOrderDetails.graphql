@@ -3,7 +3,10 @@ query ValidateOrderDetails($input: OrderDetailsInput!) {
     restaurantDetails {
       id
       printerMacAddress
-      phone
+      phoneNumbers {
+        id
+        number
+      }
       name
       address
       location {

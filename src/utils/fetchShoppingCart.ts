@@ -42,7 +42,12 @@ const fetchShoppingCart = ({
   const validItems = shoppingCartItemsParsed?.filter((item) => {
     if (typeof item === 'object' && !Array.isArray(item)) {
       // TODO: Find a better way to validate this
-      const requiredProperties = ['orderItemId', 'food', 'quantity'];
+      const requiredProperties = [
+        'orderItemId',
+        'food',
+        'quantity',
+        'customInstructions',
+      ];
       if (!requiredProperties.every((prop) => item.hasOwnProperty(prop))) {
         return false;
       }

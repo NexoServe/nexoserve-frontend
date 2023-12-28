@@ -43,6 +43,7 @@ const getShoppingCartInput = (): OrderItemInput[] => {
         id: item?.orderItemId as string,
         foodId: item?.food?.id as string,
         foodSizeId: item?.selectedSize?.id,
+        customInstructions: item?.customInstructions,
         options: item?.selectedOptions?.map((selectedOption) => {
           const option: OptionWithSizeInput = {
             id: selectedOption?.id as string,

@@ -66,6 +66,9 @@ const ShoppingCartItemList = ({ isCheckout }: IShoppingCartItemList) => {
           foodId={activeShoppingCartItem?.food?.id as string}
           type="update"
           orderItemId={activeShoppingCartItem?.orderItemId}
+          customInstructionsText={
+            activeShoppingCartItem?.customInstructions as string
+          }
         />
       )}
     </div>
