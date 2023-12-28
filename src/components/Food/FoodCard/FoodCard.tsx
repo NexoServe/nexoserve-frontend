@@ -13,6 +13,7 @@ const FoodCard = ({ food, activeFoodClick }: IFoodCard) => {
           <Image
             src={food?.image}
             objectFit="cover"
+            fill
             alt={food?.name as string}
             className={classes.foodCardImg}
           />

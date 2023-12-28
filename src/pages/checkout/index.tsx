@@ -16,7 +16,7 @@ import getRestaurantDetails from '../../utils/getRestaurantDetails';
 
 import useStyles from './css';
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const data = await getRestaurantDetails();
 
   return {

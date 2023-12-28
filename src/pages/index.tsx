@@ -41,6 +41,7 @@ const Home = (props: RestaurantDetailsQuery) => {
       >
         <Image
           alt="1"
+          fill
           src={props.restaurantDetails.hero?.background as string}
           objectFit="cover"
         />
@@ -48,6 +49,7 @@ const Home = (props: RestaurantDetailsQuery) => {
           alt="1"
           src={props.restaurantDetails.hero?.foreground as string}
           objectFit="cover"
+          fill
           style={{
             objectPosition: '40%',
           }}
