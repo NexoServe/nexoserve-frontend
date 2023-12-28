@@ -14,7 +14,7 @@ import getRestaurantDetails from '../../utils/getRestaurantDetails';
 
 import useStyles from './css';
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const data = await getRestaurantDetails();
 
   return {
@@ -26,8 +26,6 @@ export async function getStaticProps() {
 
 const Order = (props: RestaurantDetailsQuery) => {
   const classes = useStyles();
-
-  console.log('props', props);
 
   return (
     <>
