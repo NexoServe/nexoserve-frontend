@@ -27,6 +27,8 @@ export async function getStaticProps() {
 const Order = (props: RestaurantDetailsQuery) => {
   const classes = useStyles();
 
+  console.log('props', props);
+
   return (
     <>
       <div
