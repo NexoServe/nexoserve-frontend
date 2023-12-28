@@ -33,12 +33,7 @@ const Home = (props: RestaurantDetailsQuery) => {
         logo={props.restaurantDetails.logo}
         restaurantName={props.restaurantDetails.name}
       />
-      <div
-        className={styles.homeHeroContainer}
-        // style={{
-        //   backgroundImage: `url(${props.restaurantDetails.hero?.foreground}), url(${props.restaurantDetails.hero?.background})`,
-        // }}
-      >
+      <div className={styles.homeHeroContainer}>
         <Image
           alt="1"
           fill
