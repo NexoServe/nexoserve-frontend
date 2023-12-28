@@ -17,6 +17,7 @@ query Restaurant($input: OrderDetailsInput!) {
       pickUpOffset
       deliveryOffset
       deliveryFee
+      deliveryMinimum
       menu {
         category
         sort

@@ -496,7 +496,7 @@ const OrderNavBarModal = ({
         {deliveryIsClosedForTheDay && (
           <div>
             <div className={classes.orderNavbarModalError}>
-              {`We're`} sorry delivery is closed for the day. You can still
+              Delivery is currently closed. Pick up is available. You can still
               place a pick up order or place a delivery order in advanced.
             </div>
 
