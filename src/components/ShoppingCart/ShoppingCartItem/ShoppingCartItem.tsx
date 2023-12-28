@@ -5,6 +5,7 @@ import { base } from '../../../../css/base';
 import { Maybe, OptionWithSizeType } from '../../../../generated/graphql';
 import {
   FoodModalAtom,
+  FoodModalCustomInstructionsAtom,
   FoodModalSelectedOptionsAtom,
   FoodModalSelectedSizeAtom,
 } from '../../../state/FoodModalState';
@@ -31,6 +32,9 @@ const ShoppingCartItem = ({
   const [, setFoodModalSelectedOptions] = useRecoilState(
     FoodModalSelectedOptionsAtom,
   );
+  const [, setCustomInstructions] = useRecoilState(
+    FoodModalCustomInstructionsAtom,
+  );
   const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
   const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
     ShoppingCartTotalAtom,
@@ -56,6 +60,8 @@ const ShoppingCartItem = ({
         optionSize: option?.optionSize,
       })) || [],
     );
+
+    setCustomInstructions(shoppingCartItem?.customInstructions as string);
   };
 
   const removeShoppingCartItem = () => {
@@ -171,6 +177,10 @@ const ShoppingCartItem = ({
                       ))}
                     </div>
                   ))}
+
+                {shoppingCartItem.customInstructions && (
+                  <div>{shoppingCartItem.customInstructions}</div>
+                )}
               </div>
               <div className={classes.shoppingCartItemDeleteButton}>
                 <button

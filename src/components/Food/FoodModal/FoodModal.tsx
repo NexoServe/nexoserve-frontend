@@ -8,6 +8,7 @@ import {
   FoodModalAddOnRequiredAtom,
   FoodModalAddOnsAtom,
   FoodModalAtom,
+  FoodModalCustomInstructionsAtom,
   FoodModalPriceAtom,
   FoodModalSelectedOptionsAtom,
 } from '../../../state/FoodModalState';
@@ -31,6 +32,7 @@ const FoodModal = ({
   setShowModal,
   type,
   orderItemId,
+  customInstructionsText,
 }: IFoodModal) => {
   const [getFoodById, { data, loading, error }] = useFoodByIdLazyQuery({
     variables: {
@@ -83,9 +85,15 @@ const FoodModal = ({
   const [selectedOptions, setSelectedOptions] = useRecoilState(
     FoodModalSelectedOptionsAtom,
   );
-
   const [foodModalPrice, setFoodModalPrice] =
     useRecoilState(FoodModalPriceAtom);
+  const [customInstructions, setCustomInstructions] = useRecoilState(
+    FoodModalCustomInstructionsAtom,
+  );
+
+  useEffect(() => {
+    customInstructionsText && setCustomInstructions(customInstructionsText);
+  }, [customInstructionsText]);
 
   const onClose = () => {
     setShowModal(false);
@@ -98,6 +106,7 @@ const FoodModal = ({
     setRequiredAddOn(undefined);
     setFoodModalPrice(0);
     setSelectedOptions([]);
+    setCustomInstructions('');
     document.body.style.overflow = 'unset';
   };
 
@@ -148,6 +157,7 @@ const FoodModal = ({
           food: foodModal.food,
           quantity: foodModal.quantity,
           selectedSize: foodModal.selectedSize,
+          customInstructions: customInstructions,
           selectedOptions: selectedOptions.map((option) => ({
             id: option.id,
             name: option.name,
@@ -179,6 +189,7 @@ const FoodModal = ({
           price: foodModal.food?.price as number,
         },
         quantity: foodModal.quantity,
+        customInstructions: customInstructions,
         selectedSize: {
           id: foodModal.selectedSize?.id as string,
           name: foodModal.selectedSize?.name as string,
@@ -236,6 +247,7 @@ const FoodModal = ({
               },
               quantity: foodModal.quantity,
               selectedSize: foodModal.selectedSize,
+              customInstructions: customInstructions,
               selectedOptions: selectedOptions.map((option) => ({
                 id: option.id as string,
                 name: option.name as string,

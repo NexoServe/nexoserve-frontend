@@ -23,11 +23,6 @@ export async function getStaticProps() {
 const Gallery = (props: RestaurantDetailsQuery) => {
   const styles = useStyles();
 
-  console.log(
-    'props.restaurantDetails.gallery',
-    props.restaurantDetails.gallery,
-  );
-
   return (
     <>
       <Head>

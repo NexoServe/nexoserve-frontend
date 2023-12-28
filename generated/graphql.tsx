@@ -332,6 +332,7 @@ export type OrderDetailsType = {
 };
 
 export type OrderItemInput = {
+  customInstructions?: InputMaybe<Scalars['String']>;
   foodId: Scalars['String'];
   foodSizeId?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
@@ -351,6 +352,7 @@ export type OrderItemOutput = {
 
 export type OrderItemType = {
   __typename?: 'OrderItemType';
+  customInstructions?: Maybe<Scalars['String']>;
   food: FoodWithSizesType;
   foodSize?: Maybe<FoodSize>;
   id: Scalars['String'];
@@ -361,6 +363,7 @@ export type OrderItemType = {
 
 export type OrderItemWithGroupedOptionsType = {
   __typename?: 'OrderItemWithGroupedOptionsType';
+  customInstructions?: Maybe<Scalars['String']>;
   food: FoodWithSizesType;
   foodSize?: Maybe<FoodSize>;
   id: Scalars['String'];
@@ -530,6 +533,7 @@ export type ShoppingCart = {
 
 export type ShoppingCartItemType = {
   __typename?: 'ShoppingCartItemType';
+  customInstructions?: Maybe<Scalars['String']>;
   food?: Maybe<FoodWithSizesType>;
   orderItemId: Scalars['String'];
   price: Scalars['Float'];
@@ -633,7 +637,7 @@ export type ValidateShoppingCartQueryVariables = Exact<{
 }>;
 
 
-export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', subTotal: number, tax?: number | null, deliveryFee?: number | null, tip?: number | null, grandTotal?: number | null, orderItems: Array<{ __typename?: 'OrderItemType', id: string, total: number, quantity: number, food: { __typename?: 'FoodWithSizesType', id: string, name?: string | null, price?: number | null }, foodSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, options?: Array<{ __typename?: 'OptionWithSizeType', id: string, name: string, price?: number | null, addOnName: string, optionSize?: { __typename?: 'OptionSizeType', id: string, name: string, price: number } | null } | null> | null } | null> } };
+export type ValidateShoppingCartQuery = { __typename?: 'Query', validateShoppingCart: { __typename?: 'ShoppingCart', subTotal: number, tax?: number | null, deliveryFee?: number | null, tip?: number | null, grandTotal?: number | null, orderItems: Array<{ __typename?: 'OrderItemType', id: string, total: number, quantity: number, customInstructions?: string | null, food: { __typename?: 'FoodWithSizesType', id: string, name?: string | null, price?: number | null }, foodSize?: { __typename?: 'FoodSize', id?: string | null, name?: string | null, price?: number | null } | null, options?: Array<{ __typename?: 'OptionWithSizeType', id: string, name: string, price?: number | null, addOnName: string, optionSize?: { __typename?: 'OptionSizeType', id: string, name: string, price: number } | null } | null> | null } | null> } };
 
 export const AddOnFieldsFragmentDoc = gql`
     fragment AddOnFields on AddOnType {
@@ -1146,6 +1150,7 @@ export const ValidateShoppingCartDocument = gql`
       }
       total
       quantity
+      customInstructions
     }
   }
 }

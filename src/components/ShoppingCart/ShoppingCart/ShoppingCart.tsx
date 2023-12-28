@@ -77,6 +77,7 @@ const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
           food: shoppingCartItem?.food,
           orderItemId: shoppingCartItem?.id as string,
           quantity: shoppingCartItem?.quantity as number,
+          customInstructions: shoppingCartItem?.customInstructions,
           selectedOptions: shoppingCartItem?.options,
           selectedSize: shoppingCartItem?.foodSize,
           price: shoppingCartItem?.total as number,

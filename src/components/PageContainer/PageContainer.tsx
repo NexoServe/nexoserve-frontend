@@ -45,7 +45,7 @@ const PageContainer = ({ children }: IPageContainer) => {
   const orderIsPickUpStorage = localStorage.getItem('isPickUp');
   const orderDeliveryAddressStorage = localStorage.getItem('deliveryAddress');
   const orderDeliveryAddressAdditionalInfoStorage = localStorage.getItem(
-    'deliveryAddiotionalInfo',
+    'deliveryAdditionalInfo',
   );
   const orderDeliveryDetails = localStorage.getItem('deliveryDetails');
 
@@ -191,7 +191,7 @@ const PageContainer = ({ children }: IPageContainer) => {
         }
       } else {
         localStorage.removeItem('deliveryAddress');
-        localStorage.removeItem('deliveryAddiotionalInfo');
+        localStorage.removeItem('deliveryAdditionalInfo');
         localStorage.removeItem('deliveryDetails');
       }
     }

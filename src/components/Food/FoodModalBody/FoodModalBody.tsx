@@ -13,6 +13,7 @@ import {
 } from '../../../state/FoodModalState';
 import FoodAddOn from '../FoodAddOn/FoodAddOn';
 import FoodModalContentHeader from '../FoodModalContentHeader/FoodModalContentHeader';
+import FoodModalCustomInstructions from '../FoodModalCustomInstructions/FoodModalCustomInstructions';
 import FoodModalFooter from '../FoodModalFooter/FoodModalFooter';
 import FoodModalHeader from '../FoodModalHeader/FoodModalHeader';
 import FoodSize from '../FoodSize/FoodSize';
@@ -137,6 +138,7 @@ const FoodModalBody = ({ food, showModal, type }: IFoodModalBody) => {
               />
             </div>
           ))}
+        <FoodModalCustomInstructions />
       </div>
 
       <FoodModalFooter type={type} />
