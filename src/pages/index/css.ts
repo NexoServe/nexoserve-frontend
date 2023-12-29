@@ -1,10 +1,10 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../css/base';
-import colors from '../../../css/colors';
 import queries from '../../../css/queries';
+import { ThemeType } from '../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   homeHeroContainer: {
     width: '100%',
     height: `calc(100vh - ${base(6)} - 1px)`,
@@ -52,6 +52,7 @@ const useStyles = createUseStyles({
     textAlign: 'center',
     fontSize: '36px',
     lineHeight: '38px',
+    color: theme.primary,
 
     [queries.s]: {
       textAlign: 'left',
@@ -80,6 +81,7 @@ const useStyles = createUseStyles({
     lineHeight: '18px',
     maxWidth: base(50),
     textAlign: 'center',
+    color: theme.primary,
 
     [queries.s]: {
       textAlign: 'left',
@@ -104,6 +106,7 @@ const useStyles = createUseStyles({
     padding: `${base(1)} ${base(2)}`,
     maxWidth: base(30),
     marginTop: base(2),
+    backgroundColor: theme.accent,
   },
 
   homeHeroSocials: {
@@ -139,7 +142,9 @@ const useStyles = createUseStyles({
     },
   },
 
-  features: {},
+  features: {
+    backgroundColor: theme.neutral,
+  },
 
   featuresWrapper: {
     display: 'flex',
@@ -149,8 +154,8 @@ const useStyles = createUseStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderRadius: '8px',
-    backgroundColor: colors.white,
-    boxShadow: '0 40px 50px -20px rgba(176, 179, 206, 0.3)',
+    backgroundColor: theme.neutral,
+    boxShadow: `0 40px 50px -20px ${theme.primary}30`,
 
     [queries.l]: {
       display: 'grid',
@@ -165,7 +170,7 @@ const useStyles = createUseStyles({
     flexDirection: 'column',
     alignItems: 'center',
     borderRadius: ' 8px',
-    backgroundColor: colors.white,
+    backgroundColor: theme.neutral,
     minHeight: '100%',
 
     [queries.l]: {
@@ -184,6 +189,7 @@ const useStyles = createUseStyles({
     marginTop: base(2),
     marginBottom: base(0),
     textAlign: 'center',
+    color: theme.primary,
 
     [queries.xl]: {
       fontSize: '16px',
@@ -197,6 +203,7 @@ const useStyles = createUseStyles({
     fontWeight: '400',
     textAlign: 'center',
     marginBottom: base(0),
+    color: theme.primary,
 
     [queries.xl]: {
       fontSize: '16px',
@@ -204,7 +211,7 @@ const useStyles = createUseStyles({
   },
 
   aboutUs: {
-    backgroundColor: `${colors.primary}30`,
+    backgroundColor: `${theme.accent}30`,
     paddingTop: base(6),
 
     [queries.l]: {
@@ -249,6 +256,7 @@ const useStyles = createUseStyles({
     fontSize: '30px',
     fontWeight: '600',
     marginBottom: 0,
+    color: theme.primary,
 
     [queries.l]: {
       marginTop: 0,
@@ -266,6 +274,7 @@ const useStyles = createUseStyles({
     opacity: 0.5,
     marginBottom: base(2),
     marginTop: base(1),
+    color: theme.primary,
 
     [queries.xl]: {
       fontSize: '18px',
@@ -357,6 +366,6 @@ const useStyles = createUseStyles({
       height: '180px',
     },
   },
-});
+}));
 
 export default useStyles;

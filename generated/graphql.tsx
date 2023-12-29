@@ -495,6 +495,7 @@ export type RestaurantDetailsOutput = {
   openingHours: Array<DayOutput>;
   phoneNumbers: Array<PhoneNumberType>;
   socialMedia?: Maybe<SocialMediaType>;
+  theme: ThemeType;
 };
 
 export type RestaurantOutput = {
@@ -569,6 +570,15 @@ export type SubscriptionOrderCreatedArgs = {
   restaurantId: Scalars['String'];
 };
 
+export type ThemeType = {
+  __typename?: 'ThemeType';
+  accent: Scalars['String'];
+  neutral: Scalars['String'];
+  primary: Scalars['String'];
+  secondary: Scalars['String'];
+  tertiary: Scalars['String'];
+};
+
 export type TimeInput = {
   closes_at?: InputMaybe<Scalars['String']>;
   opens_at?: InputMaybe<Scalars['String']>;
@@ -625,7 +635,7 @@ export type RestaurantDetailsQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantDetailsQuery = { __typename?: 'Query', restaurantDetails: { __typename?: 'RestaurantDetailsOutput', name: string, logo: string, gallery?: Array<{ __typename?: 'ImageType', id?: string | null, url?: string | null } | null> | null, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }>, phoneNumbers: Array<{ __typename?: 'PhoneNumberType', id?: string | null, number?: string | null }>, socialMedia?: { __typename?: 'SocialMediaType', id?: string | null, xTwitterUrl?: string | null, facebookUrl?: string | null, instagramUrl?: string | null } | null, hero?: { __typename?: 'HeroType', id?: string | null, title?: string | null, description?: string | null, background?: string | null, foreground?: string | null } | null, feature?: { __typename?: 'FeatureType', id?: string | null, items?: Array<{ __typename?: 'FeatureItemType', id?: string | null, image?: string | null, title?: string | null, description?: string | null } | null> | null } | null, aboutUs?: { __typename?: 'AboutUsType', id?: string | null, title?: string | null, description?: string | null, imageOne?: string | null, imageTwo?: string | null, imageThree?: string | null, imageFour?: string | null } | null } };
+export type RestaurantDetailsQuery = { __typename?: 'Query', restaurantDetails: { __typename?: 'RestaurantDetailsOutput', name: string, logo: string, theme: { __typename?: 'ThemeType', accent: string, neutral: string, primary: string, secondary: string, tertiary: string }, gallery?: Array<{ __typename?: 'ImageType', id?: string | null, url?: string | null } | null> | null, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }>, phoneNumbers: Array<{ __typename?: 'PhoneNumberType', id?: string | null, number?: string | null }>, socialMedia?: { __typename?: 'SocialMediaType', id?: string | null, xTwitterUrl?: string | null, facebookUrl?: string | null, instagramUrl?: string | null } | null, hero?: { __typename?: 'HeroType', id?: string | null, title?: string | null, description?: string | null, background?: string | null, foreground?: string | null } | null, feature?: { __typename?: 'FeatureType', id?: string | null, items?: Array<{ __typename?: 'FeatureItemType', id?: string | null, image?: string | null, title?: string | null, description?: string | null } | null> | null } | null, aboutUs?: { __typename?: 'AboutUsType', id?: string | null, title?: string | null, description?: string | null, imageOne?: string | null, imageTwo?: string | null, imageThree?: string | null, imageFour?: string | null } | null } };
 
 export type ValidateOrderDetailsQueryVariables = Exact<{
   input: OrderDetailsInput;
@@ -950,6 +960,13 @@ export const RestaurantDetailsDocument = gql`
   restaurantDetails(restaurantId: $restaurantId) {
     name
     logo
+    theme {
+      accent
+      neutral
+      primary
+      secondary
+      tertiary
+    }
     gallery {
       id
       url

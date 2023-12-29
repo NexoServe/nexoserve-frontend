@@ -9,8 +9,8 @@ import Button from '../Button/Button';
 import useStyles from './css';
 import { IMenu } from './types';
 
-const Menu = ({ styleClass }: IMenu) => {
-  const styles = useStyles();
+const Menu = ({ styleClass, theme }: IMenu) => {
+  const styles = useStyles({ theme });
 
   return (
     <menu className={classNames(styles.menu, styleClass)}>

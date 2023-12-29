@@ -31,7 +31,7 @@ const useStyles = createUseStyles({
   },
 
   footerTitle: {
-    color: colors.white,
+    color: colors.secondary,
     fontSize: '16px',
     margin: 0,
     textAlign: 'center',
