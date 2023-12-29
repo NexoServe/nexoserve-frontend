@@ -48,6 +48,7 @@ const Order = (props: RestaurantDetailsQuery) => {
             <Navbar
               logo={props.restaurantDetails.logo}
               restaurantName={props.restaurantDetails.name}
+              theme={props.restaurantDetails.theme}
             />
             <OrderNavbar />
             <Container>
