@@ -1,13 +1,13 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../css/base';
-import colors from '../../../css/colors';
 import queries from '../../../css/queries';
 import zIndex from '../../../css/zIndex';
+import { ThemeType } from '../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   navbar: {
-    background: colors.white,
+    background: theme.neutral,
     position: 'relative',
     zIndex: zIndex.header,
   },
@@ -39,18 +39,6 @@ const useStyles = createUseStyles({
     },
   },
 
-  navbarCounter: {
-    border: '1px solid black',
-    borderRadius: '50%',
-    width: '20px',
-    height: '20px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '0.25rem',
-    marginRight: '1rem',
-  },
-
   navbarHamburger: {
     display: 'block',
 
@@ -79,6 +67,6 @@ const useStyles = createUseStyles({
       display: 'flex',
     },
   },
-});
+}));
 
 export default useStyles;

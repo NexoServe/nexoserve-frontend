@@ -37,6 +37,7 @@ const Gallery = (props: RestaurantDetailsQuery) => {
         <Navbar
           logo={props.restaurantDetails.logo}
           restaurantName={props.restaurantDetails.name}
+          theme={props.restaurantDetails.theme}
         />
         <div className={styles.galleryHero}>
           <h1 className={styles.galleryHeroTitle}>Gallery</h1>

@@ -7,7 +7,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import breakpoints from '../../../css/breakpoints';
-import colors from '../../../css/colors';
 import Container from '../Container/Container';
 import Divider from '../Divider/Divider';
 import Menu from '../Menu/Menu';
@@ -16,8 +15,10 @@ import { ModalPopUp } from '../Modal/Modal';
 import useStyles from './css';
 import { INavbar } from './types';
 
-const Navbar = ({ logo, restaurantName }: INavbar) => {
-  const classes = useStyles();
+const Navbar = ({ logo, restaurantName, theme }: INavbar) => {
+  const classes = useStyles({
+    theme,
+  });
   const [showMenu, setShowMenu] = useState(false);
 
   // const shoppingCart = useRecoilValue(ShoppingCartAtom);
@@ -55,7 +56,7 @@ const Navbar = ({ logo, restaurantName }: INavbar) => {
         <div className={classes.navbarHamburger}>
           <Hamburger
             direction="right"
-            color={colors.black}
+            color={theme.primary}
             size={22}
             rounded
             label="hey"
@@ -65,14 +66,14 @@ const Navbar = ({ logo, restaurantName }: INavbar) => {
           />
         </div>
 
-        <Menu styleClass={classes.navbarMenuDesktop} />
+        <Menu styleClass={classes.navbarMenuDesktop} theme={theme} />
 
         <ModalPopUp
           showModal={showMenu}
           onClose={() => setShowMenu(false)}
           overlayClass={classes.navbarModalOverlay}
         >
-          <Menu styleClass={classes.navbarMenuMobile} />
+          <Menu styleClass={classes.navbarMenuMobile} theme={theme} />
         </ModalPopUp>
       </Container>
       <Divider />

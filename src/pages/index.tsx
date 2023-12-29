@@ -24,14 +24,22 @@ export async function getServerSideProps() {
 }
 
 const Home = (props: RestaurantDetailsQuery) => {
-  const styles = useStyles();
+  const styles = useStyles({
+    theme: props.restaurantDetails.theme,
+  });
   const router = useRouter();
+  const theme = props.restaurantDetails.theme;
 
   return (
-    <>
+    <div
+      style={{
+        backgroundColor: theme.neutral,
+      }}
+    >
       <Navbar
         logo={props.restaurantDetails.logo}
         restaurantName={props.restaurantDetails.name}
+        theme={theme}
       />
       <div className={styles.homeHeroContainer}>
         <Image
@@ -72,7 +80,7 @@ const Home = (props: RestaurantDetailsQuery) => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <SvgIcons name="x" />
+                <SvgIcons name="x" fill={theme.primary} />
               </a>
             )}
 
@@ -83,7 +91,7 @@ const Home = (props: RestaurantDetailsQuery) => {
                 rel="noreferrer"
                 className={styles.homeHeroSocial}
               >
-                <SvgIcons name="facebook" />
+                <SvgIcons name="facebook" fill={theme.primary} />
               </a>
             )}
 
@@ -94,7 +102,7 @@ const Home = (props: RestaurantDetailsQuery) => {
                 rel="noreferrer"
                 className={styles.homeHeroSocial}
               >
-                <SvgIcons name="instagram" />
+                <SvgIcons name="instagram" fill={theme.primary} />
               </a>
             )}
           </div>
@@ -249,7 +257,7 @@ const Home = (props: RestaurantDetailsQuery) => {
         phoneNumbers={props.restaurantDetails.phoneNumbers}
         restaurantName={props.restaurantDetails.name}
       />
-    </>
+    </div>
   );
 };
 

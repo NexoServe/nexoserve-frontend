@@ -7,6 +7,13 @@ const GET_RESTAURANT_DETAILS_QUERY = gql`
     restaurantDetails(restaurantId: $restaurantId) {
       name
       logo
+      theme {
+        accent
+        neutral
+        primary
+        secondary
+        tertiary
+      }
       gallery {
         id
         url

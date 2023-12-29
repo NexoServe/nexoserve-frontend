@@ -54,6 +54,7 @@ const Checkout = (props: RestaurantDetailsQuery) => {
           <Navbar
             logo={props.restaurantDetails.logo}
             restaurantName={props.restaurantDetails.name}
+            theme={props.restaurantDetails.theme}
           />
           <Container>
             <div className={classes.checkout}>

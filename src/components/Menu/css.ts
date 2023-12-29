@@ -1,12 +1,12 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../css/base';
-import colors from '../../../css/colors';
 import queries from '../../../css/queries';
+import { ThemeType } from '../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   menu: {
-    background: colors.white,
+    background: theme.neutral,
     width: '100vw',
     height: '100vh',
     paddingTop: base(15),
@@ -42,12 +42,13 @@ const useStyles = createUseStyles({
     fontWeight: '500',
     maxWidth: base(20),
     margin: `0 auto`,
+    color: theme.primary,
 
     [queries.l]: {
       fontSize: '16px',
       padding: base(1),
     },
   },
-});
+}));
 
 export default useStyles;
