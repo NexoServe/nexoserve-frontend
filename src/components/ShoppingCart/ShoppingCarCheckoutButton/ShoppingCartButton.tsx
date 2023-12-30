@@ -79,7 +79,9 @@ const ShoppingCarCheckoutButton = ({ theme }: IShoppingCartCheckoutButton) => {
                 }}
               >
                 $
-                {restaurantDetails.deliveryMinimum - shoppingCartTotal.subtotal}
+                {(
+                  restaurantDetails.deliveryMinimum - shoppingCartTotal.subtotal
+                ).toFixed(2)}
               </span>{' '}
               more to your cart to meet the delivery minimum.
             </div>
