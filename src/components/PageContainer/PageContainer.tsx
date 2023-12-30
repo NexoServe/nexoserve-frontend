@@ -17,13 +17,14 @@ import {
   OrderTimeAtom,
 } from '../../state/OrderNavbar';
 import { RestaurantDetailsAtom } from '../../state/RestaurantState';
+import InfoModal from '../InfoModal/InfoModal';
 import Loader from '../Loader/Loader';
 import { ModalPopUp } from '../Modal/Modal';
 import OrderNavBarModal from '../OrderNavbar/OrderNavBarModal/OrderNavBarModal';
 
 import { IPageContainer } from './types';
 
-const PageContainer = ({ children }: IPageContainer) => {
+const PageContainer = ({ children, theme }: IPageContainer) => {
   const router = useRouter();
 
   const [showInvalidTimeModal, setShowInvalidTimeModal] = useRecoilState(
@@ -200,7 +201,11 @@ const PageContainer = ({ children }: IPageContainer) => {
   return (
     <>
       {loading && (
-        <ModalPopUp onClose={() => console.log()} showModal={loading}>
+        <ModalPopUp
+          theme={theme}
+          onClose={() => console.log()}
+          showModal={loading}
+        >
           <Loader />
         </ModalPopUp>
       )}
@@ -210,6 +215,7 @@ const PageContainer = ({ children }: IPageContainer) => {
           {children}
 
           <ModalPopUp
+            theme={theme}
             showModal={showInvalidTimeModal ? true : false}
             onClose={() => {
               console.log();
@@ -220,10 +226,13 @@ const PageContainer = ({ children }: IPageContainer) => {
               setModal={() => setShowInvalidTimeModal(undefined)}
               type={showInvalidTimeModal?.type}
               error={showInvalidTimeModal?.errorMessages}
+              theme={theme}
             />
           </ModalPopUp>
         </div>
       )}
+
+      <InfoModal theme={theme} />
     </>
   );
 };

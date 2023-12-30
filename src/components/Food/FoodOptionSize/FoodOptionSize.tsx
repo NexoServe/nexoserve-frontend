@@ -8,7 +8,12 @@ import FoodOptionToppingStyleSize from '../FoodOptionSizeToppingStyle/FoodOption
 
 import { IFoodOptionSize } from './types';
 
-const FoodOptionSize = ({ optionSize, option, addOn }: IFoodOptionSize) => {
+const FoodOptionSize = ({
+  optionSize,
+  option,
+  addOn,
+  theme,
+}: IFoodOptionSize) => {
   const [selectedOptions, setSelectedOptions] = useRecoilState(
     FoodModalSelectedOptionsAtom,
   );
@@ -81,6 +86,7 @@ const FoodOptionSize = ({ optionSize, option, addOn }: IFoodOptionSize) => {
       onChange={() => addOptionSize()}
       option={option}
       optionSize={optionSize}
+      theme={theme}
     />
   );
 };

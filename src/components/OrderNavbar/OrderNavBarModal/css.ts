@@ -1,12 +1,12 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   orderNavbarModal: {
-    background: colors.white,
+    background: theme.neutral,
     overflow: 'auto',
     width: '95vw',
     maxHeight: '80vh',
@@ -32,7 +32,7 @@ const useStyles = createUseStyles({
   },
 
   orderNavbarModalError: {
-    color: colors.red,
+    color: theme.tertiary,
     fontSize: '16px',
     lineHeight: '18px',
     paddingBottom: base(3),
@@ -61,6 +61,6 @@ const useStyles = createUseStyles({
       },
     },
   },
-});
+}));
 
 export default useStyles;

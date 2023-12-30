@@ -1,11 +1,12 @@
 import { ChangeEventHandler } from 'react';
 
-import { OptionType } from '../../../../generated/graphql';
+import { OptionType, ThemeType } from '../../../../generated/graphql';
 import { AddOnType } from '../FoodAddOn/types';
 
 export interface IFoodOption {
   option: OptionType;
   addOn: AddOnType;
+  theme: ThemeType;
 }
 
 export interface IFoodOptionStyle {
@@ -14,4 +15,5 @@ export interface IFoodOptionStyle {
   isChecked: boolean;
   addOn: AddOnType;
   disabled: boolean;
+  theme: ThemeType;
 }

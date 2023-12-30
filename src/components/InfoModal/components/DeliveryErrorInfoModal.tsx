@@ -6,8 +6,9 @@ import { InfoModalAtom } from '../../../state/InfoModalState';
 import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import useStyles from '../css';
+import { IDeliveryErrorInfoModal } from '../types';
 
-const DeliveryErrorInfoModal = () => {
+const DeliveryErrorInfoModal = ({ theme }: IDeliveryErrorInfoModal) => {
   const classes = useStyles();
   const [, setInfoModalState] = useRecoilState(InfoModalAtom);
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
@@ -19,6 +20,7 @@ const DeliveryErrorInfoModal = () => {
         text={'Error'}
         showCloseIcon={true}
         onClick={() => setInfoModalState({ showModal: false })}
+        theme={theme}
       />
       <div className={classes.infoModalBody}>
         <Lottie

@@ -5,7 +5,6 @@ import { base } from '../../../../css/base';
 const useStyles = createUseStyles({
   orderNavbarBottom: {
     height: base(6),
-    // background: colors.green,
   },
 });
 

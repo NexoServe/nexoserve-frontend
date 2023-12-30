@@ -8,7 +8,7 @@ import FoodOptionToppingStyle from '../FoodOptionToppingStyle/FoodOptionToppingS
 
 import { IFoodOption } from './types';
 
-const FoodOption = ({ option, addOn }: IFoodOption) => {
+const FoodOption = ({ option, addOn, theme }: IFoodOption) => {
   const [selectedOptions, setSelectedOptions] = useRecoilState(
     FoodModalSelectedOptionsAtom,
   );
@@ -85,6 +85,7 @@ const FoodOption = ({ option, addOn }: IFoodOption) => {
           option={option}
           addOn={addOn}
           disabled={disabled}
+          theme={theme}
         />
       ) : (
         <FoodOptionRegularStyle
@@ -93,6 +94,7 @@ const FoodOption = ({ option, addOn }: IFoodOption) => {
           option={option}
           addOn={addOn}
           disabled={disabled}
+          theme={theme}
         />
       )}
     </>

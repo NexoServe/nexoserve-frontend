@@ -7,17 +7,20 @@ import {
 import Button from '../../Button/Button';
 
 import useStyles from './css';
+import { IShoppingCartButton } from './types';
 
-const ShoppingCartButton = () => {
+const ShoppingCartButton = ({ theme }: IShoppingCartButton) => {
   const [, setShowShoppingCart] = useRecoilState(ShowShoppingCartAtom);
   const shoppingCart = useRecoilValue(ShoppingCartAtom);
-  const styles = useStyles();
+  const styles = useStyles({
+    theme,
+  });
 
   return (
     <>
       {shoppingCart.length > 0 ? (
         <div className={styles.shoppingCartButtonBox}>
-          <Button onClick={() => setShowShoppingCart(true)}>
+          <Button theme={theme} onClick={() => setShowShoppingCart(true)}>
             View Order ({shoppingCart.length} Items)
           </Button>
         </div>

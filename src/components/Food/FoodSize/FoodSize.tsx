@@ -11,8 +11,10 @@ import RadioButton from '../../RadioButton/RadioButton';
 import useStyles from './css';
 import { IFoodSize } from './types';
 
-const FoodSize = ({ size }: IFoodSize) => {
-  const classes = useStyles();
+const FoodSize = ({ size, theme }: IFoodSize) => {
+  const classes = useStyles({
+    theme,
+  });
   const [isChecked, setIsChecked] = useState(false);
 
   const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
@@ -66,7 +68,7 @@ const FoodSize = ({ size }: IFoodSize) => {
       htmlFor={size?.id || ''}
     >
       <div className={classes.foodSizeInner}>
-        <RadioButton isChecked={isChecked} />
+        <RadioButton isChecked={isChecked} theme={theme} />
         <input
           style={{
             opacity: 0,

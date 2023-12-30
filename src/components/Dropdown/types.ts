@@ -1,5 +1,9 @@
 import { Props } from 'react-select';
 
-export interface IDropdown extends Props {
+import { ThemeType } from '../../../generated/graphql';
+
+export interface IDropdown {
+  selectProps: Props;
   label: string;
+  theme: ThemeType;
 }

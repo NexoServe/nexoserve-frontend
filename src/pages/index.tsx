@@ -68,6 +68,7 @@ const Home = (props: RestaurantDetailsQuery) => {
             <Button
               onClick={() => router.push('/order')}
               styleClass={styles.homeHeroButton}
+              theme={theme}
             >
               Order Now
             </Button>
@@ -256,6 +257,7 @@ const Home = (props: RestaurantDetailsQuery) => {
         openingHours={props.restaurantDetails.openingHours}
         phoneNumbers={props.restaurantDetails.phoneNumbers}
         restaurantName={props.restaurantDetails.name}
+        theme={theme}
       />
     </div>
   );

@@ -11,9 +11,12 @@ import SvgIcons from '../../SvgIcons';
 import OrderInfoModal from '../OrderInfoModal/OrderInfoModal';
 
 import useStyles from './css';
+import { IOrderInfo } from './types';
 
-const OrderInfo = () => {
-  const classes = useStyles();
+const OrderInfo = ({ theme }: IOrderInfo) => {
+  const classes = useStyles({
+    theme,
+  });
 
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
   const orderDetails = useRecoilValue(OrderDetailsAtom);
@@ -26,7 +29,11 @@ const OrderInfo = () => {
         className={classes.orderInfo}
         onClick={() => setShowInfoModal(true)}
       >
-        <SvgIcons styleClass={classes.orderInfoIcon} name="info" />
+        <SvgIcons
+          styleClass={classes.orderInfoIcon}
+          name="info"
+          fill={theme.primary}
+        />
         <div className={classes.orderInfoStatus}>
           <div className={classes.orderInfoStatusText}>
             {restaurantDetails?.openStatusMessage}
@@ -43,8 +50,9 @@ const OrderInfo = () => {
       <ModalPopUp
         showModal={showInfoModal}
         onClose={() => setShowInfoModal(false)}
+        theme={theme}
       >
-        <OrderInfoModal setModal={setShowInfoModal} />
+        <OrderInfoModal theme={theme} setModal={setShowInfoModal} />
       </ModalPopUp>
     </>
   );

@@ -1,15 +1,15 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../css/base';
-import colors from '../../../css/colors';
+import { ThemeType } from '../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   divider: {
     width: '100%',
     height: base(0.1),
-    background: colors.black,
+    background: theme.primary,
     opacity: 0.1,
   },
-});
+}));
 
 export default useStyles;

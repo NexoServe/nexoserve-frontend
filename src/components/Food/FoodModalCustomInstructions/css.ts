@@ -1,19 +1,25 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
-  foodModalBodyChildBorder: {
-    border: `1px solid rgba(0, 0, 0, 0.1)`,
-    padding: base(1.5),
+const useStyles = createUseStyles((theme: ThemeType) => ({
+  foodModalCustomInstructionsTextarea: {
+    backgroundColor: theme.neutral,
+    color: theme.primary,
+    maxWidth: '100%',
+    minWidth: '100%',
+    minHeight: '125px',
+    maxHeight: '125px',
+    padding: base(2),
+    outline: 'none',
+    border: `1px solid ${theme.primary}30`,
     borderRadius: base(1),
-    marginBottom: base(2),
 
-    [queries.s]: {
-      padding: base(2),
+    '&::placeholder': {
+      color: `${theme.primary}90`,
     },
   },
-});
+}));
 
 export default useStyles;

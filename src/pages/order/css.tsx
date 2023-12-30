@@ -4,7 +4,7 @@ import { base } from '../../../css/base';
 import queries from '../../../css/queries';
 
 const useStyles = createUseStyles({
-  indexConatiner: {
+  indexContainer: {
     display: 'grid',
     gridTemplateColumns: '1fr',
     position: 'relative',

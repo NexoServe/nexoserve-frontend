@@ -23,7 +23,11 @@ import ShoppingCartItemList from '../ShoppingCartItemList/ShoppingCartItemList';
 import useStyles from './css';
 import { IShoppingCart } from './types';
 
-const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
+const ShoppingCart = ({
+  styleClass,
+  isCheckout = false,
+  theme,
+}: IShoppingCart) => {
   const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
   const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
     ShoppingCartTotalAtom,
@@ -117,10 +121,15 @@ const ShoppingCart = ({ styleClass, isCheckout = false }: IShoppingCart) => {
         styleClass={`${classes.shoppingCartInner} ${
           isCheckout ? classes.shoppingCartInnerCheckout : ''
         }`}
+        theme={theme}
       >
-        <ShoppingCartHeader isCheckout={isCheckout} />
-        <ShoppingCartItemList isCheckout={isCheckout} />
-        {isCheckout ? <ShoppingCartCheckout /> : <ShoppingCarCheckoutButton />}
+        <ShoppingCartHeader theme={theme} isCheckout={isCheckout} />
+        <ShoppingCartItemList theme={theme} isCheckout={isCheckout} />
+        {isCheckout ? (
+          <ShoppingCartCheckout theme={theme} />
+        ) : (
+          <ShoppingCarCheckoutButton theme={theme} />
+        )}
       </RoundBorder>
     </div>
   );

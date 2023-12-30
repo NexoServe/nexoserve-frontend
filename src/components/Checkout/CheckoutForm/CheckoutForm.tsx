@@ -10,7 +10,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import SkeletonLoader from 'tiny-skeleton-loader-react';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
 import {
   ErrorCodes,
   OrderDetailsType,
@@ -47,11 +46,14 @@ import Button from '../../Button/Button';
 import Loader from '../../Loader/Loader';
 
 import useStyles from './css';
+import { ICheckoutForm } from './types';
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ theme }: ICheckoutForm) {
   const stripe = useStripe();
   const elements = useElements();
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
   const router = useRouter();
 
   const [, setOrderDetails] = useRecoilState(OrderDetailsAtom);
@@ -332,6 +334,7 @@ export default function CheckoutForm() {
           style={{
             fontWeight: 500,
             marginBottom: base(1),
+            color: theme.primary,
           }}
         >
           THIS IS A TEST ENVIRONMENT. Use these cards to complete the order.
@@ -343,13 +346,19 @@ export default function CheckoutForm() {
         >
           <span
             style={{
-              color: colors.green,
+              color: theme.secondary,
               fontWeight: 500,
             }}
           >
             Accepted Card:
           </span>{' '}
-          <span>4242 4242 4242 4242</span>
+          <span
+            style={{
+              color: theme.primary,
+            }}
+          >
+            4242 4242 4242 4242
+          </span>
         </div>
         <div
           style={{
@@ -358,18 +367,31 @@ export default function CheckoutForm() {
         >
           <span
             style={{
-              color: colors.red,
+              color: theme.tertiary,
               fontWeight: 500,
             }}
           >
             Denied Card:
           </span>{' '}
-          <span>4000 0000 0000 0002</span>
+          <span
+            style={{
+              color: theme.primary,
+            }}
+          >
+            4000 0000 0000 0002
+          </span>
         </div>
-        <div>Use any, Expiration, CVC and ZIP.</div>
+        <div
+          style={{
+            color: theme.primary,
+          }}
+        >
+          Use any, Expiration, CVC and ZIP.
+        </div>
         <div
           style={{
             marginBottom: base(2),
+            color: theme.primary,
           }}
         >
           Please make sure to test both cards. Thank you :)
@@ -388,8 +410,9 @@ export default function CheckoutForm() {
           marginTop: '20px',
           marginBottom: '10px',
           fontSize: '16px',
-          background: isLoading ? 'rgba(238, 231, 165, 0.7)' : colors.primary,
+          background: isLoading ? `${theme.accent}70` : theme.accent,
         }}
+        theme={theme}
       >
         <div
           style={{
@@ -411,7 +434,7 @@ export default function CheckoutForm() {
             >
               <div style={{ whiteSpace: 'nowrap' }}>Place Pick up order (</div>
               {shoppingCartTotal.isLoading ? (
-                <SkeletonLoader background={colors.darkGray} width={50} />
+                <SkeletonLoader background={theme.primary} width={50} />
               ) : (
                 `$${shoppingCartTotal.grandTotal?.toFixed(2)}`
               )}

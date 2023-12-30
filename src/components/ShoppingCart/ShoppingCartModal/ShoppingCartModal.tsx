@@ -8,11 +8,14 @@ import { ModalPopUp } from '../../Modal/Modal';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 import useStyles from './css';
+import { IShoppingCartModal } from './types';
 
-const ShoppingCartModal = () => {
+const ShoppingCartModal = ({ theme }: IShoppingCartModal) => {
   const [showShoppingCart, setShowShoppingCart] =
     useRecoilState(ShowShoppingCartAtom);
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   useEffect(() => {
     function handleResize() {
@@ -32,9 +35,10 @@ const ShoppingCartModal = () => {
     <ModalPopUp
       showModal={showShoppingCart}
       onClose={() => setShowShoppingCart(false)}
+      theme={theme}
     >
       <div className={classes.shoppingCartModal}>
-        <ShoppingCart />
+        <ShoppingCart theme={theme} />
       </div>
     </ModalPopUp>
   );

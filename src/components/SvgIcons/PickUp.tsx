@@ -12,12 +12,12 @@ const PickUp = ({
       width={width}
       height={height}
       viewBox={viewBox}
-      fill={fill}
+      fill="none"
       className={styleClass}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M9 11C9 11 9 1 15 1C21 1 21 11 21 11" stroke="black" />
-      <rect x="3.5" y="8.5" width="23" height="15" stroke="black" />
+      <path d="M9 11C9 11 9 1 15 1C21 1 21 11 21 11" stroke={fill} />
+      <rect x="3.5" y="8.5" width="23" height="15" stroke={fill} />
     </svg>
   );
 };

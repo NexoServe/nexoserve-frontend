@@ -37,6 +37,7 @@ const OrderNavBarModal = ({
   headerText,
   type = 'pickup',
   error,
+  theme,
 }: IOrderNavBarModal) => {
   const [validateOrderDetails, { loading, error: validateOrderDetailsError }] =
     useValidateOrderDetailsLazyQuery({
@@ -58,7 +59,9 @@ const OrderNavBarModal = ({
   );
   const [orderDetails, setOrderDetails] = useRecoilState(OrderDetailsAtom);
 
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   const [orderTime, setOrderTime] = useRecoilState(OrderTimeAtom);
   const [orderDate, setOrderDate] = useRecoilState(OrderDateAtom);
@@ -489,6 +492,7 @@ const OrderNavBarModal = ({
         showCloseIcon={error ? false : true}
         text={headerText}
         onClick={() => setModal(false)}
+        theme={theme}
       />
 
       <div className={classes.orderNavbarModalContent}>
@@ -508,6 +512,7 @@ const OrderNavBarModal = ({
                   setModal(false);
                   setShowTimeModal(true);
                 }}
+                theme={theme}
               >
                 Place Pick Up Order
               </Button>
@@ -518,6 +523,7 @@ const OrderNavBarModal = ({
                   setInfoModalIsPickUp(false);
                   setShowInfoModal(true);
                 }}
+                theme={theme}
               >
                 View Delivery Hours
               </Button>
@@ -530,25 +536,32 @@ const OrderNavBarModal = ({
             setIsAddressValid={setIsAddressValid}
             isAddressValid={isAddressValid}
             setModal={setModal}
+            theme={theme}
           />
         )}
 
         <Dropdown
-          id="DateDropdown"
-          options={days}
+          selectProps={{
+            id: 'DateDropdown',
+            options: days,
+            onChange: (e) => setOrderDateState(e as OrderTime),
+            defaultValue: days[0],
+            value: orderDateState,
+          }}
           label="Date"
-          onChange={(e) => setOrderDateState(e as OrderTime)}
-          defaultValue={days[0]}
-          value={orderDateState}
+          theme={theme}
         />
 
         <Dropdown
-          id="TimeDropdown"
-          options={formattedIntervals}
+          selectProps={{
+            id: 'TimeDropdown',
+            options: formattedIntervals,
+            onChange: (e) => setOrderTimeState(e as OrderTime),
+            defaultValue: formattedIntervals[0],
+            value: orderTimeState?.value === null ? null : orderTimeState,
+          }}
           label="Time"
-          onChange={(e) => setOrderTimeState(e as OrderTime)}
-          defaultValue={formattedIntervals[0]}
-          value={orderTimeState?.value === null ? null : orderTimeState}
+          theme={theme}
         />
 
         <Button
@@ -561,6 +574,7 @@ const OrderNavBarModal = ({
           }
           type="submit"
           styleClass={classes.orderNavbarModalButton}
+          theme={theme}
         >
           {loading ? (
             <Loader width="50px" height="50px" scale={0.5} />

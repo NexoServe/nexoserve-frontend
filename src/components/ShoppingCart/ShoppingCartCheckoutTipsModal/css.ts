@@ -1,11 +1,11 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   shoppingCartCheckoutTipsModal: {
-    background: colors.white,
+    background: theme.neutral,
     width: '80vw',
     maxWidth: base(50),
     borderRadius: base(2),
@@ -20,6 +20,6 @@ const useStyles = createUseStyles({
     height: base(6),
     marginTop: base(2),
   },
-});
+}));
 
 export default useStyles;

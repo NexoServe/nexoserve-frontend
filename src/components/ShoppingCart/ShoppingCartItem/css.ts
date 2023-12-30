@@ -1,9 +1,9 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   shoppingCartItem: {
     display: 'grid',
     gridTemplateColumns: `${base(3)} 1fr ${base(3)}`,
@@ -21,7 +21,8 @@ const useStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    border: `${base(0.1)} solid ${colors.black}`,
+    border: `${base(0.1)} solid ${theme.primary}`,
+    color: theme.primary,
     borderRadius: '50%',
 
     '& span': {
@@ -36,6 +37,7 @@ const useStyles = createUseStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: '100%',
+    color: theme.primary,
   },
 
   shoppingCartItemTitle: {
@@ -73,12 +75,13 @@ const useStyles = createUseStyles({
     minHeight: base(2),
     display: 'flex',
     alignItems: 'center',
+    color: theme.primary,
 
     '& span': {
       position: 'absolute',
       fontSize: '12px',
       left: `-${base(2.5)}`,
-      background: colors.primary,
+      background: theme.accent,
       width: base(2),
       height: base(2),
       display: 'flex',
@@ -93,12 +96,14 @@ const useStyles = createUseStyles({
     fontWeight: 600,
     marginTop: base(1.5),
     paddingBottom: base(0.5),
+    color: theme.primary,
   },
 
   shoppingCartItemDetailsItemSizeItem: {
     paddingLeft: base(1),
     paddingTop: base(0.5),
     paddingBottom: base(0.5),
+    color: theme.primary,
   },
 
   shoppingCartItemDeleteButton: {
@@ -124,8 +129,9 @@ const useStyles = createUseStyles({
       fontWeight: 500,
       textDecoration: 'underline',
       cursor: 'pointer',
+      color: theme.primary,
     },
   },
-});
+}));
 
 export default useStyles;

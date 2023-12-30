@@ -14,7 +14,7 @@ const useStyles = createUseStyles({
 
   foodModalCloseBtn: {
     position: 'absolute',
-    right: base(1.5),
+    right: base(2),
     top: base(1.5),
     zIndex: 2,
     cursor: 'pointer',

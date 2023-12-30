@@ -25,16 +25,23 @@ export async function getServerSideProps() {
 }
 
 const Order = (props: RestaurantDetailsQuery) => {
-  const classes = useStyles();
+  const theme = props.restaurantDetails.theme;
+  const classes = useStyles({
+    theme,
+  });
 
   return (
-    <>
+    <div
+      style={{
+        backgroundColor: theme.neutral,
+      }}
+    >
       <div
         style={{
           minHeight: '100vh',
         }}
       >
-        <PageContainer>
+        <PageContainer theme={theme}>
           <Head>
             <title>TypeScript starter for Next.js</title>
             <meta
@@ -50,13 +57,16 @@ const Order = (props: RestaurantDetailsQuery) => {
               restaurantName={props.restaurantDetails.name}
               theme={props.restaurantDetails.theme}
             />
-            <OrderNavbar />
+            <OrderNavbar theme={theme} />
             <Container>
-              <div className={classes.indexConatiner}>
-                <FoodList />
-                <ShoppingCart styleClass={classes.indexShoppingCartDesktop} />
-                <ShoppingCartModal />
-                <ShoppingCartButton />
+              <div className={classes.indexContainer}>
+                <FoodList theme={theme} />
+                <ShoppingCart
+                  theme={theme}
+                  styleClass={classes.indexShoppingCartDesktop}
+                />
+                <ShoppingCartModal theme={theme} />
+                <ShoppingCartButton theme={theme} />
               </div>
             </Container>
           </main>
@@ -66,8 +76,9 @@ const Order = (props: RestaurantDetailsQuery) => {
         openingHours={props.restaurantDetails.openingHours}
         phoneNumbers={props.restaurantDetails.phoneNumbers}
         restaurantName={props.restaurantDetails.name}
+        theme={theme}
       />
-    </>
+    </div>
   );
 };
 

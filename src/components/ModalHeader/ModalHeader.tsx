@@ -4,8 +4,15 @@ import SvgIcons from '../SvgIcons';
 import useStyles from './css';
 import { IModalHeader } from './types';
 
-const ModalHeader = ({ text, onClick, showCloseIcon = true }: IModalHeader) => {
-  const classes = useStyles();
+const ModalHeader = ({
+  text,
+  onClick,
+  showCloseIcon = true,
+  theme,
+}: IModalHeader) => {
+  const classes = useStyles({
+    theme,
+  });
 
   return (
     <>
@@ -17,11 +24,11 @@ const ModalHeader = ({ text, onClick, showCloseIcon = true }: IModalHeader) => {
             onClick={onClick}
             type="button"
           >
-            <SvgIcons name="close" />
+            <SvgIcons name="close" fill={theme.primary} />
           </button>
         )}
       </div>
-      <Divider />
+      <Divider theme={theme} />
     </>
   );
 };

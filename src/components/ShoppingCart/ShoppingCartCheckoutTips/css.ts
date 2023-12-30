@@ -1,15 +1,16 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   shoppingCartCheckoutTipsSpan: {
     fontSize: '14px',
     opacity: 0.5,
     display: 'block',
     paddingTop: base(1),
+    color: theme.primary,
   },
 
   shoppingCartCheckoutTips: {
@@ -27,26 +28,19 @@ const useStyles = createUseStyles({
 
   shoppingCartCheckoutTip: {
     width: '100%',
-    border: `0.8px solid #00000040`,
+    border: `0.8px solid ${theme.primary}40`,
     padding: `${base(1)}`,
     borderRadius: base(1),
     fontWeight: 300,
     cursor: 'pointer',
+    color: theme.primary,
   },
 
   shoppingCartCheckoutTipActive: {
-    background: colors.primary,
-    color: colors.black,
-    border: `0.2px solid ${colors.primary}`,
+    background: theme.accent,
+    color: theme.primary,
+    border: `0.2px solid ${theme.accent}`,
   },
-
-  shoppingCartCheckoutModal: {
-    background: colors.white,
-    width: '80vw',
-    maxWidth: base(50),
-    borderRadius: base(2),
-    height: '300px',
-  },
-});
+}));
 
 export default useStyles;

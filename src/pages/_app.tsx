@@ -7,7 +7,6 @@ import { RecoilRoot } from 'recoil';
 
 import useStyles from '../../css/app';
 import { useApollo } from '../../lib/apolloClient';
-import InfoModal from '../components/InfoModal/InfoModal';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const classes = useStyles();
@@ -67,7 +66,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <RecoilRoot>
         <div className={classes.app}>
           {fontsLoaded ? <Component {...pageProps} /> : null}
-          <InfoModal />
+          {/* <InfoModal /> */}
         </div>
       </RecoilRoot>
     </ApolloProvider>

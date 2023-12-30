@@ -1,3 +1,5 @@
+import { ThemeType } from '../../../../generated/graphql';
+
 export interface IShoppingCartCheckoutButton {
-  validatedTotal?: number;
+  theme: ThemeType;
 }

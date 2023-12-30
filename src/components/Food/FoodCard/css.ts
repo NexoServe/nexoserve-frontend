@@ -2,14 +2,15 @@ import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   foodCard: {
     display: 'flex',
     padding: 0,
     width: '100%',
     height: base(12),
-    border: `1px solid rgba(0, 0, 0, 0.1)`,
+    border: `1px solid ${theme.primary}20`,
     borderRadius: base(2),
     background: 'transparent',
 
@@ -58,6 +59,7 @@ const useStyles = createUseStyles({
     display: '-webkit-box',
     '-webkit-line-clamp': 1,
     '-webkit-box-orient': 'vertical',
+    color: theme.primary,
 
     [queries.m]: {
       fontSize: '16px',
@@ -78,6 +80,7 @@ const useStyles = createUseStyles({
     display: '-webkit-box',
     '-webkit-line-clamp': 2,
     '-webkit-box-orient': 'vertical',
+    color: theme.primary,
 
     [queries.m]: {
       fontSize: '14px',
@@ -92,12 +95,13 @@ const useStyles = createUseStyles({
     fontSize: '14px',
     lineHeight: '16px',
     marginTop: 'auto',
+    color: theme.primary,
 
     [queries.xs]: {
       fontSize: '14px',
       lineHeight: '16px',
     },
   },
-});
+}));
 
 export default useStyles;

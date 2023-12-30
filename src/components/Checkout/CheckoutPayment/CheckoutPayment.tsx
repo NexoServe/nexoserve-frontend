@@ -4,7 +4,6 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import colors from '../../../../css/colors';
 import { useValidateShoppingCartLazyQuery } from '../../../../generated/graphql';
 import { InfoModalAtom } from '../../../state/InfoModalState';
 import { OrderIsPickUpAtom, OrderTimeAtom } from '../../../state/OrderNavbar';
@@ -18,8 +17,9 @@ import CheckoutForm from '../CheckoutForm/CheckoutForm';
 import CheckoutHeader from '../CheckoutHeader/CheckoutHeader';
 
 import useStyles from './css';
+import { ICheckoutPayment } from './types';
 
-const CheckoutPayment = () => {
+const CheckoutPayment = ({ theme }: ICheckoutPayment) => {
   const classes = useStyles();
   const shoppingCart = useRecoilValue(ShoppingCartAtom);
 
@@ -82,8 +82,8 @@ const CheckoutPayment = () => {
 
   return (
     <>
-      <RoundBorder styleClass={classes.checkoutPayment}>
-        <CheckoutHeader title="Payment" />
+      <RoundBorder styleClass={classes.checkoutPayment} theme={theme}>
+        <CheckoutHeader title="Payment" theme={theme} />
         {stripePromise !== undefined && (
           <Elements
             stripe={stripePromise}
@@ -104,16 +104,16 @@ const CheckoutPayment = () => {
                   fontFamily: 'Montserrat, sans-serif',
                   fontSizeBase: '16px',
                   fontSizeSm: '16px',
-                  colorBackground: colors.white,
-                  colorText: colors.black,
+                  colorBackground: theme.neutral,
+                  colorText: theme.primary,
                   fontWeightMedium: '800',
                   fontWeightNormal: '500',
-                  colorDanger: colors.red,
+                  colorDanger: theme.tertiary,
                 },
               },
             }}
           >
-            <CheckoutForm />
+            <CheckoutForm theme={theme} />
           </Elements>
         )}
       </RoundBorder>

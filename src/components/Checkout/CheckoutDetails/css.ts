@@ -2,8 +2,9 @@ import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   checkoutDetails: {
     padding: `0 ${base(2)}`,
     maxHeight: '100%',
@@ -52,6 +53,7 @@ const useStyles = createUseStyles({
     margin: 0,
     marginLeft: base(1),
     textAlign: 'left',
+    color: theme.primary,
   },
 
   checkoutDetailsBody: {
@@ -64,6 +66,7 @@ const useStyles = createUseStyles({
       marginBottom: base(0.75),
       textAlign: 'left',
       lineHeight: '18px',
+      color: theme.primary,
     },
   },
 
@@ -73,6 +76,10 @@ const useStyles = createUseStyles({
     marginLeft: base(5),
     marginTop: base(1),
     textAlign: 'left',
+
+    '& a': {
+      color: theme.primary,
+    },
   },
 
   checkoutDetailsButton: {
@@ -87,8 +94,9 @@ const useStyles = createUseStyles({
     '& div': {
       fontWeight: 600,
       fontSize: '16px',
+      color: theme.primary,
     },
   },
-});
+}));
 
 export default useStyles;

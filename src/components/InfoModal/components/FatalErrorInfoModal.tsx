@@ -6,8 +6,9 @@ import { InfoModalAtom } from '../../../state/InfoModalState';
 import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import useStyles from '../css';
+import { IFatalErrorInfoModal } from '../types';
 
-const FatalErrorInfoModal = () => {
+const FatalErrorInfoModal = ({ theme }: IFatalErrorInfoModal) => {
   const classes = useStyles();
   const [, setInfoModalState] = useRecoilState(InfoModalAtom);
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
@@ -24,6 +25,7 @@ const FatalErrorInfoModal = () => {
         text={'Fatal Error'}
         showCloseIcon={false}
         onClick={() => setInfoModalState({ showModal: false })}
+        theme={theme}
       />
       <div className={classes.infoModalBody}>
         <Lottie

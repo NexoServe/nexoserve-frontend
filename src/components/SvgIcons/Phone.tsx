@@ -1,12 +1,10 @@
-import colors from '../../../css/colors';
-
 import { SvgIconsType } from './types';
 
 const Phone = ({
   width = '24',
   height = '24',
   viewBox = '0 0 24 24',
-  fill = colors.white,
+  fill,
   styleClass,
 }: SvgIconsType) => {
   return (

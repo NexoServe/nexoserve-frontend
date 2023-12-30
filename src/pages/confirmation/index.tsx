@@ -23,11 +23,18 @@ export async function getServerSideProps() {
 }
 
 const Order = (props: RestaurantDetailsQuery) => {
-  const styles = useStyles();
+  const theme = props.restaurantDetails.theme;
+  const styles = useStyles({
+    theme,
+  });
   const router = useRouter();
 
   return (
-    <>
+    <div
+      style={{
+        backgroundColor: props.restaurantDetails.theme.neutral,
+      }}
+    >
       <Head>
         <title>TypeScript starter for Next.js</title>
         <meta
@@ -64,6 +71,7 @@ const Order = (props: RestaurantDetailsQuery) => {
             <Button
               styleClass={styles.confirmationButton}
               onClick={() => router.push('/order')}
+              theme={props.restaurantDetails.theme}
             >
               Back to Order Page
             </Button>
@@ -74,8 +82,9 @@ const Order = (props: RestaurantDetailsQuery) => {
         openingHours={props.restaurantDetails.openingHours}
         phoneNumbers={props.restaurantDetails.phoneNumbers}
         restaurantName={props.restaurantDetails.name}
+        theme={props.restaurantDetails.theme}
       />
-    </>
+    </div>
   );
 };
 

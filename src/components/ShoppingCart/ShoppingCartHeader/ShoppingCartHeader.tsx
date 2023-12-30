@@ -8,9 +8,11 @@ import ShoppingCartShowDetailsBtn from '../ShoppingCartShowDetailsBtn/ShoppingCa
 import useStyles from './css';
 import { IShoppingCartHeader } from './types';
 
-const ShoppingCartHeader = ({ isCheckout }: IShoppingCartHeader) => {
+const ShoppingCartHeader = ({ isCheckout, theme }: IShoppingCartHeader) => {
   const [, setShowShoppingCart] = useRecoilState(ShowShoppingCartAtom);
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   return (
     <>
@@ -22,15 +24,16 @@ const ShoppingCartHeader = ({ isCheckout }: IShoppingCartHeader) => {
           }`}
           onClick={() => setShowShoppingCart(false)}
         >
-          <SvgIcons name="close" />
+          <SvgIcons name="close" fill={theme.primary} />
         </button>
         <ShoppingCartShowDetailsBtn
           styleClass={`${classes.shoppingCartHeaderShowDetails} ${
             isCheckout && classes.shoppingCartHeaderShowDetailsCheckout
           }`}
+          theme={theme}
         />
       </div>
-      <Divider />
+      <Divider theme={theme} />
     </>
   );
 };

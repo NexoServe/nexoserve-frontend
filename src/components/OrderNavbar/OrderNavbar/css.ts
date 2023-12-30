@@ -1,11 +1,11 @@
 import { createUseStyles } from 'react-jss';
 
-import colors from '../../../../css/colors';
 import zIndex from '../../../../css/zIndex';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   orderNavbar: {
-    background: colors.white,
+    background: theme.neutral,
     position: 'sticky',
     top: 0,
     zIndex: zIndex.header - 1,
@@ -15,6 +15,6 @@ const useStyles = createUseStyles({
     paddingTop: 0,
     paddingBottom: 0,
   },
-});
+}));
 
 export default useStyles;

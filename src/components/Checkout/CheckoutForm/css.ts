@@ -1,11 +1,11 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   checkoutFormError: {
-    color: colors.red,
+    color: theme.tertiary,
     padding: `${base(1)} 0`,
     lineHeight: '18px',
   },
@@ -16,6 +16,6 @@ const useStyles = createUseStyles({
 
     lineHeight: 1,
   },
-});
+}));
 
 export default useStyles;

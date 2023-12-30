@@ -2,14 +2,17 @@ import { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
 
+import { base } from '../../../../css/base';
 import SvgIcons from '../../SvgIcons';
 
 import useStyles from './css';
 import { IFoodModalNav } from './types';
 
-const FoodModalNav = ({ name, onClick, loading }: IFoodModalNav) => {
+const FoodModalNav = ({ name, onClick, loading, theme }: IFoodModalNav) => {
   const [scrolled, setScrolled] = useState(false);
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   useEffect(() => {
     const container = document.querySelector<HTMLElement>('#foodModal');
@@ -43,8 +46,19 @@ const FoodModalNav = ({ name, onClick, loading }: IFoodModalNav) => {
       className={classes.foodModalNav}
     >
       <h1>{name}</h1>
-      <button onClick={onClick}>
-        <SvgIcons width="40px" height="40px" name="closeFilledWhite" />
+      <button
+        onClick={onClick}
+        style={{
+          marginRight: base(1),
+        }}
+      >
+        <SvgIcons
+          width="40px"
+          height="40px"
+          name="closeFilledWhite"
+          fill={theme.primary}
+          backgroundColor={theme.neutral}
+        />
       </button>
     </motion.div>
   );

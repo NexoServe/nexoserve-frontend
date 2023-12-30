@@ -2,8 +2,9 @@ import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   foodList: {},
 
   foodListCategory: {
@@ -12,6 +13,7 @@ const useStyles = createUseStyles({
     marginBottom: base(3),
     lineHeight: base(4.5),
     fontWeight: '400',
+    color: theme.primary,
 
     [queries.l]: {
       gap: base(2),
@@ -44,6 +46,6 @@ const useStyles = createUseStyles({
       gap: base(3),
     },
   },
-});
+}));
 
 export default useStyles;
