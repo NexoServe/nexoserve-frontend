@@ -21,8 +21,10 @@ const variants = {
   delivery: { x: '100%' },
 };
 
-const OrderType = ({ isCheckout = false }: IOrderType) => {
-  const classes = useStyles();
+const OrderType = ({ isCheckout = false, theme }: IOrderType) => {
+  const classes = useStyles({
+    theme,
+  });
 
   const [showDeliveryModal, setShowDeliveryModal] = useState(false);
   const [showPickUpModal, setShowPickUpModal] = useState(false);
@@ -59,6 +61,7 @@ const OrderType = ({ isCheckout = false }: IOrderType) => {
             : undefined
         }
         styleClass={classes.orderType}
+        theme={theme}
       >
         <div className={classes.orderTypeToggle}>
           <motion.div
@@ -76,6 +79,7 @@ const OrderType = ({ isCheckout = false }: IOrderType) => {
                 styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconPickUp}`}
                 name="pickUp"
                 width={base(2.5)}
+                fill={theme.primary}
               />
             )}
             Pick Up
@@ -93,25 +97,28 @@ const OrderType = ({ isCheckout = false }: IOrderType) => {
               <SvgIcons
                 styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconDelivery}`}
                 name="delivery"
+                fill={theme.primary}
               />
             )}
           </button>
         </div>
       </RoundBorder>
 
-      <ModalPopUp showModal={showDeliveryModal} onClose={onClose}>
+      <ModalPopUp theme={theme} showModal={showDeliveryModal} onClose={onClose}>
         <OrderNavBarModal
           setModal={setShowDeliveryModal}
           headerText="Delivery Details"
           type="delivery"
+          theme={theme}
         />
       </ModalPopUp>
 
-      <ModalPopUp showModal={showPickUpModal} onClose={onClose}>
+      <ModalPopUp theme={theme} showModal={showPickUpModal} onClose={onClose}>
         <OrderNavBarModal
           setModal={setShowPickUpModal}
           headerText="Pick Up Details"
           type="pickup"
+          theme={theme}
         />
       </ModalPopUp>
     </>

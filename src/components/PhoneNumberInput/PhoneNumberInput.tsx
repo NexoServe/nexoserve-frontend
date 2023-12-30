@@ -8,6 +8,8 @@ import {
 } from '../../state/CheckoutState';
 import Input from '../Input/Input';
 
+import { IPhoneNumberInput } from './types';
+
 const parseDigits = (string: string) => (string?.match(/\d+/g) || []).join('');
 
 const formatPhone = (string: string) => {
@@ -15,7 +17,7 @@ const formatPhone = (string: string) => {
   return new AsYouType('US').input(digits);
 };
 
-const PhoneNumberInput = () => {
+const PhoneNumberInput = ({ theme }: IPhoneNumberInput) => {
   const [phone, setPhone] = useRecoilState(CheckoutPhoneNumberAtom);
   const [phoneError, setPhoneError] = useRecoilState(
     CheckoutPhoneNumberErrorAtom,
@@ -49,6 +51,7 @@ const PhoneNumberInput = () => {
               value={value}
               onChange={onChange}
               placeholder="(xxx) xxx-xxxx"
+              theme={theme}
             />
           </div>
         )}

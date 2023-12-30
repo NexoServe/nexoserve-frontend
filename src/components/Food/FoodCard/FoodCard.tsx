@@ -3,8 +3,8 @@ import Image from 'next/image';
 import useStyles from './css';
 import { IFoodCard } from './types';
 
-const FoodCard = ({ food, activeFoodClick }: IFoodCard) => {
-  const classes = useStyles();
+const FoodCard = ({ food, activeFoodClick, theme }: IFoodCard) => {
+  const classes = useStyles({ theme });
 
   return (
     <button className={classes.foodCard} onClick={() => activeFoodClick(food)}>

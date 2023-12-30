@@ -1,8 +1,9 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   foodOptionToppingStyleSize: {
     display: 'flex',
     alignItems: 'center',
@@ -30,7 +31,12 @@ const useStyles = createUseStyles({
   },
 
   foodOptionToppingStyleSizePrice: {
+    color: theme.primary,
+  },
+
+  foodOptionToppingStyleSizePriceActive: {
     fontWeight: 600,
+    color: theme.primary,
   },
 
   foodOptionToppingStyleSizeIconMiddle: {
@@ -50,6 +56,6 @@ const useStyles = createUseStyles({
     position: 'absolute',
     overflow: 'hidden',
   },
-});
+}));
 
 export default useStyles;

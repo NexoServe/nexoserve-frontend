@@ -1,8 +1,9 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   foodOptionRegularStyle: {},
 
   foodOptionToppingStyle: {
@@ -14,7 +15,7 @@ const useStyles = createUseStyles({
   },
 
   foodOptionToppingStyleLabel: {
-    opacity: 0.7,
+    opacity: 0.5,
     cursor: 'pointer',
     marginTop: base(2),
     display: 'flex',
@@ -25,6 +26,7 @@ const useStyles = createUseStyles({
       margin: 0,
       paddingLeft: base(1),
       paddingRight: base(1),
+      color: theme.primary,
     },
   },
 
@@ -44,6 +46,6 @@ const useStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'space-between',
   },
-});
+}));
 
 export default useStyles;

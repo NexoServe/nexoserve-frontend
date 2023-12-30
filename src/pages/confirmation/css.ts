@@ -1,8 +1,9 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../css/base';
+import { ThemeType } from '../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   confirmation: {
     display: 'flex',
     flexDirection: 'column',
@@ -16,12 +17,14 @@ const useStyles = createUseStyles({
     marginBottom: base(1),
     textAlign: 'center',
     lineHeight: '26px',
+    color: theme.primary,
   },
 
   confirmationContent: {
     fontSize: '16px',
     opacity: 0.5,
     textAlign: 'center',
+    color: theme.primary,
   },
 
   confirmationButton: {
@@ -34,6 +37,6 @@ const useStyles = createUseStyles({
     marginRight: 'auto',
     cursor: 'pointer',
   },
-});
+}));
 
 export default useStyles;

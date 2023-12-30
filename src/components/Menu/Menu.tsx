@@ -33,6 +33,7 @@ const Menu = ({ styleClass, theme }: IMenu) => {
               paddingRight: base(2),
               fontSize: '16px',
             }}
+            theme={theme}
           >
             Order Online
           </Button>

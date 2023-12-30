@@ -24,7 +24,11 @@ const Gallery = (props: RestaurantDetailsQuery) => {
   const styles = useStyles();
 
   return (
-    <>
+    <div
+      style={{
+        backgroundColor: props.restaurantDetails.theme.neutral,
+      }}
+    >
       <Head>
         <title>TypeScript starter for Next.js</title>
         <meta
@@ -72,9 +76,10 @@ const Gallery = (props: RestaurantDetailsQuery) => {
           openingHours={props.restaurantDetails.openingHours}
           phoneNumbers={props.restaurantDetails.phoneNumbers}
           restaurantName={props.restaurantDetails.name}
+          theme={props.restaurantDetails.theme}
         />
       </main>
-    </>
+    </div>
   );
 };
 

@@ -1,9 +1,9 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   foodModal: {
     position: 'relative',
     overflow: 'hidden',
@@ -15,7 +15,7 @@ const useStyles = createUseStyles({
 
   foodModalForm: {
     width: '100%',
-    background: colors.secondary,
+    background: theme.neutral,
     maxHeight: '100vh',
     height: '100%',
     overflowY: 'auto',
@@ -26,6 +26,19 @@ const useStyles = createUseStyles({
     flexDirection: 'column',
     borderRadius: base(2),
     overflowX: 'hidden',
+
+    '&::-webkit-scrollbar': {
+      background: 'red',
+    },
+
+    '&::-webkit-scrollbar-thumb': {
+      background: theme.primary,
+      width: '5px',
+    },
+
+    '&::-webkit-scrollbar-track': {
+      background: theme.neutral,
+    },
   },
 
   foodModalLoader: {
@@ -35,6 +48,6 @@ const useStyles = createUseStyles({
     justifyContent: 'center',
     alignItems: 'center',
   },
-});
+}));
 
 export default useStyles;

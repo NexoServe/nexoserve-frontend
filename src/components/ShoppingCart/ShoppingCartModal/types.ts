@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction } from 'react';
+import { ThemeType } from '../../../../generated/graphql';
 
-export type ShoppingCartModalProps = {
-  setShowShoppingCart: Dispatch<SetStateAction<boolean>>;
-};
+export interface IShoppingCartModal {
+  theme: ThemeType;
+}

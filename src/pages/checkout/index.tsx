@@ -27,6 +27,7 @@ export async function getServerSideProps() {
 }
 
 const Checkout = (props: RestaurantDetailsQuery) => {
+  const theme = props.restaurantDetails.theme;
   const classes = useStyles();
   const router = useRouter();
 
@@ -40,8 +41,12 @@ const Checkout = (props: RestaurantDetailsQuery) => {
   }, [shoppingCartStorage, orderTimeStorage]);
 
   return (
-    <>
-      <PageContainer>
+    <div
+      style={{
+        backgroundColor: theme.neutral,
+      }}
+    >
+      <PageContainer theme={theme}>
         <Head>
           <title>TypeScript starter for Next.js</title>
           <meta
@@ -58,10 +63,10 @@ const Checkout = (props: RestaurantDetailsQuery) => {
           />
           <Container>
             <div className={classes.checkout}>
-              <CheckoutDetails />
-              <CheckoutContact />
-              <CheckoutOrder />
-              <CheckoutPayment />
+              <CheckoutDetails theme={theme} />
+              <CheckoutContact theme={theme} />
+              <CheckoutOrder theme={theme} />
+              <CheckoutPayment theme={theme} />
             </div>
           </Container>
         </main>
@@ -70,8 +75,9 @@ const Checkout = (props: RestaurantDetailsQuery) => {
         openingHours={props.restaurantDetails.openingHours}
         phoneNumbers={props.restaurantDetails.phoneNumbers}
         restaurantName={props.restaurantDetails.name}
+        theme={props.restaurantDetails.theme}
       />
-    </>
+    </div>
   );
 };
 

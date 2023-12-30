@@ -1,6 +1,5 @@
-export type IFoodModalContentHeader = {
-  name: string | null | undefined;
-  isRequired: boolean | null | undefined;
-  isRequiredAddOn?: boolean;
-  maxOptionsSelected?: number | null | undefined;
+import { ThemeType } from '../../../../generated/graphql';
+
+export type IFoodModalCustomInstructions = {
+  theme: ThemeType;
 };

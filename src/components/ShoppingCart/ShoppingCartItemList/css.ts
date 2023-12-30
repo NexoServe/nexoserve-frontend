@@ -2,8 +2,9 @@ import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   shoppingCartItemList: {
     padding: `0 ${base(2)}`,
     overflowY: 'auto',
@@ -53,7 +54,8 @@ const useStyles = createUseStyles({
     margin: '0 auto',
     paddingTop: base(2),
     marginTop: `-${base(8)}`,
+    color: theme.primary,
   },
-});
+}));
 
 export default useStyles;

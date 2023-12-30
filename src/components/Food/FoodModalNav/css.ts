@@ -1,15 +1,15 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   foodModalNav: {
     height: base(7),
     width: '100%',
     maxWidth: '100vw',
-    background: colors.white,
+    background: theme.neutral,
     position: 'sticky',
     top: 0,
     zIndex: 3,
@@ -36,8 +36,9 @@ const useStyles = createUseStyles({
       display: '-webkit-box',
       '-webkit-line-clamp': 1,
       '-webkit-box-orient': 'vertical',
+      color: theme.primary,
     },
   },
-});
+}));
 
 export default useStyles;

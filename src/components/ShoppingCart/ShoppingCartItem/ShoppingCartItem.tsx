@@ -22,6 +22,7 @@ import { IShoppingCartItem, OptionSizeGrouped } from './types';
 const ShoppingCartItem = ({
   shoppingCartItem,
   activeShoppingCartItemClick,
+  theme,
 }: IShoppingCartItem) => {
   const showShoppingCartDetails = useRecoilValue(ShowShoppingCartDetailsAtom);
 
@@ -39,7 +40,9 @@ const ShoppingCartItem = ({
   const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
     ShoppingCartTotalAtom,
   );
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   const updateShoppingCartItem = () => {
     activeShoppingCartItemClick(shoppingCartItem);
@@ -189,7 +192,7 @@ const ShoppingCartItem = ({
                     removeShoppingCartItem();
                   }}
                 >
-                  <SvgIcons name="closeFilled" />
+                  <SvgIcons name="closeFilled" fill={theme.primary} />
                 </button>
               </div>
               <div className={classes.shoppingCartItemEditButton}>

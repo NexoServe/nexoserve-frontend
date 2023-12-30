@@ -33,6 +33,7 @@ const FoodModal = ({
   type,
   orderItemId,
   customInstructionsText,
+  theme,
 }: IFoodModal) => {
   const [getFoodById, { data, loading, error }] = useFoodByIdLazyQuery({
     variables: {
@@ -74,7 +75,9 @@ const FoodModal = ({
     }
   }, [error]);
 
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
   const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
@@ -278,15 +281,16 @@ const FoodModal = ({
   };
 
   return (
-    <ModalPopUp showModal={showModal} onClose={() => onClose()}>
+    <ModalPopUp theme={theme} showModal={showModal} onClose={() => onClose()}>
       <div className={classes.foodModal}>
         <FoodModalNav
           loading={loading}
           onClick={onClose}
           name={data?.foodById.name}
+          theme={theme}
         />
 
-        <FoodModalCloseButton onClick={onClose} />
+        <FoodModalCloseButton theme={theme} onClick={onClose} />
 
         <form
           onSubmit={onSubmit}
@@ -300,6 +304,7 @@ const FoodModal = ({
               food={data.foodById}
               showModal={showModal}
               type={type}
+              theme={theme}
             />
           )}
         </form>

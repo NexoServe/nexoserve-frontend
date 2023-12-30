@@ -8,8 +8,11 @@ const FoodOptionSizeToppingStyle = ({
   option,
   isChecked,
   onChange,
+  theme,
 }: IFoodOptionSizeStyle) => {
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
   return (
     <div
       className={`${classes.foodOptionToppingStyleSize} ${
@@ -22,10 +25,16 @@ const FoodOptionSizeToppingStyle = ({
       >
         {optionSize?.name === 'Left Half' ? (
           <div className={classes.foodOptionToppingStyleSizeIcon}>
-            <SvgIcons name="halfPizza" />
+            <SvgIcons
+              name="halfPizza"
+              fill={theme.primary}
+              backgroundColor={theme.neutral}
+            />
             <span
               className={
-                isChecked ? classes.foodOptionToppingStyleSizePrice : ''
+                isChecked
+                  ? classes.foodOptionToppingStyleSizePriceActive
+                  : classes.foodOptionToppingStyleSizePrice
               }
             >
               ${optionSize?.price?.toFixed(2)}
@@ -35,10 +44,16 @@ const FoodOptionSizeToppingStyle = ({
           <div
             className={`${classes.foodOptionToppingStyleSizeIcon} ${classes.foodOptionToppingStyleSizeIconMiddle}`}
           >
-            <SvgIcons name="wholePizza" />
+            <SvgIcons
+              name="wholePizza"
+              fill={theme.primary}
+              backgroundColor={theme.neutral}
+            />
             <span
               className={
-                isChecked ? classes.foodOptionToppingStyleSizePrice : ''
+                isChecked
+                  ? classes.foodOptionToppingStyleSizePriceActive
+                  : classes.foodOptionToppingStyleSizePrice
               }
             >
               ${optionSize?.price?.toFixed(2)}
@@ -48,10 +63,16 @@ const FoodOptionSizeToppingStyle = ({
           <div
             className={`${classes.foodOptionToppingStyleSizeIcon} ${classes.foodOptionToppingStyleSizeIconLast}`}
           >
-            <SvgIcons name="halfPizza" />
+            <SvgIcons
+              name="halfPizza"
+              fill={theme.primary}
+              backgroundColor={theme.neutral}
+            />
             <span
               className={
-                isChecked ? classes.foodOptionToppingStyleSizePrice : ''
+                isChecked
+                  ? classes.foodOptionToppingStyleSizePriceActive
+                  : classes.foodOptionToppingStyleSizePrice
               }
             >
               ${optionSize?.price?.toFixed(2)}

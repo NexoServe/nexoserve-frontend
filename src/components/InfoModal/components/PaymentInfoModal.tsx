@@ -7,8 +7,9 @@ import * as paymentSuccess from '../../../lottie/success.json';
 import { InfoModalAtom } from '../../../state/InfoModalState';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import useStyles from '../css';
+import { IPaymentInfoModal } from '../types';
 
-const PaymentInfoModal = () => {
+const PaymentInfoModal = ({ theme }: IPaymentInfoModal) => {
   const classes = useStyles();
   const [infoModalState, setInfoModalState] = useRecoilState(InfoModalAtom);
 
@@ -18,6 +19,7 @@ const PaymentInfoModal = () => {
         text={infoModalState.title as string}
         showCloseIcon={infoModalState.type === 'error' ? true : false}
         onClick={() => setInfoModalState({ showModal: false })}
+        theme={theme}
       />
       <div className={classes.infoModalBody}>
         {infoModalState.type === 'success' ? (

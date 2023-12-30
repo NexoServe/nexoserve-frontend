@@ -1,13 +1,12 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../css/base';
-import colors from '../../../css/colors';
 import queries from '../../../css/queries';
+import { ThemeType } from '../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   footer: {
-    backgroundColor: colors.black,
-    backgroundImage: `linear-gradient(0deg, rgba(98,98,98,0.95) 0%, rgba(98,98,98,0.95) 100%), url("https://us-east-menu-images.s3.amazonaws.com/igli_7_put_pizza_on_the_right_4dc04a34-8daf-4f76-85c0-0c904cfe5fbd+(2)+(1).png")`,
+    backgroundColor: theme.primary,
     paddingTop: base(10),
   },
 
@@ -31,7 +30,7 @@ const useStyles = createUseStyles({
   },
 
   footerTitle: {
-    color: colors.secondary,
+    color: theme.neutral,
     fontSize: '16px',
     margin: 0,
     textAlign: 'center',
@@ -47,7 +46,7 @@ const useStyles = createUseStyles({
   },
 
   footerNavLink: {
-    color: colors.white,
+    color: theme.neutral,
     fontSize: '16px',
     margin: 0,
     textAlign: 'center',
@@ -55,7 +54,7 @@ const useStyles = createUseStyles({
     textDecoration: 'none',
 
     '&:hover': {
-      color: colors.primary,
+      color: theme.accent,
     },
   },
 
@@ -76,13 +75,13 @@ const useStyles = createUseStyles({
 
   footerOpeningHourWeekDay: {
     fontSize: '16px',
-    color: colors.white,
+    color: theme.neutral,
     paddingRight: base(3),
   },
 
   footerOpeningHourText: {
     fontSize: '16px',
-    color: colors.white,
+    color: theme.neutral,
   },
 
   footerPhoneWrapper: {
@@ -98,16 +97,16 @@ const useStyles = createUseStyles({
     textDecoration: 'none',
 
     '&:hover': {
-      color: colors.primary,
+      color: theme.accent,
     },
   },
 
   footerPhoneNumber: {
-    color: colors.white,
+    color: theme.neutral,
     paddingLeft: base(0.5),
 
     '&:hover': {
-      color: colors.primary,
+      color: theme.accent,
     },
   },
 
@@ -120,10 +119,10 @@ const useStyles = createUseStyles({
   },
 
   footerCopyrightText: {
-    color: colors.white,
+    color: theme.neutral,
     textAlign: 'center',
     paddingTop: base(2),
   },
-});
+}));
 
 export default useStyles;

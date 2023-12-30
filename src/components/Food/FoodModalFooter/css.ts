@@ -1,17 +1,17 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   foodModalFooter: {
     position: 'sticky',
     bottom: 0,
     minHeight: base(7),
     marginTop: 'auto',
     width: '100%',
-    background: colors.white,
+    background: theme.neutral,
     zIndex: 2,
     padding: base(1),
     display: 'grid',
@@ -24,7 +24,7 @@ const useStyles = createUseStyles({
   foodModalFooterQuantityContainer: {
     display: 'grid',
     gridTemplateColumns: '0.75fr 1.5fr 0.75fr',
-    backgroundColor: colors.secondary,
+    backgroundColor: `${theme.primary}10`,
     borderRadius: base(5),
     padding: `0 ${base(0.5)}`,
     columnGap: base(1),
@@ -49,6 +49,7 @@ const useStyles = createUseStyles({
     background: 'transparent',
     border: 'none',
     outlineColor: 'transparent',
+    color: theme.primary,
 
     [queries.xs]: {
       fontSize: '20px',
@@ -68,6 +69,6 @@ const useStyles = createUseStyles({
       '-moz-appearance': 'textfield',
     },
   },
-});
+}));
 
 export default useStyles;

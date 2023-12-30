@@ -72,11 +72,12 @@ const Navbar = ({ logo, restaurantName, theme }: INavbar) => {
           showModal={showMenu}
           onClose={() => setShowMenu(false)}
           overlayClass={classes.navbarModalOverlay}
+          theme={theme}
         >
           <Menu styleClass={classes.navbarMenuMobile} theme={theme} />
         </ModalPopUp>
       </Container>
-      <Divider />
+      <Divider theme={theme} />
     </nav>
   );
 };

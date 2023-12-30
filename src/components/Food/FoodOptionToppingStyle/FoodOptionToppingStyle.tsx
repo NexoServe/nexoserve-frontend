@@ -11,12 +11,18 @@ const FoodOptionToppingStyle = ({
   onChange,
   isChecked,
   addOn,
+  theme,
 }: IFoodOptionStyle) => {
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   return (
     <>
-      <Divider styleClass={classes.foodOptionToppingStyleDivider} />
+      <Divider
+        theme={theme}
+        styleClass={classes.foodOptionToppingStyleDivider}
+      />
       <div className={`${classes.foodOptionToppingStyle}`}>
         <label
           className={`${classes.foodOptionToppingStyleLabel} ${
@@ -24,7 +30,7 @@ const FoodOptionToppingStyle = ({
           }`}
           htmlFor={option?.id || undefined}
         >
-          <Checkbox isChecked={isChecked} />
+          <Checkbox theme={theme} isChecked={isChecked} />
           <input
             type="checkbox"
             value={option?.id || undefined}
@@ -46,6 +52,7 @@ const FoodOptionToppingStyle = ({
                 option={option}
                 key={optionSize?.id}
                 optionSize={optionSize as OptionSizeType}
+                theme={theme}
               />
             ))}
         </div>

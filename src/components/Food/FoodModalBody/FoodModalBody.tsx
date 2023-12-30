@@ -21,8 +21,10 @@ import FoodSize from '../FoodSize/FoodSize';
 import useStyles from './css';
 import { IFoodModalBody } from './types';
 
-const FoodModalBody = ({ food, showModal, type }: IFoodModalBody) => {
-  const classes = useStyles();
+const FoodModalBody = ({ food, showModal, type, theme }: IFoodModalBody) => {
+  const classes = useStyles({
+    theme,
+  });
 
   const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
   const foodModalSelectedSize = useRecoilValue(FoodModalSelectedSizeAtom);
@@ -109,13 +111,21 @@ const FoodModalBody = ({ food, showModal, type }: IFoodModalBody) => {
         )}
       </div>
       <div className={classes.foodModalBodyContent}>
-        <FoodModalHeader name={food?.name} description={food?.description} />
+        <FoodModalHeader
+          name={food?.name}
+          description={food?.description}
+          theme={theme}
+        />
 
         {foodModal.selectedSize ? (
           <div className={classes.foodModalBodyChildBorder}>
-            <FoodModalContentHeader name="Sizes" isRequired={true} />
+            <FoodModalContentHeader
+              theme={theme}
+              name="Sizes"
+              isRequired={true}
+            />
             {food.sizes?.map((size) => (
-              <FoodSize key={size?.id} size={size} />
+              <FoodSize theme={theme} key={size?.id} size={size} />
             ))}
           </div>
         ) : null}
@@ -135,13 +145,16 @@ const FoodModalBody = ({ food, showModal, type }: IFoodModalBody) => {
               <FoodAddOn
                 isRequiredAddOn={addOn?.name === requiredAddOn?.name}
                 addOn={addOn}
+                theme={theme}
               />
             </div>
           ))}
-        <FoodModalCustomInstructions />
+        <div className={classes.foodModalBodyChildBorder}>
+          <FoodModalCustomInstructions theme={theme} />
+        </div>
       </div>
 
-      <FoodModalFooter type={type} />
+      <FoodModalFooter theme={theme} type={type} />
     </>
   );
 };

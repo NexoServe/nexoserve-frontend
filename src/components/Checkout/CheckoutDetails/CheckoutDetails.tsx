@@ -21,9 +21,12 @@ import SvgIcons from '../../SvgIcons';
 import CheckoutHeader from '../CheckoutHeader/CheckoutHeader';
 
 import useStyles from './css';
+import { ICheckoutDetails } from './types';
 
-const CheckoutDetails = () => {
-  const classes = useStyles();
+const CheckoutDetails = ({ theme }: ICheckoutDetails) => {
+  const classes = useStyles({
+    theme,
+  });
   const [showTimeModal, setShowTimeModal] = useState(false);
   const [showAddressModal, setShowAddressModal] = useState(false);
 
@@ -41,11 +44,11 @@ const CheckoutDetails = () => {
 
   return (
     <>
-      <RoundBorder styleClass={classes.checkoutDetails}>
-        <CheckoutHeader title={'Order Details'} />
+      <RoundBorder styleClass={classes.checkoutDetails} theme={theme}>
+        <CheckoutHeader title={'Order Details'} theme={theme} />
         <div>
           <div className={classes.checkoutDetailsOrderType}>
-            <OrderType isCheckout={true} />
+            <OrderType theme={theme} isCheckout={true} />
           </div>
           <button
             onClick={() => {
@@ -64,6 +67,7 @@ const CheckoutDetails = () => {
                 name={isPickUpState ? 'pickUp' : 'car'}
                 width="40"
                 height="20"
+                fill={theme.primary}
               />
               <h3 className={classes.checkoutDetailsContentItemTitle}>
                 {isPickUpState ? 'Pick Up' : 'Delivery'} Address:
@@ -114,7 +118,12 @@ const CheckoutDetails = () => {
           >
             <div className={classes.checkoutDetailsHeader}>
               <div className={classes.checkoutDetailsIcon}>
-                <SvgIcons name="clock" width="30px" height="30px" />
+                <SvgIcons
+                  name="clock"
+                  width="30px"
+                  height="30px"
+                  fill={theme.primary}
+                />
               </div>
               <h3 className={classes.checkoutDetailsContentItemTitle}>
                 Day and Time:
@@ -138,21 +147,25 @@ const CheckoutDetails = () => {
       <ModalPopUp
         showModal={showTimeModal}
         onClose={() => setShowTimeModal(false)}
+        theme={theme}
       >
         <OrderNavBarModal
           setModal={setShowTimeModal}
           headerText="Delivery Details"
+          theme={theme}
         />
       </ModalPopUp>
 
       <ModalPopUp
         showModal={showAddressModal}
         onClose={() => setShowAddressModal(false)}
+        theme={theme}
       >
         <OrderNavBarModal
           setModal={setShowAddressModal}
           headerText="Delivery Details"
           type="delivery"
+          theme={theme}
         />
       </ModalPopUp>
     </>

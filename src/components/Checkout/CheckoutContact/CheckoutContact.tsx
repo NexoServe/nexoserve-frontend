@@ -18,8 +18,9 @@ import RoundBorder from '../../RoundBorder/RoundBorder';
 import CheckoutHeader from '../CheckoutHeader/CheckoutHeader';
 
 import useStyles from './css';
+import { ICheckoutContact } from './types';
 
-const CheckoutContact = () => {
+const CheckoutContact = ({ theme }: ICheckoutContact) => {
   const [, setFirstName] = useRecoilState(CheckoutFirstNameAtom);
   const [firstNameError, setFirstNameError] = useRecoilState(
     CheckoutFirstNameErrorAtom,
@@ -51,8 +52,8 @@ const CheckoutContact = () => {
 
   return (
     <div ref={ref}>
-      <RoundBorder styleClass={classes.checkoutContact}>
-        <CheckoutHeader title="Contact" />
+      <RoundBorder styleClass={classes.checkoutContact} theme={theme}>
+        <CheckoutHeader title="Contact" theme={theme} />
         <Input
           onChange={(e) => {
             setFirstName(e.target.value);
@@ -66,6 +67,7 @@ const CheckoutContact = () => {
           placeholder="John"
           isRequired={true}
           error={firstNameError ? 'Your First Name is incomplete.' : null}
+          theme={theme}
         />
 
         <Input
@@ -81,6 +83,7 @@ const CheckoutContact = () => {
           placeholder="Doe"
           isRequired={true}
           error={lastNameError ? 'Your Last Name is incomplete.' : null}
+          theme={theme}
         />
         <Input
           onChange={(e) => {
@@ -100,8 +103,9 @@ const CheckoutContact = () => {
           placeholder="email@example.com"
           isRequired={true}
           error={emailError ? 'Your Email is incomplete.' : null}
+          theme={theme}
         />
-        <PhoneNumberInput />
+        <PhoneNumberInput theme={theme} />
       </RoundBorder>
     </div>
   );

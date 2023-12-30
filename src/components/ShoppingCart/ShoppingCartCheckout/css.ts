@@ -1,8 +1,9 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   shoppingCartCheckoutLinkBox: {
     width: '100%',
     display: 'flex',
@@ -14,6 +15,7 @@ const useStyles = createUseStyles({
     fontSize: '18px',
     padding: `${base(3)} 0`,
     fontWeight: 500,
+    color: theme.primary,
   },
 
   shoppingCartCheckout: {
@@ -24,11 +26,16 @@ const useStyles = createUseStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+
+    '& > div': {
+      color: theme.primary,
+    },
   },
 
   shoppingCartCheckoutLabel: {
     margin: 0,
     fontSize: '16px',
+    color: theme.primary,
   },
 
   shoppingCartCheckoutTotalLabel: {
@@ -38,6 +45,6 @@ const useStyles = createUseStyles({
   shoppingCartCheckoutTotalDiv: {
     fontWeight: 500,
   },
-});
+}));
 
 export default useStyles;

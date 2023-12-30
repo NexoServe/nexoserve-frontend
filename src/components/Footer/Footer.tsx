@@ -1,7 +1,6 @@
 import { DateTime } from 'luxon';
 import Link from 'next/link';
 
-import colors from '../../../css/colors';
 import Container from '../Container/Container';
 import { getRestaurantOpeningHours } from '../OrderNavbar/OrderInfo/helpers';
 import SvgIcons from '../SvgIcons';
@@ -9,13 +8,25 @@ import SvgIcons from '../SvgIcons';
 import useStyles from './css';
 import { IFooter } from './types';
 
-const Footer = ({ openingHours, phoneNumbers, restaurantName }: IFooter) => {
-  const styles = useStyles();
+const Footer = ({
+  openingHours,
+  phoneNumbers,
+  restaurantName,
+  theme,
+}: IFooter) => {
+  const styles = useStyles({
+    theme,
+  });
 
   const openingHoursMap = getRestaurantOpeningHours(openingHours);
 
   return (
-    <footer className={styles.footer}>
+    <footer
+      className={styles.footer}
+      style={{
+        backgroundImage: `linear-gradient(0deg, ${theme.primary} 0%, ${theme.primary}95 100%), url("https://us-east-menu-images.s3.amazonaws.com/igli_7_put_pizza_on_the_right_4dc04a34-8daf-4f76-85c0-0c904cfe5fbd+(2)+(1).png")`,
+      }}
+    >
       <Container>
         <div className={styles.footerWrapper}>
           <div className={styles.footerCard}>
@@ -62,7 +73,7 @@ const Footer = ({ openingHours, phoneNumbers, restaurantName }: IFooter) => {
                   className={styles.footerPhone}
                   href={`tel:${phoneNumber?.number}`}
                 >
-                  <SvgIcons name="phone" />
+                  <SvgIcons name="phone" fill={theme.neutral} />
                   <div className={styles.footerPhoneNumber}>
                     {phoneNumber.number}
                   </div>
@@ -82,7 +93,7 @@ const Footer = ({ openingHours, phoneNumbers, restaurantName }: IFooter) => {
               target="_blank"
               rel="noreferrer"
               style={{
-                color: colors.primary,
+                color: theme.accent,
               }}
             >
               NexoServe

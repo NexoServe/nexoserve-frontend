@@ -155,7 +155,7 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     alignItems: 'center',
     borderRadius: '8px',
     backgroundColor: theme.neutral,
-    boxShadow: `0 40px 50px -20px ${theme.primary}30`,
+    boxShadow: `0 40px 50px -20px ${theme.neutral}30`,
 
     [queries.l]: {
       display: 'grid',

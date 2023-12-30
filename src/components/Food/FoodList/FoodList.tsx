@@ -8,8 +8,9 @@ import FoodCard from '../FoodCard/FoodCard';
 import FoodModal from '../FoodModal/FoodModal';
 
 import useStyles from './css';
+import { IFoodList } from './types';
 
-const FoodList = () => {
+const FoodList = ({ theme }: IFoodList) => {
   const menu = useRecoilValue(FoodMenuAtom);
 
   const sortedMenu = useMemo(() => {
@@ -20,7 +21,9 @@ const FoodList = () => {
     }
   }, [menu]);
 
-  const classes = useStyles();
+  const styles = useStyles({
+    theme,
+  });
 
   const [showModal, setShowModal] = useState(false);
   const [activeFood, setActiveFood] = useState<FoodWithSizesType>();
@@ -33,16 +36,17 @@ const FoodList = () => {
   return (
     <div>
       {sortedMenu?.map((foodByCategory) => (
-        <div key={foodByCategory?.category} className={classes.foodList}>
-          <h2 className={classes.foodListCategory}>
+        <div key={foodByCategory?.category} className={styles.foodList}>
+          <h2 className={styles.foodListCategory}>
             {foodByCategory?.category}
           </h2>
-          <div className={classes.foodListInner}>
+          <div className={styles.foodListInner}>
             {foodByCategory?.foods?.map((food) => (
               <FoodCard
                 key={food?.id}
                 food={food}
                 activeFoodClick={activeFoodClick}
+                theme={theme}
               />
             ))}
           </div>
@@ -54,6 +58,7 @@ const FoodList = () => {
           setShowModal={setShowModal}
           foodId={activeFood.id}
           type="create"
+          theme={theme}
         />
       )}
     </div>

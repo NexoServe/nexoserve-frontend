@@ -1,8 +1,6 @@
-import colors from '../../../css/colors';
-
 import { SvgIconsType } from './types';
 
-const EmptyCart = ({ styleClass }: SvgIconsType) => {
+const EmptyCart = ({ styleClass, fill, backgroundColor }: SvgIconsType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -12,7 +10,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
     >
       <g strokeWidth="2.0" fill="none" strokeLinecap="butt">
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 650.28 240.11
@@ -22,7 +20,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 643.33 255.63 650.28 248.68 650.28 240.11"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 333.33 250.60
@@ -32,7 +30,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 328.87 260.57 333.33 256.11 333.33 250.60"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 430.52 247.18
@@ -42,7 +40,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 428.70 251.24 430.52 249.42 430.52 247.18"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 703.44 263.81
@@ -52,7 +50,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 700.52 270.33 703.44 267.41 703.44 263.81"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 302.04 443.25
@@ -70,21 +68,21 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Q 721.99 712.00 721.54 679.75"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 721.54 679.75
   L 721.46 579.25"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 721.46 579.25
   L 721.71 485.50"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 721.71 485.50
@@ -114,7 +112,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
         />
 
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 292.5232 304.0229
@@ -128,7 +126,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   L 292.5232 304.0229"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 327.0041 294.2426
@@ -142,7 +140,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   L 327.0041 294.2426"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 660.38 308.44
@@ -161,7 +159,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 660.97 308.58 660.65 308.59 660.38 308.44"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 270.9561 329.3972
@@ -175,7 +173,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   L 270.9561 329.3972"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 348.3041 337.1557
@@ -189,7 +187,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   L 348.3041 337.1557"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 804.7105 328.5385
@@ -203,7 +201,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   L 804.7105 328.5385"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 282.7649 362.1282
@@ -217,7 +215,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   L 282.7649 362.1282"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 316.7459 374.0658
@@ -231,7 +229,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   L 316.7459 374.0658"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 243.66 411.25
@@ -241,7 +239,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 237.93 424.04 243.66 418.31 243.66 411.25"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 821.55 416.45
@@ -251,7 +249,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 819.86 420.23 821.55 418.54 821.55 416.45"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 763.98 476.26
@@ -281,7 +279,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 763.99 475.72 764.10 476.01 763.98 476.26"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 228.17 476.23
@@ -291,7 +289,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 226.46 480.06 228.17 478.35 228.17 476.23"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 644.89 240.09
@@ -301,7 +299,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 640.36 250.21 644.89 245.68 644.89 240.09"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 327.52 250.70
@@ -311,7 +309,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 325.71 254.75 327.52 252.94 327.52 250.70"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 696.2209 265.9067
@@ -321,7 +319,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 694.78 264.14 695.20 265.46 696.2209 265.9067"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 511.93 295.13
@@ -353,7 +351,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Q 485.17 294.23 511.93 295.13"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 492.94 421.56
@@ -371,7 +369,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Q 448.55 421.43 492.94 421.56"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 523.05 355.85
@@ -381,7 +379,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 521.37 359.60 523.05 357.92 523.05 355.85"
         />
         <path
-          stroke={colors.white}
+          stroke={fill}
           vectorEffect="non-scaling-stroke"
           d="
   M 236.76 411.28
@@ -393,7 +391,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
       </g>
 
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 650.28 240.11
   C 650.28 248.68 643.33 255.63 634.76 255.63
@@ -408,9 +406,9 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 640.36 250.21 644.89 245.68 644.89 240.09
   Z"
       />
-      <circle fill={colors.secondary} cx="634.77" cy="240.09" r="10.12" />
+      <circle fill={fill} cx="634.77" cy="240.09" r="10.12" />
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 333.33 250.60
   C 333.33 256.11 328.87 260.57 323.36 260.57
@@ -425,10 +423,10 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 325.71 254.75 327.52 252.94 327.52 250.70
   Z"
       />
-      <circle fill={colors.darkGray} cx="426.46" cy="247.18" r="4.06" />
-      <circle fill={colors.secondary} cx="323.47" cy="250.70" r="4.05" />
+      <circle fill={backgroundColor} cx="426.46" cy="247.18" r="4.06" />
+      <circle fill={fill} cx="323.47" cy="250.70" r="4.05" />
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 703.44 263.81
   C 703.44 267.41 700.52 270.33 696.92 270.33
@@ -444,7 +442,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Z"
       />
       <ellipse
-        fill={colors.secondary}
+        fill={fill}
         cx="0.00"
         cy="0.00"
         transform="translate(697.15,263.77) rotate(113.5)"
@@ -452,7 +450,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
         ry="2.02"
       />
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 721.71 485.50
   Q 721.20 484.03 721.19 485.67
@@ -544,7 +542,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Z"
       />
       <path
-        fill={colors.secondary}
+        fill={fill}
         d="
   M 511.93 295.13
   Q 485.17 294.23 464.80 309.46
@@ -576,7 +574,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Z"
       />
       <rect
-        fill={colors.darkGray}
+        fill={backgroundColor}
         x="-11.34"
         y="-2.63"
         transform="translate(284.08,296.45) rotate(42.9)"
@@ -585,7 +583,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
         rx="2.43"
       />
       <rect
-        fill={colors.darkGray}
+        fill={backgroundColor}
         x="-2.73"
         y="-9.59"
         transform="translate(320.32,297.55) rotate(42.2)"
@@ -594,7 +592,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
         rx="2.65"
       />
       <path
-        fill={colors.secondary}
+        fill={fill}
         d="
   M 492.94 421.56
   Q 448.55 421.43 436.43 421.32
@@ -618,7 +616,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Z"
       />
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 661.24 308.43
   Q 666.86 305.05 672.79 305.92
@@ -653,7 +651,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Z"
       />
       <path
-        fill={colors.secondary}
+        fill={fill}
         d="
   M 650.44 337.56
   Q 645.01 332.82 642.60 327.19
@@ -673,7 +671,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Z"
       />
       <rect
-        fill={colors.darkGray}
+        fill={backgroundColor}
         x="-10.71"
         y="-2.68"
         transform="translate(262.22,323.20) rotate(36.1)"
@@ -682,7 +680,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
         rx="2.54"
       />
       <rect
-        fill={colors.darkGray}
+        fill={backgroundColor}
         x="-11.25"
         y="-2.75"
         transform="translate(339.19,330.56) rotate(36.3)"
@@ -691,7 +689,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
         rx="2.67"
       />
       <rect
-        fill={colors.darkGray}
+        fill={backgroundColor}
         x="-2.76"
         y="-45.52"
         transform="translate(774.27,358.78) rotate(41.5)"
@@ -700,7 +698,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
         rx="2.70"
       />
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 528.96 355.85
   C 528.96 361.22 524.60 365.58 519.23 365.58
@@ -715,9 +713,9 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 521.37 359.60 523.05 357.92 523.05 355.85
   Z"
       />
-      <circle fill={colors.secondary} cx="519.30" cy="355.85" r="3.75" />
+      <circle fill={fill} cx="519.30" cy="355.85" r="3.75" />
       <rect
-        fill={colors.darkGray}
+        fill={backgroundColor}
         x="-2.80"
         y="-10.01"
         transform="translate(275.80,365.66) rotate(42.1)"
@@ -726,7 +724,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
         rx="2.72"
       />
       <rect
-        fill={colors.darkGray}
+        fill={backgroundColor}
         x="-10.58"
         y="-2.76"
         transform="translate(308.96,366.90) rotate(43.6)"
@@ -735,7 +733,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
         rx="2.58"
       />
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 243.66 411.25
   C 243.66 418.31 237.93 424.04 230.87 424.04
@@ -750,10 +748,10 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 234.14 417.13 236.76 414.51 236.76 411.28
   Z"
       />
-      <circle fill={colors.secondary} cx="230.91" cy="411.28" r="5.85" />
-      <circle fill={colors.darkGray} cx="817.77" cy="416.45" r="3.78" />
+      <circle fill={fill} cx="230.91" cy="411.28" r="5.85" />
+      <circle fill={backgroundColor} cx="817.77" cy="416.45" r="3.78" />
       <path
-        fill={colors.secondary}
+        fill={fill}
         d="
   M 716.71 484.25
   L 717.29 579.75
@@ -848,7 +846,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Z"
       />
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 307.46 441.00
   Q 307.24 499.50 307.46 558.00
@@ -885,7 +883,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Z"
       />
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 763.74 475.61
   Q 755.10 471.81 746.02 469.23
@@ -914,9 +912,9 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   C 764.10 476.01 763.99 475.72 763.74 475.61
   Z"
       />
-      <circle fill={colors.darkGray} cx="224.34" cy="476.23" r="3.83" />
+      <circle fill={backgroundColor} cx="224.34" cy="476.23" r="3.83" />
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 721.71 485.50
   L 721.46 579.25
@@ -933,7 +931,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Z"
       />
       <rect
-        fill={colors.darkGray}
+        fill={backgroundColor}
         x="-42.72"
         y="-2.82"
         transform="translate(413.98,566.65) rotate(0.1)"
@@ -942,7 +940,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
         rx="2.35"
       />
       <rect
-        fill={colors.darkGray}
+        fill={backgroundColor}
         x="-41.60"
         y="-2.80"
         transform="translate(606.59,566.65) rotate(0.1)"
@@ -951,7 +949,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
         rx="2.37"
       />
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 721.46 579.25
   L 721.54 679.75
@@ -965,7 +963,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Z"
       />
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 591.94 595.31
   Q 589.79 593.68 588.78 591.76
@@ -982,7 +980,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Z"
       />
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 404.69 595.31
   Q 401.40 592.77 399.95 589.70
@@ -1002,7 +1000,7 @@ const EmptyCart = ({ styleClass }: SvgIconsType) => {
   Z"
       />
       <path
-        fill={colors.darkGray}
+        fill={backgroundColor}
         d="
   M 487.10 628.14
   Q 484.47 626.86 484.74 624.30

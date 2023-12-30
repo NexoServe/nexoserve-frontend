@@ -1,10 +1,10 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   orderType: {
     position: 'relative',
     display: 'flex',
@@ -36,7 +36,7 @@ const useStyles = createUseStyles({
     position: 'absolute',
     height: '100%',
     width: `50%`,
-    background: colors.primary,
+    background: theme.accent,
     transition: 'all 0.3s linear',
     borderRadius: base(2),
   },
@@ -58,6 +58,7 @@ const useStyles = createUseStyles({
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
+    color: theme.primary,
 
     [queries.s]: {
       maxHeight: base(6),
@@ -81,6 +82,6 @@ const useStyles = createUseStyles({
   orderTypeIconDelivery: {
     marginLeft: base(0.5),
   },
-});
+}));
 
 export default useStyles;

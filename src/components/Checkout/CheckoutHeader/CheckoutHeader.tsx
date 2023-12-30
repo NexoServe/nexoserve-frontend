@@ -1,8 +1,10 @@
 import useStyles from './css';
 import { ICheckoutHeader } from './types';
 
-const CheckoutHeader = ({ title }: ICheckoutHeader) => {
-  const classes = useStyles();
+const CheckoutHeader = ({ title, theme }: ICheckoutHeader) => {
+  const classes = useStyles({
+    theme,
+  });
 
   return (
     <div className={classes.checkoutHeader}>

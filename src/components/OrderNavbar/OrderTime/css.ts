@@ -2,8 +2,9 @@ import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((them: ThemeType) => ({
   orderTime: {
     width: '40%',
 
@@ -77,6 +78,7 @@ const useStyles = createUseStyles({
   orderTimeLabel: {
     fontSize: '12px',
     fontWeight: 600,
+    color: them.primary,
 
     [queries.xl]: {
       fontSize: '16px',
@@ -88,6 +90,6 @@ const useStyles = createUseStyles({
   orderTimeIconArrow: {
     transform: 'rotate(180deg)',
   },
-});
+}));
 
 export default useStyles;

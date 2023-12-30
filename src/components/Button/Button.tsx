@@ -8,9 +8,12 @@ const Button = ({
   onClick,
   styleClass,
   disabled,
+  theme,
   ...rest
 }: ButtonType) => {
-  const styles = useStyles();
+  const styles = useStyles({
+    theme,
+  });
 
   return (
     <button

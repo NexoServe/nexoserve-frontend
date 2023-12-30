@@ -11,8 +11,11 @@ const FoodOptionRegularStyle = ({
   isChecked,
   addOn,
   disabled,
+  theme,
 }: IFoodOptionStyle) => {
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   return (
     <div
@@ -30,7 +33,7 @@ const FoodOptionRegularStyle = ({
         }}
         htmlFor={option?.id || undefined}
       >
-        <Checkbox isChecked={isChecked} />
+        <Checkbox theme={theme} isChecked={isChecked} />
         <input
           type="checkbox"
           value={option?.id || undefined}
@@ -58,6 +61,7 @@ const FoodOptionRegularStyle = ({
             option={option}
             key={optionSize?.id}
             optionSize={optionSize as OptionSizeType}
+            theme={theme}
           />
         ))}
       </div>

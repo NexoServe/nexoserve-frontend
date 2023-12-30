@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
 import { OptionWithSizeType } from '../../../../generated/graphql';
 import { OrderIsPickUpStateAtom } from '../../../state/OrderNavbar';
 import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
@@ -17,8 +16,9 @@ import Button from '../../Button/Button';
 import SvgIcons from '../../SvgIcons';
 
 import useStyles from './css';
+import { IShoppingCartCheckoutButton } from './types';
 
-const ShoppingCarCheckoutButton = () => {
+const ShoppingCarCheckoutButton = ({ theme }: IShoppingCartCheckoutButton) => {
   const styles = useStyles();
   const router = useRouter();
 
@@ -28,8 +28,6 @@ const ShoppingCarCheckoutButton = () => {
     ShoppingCartTotalAtom,
   );
   const shoppingCart = useRecoilValue(ShoppingCartAtom);
-
-  console.log('isPickUpState', isPickUpState);
 
   useEffect(() => {
     if (!shoppingCartTotal.isValidated) {
@@ -76,7 +74,7 @@ const ShoppingCarCheckoutButton = () => {
               Please add{' '}
               <span
                 style={{
-                  color: colors.red,
+                  color: theme.tertiary,
                 }}
               >
                 $
@@ -97,6 +95,7 @@ const ShoppingCarCheckoutButton = () => {
                 ? true
                 : false
             }
+            theme={theme}
           >
             Checkout (${shoppingCartTotal.subtotal.toFixed(2)})
           </Button>

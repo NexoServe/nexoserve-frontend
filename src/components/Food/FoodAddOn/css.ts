@@ -1,8 +1,9 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   foodAddOn: {
     position: 'relative',
   },
@@ -24,11 +25,15 @@ const useStyles = createUseStyles({
     display: 'grid',
     gridTemplateColumns: `repeat(3, ${base(4)})`,
     justifyContent: 'space-between',
+
+    '& div': {
+      color: theme.primary,
+    },
   },
 
   foodAddOnToppingHeaderInnerLast: {
     textAlign: 'right',
   },
-});
+}));
 
 export default useStyles;

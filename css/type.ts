@@ -1,9 +1,7 @@
 import { base, htmlFontSize } from './base';
-import colors from './colors';
 
 const heading = {
   fontWeight: 'normal',
-  color: colors.black,
 };
 
 export const h1 = {

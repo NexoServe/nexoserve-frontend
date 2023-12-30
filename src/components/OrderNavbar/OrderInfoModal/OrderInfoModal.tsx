@@ -16,12 +16,14 @@ import { getRestaurantOpeningHours } from '../OrderInfo/helpers';
 import useStyles from './css';
 import { IOrderInfoModal } from './types';
 
-const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
+const OrderInfoModal = ({ setModal, theme }: IOrderInfoModal) => {
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
   const orderDetails = useRecoilValue(OrderDetailsAtom);
 
   const [isPickUp, setIsPickUp] = useRecoilState(InfoModalIsPickUpAtom);
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   const pickUpOpeningHours = getRestaurantOpeningHours(
     restaurantDetails?.pickUpOpeningHours,
@@ -39,6 +41,7 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
           setModal(false);
           setIsPickUp(true);
         }}
+        theme={theme}
       />
       <div className={classes.orderInfoModalContent}>
         <div className={classes.orderInfoModalContentInner}>
@@ -52,6 +55,7 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
                   style={{
                     paddingTop: base(0.5),
                     paddingBottom: base(0.5),
+                    color: theme.primary,
                   }}
                   key={phone.id}
                   href={`tel:${phone.number}`}
@@ -67,6 +71,9 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
             </div>
             <div className={classes.orderInfoModalContentDirections}>
               <a
+                style={{
+                  color: theme.primary,
+                }}
                 href={`https://www.google.com/maps/place/${restaurantDetails?.address.replace(
                   / /g,
                   '+',
@@ -79,7 +86,7 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
             </div>
           </div>
         </div>
-        <Divider />
+        <Divider theme={theme} />
         <div>
           <h3 className={classes.orderInfoModalHoursTitle}>Hours:</h3>
 

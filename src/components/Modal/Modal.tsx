@@ -14,6 +14,7 @@ export const ModalPopUp = ({
   children,
   onClose,
   overlayClass,
+  theme,
 }: IModalPopUp) => {
   const styles = useStyles();
 
@@ -89,7 +90,7 @@ export const ModalPopUp = ({
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              backgroundColor: `${theme.primary}50`,
               cursor: 'pointer',
             }}
             onClick={() => onClose()}

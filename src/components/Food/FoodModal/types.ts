@@ -1,4 +1,4 @@
-import { FoodByIdQuery } from '../../../../generated/graphql';
+import { FoodByIdQuery, ThemeType } from '../../../../generated/graphql';
 
 export interface IFoodModal {
   foodId: string;
@@ -7,6 +7,7 @@ export interface IFoodModal {
   type: 'create' | 'update';
   orderItemId?: string;
   customInstructionsText?: string;
+  theme: ThemeType;
 }
 
 export type FoodType = NonNullable<FoodByIdQuery>['foodById'];
