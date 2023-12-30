@@ -10,7 +10,9 @@ import useStyles from '../css';
 import { IPaymentInfoModal } from '../types';
 
 const PaymentInfoModal = ({ theme }: IPaymentInfoModal) => {
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
   const [infoModalState, setInfoModalState] = useRecoilState(InfoModalAtom);
 
   return (

@@ -31,11 +31,6 @@ const Home = (props: RestaurantDetailsQuery) => {
   const router = useRouter();
   const theme = props.restaurantDetails.theme;
 
-  console.log(
-    'props.restaurantDetails.favicon',
-    props.restaurantDetails.favicon,
-  );
-
   return (
     <div
       style={{
@@ -59,6 +54,19 @@ const Home = (props: RestaurantDetailsQuery) => {
           content={props.restaurantDetails.metaDescription}
         />
         <meta property="og:image" content={props.restaurantDetails.ogImage} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={props.restaurantDetails.name} />
+        <meta
+          property="og:description"
+          content={props.restaurantDetails.metaDescription}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={props.restaurantDetails.name} />
+        <meta
+          name="twitter:description"
+          content={props.restaurantDetails.metaDescription}
+        />
+        <meta name="twitter:image" content={props.restaurantDetails.ogImage} />
       </Head>
       <Navbar
         logo={props.restaurantDetails.logo}
