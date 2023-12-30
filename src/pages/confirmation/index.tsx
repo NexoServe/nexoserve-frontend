@@ -36,12 +36,22 @@ const Order = (props: RestaurantDetailsQuery) => {
       }}
     >
       <Head>
-        <title>TypeScript starter for Next.js</title>
+        <link rel="shortcut icon" href={props.restaurantDetails.favicon} />
+        <title>{props.restaurantDetails.name}</title>
         <meta
           name="description"
-          content="TypeScript starter for Next.js that includes all you need to build amazing apps"
+          content={props.restaurantDetails.metaDescription}
         />
-        <link rel="icon" href="/favicon.ico" />
+        {/* <meta name="keywords" content={props.restaurantDetails.keywords} /> */}
+        <meta name="author" content="nexoserve.com" />
+        <meta name="robots" content="index, follow" />
+        <meta name="language" content="en" />
+        <meta property="og:title" content={props.restaurantDetails.name} />
+        <meta
+          property="og:description"
+          content={props.restaurantDetails.metaDescription}
+        />
+        <meta property="og:image" content={props.restaurantDetails.ogImage} />
       </Head>
 
       <main>
