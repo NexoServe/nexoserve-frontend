@@ -63,9 +63,10 @@ const ShoppingCarCheckoutButton = ({ theme }: IShoppingCartCheckoutButton) => {
               paddingTop: base(1),
               fontSize: '14px',
               display: 'flex',
+              color: theme.primary,
             }}
           >
-            <SvgIcons width="15px" name="info" />
+            <SvgIcons width="15px" name="info" fill={theme.primary} />
             <div
               style={{
                 paddingLeft: base(1),

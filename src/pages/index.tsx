@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Lottie from 'react-lottie';
@@ -30,12 +31,35 @@ const Home = (props: RestaurantDetailsQuery) => {
   const router = useRouter();
   const theme = props.restaurantDetails.theme;
 
+  console.log(
+    'props.restaurantDetails.favicon',
+    props.restaurantDetails.favicon,
+  );
+
   return (
     <div
       style={{
         backgroundColor: theme.neutral,
       }}
     >
+      <Head>
+        <link rel="shortcut icon" href={props.restaurantDetails.favicon} />
+        <title>{props.restaurantDetails.name}</title>
+        <meta
+          name="description"
+          content={props.restaurantDetails.metaDescription}
+        />
+        {/* <meta name="keywords" content={props.restaurantDetails.keywords} /> */}
+        <meta name="author" content="nexoserve.com" />
+        <meta name="robots" content="index, follow" />
+        <meta name="language" content="en" />
+        <meta property="og:title" content={props.restaurantDetails.name} />
+        <meta
+          property="og:description"
+          content={props.restaurantDetails.metaDescription}
+        />
+        <meta property="og:image" content={props.restaurantDetails.ogImage} />
+      </Head>
       <Navbar
         logo={props.restaurantDetails.logo}
         restaurantName={props.restaurantDetails.name}

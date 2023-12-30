@@ -7,6 +7,9 @@ const GET_RESTAURANT_DETAILS_QUERY = gql`
     restaurantDetails(restaurantId: $restaurantId) {
       name
       logo
+      favicon
+      metaDescription
+      ogImage
       theme {
         accent
         neutral

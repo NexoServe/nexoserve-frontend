@@ -2,6 +2,9 @@ query RestaurantDetails($restaurantId: String!) {
   restaurantDetails(restaurantId: $restaurantId) {
     name
     logo
+    favicon
+    metaDescription
+    ogImage
     theme {
       accent
       neutral
