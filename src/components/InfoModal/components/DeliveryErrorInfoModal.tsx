@@ -9,7 +9,9 @@ import useStyles from '../css';
 import { IDeliveryErrorInfoModal } from '../types';
 
 const DeliveryErrorInfoModal = ({ theme }: IDeliveryErrorInfoModal) => {
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
   const [, setInfoModalState] = useRecoilState(InfoModalAtom);
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
   // const [showMore, setShowMore] = useState(false);
