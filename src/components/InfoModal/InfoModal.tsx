@@ -19,7 +19,7 @@ const InfoModal = ({ theme }: IInfoModal) => {
   return (
     <ModalPopUp
       showModal={infoModalState.showModal || false}
-      onClose={() => console.log('')}
+      onClose={() => console.log('1')}
       theme={theme}
     >
       <div className={classes.infoModal}>
