@@ -1,5 +1,5 @@
-import Head from 'next/head';
 import { useRouter } from 'next/router';
+import ReactGA from 'react-ga4';
 import Lottie from 'react-lottie';
 
 import { RestaurantDetailsQuery } from '../../../generated/graphql';
@@ -7,6 +7,7 @@ import Button from '../../components/Button/Button';
 import Container from '../../components/Container/Container';
 import Footer from '../../components/Footer/Footer';
 import Navbar from '../../components/Navbar/Navbar';
+import Seo from '../../components/Seo/Seo';
 import * as paymentSuccess from '../../lottie/success.json';
 import getRestaurantDetails from '../../utils/getRestaurantDetails';
 
@@ -23,6 +24,12 @@ export async function getServerSideProps() {
 }
 
 const Order = (props: RestaurantDetailsQuery) => {
+  ReactGA.initialize([
+    {
+      trackingId: props.restaurantDetails.measurementId,
+    },
+  ]);
+
   const theme = props.restaurantDetails.theme;
   const styles = useStyles({
     theme,
@@ -35,24 +42,7 @@ const Order = (props: RestaurantDetailsQuery) => {
         backgroundColor: props.restaurantDetails.theme.neutral,
       }}
     >
-      <Head>
-        <link rel="shortcut icon" href={props.restaurantDetails.favicon} />
-        <title>{props.restaurantDetails.name}</title>
-        <meta
-          name="description"
-          content={props.restaurantDetails.metaDescription}
-        />
-        {/* <meta name="keywords" content={props.restaurantDetails.keywords} /> */}
-        <meta name="author" content="nexoserve.com" />
-        <meta name="robots" content="index, follow" />
-        <meta name="language" content="en" />
-        <meta property="og:title" content={props.restaurantDetails.name} />
-        <meta
-          property="og:description"
-          content={props.restaurantDetails.metaDescription}
-        />
-        <meta property="og:image" content={props.restaurantDetails.ogImage} />
-      </Head>
+      <Seo restaurantDetails={props.restaurantDetails} />
 
       <main>
         <Navbar

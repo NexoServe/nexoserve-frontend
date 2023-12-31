@@ -10,6 +10,8 @@ const GET_RESTAURANT_DETAILS_QUERY = gql`
       favicon
       metaDescription
       ogImage
+      measurementId
+      domainUrl
       theme {
         accent
         neutral

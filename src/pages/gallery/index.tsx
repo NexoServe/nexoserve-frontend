@@ -1,11 +1,12 @@
-import Head from 'next/head';
 import Image from 'next/image';
+import ReactGA from 'react-ga4';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 
 import { RestaurantDetailsQuery } from '../../../generated/graphql';
 import Container from '../../components/Container/Container';
 import Footer from '../../components/Footer/Footer';
 import Navbar from '../../components/Navbar/Navbar';
+import Seo from '../../components/Seo/Seo';
 import getRestaurantDetails from '../../utils/getRestaurantDetails';
 
 import useStyles from './css';
@@ -21,6 +22,12 @@ export async function getServerSideProps() {
 }
 
 const Gallery = (props: RestaurantDetailsQuery) => {
+  ReactGA.initialize([
+    {
+      trackingId: props.restaurantDetails.measurementId,
+    },
+  ]);
+
   const styles = useStyles();
 
   return (
@@ -29,24 +36,7 @@ const Gallery = (props: RestaurantDetailsQuery) => {
         backgroundColor: props.restaurantDetails.theme.neutral,
       }}
     >
-      <Head>
-        <link rel="shortcut icon" href={props.restaurantDetails.favicon} />
-        <title>{props.restaurantDetails.name}</title>
-        <meta
-          name="description"
-          content={props.restaurantDetails.metaDescription}
-        />
-        {/* <meta name="keywords" content={props.restaurantDetails.keywords} /> */}
-        <meta name="author" content="nexoserve.com" />
-        <meta name="robots" content="index, follow" />
-        <meta name="language" content="en" />
-        <meta property="og:title" content={props.restaurantDetails.name} />
-        <meta
-          property="og:description"
-          content={props.restaurantDetails.metaDescription}
-        />
-        <meta property="og:image" content={props.restaurantDetails.ogImage} />
-      </Head>
+      <Seo restaurantDetails={props.restaurantDetails} />
       <main>
         <Navbar
           logo={props.restaurantDetails.logo}

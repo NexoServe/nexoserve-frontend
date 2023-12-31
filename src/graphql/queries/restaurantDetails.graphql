@@ -5,6 +5,8 @@ query RestaurantDetails($restaurantId: String!) {
     favicon
     metaDescription
     ogImage
+    measurementId
+    domainUrl
     theme {
       accent
       neutral
