@@ -87,7 +87,7 @@ const Home = (props: RestaurantDetailsQuery) => {
                 href={props.restaurantDetails.socialMedia?.xTwitterUrl}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Visit our X Page"
+                // aria-label="Visit our X Page"
               >
                 <SvgIcons name="x" fill={theme.primary} />
               </a>
@@ -99,7 +99,7 @@ const Home = (props: RestaurantDetailsQuery) => {
                 target="_blank"
                 rel="noreferrer"
                 className={styles.homeHeroSocial}
-                aria-label="Visit our Facebook Page"
+                // aria-label="Visit our Facebook Page"
               >
                 <SvgIcons name="facebook" fill={theme.primary} />
               </a>
@@ -110,7 +110,7 @@ const Home = (props: RestaurantDetailsQuery) => {
                 href={props.restaurantDetails.socialMedia?.instagramUrl}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Visit our Instagram Page"
+                // aria-label="Visit our Instagram Page"
                 className={styles.homeHeroSocial}
               >
                 <SvgIcons name="instagram" fill={theme.primary} />
