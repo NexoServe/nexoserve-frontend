@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import ReactGA from 'react-ga4';
 
 import { base } from '../../../css/base';
 import { RestaurantDetailsQuery } from '../../../generated/graphql';
@@ -8,6 +8,7 @@ import Footer from '../../components/Footer/Footer';
 import Navbar from '../../components/Navbar/Navbar';
 import OrderNavbar from '../../components/OrderNavbar/OrderNavbar/OrderNavbar';
 import PageContainer from '../../components/PageContainer/PageContainer';
+import Seo from '../../components/Seo/Seo';
 import ShoppingCart from '../../components/ShoppingCart/ShoppingCart/ShoppingCart';
 import ShoppingCartButton from '../../components/ShoppingCart/ShoppingCartButton/ShoppingCartButton';
 import ShoppingCartModal from '../../components/ShoppingCart/ShoppingCartModal/ShoppingCartModal';
@@ -26,6 +27,12 @@ export async function getServerSideProps() {
 }
 
 const Order = (props: RestaurantDetailsQuery) => {
+  ReactGA.initialize([
+    {
+      trackingId: props.restaurantDetails.measurementId,
+    },
+  ]);
+
   const theme = props.restaurantDetails.theme;
   const classes = useStyles({
     theme,
@@ -44,27 +51,7 @@ const Order = (props: RestaurantDetailsQuery) => {
         }}
       >
         <PageContainer theme={theme}>
-          <Head>
-            <link rel="shortcut icon" href={props.restaurantDetails.favicon} />
-            <title>{props.restaurantDetails.name}</title>
-            <meta
-              name="description"
-              content={props.restaurantDetails.metaDescription}
-            />
-            {/* <meta name="keywords" content={props.restaurantDetails.keywords} /> */}
-            <meta name="author" content="nexoserve.com" />
-            <meta name="robots" content="index, follow" />
-            <meta name="language" content="en" />
-            <meta property="og:title" content={props.restaurantDetails.name} />
-            <meta
-              property="og:description"
-              content={props.restaurantDetails.metaDescription}
-            />
-            <meta
-              property="og:image"
-              content={props.restaurantDetails.ogImage}
-            />
-          </Head>
+          <Seo restaurantDetails={props.restaurantDetails} />
 
           <main>
             <Navbar

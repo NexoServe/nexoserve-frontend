@@ -1,6 +1,6 @@
-import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import ReactGA from 'react-ga4';
 import Lottie from 'react-lottie';
 
 import { RestaurantDetailsQuery } from '../../generated/graphql';
@@ -8,6 +8,7 @@ import Button from '../components/Button/Button';
 import Container from '../components/Container/Container';
 import Footer from '../components/Footer/Footer';
 import Navbar from '../components/Navbar/Navbar';
+import Seo from '../components/Seo/Seo';
 import SvgIcons from '../components/SvgIcons';
 import scrollLottie from '../lottie/scroll.json';
 import getRestaurantDetails from '../utils/getRestaurantDetails';
@@ -25,6 +26,12 @@ export async function getServerSideProps() {
 }
 
 const Home = (props: RestaurantDetailsQuery) => {
+  ReactGA.initialize([
+    {
+      trackingId: props.restaurantDetails.measurementId,
+    },
+  ]);
+
   const styles = useStyles({
     theme: props.restaurantDetails.theme,
   });
@@ -37,37 +44,7 @@ const Home = (props: RestaurantDetailsQuery) => {
         backgroundColor: theme.neutral,
       }}
     >
-      <Head>
-        <link rel="shortcut icon" href={props.restaurantDetails.favicon} />
-        <title>{props.restaurantDetails.name}</title>
-        <meta
-          name="description"
-          content={props.restaurantDetails.metaDescription}
-        />
-        {/* <meta name="keywords" content={props.restaurantDetails.keywords} /> */}
-        <meta name="author" content="nexoserve.com" />
-        <meta name="robots" content="index, follow" />
-        <meta name="language" content="en" />
-        <meta property="og:title" content={props.restaurantDetails.name} />
-        <meta
-          property="og:description"
-          content={props.restaurantDetails.metaDescription}
-        />
-        <meta property="og:image" content={props.restaurantDetails.ogImage} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={props.restaurantDetails.name} />
-        <meta
-          property="og:description"
-          content={props.restaurantDetails.metaDescription}
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={props.restaurantDetails.name} />
-        <meta
-          name="twitter:description"
-          content={props.restaurantDetails.metaDescription}
-        />
-        <meta name="twitter:image" content={props.restaurantDetails.ogImage} />
-      </Head>
+      <Seo restaurantDetails={props.restaurantDetails} />
       <Navbar
         logo={props.restaurantDetails.logo}
         restaurantName={props.restaurantDetails.name}
@@ -85,9 +62,7 @@ const Home = (props: RestaurantDetailsQuery) => {
           src={props.restaurantDetails.hero?.foreground as string}
           objectFit="cover"
           fill
-          style={{
-            objectPosition: '40%',
-          }}
+          className={styles.homeHeroForeground}
         />
         <div className={styles.homeHero}>
           <h1 className={styles.homeHeroTitle}>

@@ -31,6 +31,18 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     },
   },
 
+  homeHeroForeground: {
+    objectPosition: 'left',
+
+    [queries.s]: {
+      objectPosition: '40% center',
+    },
+
+    [queries.l]: {
+      objectPosition: '50% center',
+    },
+  },
+
   homeHero: {
     display: 'flex',
     flexDirection: 'column',
