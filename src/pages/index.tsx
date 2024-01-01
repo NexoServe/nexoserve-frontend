@@ -1,7 +1,10 @@
+import { useEffect } from 'react';
+
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import ReactGA from 'react-ga4';
 import Lottie from 'react-lottie';
+import { useRecoilState } from 'recoil';
 
 import { RestaurantDetailsQuery } from '../../generated/graphql';
 import Button from '../components/Button/Button';
@@ -11,6 +14,7 @@ import Navbar from '../components/Navbar/Navbar';
 import Seo from '../components/Seo/Seo';
 import SvgIcons from '../components/SvgIcons';
 import scrollLottie from '../lottie/scroll.json';
+import { LoaderAtom } from '../state/LoaderState';
 import getRestaurantDetails from '../utils/getRestaurantDetails';
 
 import useStyles from './index/css';
@@ -26,6 +30,12 @@ export async function getServerSideProps() {
 }
 
 const Home = (props: RestaurantDetailsQuery) => {
+  const [, setLoader] = useRecoilState(LoaderAtom);
+
+  useEffect(() => {
+    setLoader(props.restaurantDetails.loader);
+  }, []);
+
   ReactGA.initialize([
     {
       trackingId: props.restaurantDetails.measurementId,
@@ -45,11 +55,13 @@ const Home = (props: RestaurantDetailsQuery) => {
       }}
     >
       <Seo restaurantDetails={props.restaurantDetails} />
+
       <Navbar
         logo={props.restaurantDetails.logo}
         restaurantName={props.restaurantDetails.name}
         theme={theme}
       />
+
       <div className={styles.homeHeroContainer}>
         <Image
           alt="1"
@@ -125,6 +137,7 @@ const Home = (props: RestaurantDetailsQuery) => {
                 loop: true,
               }}
               height={50}
+              isClickToPauseDisabled={true}
             />
           </div>
         </div>

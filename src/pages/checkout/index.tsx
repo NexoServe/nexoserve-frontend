@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 import ReactGA from 'react-ga4';
+import { useRecoilState } from 'recoil';
 
 import { RestaurantDetailsQuery } from '../../../generated/graphql';
 import CheckoutContact from '../../components/Checkout/CheckoutContact/CheckoutContact';
@@ -13,6 +14,7 @@ import Footer from '../../components/Footer/Footer';
 import Navbar from '../../components/Navbar/Navbar';
 import PageContainer from '../../components/PageContainer/PageContainer';
 import Seo from '../../components/Seo/Seo';
+import { LoaderAtom } from '../../state/LoaderState';
 import getRestaurantDetails from '../../utils/getRestaurantDetails';
 
 import useStyles from './css';
@@ -28,6 +30,12 @@ export async function getServerSideProps() {
 }
 
 const Checkout = (props: RestaurantDetailsQuery) => {
+  const [, setLoader] = useRecoilState(LoaderAtom);
+
+  useEffect(() => {
+    setLoader(props.restaurantDetails.loader);
+  }, []);
+
   ReactGA.initialize([
     {
       trackingId: props.restaurantDetails.measurementId,

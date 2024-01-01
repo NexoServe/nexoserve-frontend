@@ -16,6 +16,10 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
 
     lineHeight: 1,
   },
+
+  checkoutFormButtonLoader: {
+    position: 'absolute',
+  },
 }));
 
 export default useStyles;

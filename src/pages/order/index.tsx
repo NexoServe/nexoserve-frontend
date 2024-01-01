@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
+
 import ReactGA from 'react-ga4';
+import { useRecoilState } from 'recoil';
 
 import { base } from '../../../css/base';
 import { RestaurantDetailsQuery } from '../../../generated/graphql';
@@ -12,6 +15,7 @@ import Seo from '../../components/Seo/Seo';
 import ShoppingCart from '../../components/ShoppingCart/ShoppingCart/ShoppingCart';
 import ShoppingCartButton from '../../components/ShoppingCart/ShoppingCartButton/ShoppingCartButton';
 import ShoppingCartModal from '../../components/ShoppingCart/ShoppingCartModal/ShoppingCartModal';
+import { LoaderAtom } from '../../state/LoaderState';
 import getRestaurantDetails from '../../utils/getRestaurantDetails';
 
 import useStyles from './css';
@@ -27,6 +31,12 @@ export async function getServerSideProps() {
 }
 
 const Order = (props: RestaurantDetailsQuery) => {
+  const [, setLoader] = useRecoilState(LoaderAtom);
+
+  useEffect(() => {
+    setLoader(props.restaurantDetails.loader);
+  }, []);
+
   ReactGA.initialize([
     {
       trackingId: props.restaurantDetails.measurementId,

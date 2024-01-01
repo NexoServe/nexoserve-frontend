@@ -34,6 +34,7 @@ const PaymentInfoModal = ({ theme }: IPaymentInfoModal) => {
               }}
               width={'100%'}
               height={200}
+              isClickToPauseDisabled={true}
             />
             <div className={classes.infoModalBodyMessage}>
               {infoModalState.message}
@@ -49,6 +50,7 @@ const PaymentInfoModal = ({ theme }: IPaymentInfoModal) => {
               }}
               width={'100%'}
               height={200}
+              isClickToPauseDisabled={true}
             />
             <div className={classes.infoModalBodyMessage}>
               {infoModalState.message}
@@ -63,6 +65,7 @@ const PaymentInfoModal = ({ theme }: IPaymentInfoModal) => {
               }}
               width={'100%'}
               height={200}
+              isClickToPauseDisabled={true}
             />
             <div className={classes.infoModalBodyMessage}>
               {infoModalState.message}

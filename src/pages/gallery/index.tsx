@@ -1,12 +1,16 @@
+import { useEffect } from 'react';
+
 import Image from 'next/image';
 import ReactGA from 'react-ga4';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+import { useRecoilState } from 'recoil';
 
 import { RestaurantDetailsQuery } from '../../../generated/graphql';
 import Container from '../../components/Container/Container';
 import Footer from '../../components/Footer/Footer';
 import Navbar from '../../components/Navbar/Navbar';
 import Seo from '../../components/Seo/Seo';
+import { LoaderAtom } from '../../state/LoaderState';
 import getRestaurantDetails from '../../utils/getRestaurantDetails';
 
 import useStyles from './css';
@@ -22,6 +26,12 @@ export async function getServerSideProps() {
 }
 
 const Gallery = (props: RestaurantDetailsQuery) => {
+  const [, setLoader] = useRecoilState(LoaderAtom);
+
+  useEffect(() => {
+    setLoader(props.restaurantDetails.loader);
+  }, []);
+
   ReactGA.initialize([
     {
       trackingId: props.restaurantDetails.measurementId,

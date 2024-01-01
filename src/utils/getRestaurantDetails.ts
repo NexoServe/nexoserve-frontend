@@ -12,6 +12,7 @@ const GET_RESTAURANT_DETAILS_QUERY = gql`
       ogImage
       measurementId
       domainUrl
+      loader
       theme {
         accent
         neutral
