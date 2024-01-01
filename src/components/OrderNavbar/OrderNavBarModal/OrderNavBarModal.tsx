@@ -577,7 +577,10 @@ const OrderNavBarModal = ({
           theme={theme}
         >
           {loading ? (
-            <Loader width="50px" height="50px" scale={0.5} />
+            <Loader
+              height={100}
+              styleClass={classes.orderNavbarModalButtonLoader}
+            />
           ) : (
             'Add Details'
           )}

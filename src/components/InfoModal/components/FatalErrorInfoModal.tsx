@@ -37,6 +37,7 @@ const FatalErrorInfoModal = ({ theme }: IFatalErrorInfoModal) => {
           }}
           width={'100%'}
           height={200}
+          isClickToPauseDisabled={true}
         />
 
         <div className={classes.infoModalBodyMessage}>
@@ -56,7 +57,12 @@ const FatalErrorInfoModal = ({ theme }: IFatalErrorInfoModal) => {
           </li>
           <li>
             If the error persists, you can call the restaurant at{' '}
-            <a href={`tel:${restaurantDetails?.phoneNumbers?.[0]?.number}`}>
+            <a
+              href={`tel:${restaurantDetails?.phoneNumbers?.[0]?.number}`}
+              style={{
+                color: theme.accent,
+              }}
+            >
               {restaurantDetails?.phoneNumbers?.[0]?.number}
             </a>{' '}
             and place your order over the phone.

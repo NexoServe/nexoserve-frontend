@@ -32,6 +32,7 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     textAlign: 'left',
     paddingLeft: base(4),
     paddingTop: base(2),
+    color: theme.primary,
 
     '& li': {
       marginBottom: base(1),
@@ -45,13 +46,14 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     marginTop: base(2),
     marginBottom: base(2),
     textDecoration: 'underline',
+    color: theme.primary,
   },
 
   infoModalBodyResetBtn: {
     marginLeft: base(1),
     padding: `${base(0.5)} ${base(1.5)}`,
     backgroundColor: theme.tertiary,
-    color: theme.neutral,
+    color: theme.primary,
     borderRadius: base(1),
   },
 }));

@@ -32,6 +32,7 @@ const DeliveryErrorInfoModal = ({ theme }: IDeliveryErrorInfoModal) => {
           }}
           width={'100%'}
           height={200}
+          isClickToPauseDisabled={true}
         />
 
         <div className={classes.infoModalBodyMessage}>

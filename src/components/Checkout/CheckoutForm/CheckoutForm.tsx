@@ -423,7 +423,10 @@ export default function CheckoutForm({ theme }: ICheckoutForm) {
           id="button-text"
         >
           {isLoading ? (
-            <Loader width="50px" height="50px" scale={0.5} />
+            <Loader
+              styleClass={classes.checkoutFormButtonLoader}
+              height={100}
+            />
           ) : (
             <div
               style={{

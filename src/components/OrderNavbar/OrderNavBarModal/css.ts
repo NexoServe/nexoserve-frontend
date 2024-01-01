@@ -31,6 +31,10 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     alignItems: 'center',
   },
 
+  orderNavbarModalButtonLoader: {
+    position: 'absolute',
+  },
+
   orderNavbarModalError: {
     color: theme.tertiary,
     fontSize: '16px',

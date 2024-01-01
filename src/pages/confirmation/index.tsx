@@ -23,7 +23,7 @@ export async function getServerSideProps() {
   };
 }
 
-const Order = (props: RestaurantDetailsQuery) => {
+const Checkout = (props: RestaurantDetailsQuery) => {
   ReactGA.initialize([
     {
       trackingId: props.restaurantDetails.measurementId,
@@ -60,6 +60,7 @@ const Order = (props: RestaurantDetailsQuery) => {
               }}
               width={'100%'}
               height={400}
+              isClickToPauseDisabled={true}
             />
 
             <h1 className={styles.confirmationTitle}>
@@ -88,4 +89,4 @@ const Order = (props: RestaurantDetailsQuery) => {
   );
 };
 
-export default Order;
+export default Checkout;
