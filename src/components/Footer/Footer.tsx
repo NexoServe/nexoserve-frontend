@@ -35,11 +35,20 @@ const Footer = ({
               <Link className={styles.footerNavLink} href="/">
                 Home
               </Link>
-              <Link className={styles.footerNavLink} href="/">
+              <Link className={styles.footerNavLink} href="/gallery">
                 Gallery
               </Link>
-              <Link className={styles.footerNavLink} href="/">
+              <Link className={styles.footerNavLink} href="/order">
                 Order Online
+              </Link>
+              <Link
+                className={styles.footerNavLink}
+                href="/terms-and-conditions"
+              >
+                Terms and Conditions
+              </Link>
+              <Link className={styles.footerNavLink} href="/privacy-policy">
+                Privacy Policy
               </Link>
             </nav>
           </div>

@@ -13,6 +13,8 @@ const GET_RESTAURANT_DETAILS_QUERY = gql`
       measurementId
       domainUrl
       loader
+      address
+      email
       theme {
         accent
         neutral
