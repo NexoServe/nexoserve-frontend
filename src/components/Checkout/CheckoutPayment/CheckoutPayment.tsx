@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe, Stripe } from '@stripe/stripe-js';
+import {
+  loadStripe,
+  Stripe,
+  StripeConstructorOptions,
+} from '@stripe/stripe-js';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { useValidateShoppingCartLazyQuery } from '../../../../generated/graphql';
@@ -53,9 +57,18 @@ const CheckoutPayment = ({ theme }: ICheckoutPayment) => {
             },
           });
 
+          const stripeOptions: StripeConstructorOptions | undefined =
+            process.env.NEXT_PUBLIC_STRIPE_ACCOUNT_TYPE === 'standard'
+              ? {
+                  stripeAccount: process.env
+                    .NEXT_PUBLIC_STRIPE_ACCOUNT_ID as string,
+                }
+              : undefined;
+
           if (!stripePromise) {
             const stripe = await loadStripe(
               process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
+              stripeOptions,
             );
 
             setStripePromise(stripe);
@@ -96,7 +109,6 @@ const CheckoutPayment = ({ theme }: ICheckoutPayment) => {
                   )
                 : 1,
               currency: 'usd',
-              payment_method_types: ['card', 'cashapp'],
               paymentMethodCreation: 'manual',
               appearance: {
                 theme: 'stripe',
