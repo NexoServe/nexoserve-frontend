@@ -207,8 +207,66 @@ export default function CheckoutForm({ theme }: ICheckoutForm) {
 
       const createOrderRes = res.data?.CreateOrder;
 
+      debugger;
       if (createOrderRes?.error) {
-        if (createOrderRes.error.code === ErrorCodes.InvalidOrderTime) {
+        if (createOrderRes?.error.code === ErrorCodes.StripeRequiresAction) {
+          // Use Stripe.js to handle the required next action
+          const errorData = JSON.parse(createOrderRes.error.data);
+
+          const { error: handleNextActionError, paymentIntent } =
+            // @ts-expect-error: unsupported types
+            await stripe.handleNextAction({
+              clientSecret: errorData.clientSecret as string,
+            });
+
+          if (paymentIntent.status === 'succeeded') {
+            // Do something here
+          }
+
+          if (paymentIntent.last_payment_error) {
+            setMessage(
+              'Your payment was declined, please try another payment.',
+            );
+
+            setInfoModalState({
+              showModal: true,
+              infoModalType: 'payment',
+              type: 'error',
+              title: 'Payment Declined',
+              message: paymentIntent.last_payment_error.message,
+            });
+
+            return;
+          }
+
+          if (paymentIntent.status === 'requires_action') {
+            setInfoModalState({
+              showModal: true,
+              infoModalType: 'payment',
+              type: 'error',
+              title: 'Payment Error',
+              message: 'The customer stopped this payment.',
+            });
+
+            setIsLoading(false);
+            return;
+          }
+
+          if (handleNextActionError || !paymentIntent) {
+            // Show error from Stripe.js in payment form
+            setMessage(handleNextActionError.message);
+            setInfoModalState({
+              type: 'error',
+              infoModalType: 'payment',
+              message: handleNextActionError.message,
+              showModal: true,
+              title: 'Payment Error',
+            });
+
+            setIsLoading(false);
+            return;
+          }
+        } else if (createOrderRes.error.code === ErrorCodes.InvalidOrderTime) {
           const errorData = JSON.parse(createOrderRes.error.data);
           setInfoModalState({
             showModal: false,
@@ -241,57 +299,6 @@ export default function CheckoutForm({ theme }: ICheckoutForm) {
         setIsLoading(false);
 
         return;
-      }
-
-      if (createOrderRes?.data?.stripeStatus === 'requires_action') {
-        // Use Stripe.js to handle the required next action
-        const { error: handleNextActionError, paymentIntent } =
-          // @ts-expect-error: unsupported types
-          await stripe.handleNextAction({
-            clientSecret: createOrderRes.data.clientSecret,
-          });
-
-        if (paymentIntent.last_payment_error) {
-          setMessage('Your payment was declined, please try another payment.');
-
-          setInfoModalState({
-            showModal: true,
-            infoModalType: 'payment',
-            type: 'error',
-            title: 'Payment Declined',
-            message: paymentIntent.last_payment_error.message,
-          });
-
-          return;
-        }
-
-        if (paymentIntent.status === 'requires_action') {
-          setInfoModalState({
-            showModal: true,
-            infoModalType: 'payment',
-            type: 'error',
-            title: 'Payment Error',
-            message: 'The customer stopped this payment.',
-          });
-
-          setIsLoading(false);
-          return;
-        }
-
-        if (handleNextActionError || !paymentIntent) {
-          // Show error from Stripe.js in payment form
-          setMessage(handleNextActionError.message);
-          setInfoModalState({
-            type: 'error',
-            infoModalType: 'payment',
-            message: handleNextActionError.message,
-            showModal: true,
-            title: 'Payment Error',
-          });
-
-          setIsLoading(false);
-          return;
-        }
       }
 
       setMessage(null);

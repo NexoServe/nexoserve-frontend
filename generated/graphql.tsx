@@ -131,7 +131,8 @@ export enum ErrorCodes {
   InvalidDeliveryAddress = 'INVALID_DELIVERY_ADDRESS',
   InvalidDeliveryMinimum = 'INVALID_DELIVERY_MINIMUM',
   InvalidOrderTime = 'INVALID_ORDER_TIME',
-  StripePaymentError = 'STRIPE_PAYMENT_ERROR'
+  StripePaymentError = 'STRIPE_PAYMENT_ERROR',
+  StripeRequiresAction = 'STRIPE_REQUIRES_ACTION'
 }
 
 export type ErrorType = {
