@@ -5,6 +5,7 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import SkeletonLoader from 'tiny-skeleton-loader-react';
@@ -399,6 +400,32 @@ export default function CheckoutForm({ theme }: ICheckoutForm) {
       </div>
       <PaymentElement options={{}} />
 
+      <div
+        style={{
+          color: theme.primary,
+          marginTop: base(4),
+        }}
+      >
+        *By placing your order you accept our{' '}
+        <Link
+          style={{
+            color: theme.accent,
+          }}
+          href={'/terms-and-conditions'}
+        >
+          Terms and Conditions
+        </Link>{' '}
+        and{' '}
+        <Link
+          style={{
+            color: theme.accent,
+          }}
+          href={'/privacy-policy'}
+        >
+          Privacy Policy
+        </Link>
+        .
+      </div>
       <Button
         id="submit"
         disabled={
@@ -407,7 +434,7 @@ export default function CheckoutForm({ theme }: ICheckoutForm) {
         title="Pay Now"
         style={{
           height: '60px',
-          marginTop: '20px',
+          marginTop: base(1),
           marginBottom: '10px',
           fontSize: '16px',
           background: isLoading ? `${theme.accent}70` : theme.accent,

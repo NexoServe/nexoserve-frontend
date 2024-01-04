@@ -8,6 +8,8 @@ query RestaurantDetails($restaurantId: String!) {
     measurementId
     domainUrl
     loader
+    address
+    email
     theme {
       accent
       neutral
