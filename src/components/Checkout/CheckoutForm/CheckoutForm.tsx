@@ -409,7 +409,7 @@ export default function CheckoutForm({ theme }: ICheckoutForm) {
         *By placing your order you accept our{' '}
         <Link
           style={{
-            color: theme.accent,
+            color: theme.primary,
           }}
           href={'/terms-and-conditions'}
         >
@@ -418,7 +418,7 @@ export default function CheckoutForm({ theme }: ICheckoutForm) {
         and{' '}
         <Link
           style={{
-            color: theme.accent,
+            color: theme.primary,
           }}
           href={'/privacy-policy'}
         >
