@@ -43,7 +43,7 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
   },
 
   termsLink: {
-    color: theme.accent,
+    color: theme.primary,
   },
 
   termsSubTitle: {
