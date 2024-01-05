@@ -8,7 +8,13 @@ const Seo = ({ restaurantDetails }: RestaurantDetailsQuery) => {
 
   return (
     <Head>
-      <link rel="shortcut icon" href={restaurantDetails.favicon} />
+      <link
+        rel="shortcut icon"
+        href={restaurantDetails.favicon}
+        type="image/x-icon"
+      />
+      <link rel="icon" type="image/png" href={restaurantDetails.favicon}></link>
+
       <title>{restaurantDetails.name}</title>
       <link
         rel="canonical"
