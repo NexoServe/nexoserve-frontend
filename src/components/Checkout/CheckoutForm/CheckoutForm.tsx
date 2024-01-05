@@ -207,7 +207,6 @@ export default function CheckoutForm({ theme }: ICheckoutForm) {
 
       const createOrderRes = res.data?.CreateOrder;
 
-      debugger;
       if (createOrderRes?.error) {
         if (createOrderRes?.error.code === ErrorCodes.StripeRequiresAction) {
           // Use Stripe.js to handle the required next action
@@ -337,75 +336,77 @@ export default function CheckoutForm({ theme }: ICheckoutForm) {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <div style={{}}>
-        <h5
-          style={{
-            fontWeight: 500,
-            marginBottom: base(1),
-            color: theme.primary,
-          }}
-        >
-          THIS IS A TEST ENVIRONMENT. Use these cards to complete the order.
-        </h5>
-        <div
-          style={{
-            marginBottom: base(1),
-          }}
-        >
-          <span
+      {process.env.NODE_ENV !== 'production' && (
+        <div style={{}}>
+          <h5
             style={{
-              color: theme.secondary,
               fontWeight: 500,
+              marginBottom: base(1),
+              color: theme.primary,
             }}
           >
-            Accepted Card:
-          </span>{' '}
-          <span
+            THIS IS A TEST ENVIRONMENT. Use these cards to complete the order.
+          </h5>
+          <div
+            style={{
+              marginBottom: base(1),
+            }}
+          >
+            <span
+              style={{
+                color: theme.secondary,
+                fontWeight: 500,
+              }}
+            >
+              Accepted Card:
+            </span>{' '}
+            <span
+              style={{
+                color: theme.primary,
+              }}
+            >
+              4242 4242 4242 4242
+            </span>
+          </div>
+          <div
+            style={{
+              marginBottom: base(1),
+            }}
+          >
+            <span
+              style={{
+                color: theme.tertiary,
+                fontWeight: 500,
+              }}
+            >
+              Denied Card:
+            </span>{' '}
+            <span
+              style={{
+                color: theme.primary,
+              }}
+            >
+              4000 0000 0000 0002
+            </span>
+          </div>
+          <div
             style={{
               color: theme.primary,
             }}
           >
-            4242 4242 4242 4242
-          </span>
-        </div>
-        <div
-          style={{
-            marginBottom: base(1),
-          }}
-        >
-          <span
+            Use any, Expiration, CVC and ZIP.
+          </div>
+          <div
             style={{
-              color: theme.tertiary,
-              fontWeight: 500,
-            }}
-          >
-            Denied Card:
-          </span>{' '}
-          <span
-            style={{
+              marginBottom: base(2),
               color: theme.primary,
             }}
           >
-            4000 0000 0000 0002
-          </span>
+            Please make sure to test both cards. Thank you :)
+          </div>
         </div>
-        <div
-          style={{
-            color: theme.primary,
-          }}
-        >
-          Use any, Expiration, CVC and ZIP.
-        </div>
-        <div
-          style={{
-            marginBottom: base(2),
-            color: theme.primary,
-          }}
-        >
-          Please make sure to test both cards. Thank you :)
-        </div>
-      </div>
-      <PaymentElement options={{}} />
+      )}
+      <PaymentElement />
 
       <div
         style={{
@@ -453,14 +454,12 @@ export default function CheckoutForm({ theme }: ICheckoutForm) {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            position: 'relative',
           }}
           id="button-text"
         >
           {isLoading ? (
-            <Loader
-              styleClass={classes.checkoutFormButtonLoader}
-              height={100}
-            />
+            <Loader styleClass={classes.checkoutFormButtonLoader} height={50} />
           ) : (
             <div
               style={{
