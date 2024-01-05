@@ -86,7 +86,7 @@ const FoodSize = ({ size, theme }: IFoodSize) => {
         />
         <h4 className={classes.foodSizeName}>{size?.name}</h4>
       </div>
-      <p className={classes.foodSizePrice}>${size?.price}</p>
+      <p className={classes.foodSizePrice}>${size?.price?.toFixed(2)}</p>
     </label>
   );
 };
