@@ -454,14 +454,12 @@ export default function CheckoutForm({ theme }: ICheckoutForm) {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            position: 'relative',
           }}
           id="button-text"
         >
           {isLoading ? (
-            <Loader
-              styleClass={classes.checkoutFormButtonLoader}
-              height={100}
-            />
+            <Loader styleClass={classes.checkoutFormButtonLoader} height={50} />
           ) : (
             <div
               style={{

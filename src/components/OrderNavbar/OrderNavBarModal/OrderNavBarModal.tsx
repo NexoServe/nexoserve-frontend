@@ -578,7 +578,7 @@ const OrderNavBarModal = ({
         >
           {loading ? (
             <Loader
-              height={100}
+              height={50}
               styleClass={classes.orderNavbarModalButtonLoader}
             />
           ) : (

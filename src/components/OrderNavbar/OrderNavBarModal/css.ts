@@ -29,6 +29,7 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
   },
 
   orderNavbarModalButtonLoader: {
