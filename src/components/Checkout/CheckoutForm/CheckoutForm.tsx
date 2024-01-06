@@ -336,7 +336,7 @@ export default function CheckoutForm({ theme }: ICheckoutForm) {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      {process.env.NODE_ENV !== 'production' && (
+      {process.env.NEXT_PUBLIC_NODE_ENV !== 'production' && (
         <div style={{}}>
           <h5
             style={{
