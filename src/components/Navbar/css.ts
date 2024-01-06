@@ -32,10 +32,10 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     alignItems: 'center',
     paddingTop: 0,
     paddingBottom: 0,
-    height: base(6),
+    height: base(8),
 
     [queries.l]: {
-      height: base(8),
+      height: base(10),
     },
   },
 

@@ -321,8 +321,6 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
 
   largeImage1: {
     borderRadius: '8px',
-    // backgroundImage:
-    //   'url(https://us-east-menu-images.s3.amazonaws.com/labella_large.png)',
     backgroundPosition: '50% 50%',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -337,8 +335,6 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     justifyContent: 'center',
     alignItems: 'flex-end',
     borderRadius: '8px',
-    backgroundImage:
-      'url(https://us-east-menu-images.s3.amazonaws.com/labella_small.jpeg)',
     backgroundPosition: '50% 50%',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -352,8 +348,6 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
 
   largeImage2: {
     borderRadius: '8px',
-    backgroundImage:
-      'url(https://us-east-menu-images.s3.amazonaws.com/labella_large-2.jpeg)',
     backgroundPosition: '50% 50%',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -366,8 +360,6 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     height: '244px',
     maxWidth: '244px',
     borderRadius: '8px',
-    backgroundImage:
-      'url(https://us-east-menu-images.s3.amazonaws.com/Madison+Calzone.jpeg)',
     backgroundPosition: '50% 50%',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
