@@ -92,54 +92,54 @@ const Home = (props: RestaurantDetailsQuery) => {
               Order Now
             </Button>
           </div>
-          <div className={styles.homeHeroSocials}>
-            {props.restaurantDetails.socialMedia?.xTwitterUrl && (
-              <a
-                className={styles.homeHeroSocial}
-                href={props.restaurantDetails.socialMedia?.xTwitterUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Visit our X Page"
-              >
-                <SvgIcons name="x" fill={theme.primary} />
-              </a>
-            )}
+        </div>
+        <div className={styles.homeHeroSocials}>
+          {props.restaurantDetails.socialMedia?.xTwitterUrl && (
+            <a
+              className={styles.homeHeroSocial}
+              href={props.restaurantDetails.socialMedia?.xTwitterUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Visit our X Page"
+            >
+              <SvgIcons name="x" fill={theme.primary} />
+            </a>
+          )}
 
-            {props.restaurantDetails.socialMedia?.facebookUrl && (
-              <a
-                href={props.restaurantDetails.socialMedia?.facebookUrl}
-                target="_blank"
-                rel="noreferrer"
-                className={styles.homeHeroSocial}
-                aria-label="Visit our Facebook Page"
-              >
-                <SvgIcons name="facebook" fill={theme.primary} />
-              </a>
-            )}
+          {props.restaurantDetails.socialMedia?.facebookUrl && (
+            <a
+              href={props.restaurantDetails.socialMedia?.facebookUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={styles.homeHeroSocial}
+              aria-label="Visit our Facebook Page"
+            >
+              <SvgIcons name="facebook" fill={theme.primary} />
+            </a>
+          )}
 
-            {props.restaurantDetails.socialMedia?.instagramUrl && (
-              <a
-                href={props.restaurantDetails.socialMedia?.instagramUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Visit our Instagram Page"
-                className={styles.homeHeroSocial}
-              >
-                <SvgIcons name="instagram" fill={theme.primary} />
-              </a>
-            )}
-          </div>
-          <div className={styles.homeHeroScroll}>
-            <Lottie
-              options={{
-                animationData: scrollLottie,
-                autoplay: true,
-                loop: true,
-              }}
-              height={50}
-              isClickToPauseDisabled={true}
-            />
-          </div>
+          {props.restaurantDetails.socialMedia?.instagramUrl && (
+            <a
+              href={props.restaurantDetails.socialMedia?.instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Visit our Instagram Page"
+              className={styles.homeHeroSocial}
+            >
+              <SvgIcons name="instagram" fill={theme.primary} />
+            </a>
+          )}
+        </div>
+        <div className={styles.homeHeroScroll}>
+          <Lottie
+            options={{
+              animationData: scrollLottie,
+              autoplay: true,
+              loop: true,
+            }}
+            height={50}
+            isClickToPauseDisabled={true}
+          />
         </div>
       </div>
 
