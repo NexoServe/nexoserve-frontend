@@ -198,6 +198,7 @@ const Home = (props: RestaurantDetailsQuery) => {
                   style={{
                     maxWidth: '100%',
                     maxHeight: '100%',
+                    objectFit: 'cover',
                   }}
                   alt="salad icon"
                   width={500}

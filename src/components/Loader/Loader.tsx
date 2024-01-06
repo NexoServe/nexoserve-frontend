@@ -7,7 +7,7 @@ import { LoaderAtom } from '../../state/LoaderState';
 
 import { ILoader } from './types';
 
-const Loader = ({ styleClass, height = 150 }: ILoader) => {
+const Loader = ({ styleClass, height = 100 }: ILoader) => {
   const [animationData, setAnimationData] = useState(null);
   const loader = useRecoilValue(LoaderAtom);
 
