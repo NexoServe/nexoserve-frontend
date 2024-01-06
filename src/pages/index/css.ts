@@ -7,7 +7,7 @@ import { ThemeType } from '../../../generated/graphql';
 const useStyles = createUseStyles((theme: ThemeType) => ({
   homeHeroContainer: {
     width: '100%',
-    height: `calc(100vh - ${base(8)} - 1px)`,
+    minHeight: `calc(100vh - ${base(8)} - 1px)`,
     backgroundPosition: '0% 0%, 40% 0%',
     overflowX: 'hidden',
 
@@ -18,7 +18,7 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     },
 
     [queries.l]: {
-      height: `calc(100vh - ${base(10)} - 1px)`,
+      minHeight: `calc(100vh - ${base(10)} - 1px)`,
       backgroundPosition: '50% 50%, 50% 0%',
     },
 
