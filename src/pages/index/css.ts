@@ -18,10 +18,10 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     objectPosition: 'left',
 
     [queries.s]: {
-      objectPosition: '40% center',
+      objectPosition: '30% center',
     },
 
-    [queries.l]: {
+    [queries.xl]: {
       objectPosition: '50% center',
     },
   },
@@ -47,10 +47,6 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
 
     [queries.xl]: {
       paddingBottom: base(35),
-    },
-
-    [queries.xxl]: {
-      paddingBottom: base(40),
     },
   },
 
@@ -87,7 +83,7 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     opacity: 0.5,
     marginTop: base(2),
     marginBottom: base(2),
-    lineHeight: '18px',
+    lineHeight: '22px',
     maxWidth: base(50),
     textAlign: 'center',
     color: theme.primary,
@@ -104,10 +100,26 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
 
   homeHeroButtonContainer: {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: base(2),
 
     [queries.s]: {
-      justifyContent: 'flex-start',
+      maxWidth: base(34),
+      alignItems: 'flex-start',
+    },
+  },
+
+  homeHeroButtonMessage: {
+    color: theme.primary,
+    fontSize: '14px',
+    lineHeight: '14px',
+    textAlign: 'center',
+    opacity: 0.5,
+
+    [queries.s]: {
+      textAlign: 'left',
     },
   },
 
@@ -115,7 +127,7 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     padding: `${base(1)} ${base(2)}`,
     maxWidth: base(30),
     height: base(6),
-    marginTop: base(2),
+    marginTop: base(1),
     backgroundColor: theme.accent,
   },
 
