@@ -7,28 +7,11 @@ import { ThemeType } from '../../../generated/graphql';
 const useStyles = createUseStyles((theme: ThemeType) => ({
   homeHeroContainer: {
     width: '100%',
-    minHeight: `calc(100vh - ${base(8)} - 1px)`,
+    height: '100%',
+    display: 'flex',
     backgroundPosition: '0% 0%, 40% 0%',
     overflowX: 'hidden',
-
-    [queries.s]: {
-      backgroundPosition: '40% 50%, 50% 0%',
-      backgroundSize: 'cover, cover',
-      backgroundRepeat: 'no-repeat, no-repeat',
-    },
-
-    [queries.l]: {
-      minHeight: `calc(100vh - ${base(10)} - 1px)`,
-      backgroundPosition: '50% 50%, 50% 0%',
-    },
-
-    [queries.xl]: {
-      backgroundPosition: '58% 50%, 50% 0%',
-    },
-
-    [queries.xxl]: {
-      backgroundPosition: '90% 50%, 50% 0%',
-    },
+    position: 'relative',
   },
 
   homeHeroForeground: {
@@ -51,10 +34,24 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     maxWidth: base(160),
     width: '100%',
     padding: base(2),
+    paddingTop: base(10),
     paddingBottom: base(20),
     margin: '0 auto',
     position: 'relative',
     overflowX: 'hidden',
+
+    [queries.l]: {
+      paddingTop: base(15),
+      paddingBottom: base(30),
+    },
+
+    [queries.xl]: {
+      paddingBottom: base(35),
+    },
+
+    [queries.xxl]: {
+      paddingBottom: base(40),
+    },
   },
 
   homeHeroTitle: {
@@ -117,6 +114,7 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
   homeHeroButton: {
     padding: `${base(1)} ${base(2)}`,
     maxWidth: base(30),
+    height: base(6),
     marginTop: base(2),
     backgroundColor: theme.accent,
   },
