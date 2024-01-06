@@ -84,6 +84,10 @@ const Home = (props: RestaurantDetailsQuery) => {
             {props.restaurantDetails.hero?.description}
           </div>
           <div className={styles.homeHeroButtonContainer}>
+            <div className={styles.homeHeroButtonMessage}>
+              * Order directly through our website for original prices and no
+              extra fees. No 3rd parties.
+            </div>
             <Button
               onClick={() => router.push('/order')}
               styleClass={styles.homeHeroButton}
