@@ -7,23 +7,38 @@ import { ThemeType } from '../../../generated/graphql';
 const useStyles = createUseStyles((theme: ThemeType) => ({
   homeHeroContainer: {
     width: '100%',
-    paddingTop: base(15),
-    paddingBottom: base(10),
-    // height: `calc(100vh - ${base(6)} - 1px)`,
+    height: `calc(100vh - ${base(8)} - 1px)`,
     backgroundPosition: '0% 0%, 40% 0%',
     overflowX: 'hidden',
-    position: 'relative',
+
+    [queries.s]: {
+      backgroundPosition: '40% 50%, 50% 0%',
+      backgroundSize: 'cover, cover',
+      backgroundRepeat: 'no-repeat, no-repeat',
+    },
+
+    [queries.l]: {
+      height: `calc(100vh - ${base(10)} - 1px)`,
+      backgroundPosition: '50% 50%, 50% 0%',
+    },
+
+    [queries.xl]: {
+      backgroundPosition: '58% 50%, 50% 0%',
+    },
+
+    [queries.xxl]: {
+      backgroundPosition: '90% 50%, 50% 0%',
+    },
   },
 
   homeHeroForeground: {
     objectPosition: 'left',
-    position: 'absolute',
 
     [queries.s]: {
-      objectPosition: '35% center',
+      objectPosition: '40% center',
     },
 
-    [queries.xl]: {
+    [queries.l]: {
       objectPosition: '50% center',
     },
   },
@@ -33,7 +48,6 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     height: '100%',
-    minHeight: '100%',
     maxWidth: base(160),
     width: '100%',
     padding: base(2),
@@ -102,7 +116,6 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
 
   homeHeroButton: {
     padding: `${base(1)} ${base(2)}`,
-    height: base(6),
     maxWidth: base(30),
     marginTop: base(2),
     backgroundColor: theme.accent,
@@ -110,14 +123,13 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
 
   homeHeroSocials: {
     position: 'absolute',
-    bottom: base(2),
+    bottom: base(4),
     left: '50%',
     transform: 'translateX(-50%)',
     display: 'flex',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    maxWidth: base(160),
 
     [queries.l]: {
       justifyContent: 'flex-start',
@@ -309,6 +321,8 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
 
   largeImage1: {
     borderRadius: '8px',
+    // backgroundImage:
+    //   'url(https://us-east-menu-images.s3.amazonaws.com/labella_large.png)',
     backgroundPosition: '50% 50%',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -336,6 +350,7 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
 
   largeImage2: {
     borderRadius: '8px',
+
     backgroundPosition: '50% 50%',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -348,6 +363,7 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     height: '244px',
     maxWidth: '244px',
     borderRadius: '8px',
+
     backgroundPosition: '50% 50%',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
