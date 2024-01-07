@@ -182,7 +182,13 @@ const ShoppingCartItem = ({
                   ))}
 
                 {shoppingCartItem.customInstructions && (
-                  <div>{shoppingCartItem.customInstructions}</div>
+                  <div
+                    style={{
+                      color: theme.primary,
+                    }}
+                  >
+                    {shoppingCartItem.customInstructions}
+                  </div>
                 )}
               </div>
               <div className={classes.shoppingCartItemDeleteButton}>
