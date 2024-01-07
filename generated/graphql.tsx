@@ -26,6 +26,7 @@ export type AboutUsType = {
   imageThree?: Maybe<Scalars['String']>;
   imageTwo?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 export type AddOnSimple = {
@@ -157,6 +158,8 @@ export type FeatureType = {
   __typename?: 'FeatureType';
   id?: Maybe<Scalars['String']>;
   items?: Maybe<Array<Maybe<FeatureItemType>>>;
+  title?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 export type FoodSize = {
@@ -202,6 +205,7 @@ export type HeroType = {
   foreground?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 export type ImageType = {
@@ -447,6 +451,7 @@ export type Query = {
   foodById: FoodType;
   foods: Array<Maybe<FoodType>>;
   foodsByCategory: Array<Maybe<FoodsByCategoryType>>;
+  order: OrderType;
   orders: Array<OrderType>;
   restaurant: RestaurantOutput;
   restaurantDetails: RestaurantDetailsOutput;
@@ -458,6 +463,11 @@ export type Query = {
 
 export type QueryFoodByIdArgs = {
   id: Scalars['String'];
+};
+
+
+export type QueryOrderArgs = {
+  orderId: Scalars['String'];
 };
 
 
@@ -500,6 +510,7 @@ export type RestaurantDetailsOutput = {
   measurementId: Scalars['String'];
   metaDescription: Scalars['String'];
   name: Scalars['String'];
+  navbarType: Scalars['String'];
   ogImage: Scalars['String'];
   openingHours: Array<DayOutput>;
   phoneNumbers: Array<PhoneNumberType>;
@@ -644,7 +655,7 @@ export type RestaurantDetailsQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantDetailsQuery = { __typename?: 'Query', restaurantDetails: { __typename?: 'RestaurantDetailsOutput', name: string, logo: string, favicon: string, metaDescription: string, ogImage: string, measurementId: string, domainUrl: string, loader: string, address: string, email: string, theme: { __typename?: 'ThemeType', accent: string, neutral: string, primary: string, secondary: string, tertiary: string }, gallery?: Array<{ __typename?: 'ImageType', id?: string | null, url?: string | null } | null> | null, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }>, phoneNumbers: Array<{ __typename?: 'PhoneNumberType', id?: string | null, number?: string | null }>, socialMedia?: { __typename?: 'SocialMediaType', id?: string | null, xTwitterUrl?: string | null, facebookUrl?: string | null, instagramUrl?: string | null } | null, hero?: { __typename?: 'HeroType', id?: string | null, title?: string | null, description?: string | null, background?: string | null, foreground?: string | null } | null, feature?: { __typename?: 'FeatureType', id?: string | null, items?: Array<{ __typename?: 'FeatureItemType', id?: string | null, image?: string | null, title?: string | null, description?: string | null } | null> | null } | null, aboutUs?: { __typename?: 'AboutUsType', id?: string | null, title?: string | null, description?: string | null, imageOne?: string | null, imageTwo?: string | null, imageThree?: string | null, imageFour?: string | null } | null } };
+export type RestaurantDetailsQuery = { __typename?: 'Query', restaurantDetails: { __typename?: 'RestaurantDetailsOutput', name: string, logo: string, favicon: string, metaDescription: string, ogImage: string, measurementId: string, domainUrl: string, loader: string, address: string, email: string, navbarType: string, theme: { __typename?: 'ThemeType', accent: string, neutral: string, primary: string, secondary: string, tertiary: string }, gallery?: Array<{ __typename?: 'ImageType', id?: string | null, url?: string | null } | null> | null, openingHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }>, phoneNumbers: Array<{ __typename?: 'PhoneNumberType', id?: string | null, number?: string | null }>, socialMedia?: { __typename?: 'SocialMediaType', id?: string | null, xTwitterUrl?: string | null, facebookUrl?: string | null, instagramUrl?: string | null } | null, hero?: { __typename?: 'HeroType', id?: string | null, type?: string | null, title?: string | null, description?: string | null, background?: string | null, foreground?: string | null } | null, feature?: { __typename?: 'FeatureType', id?: string | null, title?: string | null, type?: string | null, items?: Array<{ __typename?: 'FeatureItemType', id?: string | null, image?: string | null, title?: string | null, description?: string | null } | null> | null } | null, aboutUs?: { __typename?: 'AboutUsType', id?: string | null, type?: string | null, title?: string | null, description?: string | null, imageOne?: string | null, imageTwo?: string | null, imageThree?: string | null, imageFour?: string | null } | null } };
 
 export type ValidateOrderDetailsQueryVariables = Exact<{
   input: OrderDetailsInput;
@@ -977,6 +988,7 @@ export const RestaurantDetailsDocument = gql`
     loader
     address
     email
+    navbarType
     theme {
       accent
       neutral
@@ -1007,6 +1019,7 @@ export const RestaurantDetailsDocument = gql`
     }
     hero {
       id
+      type
       title
       description
       background
@@ -1014,6 +1027,8 @@ export const RestaurantDetailsDocument = gql`
     }
     feature {
       id
+      title
+      type
       items {
         id
         image
@@ -1023,6 +1038,7 @@ export const RestaurantDetailsDocument = gql`
     }
     aboutUs {
       id
+      type
       title
       description
       imageOne

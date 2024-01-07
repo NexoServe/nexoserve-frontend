@@ -1,12 +1,12 @@
 import { createUseStyles } from 'react-jss';
 
-import { base } from '../../../css/base';
-import queries from '../../../css/queries';
-import { ThemeType } from '../../../generated/graphql';
+import { base } from '../../../../css/base';
+import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
 const useStyles = createUseStyles((theme: ThemeType) => ({
   menu: {
-    background: theme.neutral,
+    background: 'transparent',
     width: '100vw',
     height: '100vh',
     paddingTop: base(15),

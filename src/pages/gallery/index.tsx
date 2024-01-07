@@ -8,7 +8,7 @@ import { useRecoilState } from 'recoil';
 import { RestaurantDetailsQuery } from '../../../generated/graphql';
 import Container from '../../components/Container/Container';
 import Footer from '../../components/Footer/Footer';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbars/Navbar/Navbar';
 import Seo from '../../components/Seo/Seo';
 import { LoaderAtom } from '../../state/LoaderState';
 import getRestaurantDetails from '../../utils/getRestaurantDetails';
@@ -52,6 +52,7 @@ const Gallery = (props: RestaurantDetailsQuery) => {
           logo={props.restaurantDetails.logo}
           restaurantName={props.restaurantDetails.name}
           theme={props.restaurantDetails.theme}
+          type={props.restaurantDetails.navbarType}
         />
         <div className={styles.galleryHero}>
           <h1 className={styles.galleryHeroTitle}>Gallery</h1>

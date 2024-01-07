@@ -8,7 +8,7 @@ import { RestaurantDetailsQuery } from '../../../generated/graphql';
 import Container from '../../components/Container/Container';
 import FoodList from '../../components/Food/FoodList/FoodList';
 import Footer from '../../components/Footer/Footer';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbars/Navbar/Navbar';
 import OrderNavbar from '../../components/OrderNavbar/OrderNavbar/OrderNavbar';
 import PageContainer from '../../components/PageContainer/PageContainer';
 import Seo from '../../components/Seo/Seo';
@@ -68,6 +68,7 @@ const Order = (props: RestaurantDetailsQuery) => {
               logo={props.restaurantDetails.logo}
               restaurantName={props.restaurantDetails.name}
               theme={props.restaurantDetails.theme}
+              type={props.restaurantDetails.navbarType}
             />
             <OrderNavbar theme={theme} />
             <Container>

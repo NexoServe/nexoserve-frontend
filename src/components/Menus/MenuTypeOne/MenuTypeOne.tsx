@@ -3,13 +3,13 @@
 import classNames from 'classnames';
 import Link from 'next/link';
 
-import { base } from '../../../css/base';
-import Button from '../Button/Button';
+import { base } from '../../../../css/base';
+import Button from '../../Button/Button';
+import { IMenu } from '../Menu/types';
 
 import useStyles from './css';
-import { IMenu } from './types';
 
-const Menu = ({ styleClass, theme }: IMenu) => {
+const MenuTypeOne = ({ styleClass, theme }: IMenu) => {
   const styles = useStyles({ theme });
 
   return (
@@ -43,4 +43,4 @@ const Menu = ({ styleClass, theme }: IMenu) => {
   );
 };
 
-export default Menu;
+export default MenuTypeOne;

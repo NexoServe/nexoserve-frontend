@@ -6,7 +6,7 @@ import { RestaurantDetailsQuery } from '../../../generated/graphql';
 import Button from '../../components/Button/Button';
 import Container from '../../components/Container/Container';
 import Footer from '../../components/Footer/Footer';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbars/Navbar/Navbar';
 import Seo from '../../components/Seo/Seo';
 import * as paymentSuccess from '../../lottie/success.json';
 import getRestaurantDetails from '../../utils/getRestaurantDetails';
@@ -49,6 +49,7 @@ const Checkout = (props: RestaurantDetailsQuery) => {
           logo={props.restaurantDetails.logo}
           restaurantName={props.restaurantDetails.name}
           theme={props.restaurantDetails.theme}
+          type={props.restaurantDetails.navbarType}
         />
         <Container>
           <div className={styles.confirmation}>

@@ -11,7 +11,7 @@ import CheckoutOrder from '../../components/Checkout/CheckoutOrder/CheckoutOrder
 import CheckoutPayment from '../../components/Checkout/CheckoutPayment/CheckoutPayment';
 import Container from '../../components/Container/Container';
 import Footer from '../../components/Footer/Footer';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbars/Navbar/Navbar';
 import PageContainer from '../../components/PageContainer/PageContainer';
 import Seo from '../../components/Seo/Seo';
 import { LoaderAtom } from '../../state/LoaderState';
@@ -68,6 +68,7 @@ const Checkout = (props: RestaurantDetailsQuery) => {
             logo={props.restaurantDetails.logo}
             restaurantName={props.restaurantDetails.name}
             theme={props.restaurantDetails.theme}
+            type={props.restaurantDetails.navbarType}
           />
           <Container>
             <div className={classes.checkout}>
