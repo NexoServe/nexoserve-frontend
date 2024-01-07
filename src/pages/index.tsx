@@ -13,8 +13,6 @@ import Seo from '../components/Seo/Seo';
 import { LoaderAtom } from '../state/LoaderState';
 import getRestaurantDetails from '../utils/getRestaurantDetails';
 
-import useStyles from './index/css';
-
 export async function getServerSideProps() {
   const data = await getRestaurantDetails();
 
@@ -37,10 +35,6 @@ const Home = (props: RestaurantDetailsQuery) => {
       trackingId: props.restaurantDetails.measurementId,
     },
   ]);
-
-  const styles = useStyles({
-    theme: props.restaurantDetails.theme,
-  });
 
   const theme = props.restaurantDetails.theme;
 
