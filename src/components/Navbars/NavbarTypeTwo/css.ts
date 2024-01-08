@@ -1,13 +1,13 @@
 import { createUseStyles } from 'react-jss';
 
-import { base } from '../../../css/base';
-import queries from '../../../css/queries';
-import zIndex from '../../../css/zIndex';
-import { ThemeType } from '../../../generated/graphql';
+import { base } from '../../../../css/base';
+import queries from '../../../../css/queries';
+import zIndex from '../../../../css/zIndex';
+import { ThemeType } from '../../../../generated/graphql';
 
 const useStyles = createUseStyles((theme: ThemeType) => ({
   navbar: {
-    background: theme.neutral,
+    background: 'transparent',
     position: 'relative',
     zIndex: zIndex.header,
   },

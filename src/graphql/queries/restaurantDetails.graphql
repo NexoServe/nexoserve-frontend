@@ -10,6 +10,7 @@ query RestaurantDetails($restaurantId: String!) {
     loader
     address
     email
+    navbarType
     theme {
       accent
       neutral
@@ -40,6 +41,7 @@ query RestaurantDetails($restaurantId: String!) {
     }
     hero {
       id
+      type
       title
       description
       background
@@ -47,6 +49,8 @@ query RestaurantDetails($restaurantId: String!) {
     }
     feature {
       id
+      title
+      type
       items {
         id
         image
@@ -56,6 +60,7 @@ query RestaurantDetails($restaurantId: String!) {
     }
     aboutUs {
       id
+      type
       title
       description
       imageOne

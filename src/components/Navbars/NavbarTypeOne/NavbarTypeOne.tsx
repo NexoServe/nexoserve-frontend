@@ -6,22 +6,20 @@ import Hamburger from 'hamburger-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import breakpoints from '../../../css/breakpoints';
-import Container from '../Container/Container';
-import Divider from '../Divider/Divider';
-import Menu from '../Menu/Menu';
-import { ModalPopUp } from '../Modal/Modal';
+import breakpoints from '../../../../css/breakpoints';
+import Container from '../../Container/Container';
+import Divider from '../../Divider/Divider';
+import Menu from '../../Menus/Menu/Menu';
+import { ModalPopUp } from '../../Modal/Modal';
+import { INavbar } from '../Navbar/types';
 
 import useStyles from './css';
-import { INavbar } from './types';
 
-const Navbar = ({ logo, restaurantName, theme }: INavbar) => {
+const NavbarTypeOne = ({ logo, restaurantName, theme }: INavbar) => {
   const classes = useStyles({
     theme,
   });
   const [showMenu, setShowMenu] = useState(false);
-
-  // const shoppingCart = useRecoilValue(ShoppingCartAtom);
 
   useEffect(() => {
     function handleResize() {
@@ -66,7 +64,12 @@ const Navbar = ({ logo, restaurantName, theme }: INavbar) => {
           />
         </div>
 
-        <Menu styleClass={classes.navbarMenuDesktop} theme={theme} />
+        <Menu
+          styleClass={classes.navbarMenuDesktop}
+          theme={theme}
+          type="one"
+          showMenu={showMenu}
+        />
 
         <ModalPopUp
           showModal={showMenu}
@@ -74,7 +77,12 @@ const Navbar = ({ logo, restaurantName, theme }: INavbar) => {
           overlayClass={classes.navbarModalOverlay}
           theme={theme}
         >
-          <Menu styleClass={classes.navbarMenuMobile} theme={theme} />
+          <Menu
+            styleClass={classes.navbarMenuMobile}
+            theme={theme}
+            type="one"
+            showMenu={showMenu}
+          />
         </ModalPopUp>
       </Container>
       <Divider theme={theme} />
@@ -82,4 +90,4 @@ const Navbar = ({ logo, restaurantName, theme }: INavbar) => {
   );
 };
 
-export default Navbar;
+export default NavbarTypeOne;

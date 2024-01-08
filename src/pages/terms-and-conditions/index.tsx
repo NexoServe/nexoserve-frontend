@@ -4,7 +4,7 @@ import ReactGA from 'react-ga4';
 import { RestaurantDetailsQuery } from '../../../generated/graphql';
 import Container from '../../components/Container/Container';
 import Footer from '../../components/Footer/Footer';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbars/Navbar/Navbar';
 import Seo from '../../components/Seo/Seo';
 import getRestaurantDetails from '../../utils/getRestaurantDetails';
 
@@ -46,6 +46,7 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
           logo={props.restaurantDetails.logo}
           restaurantName={props.restaurantDetails.name}
           theme={props.restaurantDetails.theme}
+          type={props.restaurantDetails.navbarType}
         />
         <Container>
           <div className={styles.termsContainer}>

@@ -15,6 +15,7 @@ const GET_RESTAURANT_DETAILS_QUERY = gql`
       loader
       address
       email
+      navbarType
       theme {
         accent
         neutral
@@ -45,6 +46,7 @@ const GET_RESTAURANT_DETAILS_QUERY = gql`
       }
       hero {
         id
+        type
         title
         description
         background
@@ -52,6 +54,8 @@ const GET_RESTAURANT_DETAILS_QUERY = gql`
       }
       feature {
         id
+        title
+        type
         items {
           id
           image
@@ -61,6 +65,7 @@ const GET_RESTAURANT_DETAILS_QUERY = gql`
       }
       aboutUs {
         id
+        type
         title
         description
         imageOne
