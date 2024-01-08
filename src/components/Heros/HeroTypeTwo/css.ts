@@ -52,9 +52,11 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     marginBottom: 0,
     fontWeight: '500',
     textAlign: 'center',
-    fontSize: '46px',
+    fontSize: '42px',
     lineHeight: '48px',
     color: theme.neutral,
+    paddingLeft: base(1),
+    paddingRight: base(1),
 
     [queries.l]: {
       fontSize: '52px',
