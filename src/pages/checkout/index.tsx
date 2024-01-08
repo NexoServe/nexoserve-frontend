@@ -43,7 +43,9 @@ const Checkout = (props: RestaurantDetailsQuery) => {
   ]);
 
   const theme = props.restaurantDetails.theme;
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
   const router = useRouter();
 
   const shoppingCartStorage = localStorage.getItem('shoppingCartItems');

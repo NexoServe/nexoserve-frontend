@@ -52,9 +52,18 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
   },
 
   featuresTypeTwoImage: {
-    padding: base(5),
+    padding: base(1),
     backgroundColor: theme.accent,
+    maxWidth: '100%',
     borderRadius: '50%',
+
+    [queries.xs]: {
+      padding: base(2),
+    },
+
+    [queries.s]: {
+      padding: base(3),
+    },
   },
 
   featureTitle: {
