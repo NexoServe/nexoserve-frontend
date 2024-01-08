@@ -3,10 +3,14 @@ import { useEffect, useState } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import 'focus-visible';
 import { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
 import { RecoilRoot } from 'recoil';
 
 import useStyles from '../../css/app';
+import colors from '../../css/colors';
 import { useApollo } from '../../lib/apolloClient';
+import Loader from '../components/Loader/Loader';
+import { ModalPopUp } from '../components/Modal/Modal';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const classes = useStyles();
@@ -60,13 +64,44 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     }
   }, []);
 
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const start = () => {
+      console.log('start');
+      setLoading(true);
+    };
+    const end = () => {
+      console.log('finished');
+      setLoading(false);
+    };
+    router.events.on('routeChangeStart', start);
+    router.events.on('routeChangeComplete', end);
+    router.events.on('routeChangeError', end);
+    return () => {
+      router.events.off('routeChangeStart', start);
+      router.events.off('routeChangeComplete', end);
+      router.events.off('routeChangeError', end);
+    };
+  }, []);
+
   const apolloClient = useApollo(pageProps);
   return (
     <ApolloProvider client={apolloClient}>
       <RecoilRoot>
         <div className={classes.app}>
-          {fontsLoaded ? <Component {...pageProps} /> : null}
-          {/* <InfoModal /> */}
+          {loading ? (
+            <ModalPopUp
+              theme={colors}
+              onClose={() => console.log()}
+              showModal={loading}
+            >
+              <Loader />
+            </ModalPopUp>
+          ) : (
+            <>{fontsLoaded ? <Component {...pageProps} /> : null}</>
+          )}
         </div>
       </RecoilRoot>
     </ApolloProvider>
