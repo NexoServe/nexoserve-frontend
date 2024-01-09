@@ -11,6 +11,8 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+    paddingBottom: base(10),
+    paddingTop: base(6),
   },
 
   featuresTypeTwoTitle: {
