@@ -22,7 +22,7 @@ const HeroTypeTwo = ({ theme, hero, socialMedia }: IHero) => {
         <h1 className={styles.heroTypeTwoTitle}>{hero?.title}</h1>
         <div className={styles.heroTypeTwoDescription}>{hero?.description}</div>
         <div className={styles.heroTypeOneButtonContainer}>
-          <div className={styles.heroTypeOneButtonMessage}>
+          <div className={styles.heroTypeTwoButtonMessage}>
             * Order directly through our website for original prices and no
             extra fees. No 3rd parties.
           </div>

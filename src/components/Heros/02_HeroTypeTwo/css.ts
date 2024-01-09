@@ -98,14 +98,9 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: base(4),
-
-    // [queries.s]: {
-    //   maxWidth: base(34),
-    //   alignItems: 'flex-start',
-    // },
   },
 
-  heroTypeOneButtonMessage: {
+  heroTypeTwoButtonMessage: {
     color: theme.neutral,
     fontSize: '14px',
     lineHeight: '14px',
@@ -119,7 +114,7 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     padding: `${base(1)} ${base(2)}`,
     maxWidth: base(30),
     height: base(6),
-    marginTop: base(2),
+    marginTop: base(1),
     backgroundColor: theme.accent,
   },
 
