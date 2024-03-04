@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { base } from '../../../../css/base';
+import { OrderTypeEnum } from '../../../../generated/graphql';
 import {
   OrderIsPickUpAtom,
   OrderIsPickUpStateAtom,
 } from '../../../state/OrderNavbar';
+import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import { ModalPopUp } from '../../Modal/Modal';
 import RoundBorder from '../../RoundBorder/RoundBorder';
 import SvgIcons from '../../SvgIcons';
@@ -26,6 +28,7 @@ const OrderType = ({ isCheckout = false, theme }: IOrderType) => {
     theme,
   });
 
+  const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
   const [showDeliveryModal, setShowDeliveryModal] = useState(false);
   const [showPickUpModal, setShowPickUpModal] = useState(false);
 
@@ -73,16 +76,27 @@ const OrderType = ({ isCheckout = false, theme }: IOrderType) => {
           <button
             onClick={handlePickUpClick}
             className={classes.orderTypeToggleButton}
+            disabled={
+              !restaurantDetails.services?.includes(OrderTypeEnum.PickUp)
+            }
           >
-            {!isCheckout && (
-              <SvgIcons
-                styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconPickUp}`}
-                name="pickUp"
-                width={base(2.5)}
-                fill={theme.primary}
-              />
+            {!restaurantDetails.services?.includes(OrderTypeEnum.PickUp) ? (
+              <div className={classes.orderTypeToggleButtonUnavailable}>
+                Pick Up not available
+              </div>
+            ) : (
+              <>
+                {!isCheckout && (
+                  <SvgIcons
+                    styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconPickUp}`}
+                    name="pickUp"
+                    width={base(2.5)}
+                    fill={theme.primary}
+                  />
+                )}
+                Pick Up
+              </>
             )}
-            Pick Up
           </button>
           <button
             onClick={() => {
@@ -91,14 +105,25 @@ const OrderType = ({ isCheckout = false, theme }: IOrderType) => {
               setIsPickUp(false);
             }}
             className={classes.orderTypeToggleButton}
+            disabled={
+              !restaurantDetails.services?.includes(OrderTypeEnum.Delivery)
+            }
           >
-            Delivery
-            {!isCheckout && (
-              <SvgIcons
-                styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconDelivery}`}
-                name="delivery"
-                fill={theme.primary}
-              />
+            {!restaurantDetails.services?.includes(OrderTypeEnum.Delivery) ? (
+              <div className={classes.orderTypeToggleButtonUnavailable}>
+                Delivery not available
+              </div>
+            ) : (
+              <>
+                Delivery
+                {!isCheckout && (
+                  <SvgIcons
+                    styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconDelivery}`}
+                    name="delivery"
+                    fill={theme.primary}
+                  />
+                )}
+              </>
             )}
           </button>
         </div>

@@ -66,6 +66,20 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     },
   },
 
+  orderTypeToggleButtonUnavailable: {
+    fontSize: '10px',
+
+    [queries.xs]: {
+      fontSize: '12px',
+      paddingRight: base(0.25),
+    },
+
+    [queries.s]: {
+      paddingLeft: base(1),
+      paddingRight: base(1),
+    },
+  },
+
   orderTypeIcon: {
     display: 'none',
 
