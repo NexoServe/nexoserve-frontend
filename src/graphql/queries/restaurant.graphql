@@ -3,6 +3,7 @@ query Restaurant($input: OrderDetailsInput!) {
     restaurantDetails {
       id
       printerMacAddress
+      services
       phoneNumbers {
         id
         number

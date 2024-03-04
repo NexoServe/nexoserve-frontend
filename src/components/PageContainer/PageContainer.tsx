@@ -4,7 +4,10 @@ import { DateTime } from 'luxon';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 
-import { useRestaurantLazyQuery } from '../../../generated/graphql';
+import {
+  OrderTypeEnum,
+  useRestaurantLazyQuery,
+} from '../../../generated/graphql';
 import { FoodMenuAtom } from '../../state/FoodModalState';
 import {
   OrderDateAtom,
@@ -86,6 +89,18 @@ const PageContainer = ({ children, theme }: IPageContainer) => {
   }
 
   useEffect(() => {
+    if (
+      !orderDeliveryAddressParsed &&
+      data?.restaurant.restaurantDetails.services?.length === 1 &&
+      data?.restaurant.restaurantDetails.services[0] === OrderTypeEnum.Delivery
+    ) {
+      setShowInvalidTimeModal({
+        type: 'delivery',
+        errorMessages:
+          'Please add a delivery address to place an order for delivery.',
+      });
+    }
+
     if (orderDetails?.isOrderTimeValid === false) {
       //TODO HANDLE ERROR message
       setShowInvalidTimeModal({
@@ -122,7 +137,21 @@ const PageContainer = ({ children, theme }: IPageContainer) => {
       setRestaurantDetails(data.restaurant.restaurantDetails);
       setOrderDetails(data.restaurant.orderDetails);
 
-      if (data.restaurant.orderDetails.isPickUp === true) {
+      if (
+        data?.restaurant.restaurantDetails.services?.length === 1 &&
+        data?.restaurant.restaurantDetails.services[0] ===
+          OrderTypeEnum.Delivery
+      ) {
+        setIsPickUp(false);
+        localStorage.setItem('isPickUp', JSON.stringify(false));
+      } else if (
+        data?.restaurant.restaurantDetails.services?.length === 1 &&
+        data?.restaurant.restaurantDetails.services[0] ===
+          OrderTypeEnum.Delivery
+      ) {
+        setIsPickUp(true);
+        localStorage.setItem('isPickUp', JSON.stringify(true));
+      } else if (data.restaurant.orderDetails.isPickUp === true) {
         setIsPickUp(true);
         localStorage.setItem('isPickUp', JSON.stringify(true));
       } else {

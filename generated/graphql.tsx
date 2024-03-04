@@ -129,6 +129,11 @@ export type DayOutput = {
   time: Array<TimeOutput>;
 };
 
+export enum DeliveryFulfilledByEnum {
+  Doordash = 'DOORDASH',
+  InHouse = 'IN_HOUSE'
+}
+
 export enum ErrorCodes {
   InvalidDeliveryAddress = 'INVALID_DELIVERY_ADDRESS',
   InvalidDeliveryMinimum = 'INVALID_DELIVERY_MINIMUM',
@@ -380,18 +385,23 @@ export type OrderItemWithGroupedOptionsType = {
 };
 
 export enum OrderStatusEnum {
-  Accepted = 'ACCEPTED',
   Cancelled = 'CANCELLED',
   Completed = 'COMPLETED',
-  Pending = 'PENDING',
-  Rejected = 'REJECTED'
+  InProgress = 'IN_PROGRESS',
+  NotPaid = 'NOT_PAID',
+  Paid = 'PAID',
+  Received = 'RECEIVED'
 }
 
 export type OrderType = {
   __typename?: 'OrderType';
+  applicationFee?: Maybe<Scalars['Float']['output']>;
   deliveryAddress?: Maybe<Scalars['String']['output']>;
   deliveryDetails?: Maybe<Scalars['String']['output']>;
   deliveryFee?: Maybe<Scalars['Float']['output']>;
+  deliveryFulfilledBy?: Maybe<DeliveryFulfilledByEnum>;
+  deliveryFulfilledFee?: Maybe<Scalars['Float']['output']>;
+  deliveryTrackingUrl?: Maybe<Scalars['String']['output']>;
   estimatedCompletionTime: Scalars['String']['output'];
   guestEmail?: Maybe<Scalars['String']['output']>;
   guestFirstName?: Maybe<Scalars['String']['output']>;
@@ -404,6 +414,7 @@ export type OrderType = {
   orderStatus: OrderStatusEnum;
   orderType: OrderTypeEnum;
   placementTime: Scalars['String']['output'];
+  stripePaymentId?: Maybe<Scalars['String']['output']>;
   subTotal: Scalars['Float']['output'];
   suiteAptFloor?: Maybe<Scalars['String']['output']>;
   tax: Scalars['Float']['output'];
@@ -413,7 +424,7 @@ export type OrderType = {
 
 export enum OrderTypeEnum {
   Delivery = 'DELIVERY',
-  Pickup = 'PICKUP'
+  PickUp = 'PICK_UP'
 }
 
 export type OrderWithOrderItemWithGroupedOptionsType = {
@@ -500,6 +511,7 @@ export type RestaurantDetailsOutput = {
   __typename?: 'RestaurantDetailsOutput';
   aboutUs?: Maybe<AboutUsType>;
   address: Scalars['String']['output'];
+  deliveryFulfilledBy: DeliveryFulfilledByEnum;
   domainUrl: Scalars['String']['output'];
   email: Scalars['String']['output'];
   favicon: Scalars['String']['output'];
@@ -542,6 +554,7 @@ export type RestaurantType = {
   pickUpOpeningHours: Array<DayOutput>;
   printerMacAddress: Scalars['String']['output'];
   radius: Scalars['Float']['output'];
+  services: Array<Scalars['String']['output']>;
   timezone: Scalars['String']['output'];
 };
 
@@ -649,7 +662,7 @@ export type RestaurantQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'RestaurantOutput', restaurantDetails: { __typename?: 'RestaurantType', id: string, printerMacAddress: string, name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, deliveryFee: number, deliveryMinimum: number, timezone: string, openStatusMessage: string, phoneNumbers: Array<{ __typename?: 'PhoneNumberType', id?: string | null, number?: string | null }>, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategoryType', category: string, sort?: number | null, foods?: Array<{ __typename?: 'FoodWithSizesType', id: string, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, pickUpOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }>, deliveryOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNowPickUp: boolean, isOpenNowDelivery: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
+export type RestaurantQuery = { __typename?: 'Query', restaurant: { __typename?: 'RestaurantOutput', restaurantDetails: { __typename?: 'RestaurantType', id: string, printerMacAddress: string, services: Array<string>, name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, deliveryFee: number, deliveryMinimum: number, timezone: string, openStatusMessage: string, phoneNumbers: Array<{ __typename?: 'PhoneNumberType', id?: string | null, number?: string | null }>, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategoryType', category: string, sort?: number | null, foods?: Array<{ __typename?: 'FoodWithSizesType', id: string, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, pickUpOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }>, deliveryOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNowPickUp: boolean, isOpenNowDelivery: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
 
 export type RestaurantDetailsQueryVariables = Exact<{
   restaurantId: Scalars['String']['input'];
@@ -663,7 +676,7 @@ export type ValidateOrderDetailsQueryVariables = Exact<{
 }>;
 
 
-export type ValidateOrderDetailsQuery = { __typename?: 'Query', validateOrderDetails: { __typename?: 'ValidateOrderDetailsOutput', restaurantDetails: { __typename?: 'RestaurantType', id: string, printerMacAddress: string, name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, deliveryFee: number, deliveryMinimum: number, timezone: string, openStatusMessage: string, phoneNumbers: Array<{ __typename?: 'PhoneNumberType', id?: string | null, number?: string | null }>, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategoryType', category: string, sort?: number | null, foods?: Array<{ __typename?: 'FoodWithSizesType', id: string, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, pickUpOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }>, deliveryOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNowPickUp: boolean, isOpenNowDelivery: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
+export type ValidateOrderDetailsQuery = { __typename?: 'Query', validateOrderDetails: { __typename?: 'ValidateOrderDetailsOutput', restaurantDetails: { __typename?: 'RestaurantType', id: string, printerMacAddress: string, services: Array<string>, name: string, address: string, radius: number, pickUpOffset: number, deliveryOffset: number, deliveryFee: number, deliveryMinimum: number, timezone: string, openStatusMessage: string, phoneNumbers: Array<{ __typename?: 'PhoneNumberType', id?: string | null, number?: string | null }>, location: { __typename?: 'Location', latitude?: number | null, longitude?: number | null }, menu: Array<{ __typename?: 'FoodsByCategoryType', category: string, sort?: number | null, foods?: Array<{ __typename?: 'FoodWithSizesType', id: string, description?: string | null, image?: string | null, name?: string | null, price?: number | null, sizes?: Array<{ __typename?: 'FoodSize', price?: number | null } | null> | null }> | null }>, pickUpOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }>, deliveryOpeningHours: Array<{ __typename?: 'DayOutput', dayOfWeek: string, time: Array<{ __typename?: 'TimeOutput', opens_at?: string | null, closes_at?: string | null }> }> }, orderDetails: { __typename?: 'OrderDetailsType', currentDateTime: string, isOpenNowPickUp: boolean, isOpenNowDelivery: boolean, isOrderTimeValid: boolean, isDeliveryAddressValid: boolean, isPickUp: boolean, deliveryAddress?: string | null, deliveryAddressAdditionalInfo?: string | null, deliveryDetails?: string | null } } };
 
 export type ValidateShoppingCartQueryVariables = Exact<{
   order: CreateOrderInput;
@@ -903,6 +916,7 @@ export const RestaurantDocument = gql`
     restaurantDetails {
       id
       printerMacAddress
+      services
       phoneNumbers {
         id
         number
@@ -1109,6 +1123,7 @@ export const ValidateOrderDetailsDocument = gql`
     restaurantDetails {
       id
       printerMacAddress
+      services
       phoneNumbers {
         id
         number
