@@ -3,7 +3,10 @@ import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { DateTime, Interval } from 'luxon';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { useValidateOrderDetailsLazyQuery } from '../../../../generated/graphql';
+import {
+  OrderTypeEnum,
+  useValidateOrderDetailsLazyQuery,
+} from '../../../../generated/graphql';
 import { FoodMenuAtom } from '../../../state/FoodModalState';
 import { InfoModalAtom } from '../../../state/InfoModalState';
 import {
@@ -87,7 +90,9 @@ const OrderNavBarModal = ({
     if (
       type === 'delivery' &&
       !orderDetails.isOpenNowDelivery &&
-      orderDetails.isOpenNowPickUp
+      orderDetails.isOpenNowPickUp &&
+      restaurantDetails.services.length > 1 &&
+      restaurantDetails.services.includes(OrderTypeEnum.PickUp)
     ) {
       setDeliveryIsClosedForTheDay(true);
     } else {

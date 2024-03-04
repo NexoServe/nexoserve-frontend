@@ -27,6 +27,8 @@ query Restaurant($input: OrderDetailsInput!) {
           description
           image
           name
+          startDate
+          endDate
           price
           sizes {
             price

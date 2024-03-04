@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
+import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 
 import { FoodWithSizesType } from '../../../../generated/graphql';
@@ -12,6 +13,8 @@ import { IFoodList } from './types';
 
 const FoodList = ({ theme }: IFoodList) => {
   const menu = useRecoilValue(FoodMenuAtom);
+  const router = useRouter(); // Use useRouter to access the query
+  const { id: foodId } = router.query; // Destructure to get 'id' parameter
 
   const sortedMenu = useMemo(() => {
     if (menu.length > 0) {
@@ -27,6 +30,21 @@ const FoodList = ({ theme }: IFoodList) => {
 
   const [showModal, setShowModal] = useState(false);
   const [activeFood, setActiveFood] = useState<FoodWithSizesType>();
+
+  useEffect(() => {
+    if (foodId && typeof foodId === 'string') {
+      let foundFood: FoodWithSizesType | undefined;
+      for (const category of menu) {
+        foundFood = category?.foods?.find((food) => food.id === foodId);
+        if (foundFood) break;
+      }
+
+      if (foundFood) {
+        setActiveFood(foundFood);
+        setShowModal(true);
+      }
+    }
+  }, [foodId, menu]);
 
   const activeFoodClick = (food: FoodWithSizesType) => {
     setShowModal(true);
@@ -52,6 +70,7 @@ const FoodList = ({ theme }: IFoodList) => {
           </div>
         </div>
       ))}
+
       {activeFood && (
         <FoodModal
           showModal={showModal}

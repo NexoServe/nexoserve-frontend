@@ -25,6 +25,8 @@ query ValidateOrderDetails($input: OrderDetailsInput!) {
         foods {
           id
           description
+          startDate
+          endDate
           image
           name
           price
