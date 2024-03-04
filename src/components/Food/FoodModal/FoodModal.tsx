@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useMemo } from 'react';
 
+import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { v4 } from 'uuid';
 
@@ -41,6 +42,8 @@ const FoodModal = ({
     },
     notifyOnNetworkStatusChange: true,
   });
+  const router = useRouter();
+  const { id } = router.query;
 
   const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
     ShoppingCartTotalAtom,
@@ -110,7 +113,11 @@ const FoodModal = ({
     setFoodModalPrice(0);
     setSelectedOptions([]);
     setCustomInstructions('');
-    document.body.style.overflow = 'unset';
+
+    if (id) {
+      const newPath = router.pathname;
+      router.replace(newPath, undefined, { shallow: true });
+    }
   };
 
   useEffect(() => {
