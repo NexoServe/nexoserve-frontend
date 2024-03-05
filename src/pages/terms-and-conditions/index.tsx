@@ -1083,6 +1083,7 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
         phoneNumbers={props.restaurantDetails.phoneNumbers}
         restaurantName={props.restaurantDetails.name}
         theme={props.restaurantDetails.theme}
+        email={props.restaurantDetails.email}
       />
     </div>
   );

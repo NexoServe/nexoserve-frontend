@@ -13,6 +13,7 @@ const Footer = ({
   phoneNumbers,
   restaurantName,
   theme,
+  email,
 }: IFooter) => {
   const styles = useStyles({
     theme,
@@ -88,6 +89,9 @@ const Footer = ({
                   </div>
                 </a>
               ))}
+              <a className={styles.footerPhone} href={`mailto:${email}`}>
+                <div className={styles.footerPhoneNumber}>{email}</div>
+              </a>
             </div>
           </div>
         </div>

@@ -99,9 +99,7 @@ const PageContainer = ({ children, theme }: IPageContainer) => {
         errorMessages:
           'Please add a delivery address to place an order for delivery.',
       });
-    }
-
-    if (orderDetails?.isOrderTimeValid === false) {
+    } else if (orderDetails?.isOrderTimeValid === false) {
       //TODO HANDLE ERROR message
       setShowInvalidTimeModal({
         type: 'pickup',

@@ -9,4 +9,5 @@ export interface IFooter {
   phoneNumbers: PhoneNumberType[];
   restaurantName: string;
   theme: ThemeType;
+  email: string;
 }

@@ -90,6 +90,7 @@ const Order = (props: RestaurantDetailsQuery) => {
         phoneNumbers={props.restaurantDetails.phoneNumbers}
         restaurantName={props.restaurantDetails.name}
         theme={theme}
+        email={props.restaurantDetails.email}
       />
     </div>
   );

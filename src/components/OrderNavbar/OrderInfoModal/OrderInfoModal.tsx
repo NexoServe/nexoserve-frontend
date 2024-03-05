@@ -1,9 +1,12 @@
+import { useEffect } from 'react';
+
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
 import { DateTime } from 'luxon';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { base } from '../../../../css/base';
+import { OrderTypeEnum } from '../../../../generated/graphql';
 import {
   InfoModalIsPickUpAtom,
   OrderDetailsAtom,
@@ -32,6 +35,15 @@ const OrderInfoModal = ({ setModal, theme }: IOrderInfoModal) => {
   const deliveryOpeningHours = getRestaurantOpeningHours(
     restaurantDetails?.deliveryOpeningHours,
   );
+
+  useEffect(() => {
+    if (
+      restaurantDetails.services?.length === 1 &&
+      restaurantDetails.services[0] === OrderTypeEnum.Delivery
+    ) {
+      setIsPickUp(false);
+    }
+  }, [restaurantDetails]);
 
   return (
     <div className={classes.orderInfoModal}>
@@ -65,26 +77,28 @@ const OrderInfoModal = ({ setModal, theme }: IOrderInfoModal) => {
               ))}
             </div>
           </div>
-          <div>
-            <div className={classes.orderInfoModalContentAddress}>
-              {restaurantDetails?.address}
+          {restaurantDetails?.services.includes(OrderTypeEnum.PickUp) && (
+            <div>
+              <div className={classes.orderInfoModalContentAddress}>
+                {restaurantDetails?.address}
+              </div>
+              <div className={classes.orderInfoModalContentDirections}>
+                <a
+                  style={{
+                    color: theme.primary,
+                  }}
+                  href={`https://www.google.com/maps/place/${restaurantDetails?.address.replace(
+                    / /g,
+                    '+',
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Get directions
+                </a>
+              </div>
             </div>
-            <div className={classes.orderInfoModalContentDirections}>
-              <a
-                style={{
-                  color: theme.primary,
-                }}
-                href={`https://www.google.com/maps/place/${restaurantDetails?.address.replace(
-                  / /g,
-                  '+',
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Get directions
-              </a>
-            </div>
-          </div>
+          )}
         </div>
         <Divider theme={theme} />
         <div>
@@ -92,22 +106,33 @@ const OrderInfoModal = ({ setModal, theme }: IOrderInfoModal) => {
 
           <div>
             <div className={classes.orderInfoHoursTabs}>
-              <button
-                className={classes.orderInfoHoursTabButton}
-                onClick={() => setIsPickUp(true)}
-              >
-                Pick up
-              </button>
-              <button
-                onClick={() => setIsPickUp(false)}
-                className={classes.orderInfoHoursTabButton}
-              >
-                Delivery
-              </button>
+              {restaurantDetails.services.includes(OrderTypeEnum.PickUp) && (
+                <button
+                  className={classes.orderInfoHoursTabButton}
+                  onClick={() => setIsPickUp(true)}
+                >
+                  Pick up
+                </button>
+              )}
+
+              {restaurantDetails.services.includes(OrderTypeEnum.Delivery) && (
+                <button
+                  onClick={() => setIsPickUp(false)}
+                  className={classes.orderInfoHoursTabButton}
+                >
+                  Delivery
+                </button>
+              )}
+
               <motion.div
                 className={classes.orderInfoHoursTabUnderline}
                 animate={{
-                  x: isPickUp ? 0 : 80,
+                  x:
+                    restaurantDetails.services?.length === 1
+                      ? 0
+                      : isPickUp
+                      ? 0
+                      : 80,
                 }}
               ></motion.div>
             </div>
