@@ -1,33 +1,56 @@
-import { NextPage } from 'next';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
+import ReactGA from 'react-ga4';
 import Lottie from 'react-lottie';
 
+import { RestaurantDetailsQuery } from '../../../generated/graphql';
 import Button from '../../components/Button/Button';
 import Container from '../../components/Container/Container';
 import Footer from '../../components/Footer/Footer';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbars/Navbar/Navbar';
+import Seo from '../../components/Seo/Seo';
 import * as paymentSuccess from '../../lottie/success.json';
+import getRestaurantDetails from '../../utils/getRestaurantDetails';
 
 import useStyles from './css';
 
-const Order: NextPage = () => {
-  const styles = useStyles();
+export async function getServerSideProps() {
+  const data = await getRestaurantDetails();
+
+  return {
+    props: {
+      ...data,
+    },
+  };
+}
+
+const Checkout = (props: RestaurantDetailsQuery) => {
+  ReactGA.initialize([
+    {
+      trackingId: props.restaurantDetails.measurementId,
+    },
+  ]);
+
+  const theme = props.restaurantDetails.theme;
+  const styles = useStyles({
+    theme,
+  });
   const router = useRouter();
 
   return (
-    <>
-      <Head>
-        <title>TypeScript starter for Next.js</title>
-        <meta
-          name="description"
-          content="TypeScript starter for Next.js that includes all you need to build amazing apps"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div
+      style={{
+        backgroundColor: props.restaurantDetails.theme.neutral,
+      }}
+    >
+      <Seo restaurantDetails={props.restaurantDetails} />
 
       <main>
-        <Navbar />
+        <Navbar
+          logo={props.restaurantDetails.logo}
+          restaurantName={props.restaurantDetails.name}
+          theme={props.restaurantDetails.theme}
+          type={props.restaurantDetails.navbarType}
+        />
         <Container>
           <div className={styles.confirmation}>
             <Lottie
@@ -38,6 +61,7 @@ const Order: NextPage = () => {
               }}
               width={'100%'}
               height={400}
+              isClickToPauseDisabled={true}
             />
 
             <h1 className={styles.confirmationTitle}>
@@ -49,15 +73,22 @@ const Order: NextPage = () => {
             <Button
               styleClass={styles.confirmationButton}
               onClick={() => router.push('/order')}
+              theme={props.restaurantDetails.theme}
             >
               Back to Order Page
             </Button>
           </div>
         </Container>
       </main>
-      <Footer />
-    </>
+      <Footer
+        openingHours={props.restaurantDetails.openingHours}
+        phoneNumbers={props.restaurantDetails.phoneNumbers}
+        restaurantName={props.restaurantDetails.name}
+        theme={props.restaurantDetails.theme}
+        email={props.restaurantDetails.email}
+      />
+    </div>
   );
 };
 
-export default Order;
+export default Checkout;

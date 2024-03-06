@@ -3,7 +3,10 @@ import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { DateTime, Interval } from 'luxon';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { useValidateOrderDetailsLazyQuery } from '../../../../generated/graphql';
+import {
+  OrderTypeEnum,
+  useValidateOrderDetailsLazyQuery,
+} from '../../../../generated/graphql';
 import { FoodMenuAtom } from '../../../state/FoodModalState';
 import { InfoModalAtom } from '../../../state/InfoModalState';
 import {
@@ -37,6 +40,7 @@ const OrderNavBarModal = ({
   headerText,
   type = 'pickup',
   error,
+  theme,
 }: IOrderNavBarModal) => {
   const [validateOrderDetails, { loading, error: validateOrderDetailsError }] =
     useValidateOrderDetailsLazyQuery({
@@ -58,7 +62,9 @@ const OrderNavBarModal = ({
   );
   const [orderDetails, setOrderDetails] = useRecoilState(OrderDetailsAtom);
 
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   const [orderTime, setOrderTime] = useRecoilState(OrderTimeAtom);
   const [orderDate, setOrderDate] = useRecoilState(OrderDateAtom);
@@ -84,7 +90,9 @@ const OrderNavBarModal = ({
     if (
       type === 'delivery' &&
       !orderDetails.isOpenNowDelivery &&
-      orderDetails.isOpenNowPickUp
+      orderDetails.isOpenNowPickUp &&
+      restaurantDetails.services.length > 1 &&
+      restaurantDetails.services.includes(OrderTypeEnum.PickUp)
     ) {
       setDeliveryIsClosedForTheDay(true);
     } else {
@@ -106,10 +114,10 @@ const OrderNavBarModal = ({
 
   while (dayCount < 7) {
     const day = now.plus({ days: i });
-    const dayOfWeek = day.toFormat('cccc').toLowerCase(); // 'cccc' will give full weekday name in lowercase
+    const dayOfWeek = day.toFormat('cccc'); // 'cccc' will give full weekday name in lowercase
 
     const dayDetails = openingHours.find(
-      (item) => item.dayOfWeek.toLowerCase() === dayOfWeek.toLowerCase(),
+      (item) => item.dayOfWeek === dayOfWeek,
     );
 
     if (dayDetails && dayDetails.time.length > 0) {
@@ -147,7 +155,7 @@ const OrderNavBarModal = ({
   }
 
   const openingHoursForDay = openingHours.find(
-    (day) => day.dayOfWeek === now.weekdayLong?.toLowerCase(),
+    (day) => day.dayOfWeek === now.weekdayLong,
   );
 
   const allHoursAreInThePast = openingHoursForDay?.time.every((interval) => {
@@ -221,9 +229,7 @@ const OrderNavBarModal = ({
 
   const dayHours =
     openingHours.find(
-      (hours) =>
-        hours.dayOfWeek.toLowerCase() ===
-        orderDateState?.value?.weekdayLong?.toLowerCase(),
+      (hours) => hours.dayOfWeek === orderDateState?.value?.weekdayLong,
     )?.time || [];
 
   let intervals = [];
@@ -282,10 +288,7 @@ const OrderNavBarModal = ({
   }
 
   // Remove intervals that have already passed
-  if (
-    orderDateState?.value?.weekdayLong?.toLowerCase() ===
-    now.weekdayLong?.toLowerCase()
-  ) {
+  if (orderDateState?.value?.weekdayLong === now.weekdayLong) {
     intervals = intervals.filter(
       (interval) =>
         (interval as DateTime) >
@@ -494,6 +497,7 @@ const OrderNavBarModal = ({
         showCloseIcon={error ? false : true}
         text={headerText}
         onClick={() => setModal(false)}
+        theme={theme}
       />
 
       <div className={classes.orderNavbarModalContent}>
@@ -501,7 +505,7 @@ const OrderNavBarModal = ({
         {deliveryIsClosedForTheDay && (
           <div>
             <div className={classes.orderNavbarModalError}>
-              {`We're`} sorry delivery is closed for the day. You can still
+              Delivery is currently closed. Pick up is available. You can still
               place a pick up order or place a delivery order in advanced.
             </div>
 
@@ -513,6 +517,7 @@ const OrderNavBarModal = ({
                   setModal(false);
                   setShowTimeModal(true);
                 }}
+                theme={theme}
               >
                 Place Pick Up Order
               </Button>
@@ -523,6 +528,7 @@ const OrderNavBarModal = ({
                   setInfoModalIsPickUp(false);
                   setShowInfoModal(true);
                 }}
+                theme={theme}
               >
                 View Delivery Hours
               </Button>
@@ -535,25 +541,32 @@ const OrderNavBarModal = ({
             setIsAddressValid={setIsAddressValid}
             isAddressValid={isAddressValid}
             setModal={setModal}
+            theme={theme}
           />
         )}
 
         <Dropdown
-          id="DateDropdown"
-          options={days}
+          selectProps={{
+            id: 'DateDropdown',
+            options: days,
+            onChange: (e) => setOrderDateState(e as OrderTime),
+            defaultValue: days[0],
+            value: orderDateState,
+          }}
           label="Date"
-          onChange={(e) => setOrderDateState(e as OrderTime)}
-          defaultValue={days[0]}
-          value={orderDateState}
+          theme={theme}
         />
 
         <Dropdown
-          id="TimeDropdown"
-          options={formattedIntervals}
+          selectProps={{
+            id: 'TimeDropdown',
+            options: formattedIntervals,
+            onChange: (e) => setOrderTimeState(e as OrderTime),
+            defaultValue: formattedIntervals[0],
+            value: orderTimeState?.value === null ? null : orderTimeState,
+          }}
           label="Time"
-          onChange={(e) => setOrderTimeState(e as OrderTime)}
-          defaultValue={formattedIntervals[0]}
-          value={orderTimeState?.value === null ? null : orderTimeState}
+          theme={theme}
         />
 
         <Button
@@ -566,9 +579,13 @@ const OrderNavBarModal = ({
           }
           type="submit"
           styleClass={classes.orderNavbarModalButton}
+          theme={theme}
         >
           {loading ? (
-            <Loader width="50px" height="50px" scale={0.5} />
+            <Loader
+              height={50}
+              styleClass={classes.orderNavbarModalButtonLoader}
+            />
           ) : (
             'Add Details'
           )}

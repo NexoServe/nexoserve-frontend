@@ -1,97 +1,117 @@
+import { DateTime } from 'luxon';
 import Link from 'next/link';
 
 import Container from '../Container/Container';
+import { getRestaurantOpeningHours } from '../OrderNavbar/OrderInfo/helpers';
 import SvgIcons from '../SvgIcons';
 
 import useStyles from './css';
+import { IFooter } from './types';
 
-const Footer = () => {
-  const styles = useStyles();
+const Footer = ({
+  openingHours,
+  phoneNumbers,
+  restaurantName,
+  theme,
+  email,
+}: IFooter) => {
+  const styles = useStyles({
+    theme,
+  });
+
+  const openingHoursMap = getRestaurantOpeningHours(openingHours);
 
   return (
-    <footer className={styles.footer}>
+    <footer
+      className={styles.footer}
+      style={{
+        backgroundImage: `linear-gradient(0deg, ${theme.primary} 0%, ${theme.primary}95 100%), url("https://us-east-menu-images.s3.amazonaws.com/igli_7_put_pizza_on_the_right_4dc04a34-8daf-4f76-85c0-0c904cfe5fbd+(2)+(1).png")`,
+      }}
+    >
       <Container>
         <div className={styles.footerWrapper}>
           <div className={styles.footerCard}>
-            <h3 className={styles.footerTitle}>Naivgation</h3>
+            <h3 className={styles.footerTitle}>Navigation</h3>
             <nav className={styles.footerNav}>
-              <Link href="/">
-                <a className={styles.footerNavLink}>Home</a>
+              <Link className={styles.footerNavLink} href="/">
+                Home
               </Link>
-              <Link href="/">
-                <a className={styles.footerNavLink}>Gallery</a>
+              <Link className={styles.footerNavLink} href="/gallery">
+                Gallery
               </Link>
-              <Link href="/">
-                <a className={styles.footerNavLink}>Order Online</a>
+              <Link className={styles.footerNavLink} href="/order">
+                Order Online
+              </Link>
+              <Link
+                className={styles.footerNavLink}
+                href="/terms-and-conditions"
+              >
+                Terms and Conditions
+              </Link>
+              <Link className={styles.footerNavLink} href="/privacy-policy">
+                Privacy Policy
               </Link>
             </nav>
           </div>
           <div>
             <h3 className={styles.footerTitle}>Opening Hours</h3>
             <div className={styles.footerOpeningHours}>
-              <div className={styles.footerOpeningHourRow}>
-                <div className={styles.footerOpeningHourText}>Monday</div>
-                <div className={styles.footerOpeningHourText}>
-                  10:00 - 22:00
+              {openingHoursMap.map((openingHour, key) => (
+                <div key={key} className={styles.footerOpeningHourRow}>
+                  <div className={styles.footerOpeningHourWeekDay}>
+                    {openingHour.dayOfWeek}
+                  </div>
+                  <div className={styles.footerOpeningHourText}>
+                    {openingHour?.opens_at
+                      ? `${DateTime.fromISO(
+                          openingHour.opens_at as string,
+                        ).toFormat('hh:mm a')} - ${DateTime.fromISO(
+                          openingHour.closes_at as string,
+                        ).toFormat('hh:mm a')}`
+                      : 'Closed'}
+                  </div>
                 </div>
-              </div>
-              <div className={styles.footerOpeningHourRow}>
-                <div className={styles.footerOpeningHourText}>Tuesday</div>
-                <div className={styles.footerOpeningHourText}>
-                  10:00 - 22:00
-                </div>
-              </div>
-              <div className={styles.footerOpeningHourRow}>
-                <div className={styles.footerOpeningHourText}>Wednesday</div>
-                <div className={styles.footerOpeningHourText}>
-                  10:00 - 22:00
-                </div>
-              </div>
-              <div className={styles.footerOpeningHourRow}>
-                <div className={styles.footerOpeningHourText}>Thursday</div>
-                <div className={styles.footerOpeningHourText}>
-                  10:00 - 22:00
-                </div>
-              </div>
-              <div className={styles.footerOpeningHourRow}>
-                <div className={styles.footerOpeningHourText}>Friday</div>
-                <div className={styles.footerOpeningHourText}>
-                  10:00 - 22:00
-                </div>
-              </div>
-              <div className={styles.footerOpeningHourRow}>
-                <div className={styles.footerOpeningHourText}>Saturday</div>
-                <div className={styles.footerOpeningHourText}>
-                  10:00 - 22:00
-                </div>
-              </div>
-              <div className={styles.footerOpeningHourRow}>
-                <div className={styles.footerOpeningHourText}>Sunday</div>
-                <div className={styles.footerOpeningHourText}>
-                  10:00 - 22:00
-                </div>
-              </div>
+              ))}
             </div>
           </div>
           <div>
             <h3 className={styles.footerTitle}>Contact</h3>
             <div className={styles.footerPhoneWrapper}>
-              <a className={styles.footerPhone}>
-                <SvgIcons name="phone" />
-                <div className={styles.footerPhoneNumber}>(518) 888-0022</div>
-              </a>
-              <a className={styles.footerPhone}>
-                <SvgIcons name="phone" />
-                <div className={styles.footerPhoneNumber}>(518) 888-0022</div>
+              {phoneNumbers?.map((phoneNumber) => (
+                <a
+                  key={phoneNumber.id}
+                  className={styles.footerPhone}
+                  href={`tel:${phoneNumber?.number}`}
+                >
+                  <SvgIcons name="phone" fill={theme.neutral} />
+                  <div className={styles.footerPhoneNumber}>
+                    {phoneNumber.number}
+                  </div>
+                </a>
+              ))}
+              <a className={styles.footerPhone} href={`mailto:${email}`}>
+                <div className={styles.footerPhoneNumber}>{email}</div>
               </a>
             </div>
           </div>
         </div>
         <div className={styles.footerCopyright}>
           <div className={styles.footerCopyrightText}>
-            Copyright © Reserved by LaBella Pizza
+            Copyright © Reserved by {restaurantName}
           </div>
-          <div className={styles.footerCopyrightText}>Powered by NexaServe</div>
+          <div className={styles.footerCopyrightText}>
+            Powered by{' '}
+            <a
+              href="https://nexoserve.com"
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                color: theme.accent,
+              }}
+            >
+              NexoServe
+            </a>
+          </div>
         </div>
       </Container>
     </footer>

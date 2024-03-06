@@ -7,9 +7,12 @@ import * as paymentSuccess from '../../../lottie/success.json';
 import { InfoModalAtom } from '../../../state/InfoModalState';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import useStyles from '../css';
+import { IPaymentInfoModal } from '../types';
 
-const PaymentInfoModal = () => {
-  const classes = useStyles();
+const PaymentInfoModal = ({ theme }: IPaymentInfoModal) => {
+  const classes = useStyles({
+    theme,
+  });
   const [infoModalState, setInfoModalState] = useRecoilState(InfoModalAtom);
 
   return (
@@ -18,6 +21,7 @@ const PaymentInfoModal = () => {
         text={infoModalState.title as string}
         showCloseIcon={infoModalState.type === 'error' ? true : false}
         onClick={() => setInfoModalState({ showModal: false })}
+        theme={theme}
       />
       <div className={classes.infoModalBody}>
         {infoModalState.type === 'success' ? (
@@ -30,6 +34,7 @@ const PaymentInfoModal = () => {
               }}
               width={'100%'}
               height={200}
+              isClickToPauseDisabled={true}
             />
             <div className={classes.infoModalBodyMessage}>
               {infoModalState.message}
@@ -45,6 +50,7 @@ const PaymentInfoModal = () => {
               }}
               width={'100%'}
               height={200}
+              isClickToPauseDisabled={true}
             />
             <div className={classes.infoModalBodyMessage}>
               {infoModalState.message}
@@ -59,6 +65,7 @@ const PaymentInfoModal = () => {
               }}
               width={'100%'}
               height={200}
+              isClickToPauseDisabled={true}
             />
             <div className={classes.infoModalBodyMessage}>
               {infoModalState.message}

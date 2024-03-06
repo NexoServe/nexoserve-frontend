@@ -6,9 +6,12 @@ import { InfoModalAtom } from '../../../state/InfoModalState';
 import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import useStyles from '../css';
+import { IDeliveryErrorInfoModal } from '../types';
 
-const DeliveryErrorInfoModal = () => {
-  const classes = useStyles();
+const DeliveryErrorInfoModal = ({ theme }: IDeliveryErrorInfoModal) => {
+  const classes = useStyles({
+    theme,
+  });
   const [, setInfoModalState] = useRecoilState(InfoModalAtom);
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
   // const [showMore, setShowMore] = useState(false);
@@ -19,6 +22,7 @@ const DeliveryErrorInfoModal = () => {
         text={'Error'}
         showCloseIcon={true}
         onClick={() => setInfoModalState({ showModal: false })}
+        theme={theme}
       />
       <div className={classes.infoModalBody}>
         <Lottie
@@ -28,13 +32,14 @@ const DeliveryErrorInfoModal = () => {
           }}
           width={'100%'}
           height={200}
+          isClickToPauseDisabled={true}
         />
 
         <div className={classes.infoModalBodyMessage}>
           Delivery is not available online at this time. Please call the
           restaurant at{' '}
-          <a href={`tel:${restaurantDetails?.phone}`}>
-            {restaurantDetails?.phone}
+          <a href={`tel:${restaurantDetails?.phoneNumbers?.[0]?.number}`}>
+            {restaurantDetails?.phoneNumbers?.[0]?.number}
           </a>{' '}
           and place your order over the phone. NOTE: You can still place a pick
           up order.

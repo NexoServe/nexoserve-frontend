@@ -7,9 +7,12 @@ import DeliveryErrorInfoModal from './components/DeliveryErrorInfoModal';
 import FatalErrorInfoModal from './components/FatalErrorInfoModal';
 import PaymentInfoModal from './components/PaymentInfoModal';
 import useStyles from './css';
+import { IInfoModal } from './types';
 
-const InfoModal = () => {
-  const classes = useStyles();
+const InfoModal = ({ theme }: IInfoModal) => {
+  const classes = useStyles({
+    theme,
+  });
 
   const [infoModalState] = useRecoilState(InfoModalAtom);
 
@@ -17,14 +20,15 @@ const InfoModal = () => {
     <ModalPopUp
       showModal={infoModalState.showModal || false}
       onClose={() => console.log('')}
+      theme={theme}
     >
       <div className={classes.infoModal}>
         {infoModalState.infoModalType === 'payment' ? (
-          <PaymentInfoModal />
+          <PaymentInfoModal theme={theme} />
         ) : infoModalState.infoModalType === 'delivery' ? (
-          <DeliveryErrorInfoModal />
+          <DeliveryErrorInfoModal theme={theme} />
         ) : (
-          <FatalErrorInfoModal />
+          <FatalErrorInfoModal theme={theme} />
         )}
       </div>
     </ModalPopUp>

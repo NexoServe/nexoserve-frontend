@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 
-import colors from '../../../../css/colors';
 import SvgIcons from '../../SvgIcons';
 
 import useStyles from './css';
@@ -11,8 +10,11 @@ const FoodModalContentHeader = ({
   isRequired,
   isRequiredAddOn,
   maxOptionsSelected,
+  theme,
 }: IFoodModalContentHeader) => {
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   return (
     <div className={classes.foodModalContentHeader}>
@@ -30,16 +32,24 @@ const FoodModalContentHeader = ({
           style={
             isRequiredAddOn
               ? {
-                  border: `1px solid ${colors.red}`,
+                  border: `1px solid ${theme.tertiary}`,
                   padding: '0.2rem 0.5rem',
                   borderRadius: '0.5rem',
-                  color: colors.red,
+                  color: theme.tertiary,
                 }
-              : {}
+              : {
+                  color: theme.primary,
+                }
           }
         >
           {isRequiredAddOn ? (
-            <SvgIcons width="15" height="15" name="warning" />
+            <SvgIcons
+              width="15"
+              height="15"
+              name="warning"
+              fill={theme.tertiary}
+              backgroundColor={theme.neutral}
+            />
           ) : null}
           {isRequired ? 'Required' : 'Optional'}
         </motion.span>
@@ -50,6 +60,7 @@ const FoodModalContentHeader = ({
               fontSize: '12px',
               textAlign: 'right',
               lineHeight: '14px',
+              color: theme.primary,
             }}
           >
             {maxOptionsSelected === 1

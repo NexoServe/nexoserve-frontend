@@ -1,15 +1,15 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../css/base';
-import colors from '../../../css/colors';
+import { ThemeType } from '../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   infoModal: {
     width: '90vw',
     maxWidth: '500px',
     maxHeight: '600px',
     borderRadius: base(2),
-    background: colors.white,
+    background: theme.neutral,
     overflow: 'auto',
   },
   infoModalBody: {
@@ -24,6 +24,7 @@ const useStyles = createUseStyles({
     width: '100%',
     fontWeight: 500,
     lineHeight: '20px',
+    color: theme.primary,
   },
 
   infoModalBodyList: {
@@ -31,6 +32,7 @@ const useStyles = createUseStyles({
     textAlign: 'left',
     paddingLeft: base(4),
     paddingTop: base(2),
+    color: theme.primary,
 
     '& li': {
       marginBottom: base(1),
@@ -44,15 +46,16 @@ const useStyles = createUseStyles({
     marginTop: base(2),
     marginBottom: base(2),
     textDecoration: 'underline',
+    color: theme.primary,
   },
 
   infoModalBodyResetBtn: {
     marginLeft: base(1),
     padding: `${base(0.5)} ${base(1.5)}`,
-    backgroundColor: colors.red,
-    color: colors.white,
+    backgroundColor: theme.tertiary,
+    color: theme.primary,
     borderRadius: base(1),
   },
-});
+}));
 
 export default useStyles;

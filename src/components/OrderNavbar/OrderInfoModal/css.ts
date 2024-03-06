@@ -1,11 +1,11 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   orderInfoModal: {
-    background: colors.white,
+    background: theme.neutral,
     width: '95vw',
     maxHeight: '80vh',
     overflow: 'auto',
@@ -29,21 +29,24 @@ const useStyles = createUseStyles({
     lineHeight: '20px',
     fontWeight: 600,
     paddingBottom: base(1),
+    color: theme.primary,
   },
 
   orderInfoModalContentPhone: {
     fontSize: '14px',
     paddingBottom: base(1.5),
-    color: colors.black,
+    color: theme.primary,
     opacity: 1,
     textDecoration: 'underline',
+    display: 'flex',
+    flexDirection: 'column',
   },
 
   orderInfoModalContentAddress: {
     fontSize: '16px',
     lineHeight: '18px',
     paddingBottom: base(0.5),
-    color: colors.darkGray,
+    color: theme.primary,
     opacity: 0.8,
     textAlign: 'right',
   },
@@ -62,6 +65,7 @@ const useStyles = createUseStyles({
     fontWeight: 600,
     marginBottom: base(1),
     marginTop: base(1.5),
+    color: theme.primary,
   },
 
   orderInfoHoursTabButton: {
@@ -69,18 +73,19 @@ const useStyles = createUseStyles({
     fontSize: '16px',
     textAlign: 'left',
     cursor: 'pointer',
-    background: colors.secondary,
+    background: theme.neutral,
     padding: `${base(1)} 0`,
+    color: theme.primary,
   },
 
   orderInfoHoursTabs: {
-    background: colors.secondary,
+    background: theme.neutral,
   },
 
   orderInfoHoursTabButtonDivider: {
     width: '1px',
     height: '100%',
-    color: colors.black,
+    color: theme.primary,
   },
 
   orderInfoHoursTabUnderline: {
@@ -88,7 +93,7 @@ const useStyles = createUseStyles({
     height: '3px',
     borderRadius: '10px',
 
-    backgroundColor: colors.black,
+    backgroundColor: theme.primary,
   },
 
   orderInfoHoursTabContent: {
@@ -101,11 +106,12 @@ const useStyles = createUseStyles({
     justifyContent: 'space-between',
     padding: `${base(1)} 0`,
     opacity: 0.8,
+    color: theme.primary,
   },
 
   orderInfoHoursTabContentItemActive: {
     fontWeight: 700,
   },
-});
+}));
 
 export default useStyles;

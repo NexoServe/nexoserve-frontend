@@ -1,12 +1,10 @@
-import colors from '../../../css/colors';
-
 import { SvgIconsType } from './types';
 
 const Plus = ({
   width = '25',
   height = '25',
   viewBox = '0 0 25 25',
-  fill = 'none',
+  fill,
 }: SvgIconsType) => {
   return (
     <svg
@@ -18,7 +16,7 @@ const Plus = ({
     >
       <path
         d="M6.25 12.5H18.75M12.5 18.75V6.25"
-        stroke={colors.black}
+        stroke={fill}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"

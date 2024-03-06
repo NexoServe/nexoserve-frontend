@@ -34,6 +34,7 @@ const OrderNavBarModalDelivery = ({
   setIsAddressValid,
   isAddressValid,
   setModal,
+  theme,
 }: IOrderNavBarModalDelivery) => {
   const [address, setAddress] = useState('');
 
@@ -51,7 +52,9 @@ const OrderNavBarModalDelivery = ({
 
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
 
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   useEffect(() => {
     if (deliveryAddress) {
@@ -165,7 +168,6 @@ const OrderNavBarModalDelivery = ({
 
         setIsAddressValid(true);
       } else {
-        console.log('The address is not within the radius');
         setIsAddressValid(false);
       }
     } catch (error) {
@@ -234,6 +236,7 @@ const OrderNavBarModalDelivery = ({
         placeholder="Ste, Apt, Floor (Max 50 characters)"
         maxLength={50}
         style={{ marginTop: base(1) }}
+        theme={theme}
       />
 
       <TextArea
@@ -242,6 +245,11 @@ const OrderNavBarModalDelivery = ({
         maxLength={140}
         onChange={(e) => setDeliveryDetails(e.target.value)}
         value={deliveryDetails}
+        theme={theme}
+        style={{
+          minHeight: base(10),
+          maxHeight: base(10),
+        }}
       />
     </div>
   );

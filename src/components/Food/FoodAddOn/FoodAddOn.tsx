@@ -7,8 +7,10 @@ import FoodOption from '../FoodOption/FoodOption';
 import useStyles from './css';
 import { IFoodAddOn } from './types';
 
-const FoodAddOn = ({ addOn, isRequiredAddOn }: IFoodAddOn) => {
-  const classes = useStyles();
+const FoodAddOn = ({ addOn, isRequiredAddOn, theme }: IFoodAddOn) => {
+  const classes = useStyles({
+    theme,
+  });
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -26,6 +28,7 @@ const FoodAddOn = ({ addOn, isRequiredAddOn }: IFoodAddOn) => {
     <div className={classes.foodAddOn}>
       <div ref={ref} style={{ position: 'absolute', top: '-100px' }}></div>
       <FoodModalContentHeader
+        theme={theme}
         name={addOn?.name}
         isRequired={addOn?.isRequired}
         isRequiredAddOn={isRequiredAddOn}
@@ -45,12 +48,13 @@ const FoodAddOn = ({ addOn, isRequiredAddOn }: IFoodAddOn) => {
       <div>
         {addOn?.options
           ?.slice()
-          ?.sort((a, b) => (a?.order as number) - (b?.order as number))
+          ?.sort((a, b) => (a?.sort as number) - (b?.sort as number))
           ?.map((option) => (
             <FoodOption
               key={option?.id}
               option={option as OptionType}
               addOn={addOn}
+              theme={theme}
             />
           ))}
       </div>

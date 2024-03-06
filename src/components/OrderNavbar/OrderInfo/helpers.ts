@@ -3,13 +3,13 @@ import { DateTime } from 'luxon';
 import { DayOutput } from '../../../../generated/graphql';
 
 const daysOfWeek = [
-  'monday',
-  'tuesday',
-  'wednesday',
-  'thursday',
-  'friday',
-  'saturday',
-  'sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
 ];
 
 export const getNextOpeningDay = (
@@ -36,8 +36,7 @@ export const getNextDateFromDayOfWeek = (
   desiredDayOfWeek: string,
 ): DateTime => {
   const currentDayIndex = currentDate.weekday;
-  const desiredDayIndex =
-    daysOfWeek.indexOf(desiredDayOfWeek.toLowerCase()) + 1;
+  const desiredDayIndex = daysOfWeek.indexOf(desiredDayOfWeek) + 1;
 
   const diff = desiredDayIndex - currentDayIndex;
   const daysToAdd = diff <= 0 ? diff + 7 : diff;
@@ -50,7 +49,7 @@ export const getRestaurantOpeningHours = (openingHours: DayOutput[]) => {
     let closingTime;
 
     if (
-      item.time[0].opens_at === '00:00' &&
+      item.time[0]?.opens_at === '00:00' &&
       item.time[index + 1]?.opens_at === null
     ) {
       return {

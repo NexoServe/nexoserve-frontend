@@ -1,10 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 
-import colors from '../../../css/colors';
-
 import { IRadioButton } from './types';
 
-const RadioButton = ({ isChecked }: IRadioButton) => {
+const RadioButton = ({ isChecked, theme }: IRadioButton) => {
   return (
     <div>
       <svg width={25} height={25} viewBox="0 0 100 100">
@@ -12,7 +10,7 @@ const RadioButton = ({ isChecked }: IRadioButton) => {
           cx="50"
           cy="50"
           r="40"
-          stroke={colors.black}
+          stroke={theme.primary}
           strokeWidth="5"
           fill="none"
         />
@@ -23,8 +21,8 @@ const RadioButton = ({ isChecked }: IRadioButton) => {
                 cx="50"
                 cy="50"
                 r="24"
-                fill={colors.black}
-                stroke={colors.black}
+                fill={theme.primary}
+                stroke={theme.primary}
                 strokeWidth="1"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
@@ -38,7 +36,7 @@ const RadioButton = ({ isChecked }: IRadioButton) => {
               />
               <motion.path
                 d="M 30,50 a 20,20 0 1,0 40,0 a 20,20 0 1,0 -40,0"
-                stroke={colors.black}
+                stroke={theme.primary}
                 strokeWidth="4"
                 fill="none"
                 initial={{ pathLength: 0 }}

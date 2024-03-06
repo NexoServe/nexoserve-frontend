@@ -2,7 +2,12 @@ query ValidateOrderDetails($input: OrderDetailsInput!) {
   validateOrderDetails(input: $input) {
     restaurantDetails {
       id
-      phone
+      printerMacAddress
+      services
+      phoneNumbers {
+        id
+        number
+      }
       name
       address
       location {
@@ -13,12 +18,15 @@ query ValidateOrderDetails($input: OrderDetailsInput!) {
       pickUpOffset
       deliveryOffset
       deliveryFee
+      deliveryMinimum
       menu {
         category
-        order
+        sort
         foods {
           id
           description
+          startDate
+          endDate
           image
           name
           price

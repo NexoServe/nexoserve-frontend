@@ -1,21 +1,19 @@
 import { AnimatePresence, motion } from 'framer-motion';
 
-import colors from '../../../css/colors';
-
 import { ICheckbox } from './types';
 
-const Checkbox = ({ isChecked }: ICheckbox) => {
+const Checkbox = ({ isChecked, theme }: ICheckbox) => {
   return (
     <div
       style={{
-        border: `2px solid ${colors.black}`,
+        border: `2px solid ${theme.primary}`,
         minHeight: '20px',
         minWidth: '20px',
         maxWidth: '20px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: isChecked ? colors.black : colors.white,
+        backgroundColor: isChecked ? theme.primary : theme.neutral,
         transition: '300ms ease-in-out',
       }}
     >
@@ -38,7 +36,7 @@ const Checkbox = ({ isChecked }: ICheckbox) => {
               }}
               exit={{ pathLength: 0 }}
               d="M3.5 9.5L8 14L21 1"
-              stroke={colors.white}
+              stroke={theme.neutral}
               strokeWidth="3"
               strokeLinecap="round"
             />

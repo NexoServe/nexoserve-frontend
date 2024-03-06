@@ -1,8 +1,12 @@
+import { useEffect } from 'react';
+
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
 import { DateTime } from 'luxon';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { base } from '../../../../css/base';
+import { OrderTypeEnum } from '../../../../generated/graphql';
 import {
   InfoModalIsPickUpAtom,
   OrderDetailsAtom,
@@ -15,12 +19,14 @@ import { getRestaurantOpeningHours } from '../OrderInfo/helpers';
 import useStyles from './css';
 import { IOrderInfoModal } from './types';
 
-const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
+const OrderInfoModal = ({ setModal, theme }: IOrderInfoModal) => {
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
   const orderDetails = useRecoilValue(OrderDetailsAtom);
 
   const [isPickUp, setIsPickUp] = useRecoilState(InfoModalIsPickUpAtom);
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   const pickUpOpeningHours = getRestaurantOpeningHours(
     restaurantDetails?.pickUpOpeningHours,
@@ -30,6 +36,15 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
     restaurantDetails?.deliveryOpeningHours,
   );
 
+  useEffect(() => {
+    if (
+      restaurantDetails.services?.length === 1 &&
+      restaurantDetails.services[0] === OrderTypeEnum.Delivery
+    ) {
+      setIsPickUp(false);
+    }
+  }, [restaurantDetails]);
+
   return (
     <div className={classes.orderInfoModal}>
       <ModalHeader
@@ -38,6 +53,7 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
           setModal(false);
           setIsPickUp(true);
         }}
+        theme={theme}
       />
       <div className={classes.orderInfoModalContent}>
         <div className={classes.orderInfoModalContentInner}>
@@ -46,51 +62,77 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
               {restaurantDetails?.name}
             </div>
             <div className={classes.orderInfoModalContentPhone}>
-              <a href={`tel:${restaurantDetails?.phone}`}>
-                {restaurantDetails?.phone}
-              </a>
+              {restaurantDetails?.phoneNumbers?.map((phone, i) => (
+                <a
+                  style={{
+                    paddingTop: base(0.5),
+                    paddingBottom: base(0.5),
+                    color: theme.primary,
+                  }}
+                  key={phone.id}
+                  href={`tel:${phone.number}`}
+                >
+                  {phone.number}
+                </a>
+              ))}
             </div>
           </div>
-          <div>
-            <div className={classes.orderInfoModalContentAddress}>
-              {restaurantDetails?.address}
+          {restaurantDetails?.services.includes(OrderTypeEnum.PickUp) && (
+            <div>
+              <div className={classes.orderInfoModalContentAddress}>
+                {restaurantDetails?.address}
+              </div>
+              <div className={classes.orderInfoModalContentDirections}>
+                <a
+                  style={{
+                    color: theme.primary,
+                  }}
+                  href={`https://www.google.com/maps/place/${restaurantDetails?.address.replace(
+                    / /g,
+                    '+',
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Get directions
+                </a>
+              </div>
             </div>
-            <div className={classes.orderInfoModalContentDirections}>
-              <a
-                href={`https://www.google.com/maps/place/${restaurantDetails?.address.replace(
-                  / /g,
-                  '+',
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Get directions
-              </a>
-            </div>
-          </div>
+          )}
         </div>
-        <Divider />
+        <Divider theme={theme} />
         <div>
           <h3 className={classes.orderInfoModalHoursTitle}>Hours:</h3>
 
           <div>
             <div className={classes.orderInfoHoursTabs}>
-              <button
-                className={classes.orderInfoHoursTabButton}
-                onClick={() => setIsPickUp(true)}
-              >
-                Pick up
-              </button>
-              <button
-                onClick={() => setIsPickUp(false)}
-                className={classes.orderInfoHoursTabButton}
-              >
-                Delivery
-              </button>
+              {restaurantDetails.services.includes(OrderTypeEnum.PickUp) && (
+                <button
+                  className={classes.orderInfoHoursTabButton}
+                  onClick={() => setIsPickUp(true)}
+                >
+                  Pick up
+                </button>
+              )}
+
+              {restaurantDetails.services.includes(OrderTypeEnum.Delivery) && (
+                <button
+                  onClick={() => setIsPickUp(false)}
+                  className={classes.orderInfoHoursTabButton}
+                >
+                  Delivery
+                </button>
+              )}
+
               <motion.div
                 className={classes.orderInfoHoursTabUnderline}
                 animate={{
-                  x: isPickUp ? 0 : 80,
+                  x:
+                    restaurantDetails.services?.length === 1
+                      ? 0
+                      : isPickUp
+                      ? 0
+                      : 80,
                 }}
               ></motion.div>
             </div>
@@ -99,9 +141,8 @@ const OrderInfoModal = ({ setModal }: IOrderInfoModal) => {
               {(isPickUp ? pickUpOpeningHours : deliveryOpeningHours)?.map(
                 (item, i) => {
                   const isSameDay =
-                    DateTime.fromISO(
-                      orderDetails?.currentDateTime as string,
-                    ).weekdayLong?.toLowerCase() === item.dayOfWeek;
+                    DateTime.fromISO(orderDetails?.currentDateTime as string)
+                      .weekdayLong === item.dayOfWeek;
 
                   return (
                     <div

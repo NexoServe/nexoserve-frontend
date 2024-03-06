@@ -13,6 +13,7 @@ import { IShoppingCartShowDetailsBtn } from './types';
 
 const ShoppingCartShowDetailsBtn = ({
   styleClass,
+  theme,
 }: IShoppingCartShowDetailsBtn) => {
   const classes = useStyles();
 
@@ -26,13 +27,16 @@ const ShoppingCartShowDetailsBtn = ({
     <div className={classNames(styleClass, classes.shoppingCartShowDetailsBtn)}>
       {shoppingCart.length > 0 ? (
         <button
+          style={{
+            color: theme.primary,
+          }}
           onClick={() => setShowShoppingCartDetails(!showShoppingCartDetails)}
         >
           {showShoppingCartDetails ? 'Hide Details' : 'Show Details'}
           <motion.span
             animate={{ rotate: showShoppingCartDetails ? '180deg' : '0' }}
           >
-            <SvgIcons name="arrow" />
+            <SvgIcons name="arrow" fill={theme.primary} />
           </motion.span>
         </button>
       ) : null}

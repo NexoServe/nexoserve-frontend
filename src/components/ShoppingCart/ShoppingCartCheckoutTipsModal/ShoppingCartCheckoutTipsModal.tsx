@@ -12,10 +12,13 @@ import { IShoppingCartCheckoutTipsModal } from './types';
 
 const ShoppingCartCheckoutTipsModal = ({
   setShowCustomTip,
+  theme,
 }: IShoppingCartCheckoutTipsModal) => {
   // const [value, setValue] = useState<null | string>(null);
   const [, setShoppingCartTip] = useRecoilState(ShoppingCartTipAtom);
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   const [value, setValue] = useState('$');
 
@@ -48,7 +51,11 @@ const ShoppingCartCheckoutTipsModal = ({
       onSubmit={handleSubmit}
       className={classes.shoppingCartCheckoutTipsModal}
     >
-      <ModalHeader text="Add a Tip" onClick={() => setShowCustomTip(false)} />
+      <ModalHeader
+        theme={theme}
+        text="Add a Tip"
+        onClick={() => setShowCustomTip(false)}
+      />
       <div className={classes.shoppingCartCheckoutTipsModalContent}>
         <Input
           error={value === '' ? 'Please enter a tip amount' : null}
@@ -58,10 +65,12 @@ const ShoppingCartCheckoutTipsModal = ({
           onChange={handleChange}
           placeholder="$0.00"
           maxLength={7}
+          theme={theme}
         />
         <Button
           type="submit"
           styleClass={classes.shoppingCartCheckoutTipsModalButton}
+          theme={theme}
         >
           Add Tip
         </Button>

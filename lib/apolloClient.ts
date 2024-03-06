@@ -9,10 +9,24 @@ import {
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
+let graphqlUri: string;
+
+type Environment = 'development' | 'production' | 'staging';
+
+const env: Environment = process.env.NEXT_PUBLIC_NODE_ENV as Environment;
+
+if (env === 'development') {
+  graphqlUri = 'http://localhost:4000/graphql'; // Development URI
+} else if (env === 'staging') {
+  graphqlUri = 'https://staging-nexoserve-backend.up.railway.app/graphql'; // Staging URI
+} else if (env === 'production') {
+  graphqlUri = 'https://nexoserve-backend.up.railway.app/graphql'; // Default to Production URI
+}
+
 function createApolloClient() {
   return new ApolloClient({
     link: new HttpLink({
-      uri: 'https://restaurant-server-production-5304.up.railway.app/graphql', // Replace with your GraphQL server URL
+      uri: graphqlUri,
     }),
     cache: new InMemoryCache(),
   });

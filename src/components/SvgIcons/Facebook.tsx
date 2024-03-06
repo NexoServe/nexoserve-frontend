@@ -1,12 +1,10 @@
-import colors from '../../../css/colors';
-
 import { SvgIconsType } from './types';
 
 const Facebook = ({
   width = '30',
   height = '30',
   viewBox = '0 0 30 30',
-  fill = colors.black,
+  fill,
   styleClass,
 }: SvgIconsType) => {
   return (

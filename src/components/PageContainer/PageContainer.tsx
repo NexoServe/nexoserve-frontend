@@ -4,7 +4,10 @@ import { DateTime } from 'luxon';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 
-import { useRestaurantLazyQuery } from '../../../generated/graphql';
+import {
+  OrderTypeEnum,
+  useRestaurantLazyQuery,
+} from '../../../generated/graphql';
 import { FoodMenuAtom } from '../../state/FoodModalState';
 import {
   OrderDateAtom,
@@ -17,13 +20,14 @@ import {
   OrderTimeAtom,
 } from '../../state/OrderNavbar';
 import { RestaurantDetailsAtom } from '../../state/RestaurantState';
+import InfoModal from '../InfoModal/InfoModal';
 import Loader from '../Loader/Loader';
 import { ModalPopUp } from '../Modal/Modal';
 import OrderNavBarModal from '../OrderNavbar/OrderNavBarModal/OrderNavBarModal';
 
 import { IPageContainer } from './types';
 
-const PageContainer = ({ children }: IPageContainer) => {
+const PageContainer = ({ children, theme }: IPageContainer) => {
   const router = useRouter();
 
   const [showInvalidTimeModal, setShowInvalidTimeModal] = useRecoilState(
@@ -45,7 +49,7 @@ const PageContainer = ({ children }: IPageContainer) => {
   const orderIsPickUpStorage = localStorage.getItem('isPickUp');
   const orderDeliveryAddressStorage = localStorage.getItem('deliveryAddress');
   const orderDeliveryAddressAdditionalInfoStorage = localStorage.getItem(
-    'deliveryAddiotionalInfo',
+    'deliveryAdditionalInfo',
   );
   const orderDeliveryDetails = localStorage.getItem('deliveryDetails');
 
@@ -85,7 +89,17 @@ const PageContainer = ({ children }: IPageContainer) => {
   }
 
   useEffect(() => {
-    if (orderDetails?.isOrderTimeValid === false) {
+    if (
+      !orderDeliveryAddressParsed &&
+      data?.restaurant.restaurantDetails.services?.length === 1 &&
+      data?.restaurant.restaurantDetails.services[0] === OrderTypeEnum.Delivery
+    ) {
+      setShowInvalidTimeModal({
+        type: 'delivery',
+        errorMessages:
+          'Please add a delivery address to place an order for delivery.',
+      });
+    } else if (orderDetails?.isOrderTimeValid === false) {
       //TODO HANDLE ERROR message
       setShowInvalidTimeModal({
         type: 'pickup',
@@ -121,7 +135,21 @@ const PageContainer = ({ children }: IPageContainer) => {
       setRestaurantDetails(data.restaurant.restaurantDetails);
       setOrderDetails(data.restaurant.orderDetails);
 
-      if (data.restaurant.orderDetails.isPickUp === true) {
+      if (
+        data?.restaurant.restaurantDetails.services?.length === 1 &&
+        data?.restaurant.restaurantDetails.services[0] ===
+          OrderTypeEnum.Delivery
+      ) {
+        setIsPickUp(false);
+        localStorage.setItem('isPickUp', JSON.stringify(false));
+      } else if (
+        data?.restaurant.restaurantDetails.services?.length === 1 &&
+        data?.restaurant.restaurantDetails.services[0] ===
+          OrderTypeEnum.Delivery
+      ) {
+        setIsPickUp(true);
+        localStorage.setItem('isPickUp', JSON.stringify(true));
+      } else if (data.restaurant.orderDetails.isPickUp === true) {
         setIsPickUp(true);
         localStorage.setItem('isPickUp', JSON.stringify(true));
       } else {
@@ -191,7 +219,7 @@ const PageContainer = ({ children }: IPageContainer) => {
         }
       } else {
         localStorage.removeItem('deliveryAddress');
-        localStorage.removeItem('deliveryAddiotionalInfo');
+        localStorage.removeItem('deliveryAdditionalInfo');
         localStorage.removeItem('deliveryDetails');
       }
     }
@@ -200,7 +228,11 @@ const PageContainer = ({ children }: IPageContainer) => {
   return (
     <>
       {loading && (
-        <ModalPopUp onClose={() => console.log('first')} showModal={loading}>
+        <ModalPopUp
+          theme={theme}
+          onClose={() => console.log()}
+          showModal={loading}
+        >
           <Loader />
         </ModalPopUp>
       )}
@@ -210,6 +242,7 @@ const PageContainer = ({ children }: IPageContainer) => {
           {children}
 
           <ModalPopUp
+            theme={theme}
             showModal={showInvalidTimeModal ? true : false}
             onClose={() => {
               console.log();
@@ -220,10 +253,13 @@ const PageContainer = ({ children }: IPageContainer) => {
               setModal={() => setShowInvalidTimeModal(undefined)}
               type={showInvalidTimeModal?.type}
               error={showInvalidTimeModal?.errorMessages}
+              theme={theme}
             />
           </ModalPopUp>
         </div>
       )}
+
+      <InfoModal theme={theme} />
     </>
   );
 };

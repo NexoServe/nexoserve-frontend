@@ -13,7 +13,7 @@ import ShoppingCartShowDetailsBtn from '../ShoppingCartShowDetailsBtn/ShoppingCa
 import useStyles from './css';
 import { IShoppingCartItemList } from './types';
 
-const ShoppingCartItemList = ({ isCheckout }: IShoppingCartItemList) => {
+const ShoppingCartItemList = ({ isCheckout, theme }: IShoppingCartItemList) => {
   const shoppingCart = useRecoilValue(ShoppingCartAtom);
   const [showModal, setShowModal] = useState(false);
   const [activeShoppingCartItem, setActiveActiveShoppingCartItem] =
@@ -26,7 +26,9 @@ const ShoppingCartItemList = ({ isCheckout }: IShoppingCartItemList) => {
     setActiveActiveShoppingCartItem(activeShoppingCartItem);
   };
 
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   return (
     <div className={classes.shoppingCartItemList}>
@@ -35,6 +37,8 @@ const ShoppingCartItemList = ({ isCheckout }: IShoppingCartItemList) => {
           <SvgIcons
             styleClass={classes.shoppingCartItemListEmptySvg}
             name="emptyCart"
+            fill={theme.neutral}
+            backgroundColor={theme.primary}
           />
           <p className={classes.shoppingCartItemListEmptyText}>
             Your cart is empty
@@ -46,14 +50,16 @@ const ShoppingCartItemList = ({ isCheckout }: IShoppingCartItemList) => {
             styleClass={`${classes.shoppingCartItemListShowDetails} ${
               isCheckout && classes.shoppingCartItemListShowDetailsChecked
             }`}
+            theme={theme}
           />
           {shoppingCart?.map((shoppingCartItem) => (
             <Fragment key={shoppingCartItem.orderItemId}>
               <ShoppingCartItem
                 shoppingCartItem={shoppingCartItem}
                 activeShoppingCartItemClick={activeShoppingCartItemClick}
+                theme={theme}
               />
-              <Divider />
+              <Divider theme={theme} />
             </Fragment>
           ))}
         </>
@@ -66,6 +72,10 @@ const ShoppingCartItemList = ({ isCheckout }: IShoppingCartItemList) => {
           foodId={activeShoppingCartItem?.food?.id as string}
           type="update"
           orderItemId={activeShoppingCartItem?.orderItemId}
+          customInstructionsText={
+            activeShoppingCartItem?.customInstructions as string
+          }
+          theme={theme}
         />
       )}
     </div>

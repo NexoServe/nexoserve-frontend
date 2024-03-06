@@ -1,0 +1,72 @@
+query RestaurantDetails($restaurantId: String!) {
+  restaurantDetails(restaurantId: $restaurantId) {
+    name
+    logo
+    favicon
+    metaDescription
+    ogImage
+    measurementId
+    domainUrl
+    loader
+    address
+    email
+    navbarType
+    theme {
+      accent
+      neutral
+      primary
+      secondary
+      tertiary
+    }
+    gallery {
+      id
+      url
+    }
+    openingHours {
+      dayOfWeek
+      time {
+        opens_at
+        closes_at
+      }
+    }
+    phoneNumbers {
+      id
+      number
+    }
+    socialMedia {
+      id
+      xTwitterUrl
+      facebookUrl
+      instagramUrl
+    }
+    hero {
+      id
+      type
+      title
+      description
+      background
+      foreground
+    }
+    feature {
+      id
+      title
+      type
+      items {
+        id
+        image
+        title
+        description
+      }
+    }
+    aboutUs {
+      id
+      type
+      title
+      description
+      imageOne
+      imageTwo
+      imageThree
+      imageFour
+    }
+  }
+}

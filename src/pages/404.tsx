@@ -22,11 +22,10 @@ const NotFoundPage = () => {
         }}
         width={'100%'}
         height={200}
+        isClickToPauseDisabled={true}
       />
 
-      <Link href="/">
-        <a>Go back home</a>
-      </Link>
+      <Link href="/">Go back home</Link>
 
       <div
         style={{

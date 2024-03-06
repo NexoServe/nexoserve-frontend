@@ -1,11 +1,12 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../css/base';
-import colors from '../../../css/colors';
+import { ThemeType } from '../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   button: {
-    background: colors.primary,
+    background: theme.accent,
+    color: theme.primary,
     bottom: 0,
     left: 0,
     width: '100%',
@@ -17,6 +18,6 @@ const useStyles = createUseStyles({
     fontWeight: '600',
     cursor: 'pointer',
   },
-});
+}));
 
 export default useStyles;

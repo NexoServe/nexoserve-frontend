@@ -1,12 +1,17 @@
 import { ChangeEventHandler } from 'react';
 
-import { OptionSizeType, OptionType } from '../../../../generated/graphql';
+import {
+  OptionSizeType,
+  OptionType,
+  ThemeType,
+} from '../../../../generated/graphql';
 import { AddOnType } from '../FoodAddOn/types';
 
 export interface IFoodOptionSize {
   optionSize: OptionSizeType;
   option: OptionType;
   addOn: AddOnType;
+  theme: ThemeType;
 }
 
 export interface IFoodOptionSizeStyle {
@@ -14,4 +19,5 @@ export interface IFoodOptionSizeStyle {
   option: OptionType;
   onChange: ChangeEventHandler<HTMLInputElement> | undefined;
   isChecked: boolean;
+  theme: ThemeType;
 }

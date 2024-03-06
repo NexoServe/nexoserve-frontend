@@ -1,12 +1,12 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   shoppingCartButtonBox: {
-    backgroundColor: colors.secondary,
+    backgroundColor: theme.neutral,
     position: 'sticky',
     bottom: 0,
     left: 0,
@@ -23,6 +23,6 @@ const useStyles = createUseStyles({
       cursor: 'pointer',
     },
   },
-});
+}));
 
 export default useStyles;

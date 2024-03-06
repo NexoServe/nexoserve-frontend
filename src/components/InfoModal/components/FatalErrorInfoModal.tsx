@@ -6,9 +6,12 @@ import { InfoModalAtom } from '../../../state/InfoModalState';
 import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import ModalHeader from '../../ModalHeader/ModalHeader';
 import useStyles from '../css';
+import { IFatalErrorInfoModal } from '../types';
 
-const FatalErrorInfoModal = () => {
-  const classes = useStyles();
+const FatalErrorInfoModal = ({ theme }: IFatalErrorInfoModal) => {
+  const classes = useStyles({
+    theme,
+  });
   const [, setInfoModalState] = useRecoilState(InfoModalAtom);
   const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
   // const [showMore, setShowMore] = useState(false);
@@ -24,6 +27,7 @@ const FatalErrorInfoModal = () => {
         text={'Fatal Error'}
         showCloseIcon={false}
         onClick={() => setInfoModalState({ showModal: false })}
+        theme={theme}
       />
       <div className={classes.infoModalBody}>
         <Lottie
@@ -33,6 +37,7 @@ const FatalErrorInfoModal = () => {
           }}
           width={'100%'}
           height={200}
+          isClickToPauseDisabled={true}
         />
 
         <div className={classes.infoModalBodyMessage}>
@@ -52,8 +57,13 @@ const FatalErrorInfoModal = () => {
           </li>
           <li>
             If the error persists, you can call the restaurant at{' '}
-            <a href={`tel:${restaurantDetails?.phone}`}>
-              {restaurantDetails?.phone}
+            <a
+              href={`tel:${restaurantDetails?.phoneNumbers?.[0]?.number}`}
+              style={{
+                color: theme.accent,
+              }}
+            >
+              {restaurantDetails?.phoneNumbers?.[0]?.number}
             </a>{' '}
             and place your order over the phone.
           </li>

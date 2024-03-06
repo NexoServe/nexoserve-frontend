@@ -30,6 +30,7 @@ query ValidateShoppingCart($order: CreateOrderInput!) {
       }
       total
       quantity
+      customInstructions
     }
   }
 }

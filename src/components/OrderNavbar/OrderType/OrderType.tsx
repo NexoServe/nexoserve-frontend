@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 
 import { motion } from 'framer-motion';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { base } from '../../../../css/base';
+import { OrderTypeEnum } from '../../../../generated/graphql';
 import {
   OrderIsPickUpAtom,
   OrderIsPickUpStateAtom,
 } from '../../../state/OrderNavbar';
+import { RestaurantDetailsAtom } from '../../../state/RestaurantState';
 import { ModalPopUp } from '../../Modal/Modal';
 import RoundBorder from '../../RoundBorder/RoundBorder';
 import SvgIcons from '../../SvgIcons';
@@ -21,9 +23,12 @@ const variants = {
   delivery: { x: '100%' },
 };
 
-const OrderType = ({ isCheckout = false }: IOrderType) => {
-  const classes = useStyles();
+const OrderType = ({ isCheckout = false, theme }: IOrderType) => {
+  const classes = useStyles({
+    theme,
+  });
 
+  const restaurantDetails = useRecoilValue(RestaurantDetailsAtom);
   const [showDeliveryModal, setShowDeliveryModal] = useState(false);
   const [showPickUpModal, setShowPickUpModal] = useState(false);
 
@@ -59,6 +64,7 @@ const OrderType = ({ isCheckout = false }: IOrderType) => {
             : undefined
         }
         styleClass={classes.orderType}
+        theme={theme}
       >
         <div className={classes.orderTypeToggle}>
           <motion.div
@@ -70,15 +76,27 @@ const OrderType = ({ isCheckout = false }: IOrderType) => {
           <button
             onClick={handlePickUpClick}
             className={classes.orderTypeToggleButton}
+            disabled={
+              !restaurantDetails.services?.includes(OrderTypeEnum.PickUp)
+            }
           >
-            {!isCheckout && (
-              <SvgIcons
-                styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconPickUp}`}
-                name="pickUp"
-                width={base(2.5)}
-              />
+            {!restaurantDetails.services?.includes(OrderTypeEnum.PickUp) ? (
+              <div className={classes.orderTypeToggleButtonUnavailable}>
+                Pick Up not available
+              </div>
+            ) : (
+              <>
+                {!isCheckout && (
+                  <SvgIcons
+                    styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconPickUp}`}
+                    name="pickUp"
+                    width={base(2.5)}
+                    fill={theme.primary}
+                  />
+                )}
+                Pick Up
+              </>
             )}
-            Pick Up
           </button>
           <button
             onClick={() => {
@@ -87,31 +105,45 @@ const OrderType = ({ isCheckout = false }: IOrderType) => {
               setIsPickUp(false);
             }}
             className={classes.orderTypeToggleButton}
+            disabled={
+              !restaurantDetails.services?.includes(OrderTypeEnum.Delivery)
+            }
           >
-            Delivery
-            {!isCheckout && (
-              <SvgIcons
-                styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconDelivery}`}
-                name="delivery"
-              />
+            {!restaurantDetails.services?.includes(OrderTypeEnum.Delivery) ? (
+              <div className={classes.orderTypeToggleButtonUnavailable}>
+                Delivery not available
+              </div>
+            ) : (
+              <>
+                Delivery
+                {!isCheckout && (
+                  <SvgIcons
+                    styleClass={`${classes.orderTypeIcon} ${classes.orderTypeIconDelivery}`}
+                    name="delivery"
+                    fill={theme.primary}
+                  />
+                )}
+              </>
             )}
           </button>
         </div>
       </RoundBorder>
 
-      <ModalPopUp showModal={showDeliveryModal} onClose={onClose}>
+      <ModalPopUp theme={theme} showModal={showDeliveryModal} onClose={onClose}>
         <OrderNavBarModal
           setModal={setShowDeliveryModal}
           headerText="Delivery Details"
           type="delivery"
+          theme={theme}
         />
       </ModalPopUp>
 
-      <ModalPopUp showModal={showPickUpModal} onClose={onClose}>
+      <ModalPopUp theme={theme} showModal={showPickUpModal} onClose={onClose}>
         <OrderNavBarModal
           setModal={setShowPickUpModal}
           headerText="Pick Up Details"
           type="pickup"
+          theme={theme}
         />
       </ModalPopUp>
     </>

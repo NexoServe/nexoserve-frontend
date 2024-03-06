@@ -8,9 +8,12 @@ const Input = ({
   isRequired = false,
   label,
   error,
+  theme,
   ...rest
 }: IInput) => {
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   return (
     <div className={classNames(styleClass)}>

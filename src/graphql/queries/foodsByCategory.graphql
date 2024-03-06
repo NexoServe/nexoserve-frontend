@@ -1,7 +1,7 @@
 query FoodsByCategory {
   foodsByCategory {
     category
-    order
+    sort
     foods {
       id
       description

@@ -7,17 +7,20 @@ import { ModalPopUp } from '../../Modal/Modal';
 import ShoppingCartCheckoutTipsModal from '../ShoppingCartCheckoutTipsModal/ShoppingCartCheckoutTipsModal';
 
 import useStyles from './css';
+import { IShoppingCartCheckoutTips } from './types';
 
-const ShoppingCartCheckoutTips = () => {
+const ShoppingCartCheckoutTips = ({ theme }: IShoppingCartCheckoutTips) => {
   const [shoppingCartTip, setShoppingCartTip] =
     useRecoilState(ShoppingCartTipAtom);
   const [showCustomTip, setShowCustomTip] = useState(false);
 
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
   return (
     <>
       <span className={classes.shoppingCartCheckoutTipsSpan}>
-        *All tips support the local business
+        *All tips support our local business
       </span>
       <div className={classes.shoppingCartCheckoutTips}>
         <button
@@ -95,8 +98,12 @@ const ShoppingCartCheckoutTips = () => {
         onClose={() => {
           setShowCustomTip(false);
         }}
+        theme={theme}
       >
-        <ShoppingCartCheckoutTipsModal setShowCustomTip={setShowCustomTip} />
+        <ShoppingCartCheckoutTipsModal
+          theme={theme}
+          setShowCustomTip={setShowCustomTip}
+        />
       </ModalPopUp>
     </>
   );

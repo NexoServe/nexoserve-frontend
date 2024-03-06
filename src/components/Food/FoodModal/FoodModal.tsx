@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useMemo } from 'react';
 
+import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { v4 } from 'uuid';
 
@@ -8,6 +9,7 @@ import {
   FoodModalAddOnRequiredAtom,
   FoodModalAddOnsAtom,
   FoodModalAtom,
+  FoodModalCustomInstructionsAtom,
   FoodModalPriceAtom,
   FoodModalSelectedOptionsAtom,
 } from '../../../state/FoodModalState';
@@ -31,6 +33,8 @@ const FoodModal = ({
   setShowModal,
   type,
   orderItemId,
+  customInstructionsText,
+  theme,
 }: IFoodModal) => {
   const [getFoodById, { data, loading, error }] = useFoodByIdLazyQuery({
     variables: {
@@ -38,6 +42,8 @@ const FoodModal = ({
     },
     notifyOnNetworkStatusChange: true,
   });
+  const router = useRouter();
+  const { id } = router.query;
 
   const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
     ShoppingCartTotalAtom,
@@ -72,7 +78,9 @@ const FoodModal = ({
     }
   }, [error]);
 
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
   const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
@@ -83,9 +91,15 @@ const FoodModal = ({
   const [selectedOptions, setSelectedOptions] = useRecoilState(
     FoodModalSelectedOptionsAtom,
   );
-
   const [foodModalPrice, setFoodModalPrice] =
     useRecoilState(FoodModalPriceAtom);
+  const [customInstructions, setCustomInstructions] = useRecoilState(
+    FoodModalCustomInstructionsAtom,
+  );
+
+  useEffect(() => {
+    customInstructionsText && setCustomInstructions(customInstructionsText);
+  }, [customInstructionsText]);
 
   const onClose = () => {
     setShowModal(false);
@@ -98,7 +112,12 @@ const FoodModal = ({
     setRequiredAddOn(undefined);
     setFoodModalPrice(0);
     setSelectedOptions([]);
-    document.body.style.overflow = 'unset';
+    setCustomInstructions('');
+
+    if (id) {
+      const newPath = router.pathname;
+      router.replace(newPath, undefined, { shallow: true });
+    }
   };
 
   useEffect(() => {
@@ -148,6 +167,7 @@ const FoodModal = ({
           food: foodModal.food,
           quantity: foodModal.quantity,
           selectedSize: foodModal.selectedSize,
+          customInstructions: customInstructions,
           selectedOptions: selectedOptions.map((option) => ({
             id: option.id,
             name: option.name,
@@ -179,6 +199,7 @@ const FoodModal = ({
           price: foodModal.food?.price as number,
         },
         quantity: foodModal.quantity,
+        customInstructions: customInstructions,
         selectedSize: {
           id: foodModal.selectedSize?.id as string,
           name: foodModal.selectedSize?.name as string,
@@ -236,6 +257,7 @@ const FoodModal = ({
               },
               quantity: foodModal.quantity,
               selectedSize: foodModal.selectedSize,
+              customInstructions: customInstructions,
               selectedOptions: selectedOptions.map((option) => ({
                 id: option.id as string,
                 name: option.name as string,
@@ -266,15 +288,16 @@ const FoodModal = ({
   };
 
   return (
-    <ModalPopUp showModal={showModal} onClose={() => onClose()}>
+    <ModalPopUp theme={theme} showModal={showModal} onClose={() => onClose()}>
       <div className={classes.foodModal}>
         <FoodModalNav
           loading={loading}
           onClick={onClose}
           name={data?.foodById.name}
+          theme={theme}
         />
 
-        <FoodModalCloseButton onClick={onClose} />
+        <FoodModalCloseButton theme={theme} onClick={onClose} />
 
         <form
           onSubmit={onSubmit}
@@ -288,6 +311,7 @@ const FoodModal = ({
               food={data.foodById}
               showModal={showModal}
               type={type}
+              theme={theme}
             />
           )}
         </form>

@@ -5,6 +5,7 @@ import { base } from '../../../../css/base';
 import { Maybe, OptionWithSizeType } from '../../../../generated/graphql';
 import {
   FoodModalAtom,
+  FoodModalCustomInstructionsAtom,
   FoodModalSelectedOptionsAtom,
   FoodModalSelectedSizeAtom,
 } from '../../../state/FoodModalState';
@@ -21,6 +22,7 @@ import { IShoppingCartItem, OptionSizeGrouped } from './types';
 const ShoppingCartItem = ({
   shoppingCartItem,
   activeShoppingCartItemClick,
+  theme,
 }: IShoppingCartItem) => {
   const showShoppingCartDetails = useRecoilValue(ShowShoppingCartDetailsAtom);
 
@@ -31,11 +33,16 @@ const ShoppingCartItem = ({
   const [, setFoodModalSelectedOptions] = useRecoilState(
     FoodModalSelectedOptionsAtom,
   );
+  const [, setCustomInstructions] = useRecoilState(
+    FoodModalCustomInstructionsAtom,
+  );
   const [shoppingCart, setShoppingCart] = useRecoilState(ShoppingCartAtom);
   const [shoppingCartTotal, setShoppingCartTotal] = useRecoilState(
     ShoppingCartTotalAtom,
   );
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
 
   const updateShoppingCartItem = () => {
     activeShoppingCartItemClick(shoppingCartItem);
@@ -56,6 +63,8 @@ const ShoppingCartItem = ({
         optionSize: option?.optionSize,
       })) || [],
     );
+
+    setCustomInstructions(shoppingCartItem?.customInstructions as string);
   };
 
   const removeShoppingCartItem = () => {
@@ -171,6 +180,16 @@ const ShoppingCartItem = ({
                       ))}
                     </div>
                   ))}
+
+                {shoppingCartItem.customInstructions && (
+                  <div
+                    style={{
+                      color: theme.primary,
+                    }}
+                  >
+                    {shoppingCartItem.customInstructions}
+                  </div>
+                )}
               </div>
               <div className={classes.shoppingCartItemDeleteButton}>
                 <button
@@ -179,7 +198,7 @@ const ShoppingCartItem = ({
                     removeShoppingCartItem();
                   }}
                 >
-                  <SvgIcons name="closeFilled" />
+                  <SvgIcons name="closeFilled" fill={theme.primary} />
                 </button>
               </div>
               <div className={classes.shoppingCartItemEditButton}>

@@ -1,12 +1,10 @@
-import colors from '../../../css/colors';
-
 import { SvgIconsType } from './types';
 
 const Delivery = ({
   width = '46',
   height = '41',
   viewBox = '0 0 46 41',
-  fill = colors.black,
+  fill,
   styleClass,
 }: SvgIconsType) => {
   return (

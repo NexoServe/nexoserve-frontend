@@ -1,5 +1,7 @@
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 
+import { ThemeType } from '../../../generated/graphql';
+
 export interface IInput
   extends DetailedHTMLProps<
     InputHTMLAttributes<HTMLInputElement>,
@@ -9,4 +11,5 @@ export interface IInput
   label: string;
   isRequired?: boolean;
   error: string | null;
+  theme: ThemeType;
 }

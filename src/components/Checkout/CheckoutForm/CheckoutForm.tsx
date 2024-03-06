@@ -5,12 +5,12 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import SkeletonLoader from 'tiny-skeleton-loader-react';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
 import {
   ErrorCodes,
   OrderDetailsType,
@@ -47,11 +47,14 @@ import Button from '../../Button/Button';
 import Loader from '../../Loader/Loader';
 
 import useStyles from './css';
+import { ICheckoutForm } from './types';
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ theme }: ICheckoutForm) {
   const stripe = useStripe();
   const elements = useElements();
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
   const router = useRouter();
 
   const [, setOrderDetails] = useRecoilState(OrderDetailsAtom);
@@ -185,7 +188,7 @@ export default function CheckoutForm() {
                 ? 'ASAP'
                 : (orderTime?.value?.toString() as string),
             orderItems: getShoppingCartInput(),
-            tip: shoppingCartTip.tip,
+            tip: parseFloat(shoppingCartTip.tip.toFixed(2)),
             isTipPercentage: shoppingCartTip.isTipPercentage,
             deliveryAddress,
             suiteAptFloor: additionalAddressInfo,
@@ -205,7 +208,64 @@ export default function CheckoutForm() {
       const createOrderRes = res.data?.CreateOrder;
 
       if (createOrderRes?.error) {
-        if (createOrderRes.error.code === ErrorCodes.InvalidOrderTime) {
+        if (createOrderRes?.error.code === ErrorCodes.StripeRequiresAction) {
+          // Use Stripe.js to handle the required next action
+          const errorData = JSON.parse(createOrderRes.error.data);
+
+          const { error: handleNextActionError, paymentIntent } =
+            // @ts-expect-error: unsupported types
+            await stripe.handleNextAction({
+              clientSecret: errorData.clientSecret as string,
+            });
+
+          if (paymentIntent.status === 'succeeded') {
+            // Do something here
+          }
+
+          if (paymentIntent.last_payment_error) {
+            setMessage(
+              'Your payment was declined, please try another payment.',
+            );
+
+            setInfoModalState({
+              showModal: true,
+              infoModalType: 'payment',
+              type: 'error',
+              title: 'Payment Declined',
+              message: paymentIntent.last_payment_error.message,
+            });
+
+            return;
+          }
+
+          if (paymentIntent.status === 'requires_action') {
+            setInfoModalState({
+              showModal: true,
+              infoModalType: 'payment',
+              type: 'error',
+              title: 'Payment Error',
+              message: 'The customer stopped this payment.',
+            });
+
+            setIsLoading(false);
+            return;
+          }
+
+          if (handleNextActionError || !paymentIntent) {
+            // Show error from Stripe.js in payment form
+            setMessage(handleNextActionError.message);
+            setInfoModalState({
+              type: 'error',
+              infoModalType: 'payment',
+              message: handleNextActionError.message,
+              showModal: true,
+              title: 'Payment Error',
+            });
+
+            setIsLoading(false);
+            return;
+          }
+        } else if (createOrderRes.error.code === ErrorCodes.InvalidOrderTime) {
           const errorData = JSON.parse(createOrderRes.error.data);
           setInfoModalState({
             showModal: false,
@@ -238,57 +298,6 @@ export default function CheckoutForm() {
         setIsLoading(false);
 
         return;
-      }
-
-      if (createOrderRes?.data?.stripeStatus === 'requires_action') {
-        // Use Stripe.js to handle the required next action
-        const { error: handleNextActionError, paymentIntent } =
-          // @ts-expect-error: unsupported types
-          await stripe.handleNextAction({
-            clientSecret: createOrderRes.data.clientSecret,
-          });
-
-        if (paymentIntent.last_payment_error) {
-          setMessage('Your payment was declined, please try another payment.');
-
-          setInfoModalState({
-            showModal: true,
-            infoModalType: 'payment',
-            type: 'error',
-            title: 'Payment Declined',
-            message: paymentIntent.last_payment_error.message,
-          });
-
-          return;
-        }
-
-        if (paymentIntent.status === 'requires_action') {
-          setInfoModalState({
-            showModal: true,
-            infoModalType: 'payment',
-            type: 'error',
-            title: 'Payment Error',
-            message: 'The customer stopped this payment.',
-          });
-
-          setIsLoading(false);
-          return;
-        }
-
-        if (handleNextActionError || !paymentIntent) {
-          // Show error from Stripe.js in payment form
-          setMessage(handleNextActionError.message);
-          setInfoModalState({
-            type: 'error',
-            infoModalType: 'payment',
-            message: handleNextActionError.message,
-            showModal: true,
-            title: 'Payment Error',
-          });
-
-          setIsLoading(false);
-          return;
-        }
       }
 
       setMessage(null);
@@ -327,56 +336,104 @@ export default function CheckoutForm() {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <div style={{}}>
-        <h5
-          style={{
-            fontWeight: 500,
-            marginBottom: base(1),
-          }}
-        >
-          THIS IS A TEST ENVIRONMENT. Use these cards to complete the order.
-        </h5>
-        <div
-          style={{
-            marginBottom: base(1),
-          }}
-        >
-          <span
+      {process.env.NEXT_PUBLIC_NODE_ENV !== 'production' && (
+        <div style={{}}>
+          <h5
             style={{
-              color: colors.green,
               fontWeight: 500,
+              marginBottom: base(1),
+              color: theme.primary,
             }}
           >
-            Accepted Card:
-          </span>{' '}
-          <span>4242 4242 4242 4242</span>
-        </div>
-        <div
-          style={{
-            marginBottom: base(1),
-          }}
-        >
-          <span
+            THIS IS A TEST ENVIRONMENT. Use these cards to complete the order.
+          </h5>
+          <div
             style={{
-              color: colors.red,
-              fontWeight: 500,
+              marginBottom: base(1),
             }}
           >
-            Denied Card:
-          </span>{' '}
-          <span>4000 0000 0000 0002</span>
+            <span
+              style={{
+                color: theme.secondary,
+                fontWeight: 500,
+              }}
+            >
+              Accepted Card:
+            </span>{' '}
+            <span
+              style={{
+                color: theme.primary,
+              }}
+            >
+              4242 4242 4242 4242
+            </span>
+          </div>
+          <div
+            style={{
+              marginBottom: base(1),
+            }}
+          >
+            <span
+              style={{
+                color: theme.tertiary,
+                fontWeight: 500,
+              }}
+            >
+              Denied Card:
+            </span>{' '}
+            <span
+              style={{
+                color: theme.primary,
+              }}
+            >
+              4000 0000 0000 0002
+            </span>
+          </div>
+          <div
+            style={{
+              color: theme.primary,
+            }}
+          >
+            Use any, Expiration, CVC and ZIP.
+          </div>
+          <div
+            style={{
+              marginBottom: base(2),
+              color: theme.primary,
+            }}
+          >
+            Please make sure to test both cards. Thank you :)
+          </div>
         </div>
-        <div>Use any, Expiration, CVC and ZIP.</div>
-        <div
-          style={{
-            marginBottom: base(2),
-          }}
-        >
-          Please make sure to test both cards. Thank you :)
-        </div>
-      </div>
-      <PaymentElement options={{}} />
+      )}
+      <PaymentElement />
 
+      <div
+        style={{
+          color: theme.primary,
+          marginTop: base(4),
+        }}
+      >
+        *By placing your order you accept our{' '}
+        <Link
+          style={{
+            color: theme.primary,
+          }}
+          href={'/terms-and-conditions'}
+        >
+          Terms and Conditions
+        </Link>{' '}
+        and{' '}
+        <Link
+          style={{
+            color: theme.primary,
+          }}
+          href={'/privacy-policy'}
+        >
+          Privacy Policy
+        </Link>
+        .
+      </div>
       <Button
         id="submit"
         disabled={
@@ -385,22 +442,24 @@ export default function CheckoutForm() {
         title="Pay Now"
         style={{
           height: '60px',
-          marginTop: '20px',
+          marginTop: base(1),
           marginBottom: '10px',
           fontSize: '16px',
-          background: isLoading ? 'rgba(238, 231, 165, 0.7)' : colors.primary,
+          background: isLoading ? `${theme.accent}70` : theme.accent,
         }}
+        theme={theme}
       >
         <div
           style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            position: 'relative',
           }}
           id="button-text"
         >
           {isLoading ? (
-            <Loader width="50px" height="50px" scale={0.5} />
+            <Loader styleClass={classes.checkoutFormButtonLoader} height={50} />
           ) : (
             <div
               style={{
@@ -411,7 +470,7 @@ export default function CheckoutForm() {
             >
               <div style={{ whiteSpace: 'nowrap' }}>Place Pick up order (</div>
               {shoppingCartTotal.isLoading ? (
-                <SkeletonLoader background={colors.darkGray} width={50} />
+                <SkeletonLoader background={theme.primary} width={50} />
               ) : (
                 `$${shoppingCartTotal.grandTotal?.toFixed(2)}`
               )}

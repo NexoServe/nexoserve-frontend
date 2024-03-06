@@ -1,3 +1,5 @@
-export interface IShoppingCartCheckout {
-  validatedTotal?: number;
+import { ThemeType } from '../../../../generated/graphql';
+
+export interface IShoppingCartCheckoutTips {
+  theme: ThemeType;
 }

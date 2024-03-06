@@ -1,15 +1,15 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   shoppingCartModal: {
     width: '95vw',
     height: '85vh',
     position: 'relative',
-    background: colors.secondary,
+    background: theme.neutral,
     borderRadius: base(2),
     display: 'flex',
     justifyContent: 'center',
@@ -23,6 +23,6 @@ const useStyles = createUseStyles({
       borderRadius: base(2),
     },
   },
-});
+}));
 
 export default useStyles;

@@ -14,12 +14,14 @@ import SvgIcons from '../../SvgIcons';
 import useStyles from './css';
 import { IFoodModalFooter } from './types';
 
-const FoodModalFooter = ({ type }: IFoodModalFooter) => {
+const FoodModalFooter = ({ type, theme }: IFoodModalFooter) => {
   const [foodModal, setFoodModal] = useRecoilState(FoodModalAtom);
   const [, setRequiredAddOn] = useRecoilState(FoodModalAddOnRequiredAtom);
   const [, setFoodModalPrice] = useRecoilState(FoodModalPriceAtom);
 
-  const classes = useStyles();
+  const classes = useStyles({
+    theme,
+  });
   const total = useRecoilValue(foodModalTotalSelector);
 
   useEffect(() => {
@@ -44,7 +46,7 @@ const FoodModalFooter = ({ type }: IFoodModalFooter) => {
           type="button"
           onClick={decreaseQuantity}
         >
-          <SvgIcons name="minus" />
+          <SvgIcons name="minus" fill={theme.primary} />
         </button>
         <div className={classes.foodModalFooterQuantity}>
           {foodModal.quantity}
@@ -54,7 +56,7 @@ const FoodModalFooter = ({ type }: IFoodModalFooter) => {
           className={classes.foodModalFooterButton}
           onClick={increaseQuantity}
         >
-          <SvgIcons name="plus" />
+          <SvgIcons name="plus" fill={theme.primary} />
         </button>
       </div>
 
@@ -62,6 +64,7 @@ const FoodModalFooter = ({ type }: IFoodModalFooter) => {
         onClick={() => setRequiredAddOn(undefined)}
         styleClass={classes.foodModalFooterButton}
         type="submit"
+        theme={theme}
       >
         {foodModal.quantity === 0
           ? 'Remove'

@@ -1,21 +1,19 @@
-import { useState } from 'react';
-
 import Select from 'react-select';
-
-import colors from '../../../css/colors';
 
 import useStyles from './css';
 import { IDropdown } from './types';
 
-const Dropdown = (props: IDropdown) => {
-  const classes = useStyles();
-  const [isFocused, setIsFocused] = useState(false);
+const Dropdown = ({ selectProps, label, theme }: IDropdown) => {
+  const classes = useStyles({
+    theme,
+  });
+  // const [isFocused, setIsFocused] = useState(false);
 
   return (
     <div className={classes.dropdown}>
-      <label className={classes.dropdownLabel}>{props.label}</label>
+      <label className={classes.dropdownLabel}>{label}</label>
       <Select
-        {...props}
+        {...selectProps}
         className="basic-single"
         classNamePrefix="select"
         isClearable={false}
@@ -24,30 +22,67 @@ const Dropdown = (props: IDropdown) => {
         menuPlacement="auto"
         menuPortalTarget={document.body}
         menuPosition="fixed"
-        options={props.options}
+        options={selectProps.options}
         styles={{
           control: (provided) => ({
             ...provided,
             height: 40, // adjust this as needed
             borderRadius: '5px', // adjust this as needed
-            border: isFocused ? '1px solid blue' : '1px solid #e1e1e1',
+            border: `1px solid ${theme.primary}30`,
             fontSize: '16px',
-            background: colors.white,
-            boxShadow:
-              '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02)',
+            background: theme.neutral,
+            color: theme.primary,
           }),
           menuPortal: (base) => ({
             ...base,
             zIndex: 9999, // adjust this as needed
+            color: theme.primary,
+            backgroundColor: theme.neutral,
           }),
           singleValue: (provided) => ({
             ...provided,
             height: '100%',
             lineHeight: '100%',
+            color: theme.primary,
+            background: theme.neutral,
+          }),
+          option: (provided, state) => ({
+            ...provided,
+            color: state.isSelected ? theme.neutral : theme.primary,
+            background: state.isSelected ? theme.accent : theme.neutral,
+
+            '&:hover': {
+              background: theme.accent,
+            },
+
+            '&:active': {
+              background: theme.accent,
+            },
+
+            '&:focus': {
+              background: theme.accent,
+            },
+          }),
+          container: (provided) => ({
+            ...provided,
+            backgroundColor: theme.neutral,
+          }),
+          valueContainer: (provided) => ({
+            ...provided,
+            color: theme.primary,
+            background: theme.neutral,
+          }),
+          dropdownIndicator: (provided) => ({
+            ...provided,
+            backgroundColor: theme.neutral,
+          }),
+          menu: (provided) => ({
+            ...provided,
+            backgroundColor: theme.neutral,
           }),
         }}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        // onFocus={() => setIsFocused(true)}
+        // onBlur={() => setIsFocused(false)}
       />
     </div>
   );

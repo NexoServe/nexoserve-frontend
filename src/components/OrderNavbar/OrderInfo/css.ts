@@ -1,10 +1,10 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
-import colors from '../../../../css/colors';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   orderInfo: {
     cursor: 'pointer',
 
@@ -45,6 +45,7 @@ const useStyles = createUseStyles({
   orderInfoStatusText: {
     fontSize: '14px',
     lineHeight: '16px',
+    color: theme.primary,
 
     [queries.xl]: {
       fontSize: '16px',
@@ -54,7 +55,7 @@ const useStyles = createUseStyles({
   orderInfoStatusIcon: {
     minWidth: base(1),
     minHeight: base(1),
-    background: colors.green,
+    background: theme.secondary,
     borderRadius: '50%',
     marginLeft: base(0.4),
 
@@ -64,8 +65,8 @@ const useStyles = createUseStyles({
   },
 
   orderInfoStatusIconClosed: {
-    background: colors.red,
+    background: theme.tertiary,
   },
-});
+}));
 
 export default useStyles;

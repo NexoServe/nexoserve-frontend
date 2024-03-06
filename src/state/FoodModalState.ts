@@ -34,6 +34,11 @@ export const FoodModalSelectedOptionsAtom = atom<OptionWithSizeType[]>({
   default: [],
 });
 
+export const FoodModalCustomInstructionsAtom = atom<string>({
+  key: 'FoodModalCustomInstructionsAtom',
+  default: '',
+});
+
 export const FoodModalPriceAtom = atom<number>({
   key: 'FoodModalPriceAtom',
   default: 0,

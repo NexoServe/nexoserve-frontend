@@ -17,7 +17,12 @@
     "incremental": true
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "generate-codegen-config.js"
+  ],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"

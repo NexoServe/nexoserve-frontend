@@ -1,8 +1,10 @@
 import useStyles from './css';
 import { IFoodModalHeader } from './types';
 
-const FoodModalHeader = ({ name, description }: IFoodModalHeader) => {
-  const classes = useStyles();
+const FoodModalHeader = ({ name, description, theme }: IFoodModalHeader) => {
+  const classes = useStyles({
+    theme,
+  });
 
   return (
     <div>

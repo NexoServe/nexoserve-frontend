@@ -2,8 +2,9 @@ import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../../css/base';
 import queries from '../../../../css/queries';
+import { ThemeType } from '../../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   foodOptionToppingStyleDivider: {
     marginLeft: `-${base(1)}`,
     width: base(10),
@@ -32,6 +33,7 @@ const useStyles = createUseStyles({
       width: '100%',
       margin: 0,
       paddingLeft: base(1),
+      color: theme.primary,
     },
   },
 
@@ -51,6 +53,6 @@ const useStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'space-between',
   },
-});
+}));
 
 export default useStyles;

@@ -1,11 +1,10 @@
 import { createUseStyles } from 'react-jss';
 
 import { base } from '../../../css/base';
-import colors from '../../../css/colors';
-import queries from '../../../css/queries';
 import zIndex from '../../../css/zIndex';
+import { ThemeType } from '../../../generated/graphql';
 
-const useStyles = createUseStyles({
+const useStyles = createUseStyles((theme: ThemeType) => ({
   modalHeader: {
     width: '100%',
     height: base(6),
@@ -17,12 +16,8 @@ const useStyles = createUseStyles({
     borderTopRightRadius: base(2),
     position: 'sticky',
     top: 0,
-    background: colors.white,
+    background: theme.neutral,
     zIndex: zIndex.header,
-
-    [queries.l]: {
-      background: colors.white,
-    },
   },
 
   modalHeaderTitle: {
@@ -30,6 +25,7 @@ const useStyles = createUseStyles({
     fontSize: '20px',
     fontWeight: '500',
     lineHeight: '22px',
+    color: theme.primary,
   },
 
   modalHeaderCloseButton: {
@@ -37,6 +33,6 @@ const useStyles = createUseStyles({
     display: 'block',
     cursor: 'pointer',
   },
-});
+}));
 
 export default useStyles;
