@@ -18,9 +18,9 @@ const env: Environment = process.env.NEXT_PUBLIC_NODE_ENV as Environment;
 if (env === 'development') {
   graphqlUri = 'http://localhost:4000/graphql'; // Development URI
 } else if (env === 'staging') {
-  graphqlUri = 'https://nexoserve-backend-staging.up.railway.app/graphql'; // Staging URI
+  graphqlUri = 'https://staging-nexoserve-backend.up.railway.app/graphql'; // Staging URI
 } else if (env === 'production') {
-  graphqlUri = 'https://nexoserve-backend-production.up.railway.app/graphql'; // Default to Production URI
+  graphqlUri = 'https://nexoserve-backend.up.railway.app/graphql'; // Default to Production URI
 }
 
 function createApolloClient() {
