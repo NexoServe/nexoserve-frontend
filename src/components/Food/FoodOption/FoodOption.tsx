@@ -34,19 +34,17 @@ const FoodOption = ({ option, addOn, theme }: IFoodOption) => {
   }, [selectedOptions, option]);
 
   const selectOption = () => {
-    if (
-      selectedOptions.find(
-        (selectedOption) => selectedOption?.id === option?.id,
-      )
-    ) {
-      const arr = selectedOptions.filter(
-        (selectOption) => selectOption?.id !== option?.id,
+    if (addOn?.maxOptionsSelected && addOn?.maxOptionsSelected === 1) {
+      const findAddOnOption = addOn.options?.find((option1) =>
+        selectedOptions.some((option2) => option2?.id === option1?.id),
       );
 
-      setSelectedOptions(arr);
-    } else {
+      const arr = selectedOptions.filter(
+        (selectOption) => selectOption?.id !== findAddOnOption?.id,
+      );
+
       setSelectedOptions([
-        ...selectedOptions,
+        ...arr,
         {
           id: option?.id,
           name: option?.name,
@@ -57,22 +55,50 @@ const FoodOption = ({ option, addOn, theme }: IFoodOption) => {
           ),
         },
       ]);
+    } else {
+      if (
+        selectedOptions.find(
+          (selectedOption) => selectedOption?.id === option?.id,
+        )
+      ) {
+        const arr = selectedOptions.filter(
+          (selectOption) => selectOption?.id !== option?.id,
+        );
+
+        setSelectedOptions(arr);
+      } else {
+        setSelectedOptions([
+          ...selectedOptions,
+          {
+            id: option?.id,
+            name: option?.name,
+            price: option?.price,
+            addOnName: addOn?.name as string,
+            optionSize: option?.optionSizes?.find(
+              (optionSize) => optionSize?.default === true,
+            ),
+          },
+        ]);
+      }
     }
   };
 
   const disabled = useMemo(() => {
-    const addOnSelectedOptions = selectedOptions?.filter(
-      (selectOption) => selectOption?.addOnName === addOn?.name,
-    );
+    if (!(addOn?.maxOptionsSelected && addOn.maxOptionsSelected === 1)) {
+      const addOnSelectedOptions = selectedOptions?.filter(
+        (selectOption) => selectOption?.addOnName === addOn?.name,
+      );
 
-    if (
-      addOn?.maxOptionsSelected &&
-      addOnSelectedOptions.length >= addOn?.maxOptionsSelected &&
-      !addOnSelectedOptions.find(
-        (selectedOption) => selectedOption?.id === option?.id,
-      )
-    ) {
-      return true;
+      if (
+        addOn?.maxOptionsSelected &&
+        addOnSelectedOptions.length >= addOn?.maxOptionsSelected &&
+        !addOnSelectedOptions.find(
+          (selectedOption) => selectedOption?.id === option?.id,
+        )
+      ) {
+        return true;
+      }
+      return false;
     }
     return false;
   }, [selectedOptions, addOn, option?.id]);
