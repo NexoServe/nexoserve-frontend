@@ -1,5 +1,6 @@
 import { OptionSizeType } from '../../../../generated/graphql';
 import Checkbox from '../../Checkbox/Checkbox';
+import RadioButton from '../../RadioButton/RadioButton';
 import { IFoodOptionStyle } from '../FoodOption/types';
 import FoodOptionSize from '../FoodOptionSize/FoodOptionSize';
 
@@ -33,9 +34,14 @@ const FoodOptionRegularStyle = ({
         }}
         htmlFor={option?.id || undefined}
       >
-        <Checkbox theme={theme} isChecked={isChecked} />
+        {addOn?.maxOptionsSelected === 1 ? (
+          <RadioButton theme={theme} isChecked={isChecked} />
+        ) : (
+          <Checkbox theme={theme} isChecked={isChecked} />
+        )}
+
         <input
-          type="checkbox"
+          type={addOn?.maxOptionsSelected === 1 ? 'radio' : 'checkbox'}
           value={option?.id || undefined}
           id={option?.id || undefined}
           checked={isChecked}
