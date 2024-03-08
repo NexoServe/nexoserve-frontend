@@ -67,11 +67,22 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
     lineHeight: '16px',
     textAlign: 'left',
     paddingBottom: base(2),
+    marginTop: `-${base(2)}`,
+  },
+
+  shoppingCartItemAddOn: {
+    color: theme.primary,
+    fontSize: '14px',
+    fontWeight: '800',
+    marginTop: base(2),
+    paddingBottom: base(0.5),
   },
 
   shoppingCartItemDetailsItem: {
     position: 'relative',
     marginBottom: base(1),
+    paddingLeft: base(1),
+    paddingTop: base(0.5),
     minHeight: base(2),
     display: 'flex',
     alignItems: 'center',
@@ -93,14 +104,13 @@ const useStyles = createUseStyles((theme: ThemeType) => ({
 
   shoppingCartItemDetailsItemSize: {
     fontSize: '14px',
-    fontWeight: 600,
-    marginTop: base(1.5),
-    paddingBottom: base(0.5),
+    paddingLeft: base(2),
+    paddingTop: base(0.5),
     color: theme.primary,
   },
 
   shoppingCartItemDetailsItemSizeItem: {
-    paddingLeft: base(1),
+    paddingLeft: base(4),
     paddingTop: base(0.5),
     paddingBottom: base(0.5),
     color: theme.primary,
