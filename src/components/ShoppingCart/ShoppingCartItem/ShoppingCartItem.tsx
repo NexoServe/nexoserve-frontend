@@ -100,10 +100,10 @@ const ShoppingCartItem = ({
   >();
 
   shoppingCartItem.selectedOptions?.forEach((selectedOption) => {
-    const addOnName = selectedOption?.addOnName || '---'; // Use '---' for options without addOnName
+    const addOnName = selectedOption?.addOnName as string;
     const optionSizeName = selectedOption?.optionSize?.name;
+    const optionSizeSort = selectedOption?.optionSize?.sort || 0; // Default to 0 if no sort value
 
-    // Retrieve or initialize the group for this addOnName
     let addOnGroup = addOnGroupMap.get(addOnName);
     if (!addOnGroup) {
       addOnGroup = {
@@ -114,37 +114,33 @@ const ShoppingCartItem = ({
       addOnGroupMap.set(addOnName, addOnGroup);
     }
 
-    if (selectedOption) {
-      if (optionSizeName) {
-        // Handle options with optionSize
-        let optionSizeGroup = addOnGroup.optionSizeGroupMap.get(optionSizeName);
-        if (!optionSizeGroup) {
-          optionSizeGroup = { optionSizeName, selectedOptions: [] };
-          addOnGroup.optionSizeGroupMap.set(optionSizeName, optionSizeGroup);
-        }
-        optionSizeGroup.selectedOptions.push(selectedOption);
-      } else {
-        // Handle options without optionSize
-        addOnGroup.selectedOptionsWithoutSize.push(selectedOption);
+    if (selectedOption && optionSizeName) {
+      let optionSizeGroup = addOnGroup.optionSizeGroupMap.get(optionSizeName);
+      if (!optionSizeGroup) {
+        optionSizeGroup = {
+          optionSizeName,
+          optionSizeSort,
+          selectedOptions: [],
+        };
+        addOnGroup.optionSizeGroupMap.set(optionSizeName, optionSizeGroup);
       }
+      optionSizeGroup.selectedOptions.push(selectedOption);
+    } else if (selectedOption) {
+      addOnGroup.selectedOptionsWithoutSize.push(selectedOption);
     }
   });
 
-  // Convert the grouped data into a more usable format
   const selectedOptionsGroupedByAddOn: AddOnGrouped[] = Array.from(
     addOnGroupMap.values(),
   )
     .map(({ optionSizeGroupMap, selectedOptionsWithoutSize, addOnName }) => ({
       addOnName,
       selectedOptionsWithoutSize,
-      optionSizeGroups: Array.from(optionSizeGroupMap.values()).sort((a, b) =>
-        a.optionSizeName.localeCompare(b.optionSizeName),
+      optionSizeGroups: Array.from(optionSizeGroupMap.values()).sort(
+        (a, b) => a.optionSizeSort - b.optionSizeSort,
       ),
     }))
     .sort((a, b) => a.addOnName.localeCompare(b.addOnName));
-
-  // Include the rest of your rendering code here, making sure to adjust how you render
-  // both selectedOptionsWithoutSize and optionSizeGroups according to the new structure.
 
   return (
     <>

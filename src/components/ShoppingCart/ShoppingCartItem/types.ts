@@ -14,5 +14,6 @@ export interface IShoppingCartItem {
 
 export type OptionSizeGrouped = {
   optionSizeName: string;
+  optionSizeSort: number;
   selectedOptions: Maybe<OptionWithSizeType>[];
 };
