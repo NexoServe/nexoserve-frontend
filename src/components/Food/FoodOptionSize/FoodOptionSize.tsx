@@ -20,10 +20,15 @@ const FoodOptionSize = ({
 
   const isChecked = useMemo(() => {
     const selectedOption = selectedOptions.find(
-      (selectedOption) => selectedOption?.name === option?.name,
+      (selectedOption) =>
+        `${selectedOption.addOnName}-${selectedOption?.name}` ===
+        `${addOn?.name}-${option?.name}`,
     );
 
-    if (selectedOption?.optionSize?.name === optionSize?.name) {
+    if (
+      `${selectedOption?.addOnName}-${selectedOption?.optionSize?.name}` ===
+      `${addOn?.name}-${optionSize?.name}`
+    ) {
       return true;
     } else {
       return false;
@@ -32,7 +37,9 @@ const FoodOptionSize = ({
 
   const addOptionSize = () => {
     const optionSizeParent = selectedOptions.find(
-      (selectedOption) => selectedOption.name === option?.name,
+      (selectedOption) =>
+        `${selectedOption.addOnName}-${selectedOption.name}` ===
+        `${addOn?.name}-${option?.name}`,
     );
 
     if (
@@ -40,12 +47,18 @@ const FoodOptionSize = ({
       optionSizeParent?.optionSize?.name === optionSize?.name
     ) {
       const filteredOptions = selectedOptions.filter(
-        (selectOption) => selectOption?.name !== option?.name,
+        (selectOption) =>
+          `${selectOption.addOnName}-${selectOption.name}` !==
+          `${addOn?.name}-${option?.name}`,
       );
+
       setSelectedOptions(filteredOptions);
     } else if (optionSizeParent) {
       const arr: OptionWithSizeType[] = selectedOptions.map((selectOption) => {
-        if (selectOption.name === option?.name) {
+        if (
+          `${selectOption.addOnName}-${selectOption.name}` ===
+          `${addOn?.name}-${option?.name}`
+        ) {
           return {
             id: option.id as string,
             name: option?.name,

@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { base } from '../../../../css/base';
-import { Maybe, OptionWithSizeType } from '../../../../generated/graphql';
+import { OptionWithSizeType } from '../../../../generated/graphql';
 import {
   FoodModalAtom,
   FoodModalCustomInstructionsAtom,
@@ -67,6 +67,8 @@ const ShoppingCartItem = ({
     setCustomInstructions(shoppingCartItem?.customInstructions as string);
   };
 
+  console.log('shoppingCart', shoppingCart);
+
   const removeShoppingCartItem = () => {
     const newShoppingCart = shoppingCart.filter(
       (cartItem) => cartItem.orderItemId !== shoppingCartItem?.orderItemId,
@@ -81,32 +83,64 @@ const ShoppingCartItem = ({
     });
   };
 
-  const selectedOptions: Maybe<OptionWithSizeType>[] = [];
+  interface AddOnGrouped {
+    addOnName: string;
+    selectedOptionsWithoutSize: OptionWithSizeType[]; // Array for selectedOptions without optionSize
+    optionSizeGroups: OptionSizeGrouped[]; // Renamed for clarity
+  }
 
-  const groupMap = new Map<string, OptionSizeGrouped>();
+  // This map will store the first level of grouping by addOnName
+  const addOnGroupMap = new Map<
+    string,
+    {
+      optionSizeGroupMap: Map<string, OptionSizeGrouped>;
+      selectedOptionsWithoutSize: OptionWithSizeType[];
+      addOnName: string;
+    }
+  >();
 
   shoppingCartItem.selectedOptions?.forEach((selectedOption) => {
+    const addOnName = selectedOption?.addOnName as string;
     const optionSizeName = selectedOption?.optionSize?.name;
-    const existingGroup = groupMap.get(optionSizeName as string);
+    const optionSizeSort = selectedOption?.optionSize?.sort || 0; // Default to 0 if no sort value
 
-    if (!optionSizeName) {
-      selectedOptions.push(selectedOption);
-      return;
+    let addOnGroup = addOnGroupMap.get(addOnName);
+    if (!addOnGroup) {
+      addOnGroup = {
+        optionSizeGroupMap: new Map<string, OptionSizeGrouped>(),
+        selectedOptionsWithoutSize: [],
+        addOnName,
+      };
+      addOnGroupMap.set(addOnName, addOnGroup);
     }
 
-    if (existingGroup) {
-      existingGroup.selectedOptions.push(selectedOption);
-    } else {
-      groupMap.set(optionSizeName, {
-        optionSizeName: optionSizeName,
-        selectedOptions: [selectedOption],
-      });
+    if (selectedOption && optionSizeName) {
+      let optionSizeGroup = addOnGroup.optionSizeGroupMap.get(optionSizeName);
+      if (!optionSizeGroup) {
+        optionSizeGroup = {
+          optionSizeName,
+          optionSizeSort,
+          selectedOptions: [],
+        };
+        addOnGroup.optionSizeGroupMap.set(optionSizeName, optionSizeGroup);
+      }
+      optionSizeGroup.selectedOptions.push(selectedOption);
+    } else if (selectedOption) {
+      addOnGroup.selectedOptionsWithoutSize.push(selectedOption);
     }
   });
 
-  const selectedOptionGroupedByOptionSize = Array.from(groupMap.values()).sort(
-    (a, b) => a.optionSizeName.localeCompare(b.optionSizeName),
-  );
+  const selectedOptionsGroupedByAddOn: AddOnGrouped[] = Array.from(
+    addOnGroupMap.values(),
+  )
+    .map(({ optionSizeGroupMap, selectedOptionsWithoutSize, addOnName }) => ({
+      addOnName,
+      selectedOptionsWithoutSize,
+      optionSizeGroups: Array.from(optionSizeGroupMap.values()).sort(
+        (a, b) => a.optionSizeSort - b.optionSizeSort,
+      ),
+    }))
+    .sort((a, b) => a.addOnName.localeCompare(b.addOnName));
 
   return (
     <>
@@ -147,36 +181,53 @@ const ShoppingCartItem = ({
                 className={classes.shoppingCartItemDetailsInner}
               >
                 {shoppingCartItem.selectedSize ? (
-                  <div className={classes.shoppingCartItemDetailsItem}>
-                    {shoppingCartItem.selectedSize?.name}
-                  </div>
+                  <>
+                    <div className={classes.shoppingCartItemAddOn}>Size</div>
+                    <div className={classes.shoppingCartItemDetailsItem}>
+                      - {shoppingCartItem.selectedSize?.name}
+                    </div>
+                  </>
                 ) : null}
 
-                {selectedOptions?.map((selectedOption) => (
-                  <div
-                    key={selectedOption?.id}
-                    className={classes.shoppingCartItemDetailsItem}
-                  >
-                    {selectedOption?.name}
-                  </div>
-                ))}
-
-                {selectedOptionGroupedByOptionSize.length > 0 &&
-                  selectedOptionGroupedByOptionSize.map((group, i) => (
+                {selectedOptionsGroupedByAddOn.length > 0 &&
+                  selectedOptionsGroupedByAddOn.map((group, i) => (
                     <div key={i}>
-                      <div className={classes.shoppingCartItemDetailsItemSize}>
-                        {group?.optionSizeName}
+                      <div className={classes.shoppingCartItemAddOn}>
+                        {group?.addOnName}
                       </div>
 
-                      {group?.selectedOptions?.map((selectedOption) => (
-                        <div
-                          className={
-                            classes.shoppingCartItemDetailsItemSizeItem
-                          }
-                          key={selectedOption?.id}
-                        >
-                          {selectedOption?.name}
-                        </div>
+                      {group?.selectedOptionsWithoutSize.map(
+                        (selectedOption) => (
+                          <div
+                            className={classes.shoppingCartItemDetailsItem}
+                            key={selectedOption?.id}
+                          >
+                            - {selectedOption?.name}
+                          </div>
+                        ),
+                      )}
+
+                      {group?.optionSizeGroups.map((optionSizeGroup) => (
+                        <>
+                          <div
+                            className={classes.shoppingCartItemDetailsItemSize}
+                          >
+                            {optionSizeGroup?.optionSizeName}
+                          </div>
+
+                          {optionSizeGroup?.selectedOptions?.map(
+                            (selectedOption) => (
+                              <div
+                                className={
+                                  classes.shoppingCartItemDetailsItemSizeItem
+                                }
+                                key={selectedOption?.id}
+                              >
+                                - {selectedOption?.name}
+                              </div>
+                            ),
+                          )}
+                        </>
                       ))}
                     </div>
                   ))}
