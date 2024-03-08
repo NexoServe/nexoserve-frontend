@@ -3,6 +3,7 @@ fragment AddOnFields on AddOnType {
   name
   isRequired
   maxOptionsSelected
+  type
   options {
     id
     name

@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 
 import { useRecoilState } from 'recoil';
 
+import { AddOnTypeEnum } from '../../../../generated/graphql';
 import { FoodModalSelectedOptionsAtom } from '../../../state/FoodModalState';
 import FoodOptionRegularStyle from '../FoodOptionRegularStyle/FoodOptionRegularStyle';
 import FoodOptionToppingStyle from '../FoodOptionToppingStyle/FoodOptionToppingStyle';
@@ -78,7 +79,7 @@ const FoodOption = ({ option, addOn, theme }: IFoodOption) => {
 
   return (
     <>
-      {addOn?.name === 'Toppings' ? (
+      {addOn?.type === AddOnTypeEnum.PizzaTopping ? (
         <FoodOptionToppingStyle
           isChecked={isChecked}
           onChange={() => selectOption()}
