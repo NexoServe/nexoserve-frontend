@@ -67,8 +67,6 @@ const ShoppingCartItem = ({
     setCustomInstructions(shoppingCartItem?.customInstructions as string);
   };
 
-  console.log('shoppingCart', shoppingCart);
-
   const removeShoppingCartItem = () => {
     const newShoppingCart = shoppingCart.filter(
       (cartItem) => cartItem.orderItemId !== shoppingCartItem?.orderItemId,
