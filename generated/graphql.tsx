@@ -529,6 +529,11 @@ export type QueryOrderArgs = {
 };
 
 
+export type QueryOrdersArgs = {
+  restaurantIds: Array<Scalars['String']['input']>;
+};
+
+
 export type QueryRestaurantArgs = {
   input: OrderDetailsInput;
 };
