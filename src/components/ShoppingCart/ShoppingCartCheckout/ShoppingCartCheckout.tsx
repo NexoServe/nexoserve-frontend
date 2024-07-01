@@ -39,7 +39,7 @@ const ShoppingCartCheckout = ({ theme }: IShoppingCartCheckout) => {
           )}
         </div>
         <div className={classes.shoppingCartCheckoutInner}>
-          <h4 className={classes.shoppingCartCheckoutLabel}>Tax: </h4>
+          <h4 className={classes.shoppingCartCheckoutLabel}>Taxes & Fees: </h4>
           {shoppingCartTotal.isLoading ? (
             <SkeletonLoader background={theme.neutral} width={50} />
           ) : (

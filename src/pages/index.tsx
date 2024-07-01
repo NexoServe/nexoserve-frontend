@@ -51,6 +51,7 @@ const Home = (props: RestaurantDetailsQuery) => {
         restaurantName={props.restaurantDetails.name}
         theme={theme}
         type={props.restaurantDetails.navbarType}
+        gallery={props.restaurantDetails.gallery}
       />
 
       <Hero

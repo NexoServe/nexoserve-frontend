@@ -47,6 +47,7 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
           restaurantName={props.restaurantDetails.name}
           theme={props.restaurantDetails.theme}
           type={props.restaurantDetails.navbarType}
+          gallery={props.restaurantDetails.gallery}
         />
         <Container>
           <div className={styles.termsContainer}>

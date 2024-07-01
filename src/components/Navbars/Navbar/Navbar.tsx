@@ -3,7 +3,7 @@ import NavbarTypeTwo from '../NavbarTypeTwo/NavbarTypeTwo';
 
 import { INavbar } from './types';
 
-const Navbar = ({ logo, restaurantName, theme, type }: INavbar) => {
+const Navbar = ({ logo, restaurantName, theme, type, gallery }: INavbar) => {
   return (
     <>
       {type === 'one' ? (
@@ -12,6 +12,7 @@ const Navbar = ({ logo, restaurantName, theme, type }: INavbar) => {
           theme={theme}
           restaurantName={restaurantName}
           type={type}
+          gallery={gallery}
         />
       ) : type === 'two' ? (
         <NavbarTypeTwo
@@ -19,6 +20,7 @@ const Navbar = ({ logo, restaurantName, theme, type }: INavbar) => {
           theme={theme}
           restaurantName={restaurantName}
           type={type}
+          gallery={gallery}
         />
       ) : null}
     </>

@@ -4,6 +4,8 @@ query Restaurant($input: OrderDetailsInput!) {
       id
       printerMacAddress
       services
+      applicationFeeToCustomer
+      applicationFeeToRestaurant
       phoneNumbers {
         id
         number
