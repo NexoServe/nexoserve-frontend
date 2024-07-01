@@ -9,7 +9,7 @@ import { IMenu } from '../Menu/types';
 
 import useStyles from './css';
 
-const MenuTypeOne = ({ styleClass, theme }: IMenu) => {
+const MenuTypeOne = ({ styleClass, theme, gallery }: IMenu) => {
   const styles = useStyles({ theme });
 
   return (
@@ -19,11 +19,14 @@ const MenuTypeOne = ({ styleClass, theme }: IMenu) => {
           Home
         </Link>
       </div>
-      <div className={styles.menuLinkWrapper}>
-        <Link className={styles.menuLink} href="/gallery">
-          Gallery
-        </Link>
-      </div>
+      {gallery && gallery.length > 0 && (
+        <div className={styles.menuLinkWrapper}>
+          <Link className={styles.menuLink} href="/gallery">
+            Gallery
+          </Link>
+        </div>
+      )}
+
       <div>
         <Link className={styles.menuLink} href="/order">
           <Button

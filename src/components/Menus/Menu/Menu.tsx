@@ -3,7 +3,7 @@ import MenuTypeTwo from '../MenuTypeTwo/MenuTypeTwo';
 
 import { IMenu } from './types';
 
-const Menu = ({ theme, type, styleClass, showMenu }: IMenu) => {
+const Menu = ({ theme, type, styleClass, showMenu, gallery }: IMenu) => {
   return (
     <>
       {type === 'one' ? (
@@ -12,6 +12,7 @@ const Menu = ({ theme, type, styleClass, showMenu }: IMenu) => {
           type={type}
           styleClass={styleClass}
           showMenu={showMenu}
+          gallery={gallery}
         />
       ) : type === 'two' ? (
         <MenuTypeTwo
@@ -19,6 +20,7 @@ const Menu = ({ theme, type, styleClass, showMenu }: IMenu) => {
           type={type}
           styleClass={styleClass}
           showMenu={showMenu}
+          gallery={gallery}
         />
       ) : null}
     </>
