@@ -10,7 +10,7 @@ import { IMenu } from '../Menu/types';
 
 import useStyles from './css';
 
-const MenuTypeTwo = ({ styleClass, theme, showMenu }: IMenu) => {
+const MenuTypeTwo = ({ styleClass, theme, showMenu, gallery }: IMenu) => {
   const styles = useStyles({ theme });
 
   const router = useRouter();
@@ -41,21 +41,25 @@ const MenuTypeTwo = ({ styleClass, theme, showMenu }: IMenu) => {
           Home
         </Link>
       </div>
-      <div className={styles.menuLinkWrapper}>
-        <Link
-          className={styles.menuLink}
-          href="/gallery"
-          style={{
-            color: showMenu
-              ? theme.primary
-              : router.pathname === '/'
-              ? theme.neutral
-              : theme.primary,
-          }}
-        >
-          Gallery
-        </Link>
-      </div>
+
+      {gallery && gallery.length > 0 && (
+        <div className={styles.menuLinkWrapper}>
+          <Link
+            className={styles.menuLink}
+            href="/gallery"
+            style={{
+              color: showMenu
+                ? theme.primary
+                : router.pathname === '/'
+                ? theme.neutral
+                : theme.primary,
+            }}
+          >
+            Gallery
+          </Link>
+        </div>
+      )}
+
       <div>
         <Link className={styles.menuLink} href="/order">
           <Button

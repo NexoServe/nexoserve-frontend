@@ -62,7 +62,7 @@ export const getRestaurantOpeningHours = (openingHours: DayOutput[]) => {
     // If 'closes_at' is '23:59', use the 'closes_at' of the next day's first time slot
     if (item.time[item.time.length - 1]?.closes_at === '23:59') {
       const nextDayIndex = (index + 1) % arr.length;
-      closingTime = arr[nextDayIndex].time[0].closes_at;
+      closingTime = arr[nextDayIndex].time[0]?.closes_at;
     } else {
       // If 'closes_at' is not '23:59', use the 'closes_at' of the current day's last time slot
       closingTime = item.time[item.time.length - 1]?.closes_at;

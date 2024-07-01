@@ -9,6 +9,7 @@ query RestaurantDetails($restaurantId: String!) {
     domainUrl
     loader
     address
+
     email
     navbarType
     theme {

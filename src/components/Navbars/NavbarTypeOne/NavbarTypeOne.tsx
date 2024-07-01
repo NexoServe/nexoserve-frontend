@@ -15,7 +15,7 @@ import { INavbar } from '../Navbar/types';
 
 import useStyles from './css';
 
-const NavbarTypeOne = ({ logo, restaurantName, theme }: INavbar) => {
+const NavbarTypeOne = ({ logo, restaurantName, theme, gallery }: INavbar) => {
   const classes = useStyles({
     theme,
   });
@@ -69,6 +69,7 @@ const NavbarTypeOne = ({ logo, restaurantName, theme }: INavbar) => {
           theme={theme}
           type="one"
           showMenu={showMenu}
+          gallery={gallery}
         />
 
         <ModalPopUp
@@ -82,6 +83,7 @@ const NavbarTypeOne = ({ logo, restaurantName, theme }: INavbar) => {
             theme={theme}
             type="one"
             showMenu={showMenu}
+            gallery={gallery}
           />
         </ModalPopUp>
       </Container>
