@@ -29,8 +29,11 @@ const Seo = ({ restaurantDetails }: RestaurantDetailsQuery) => {
         content={restaurantDetails.metaDescription}
       />
       <meta property="og:url" content={fullUrl} />
-      <meta property="og:image" content={restaurantDetails.ogImage} />
       <meta property="og:type" content="website" />
+      <meta property="og:image" content={restaurantDetails.ogImage} />
+      <meta property="og:image:width" content="1900" />
+      <meta property="og:image:height" content="1300" />
+      <meta property="og:image:type" content="image/jpeg" />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={restaurantDetails.name} />
@@ -38,6 +41,7 @@ const Seo = ({ restaurantDetails }: RestaurantDetailsQuery) => {
         name="twitter:description"
         content={restaurantDetails.metaDescription}
       />
+      <meta name="twitter:url" content={fullUrl} />
       <meta name="twitter:image" content={restaurantDetails.ogImage} />
     </Head>
   );
