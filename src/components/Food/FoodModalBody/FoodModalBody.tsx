@@ -96,20 +96,22 @@ const FoodModalBody = ({ food, showModal, type, theme }: IFoodModalBody) => {
 
   return (
     <>
-      <div className={classes.foodModalBodyImage}>
-        {food?.image && (
+      {food?.image && (
+        <div className={classes.foodModalBodyImage}>
           <Image
             src={food?.image}
             alt={food.name as string}
             loading="eager"
-            width={500}
-            height={300}
+            fill
             style={{
               objectFit: 'cover', // cover, contain, none
+              objectPosition: 'center', // left top, left center, left bottom, right top, right center, right bottom, center top, center center, center bottom
+              maxWidth: '100%',
+              maxHeight: '100%',
             }}
           />
-        )}
-      </div>
+        </div>
+      )}
       <div className={classes.foodModalBodyContent}>
         <FoodModalHeader
           name={food?.name}

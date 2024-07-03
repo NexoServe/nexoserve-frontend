@@ -6,8 +6,12 @@ import { ThemeType } from '../../../../generated/graphql';
 
 const useStyles = createUseStyles((theme: ThemeType) => ({
   foodModalBodyImage: {
+    width: '100%',
+    height: base(40),
+    position: 'relative',
     minWidth: '100%',
     maxHeight: base(40),
+    minHeight: base(40),
     pointerEvents: 'none',
   },
 
