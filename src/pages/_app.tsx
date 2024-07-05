@@ -9,6 +9,7 @@ import { RecoilRoot } from 'recoil';
 import useStyles from '../../css/app';
 import colors from '../../css/colors';
 import { useApollo } from '../../lib/apolloClient';
+import { FacebookPixelEvents } from '../../lib/pixelEvents';
 import Loader from '../components/Loader/Loader';
 import { ModalPopUp } from '../components/Modal/Modal';
 
@@ -90,6 +91,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={apolloClient}>
       <RecoilRoot>
+        <FacebookPixelEvents />
         <div className={classes.app}>
           {loading ? (
             <ModalPopUp
