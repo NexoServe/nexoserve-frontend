@@ -1,3 +1,4 @@
+'use client';
 // import { ShoppingCartAtom } from '../../state/ShoppingCartState';
 
 import classNames from 'classnames';

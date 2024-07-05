@@ -1,96 +1,169 @@
+'use client';
+
+import { Metadata } from 'next';
 import Link from 'next/link';
 import ReactGA from 'react-ga4';
 
-import { RestaurantDetailsQuery } from '../../../generated/graphql';
+import {
+  ThemeType,
+  useRestaurantDetailsQuery,
+} from '../../../generated/graphql';
 import Container from '../../components/Container/Container';
 import Footer from '../../components/Footer/Footer';
 import Navbar from '../../components/Navbars/Navbar/Navbar';
-import Seo from '../../components/Seo/Seo';
-import getRestaurantDetails from '../../utils/getRestaurantDetails';
 
 import useStyles from './css';
 
-export async function getServerSideProps() {
-  const data = await getRestaurantDetails();
+const GET_RESTAURANT_DETAILS = `
+  query RestaurantDetails($restaurantId: String!) {
+    restaurantDetails(restaurantId: $restaurantId) {
+      name
+      metaDescription
+      ogImage
+    }
+  }
+`;
+
+const graphqlUri =
+  process.env.NODE_ENV === 'production'
+    ? 'https://nexoserve-backend.up.railway.app/graphql'
+    : 'http://localhost:4000/graphql';
+
+interface GraphQLResponse {
+  data: {
+    restaurantDetails: {
+      name: string;
+      metaDescription: string;
+      ogImage: string;
+    };
+  };
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const response = await fetch(graphqlUri, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: GET_RESTAURANT_DETAILS,
+      variables: {
+        restaurantId: 'a4e7fbb8-7476-4a6f-991d-f8739a02f992',
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('Network response was not ok:', errorText);
+    throw new Error('Network response was not ok');
+  }
+
+  const { data }: GraphQLResponse = await response.json();
+
+  console.log('data', data?.restaurantDetails.ogImage);
 
   return {
-    props: {
-      ...data,
+    title: data?.restaurantDetails.name,
+    description: data?.restaurantDetails.metaDescription,
+    openGraph: {
+      title: data?.restaurantDetails.name,
+      description: data?.restaurantDetails.metaDescription,
+      images: [
+        {
+          url: data?.restaurantDetails.ogImage,
+        },
+      ],
     },
   };
 }
 
-const TermsAndConditions = (props: RestaurantDetailsQuery) => {
+const TermsAndConditions = () => {
+  const { data } = useRestaurantDetailsQuery({
+    variables: {
+      restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
+    },
+  });
+
   ReactGA.initialize([
     {
-      trackingId: props.restaurantDetails.measurementId,
+      trackingId: data?.restaurantDetails.measurementId as string,
     },
   ]);
 
-  const theme = props.restaurantDetails.theme;
-  const styles = useStyles({
-    theme,
+  const theme = data?.restaurantDetails.theme;
+  const defaultTheme: ThemeType = {
+    accent: '#FFD700',
+    primary: '#000000',
+    secondary: '#FFFFFF',
+    neutral: '#F5F5F5',
+    tertiary: '#F0F0F0',
+  };
+
+  const { classes } = useStyles({
+    theme: theme || defaultTheme,
   });
 
+  if (!data) {
+    return;
+  }
   return (
     <div
-      style={{
-        backgroundColor: props.restaurantDetails.theme.neutral,
-        color: props.restaurantDetails.theme.primary,
-      }}
+    // style={{
+    //   backgroundColor: data.restaurantDetails.theme.neutral,
+    //   color: data.restaurantDetails.theme.primary,
+    // }}
     >
-      <Seo restaurantDetails={props.restaurantDetails} />
-
       <main>
         <Navbar
-          logo={props.restaurantDetails.logo}
-          restaurantName={props.restaurantDetails.name}
-          theme={props.restaurantDetails.theme}
-          type={props.restaurantDetails.navbarType}
-          gallery={props.restaurantDetails.gallery}
+          logo={data.restaurantDetails.logo}
+          restaurantName={data.restaurantDetails.name}
+          theme={data.restaurantDetails.theme}
+          type={data.restaurantDetails.navbarType}
+          gallery={data.restaurantDetails.gallery}
         />
         <Container>
-          <div className={styles.termsContainer}>
-            <div className={styles.termsUpdateDate}>
+          <div className={classes.termsContainer}>
+            <div className={classes.termsUpdateDate}>
               <i>Last updated January 02, 2024</i>
             </div>
-            <h1 className={styles.termsHeading}>
+            <h1 className={classes.termsHeading}>
               <strong>TERMS AND CONDITIONS</strong>
             </h1>
 
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 AGREEMENT TO OUR LEGAL TERMS
               </h2>
-              <div className={styles.termsSubSection}>
-                We are {props.restaurantDetails.name}, a company registered in
+              <div className={classes.termsSubSection}>
+                We are {data.restaurantDetails.name}, a company registered in
                 New York, United States at 349 Whitehall road, Albany, NY 12208.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 We operate the website{' '}
-                <Link className={styles.termsLink} href={'/'}>
-                  {props.restaurantDetails.domainUrl}
+                <Link className={classes.termsLink} href={'/'}>
+                  {data.restaurantDetails.domainUrl}
                 </Link>{' '}
                 (the <strong>"Site"</strong>), as well as any other related
                 products and services that refer or link to these legal terms
                 (the <strong>"Legal Terms"</strong>) (collectively, the
                 <strong>"Services"</strong>).
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 You can contact us by phone at{' '}
-                {props.restaurantDetails.phoneNumbers[0].number}, email at{' '}
+                {data.restaurantDetails.phoneNumbers[0].number}, email at{' '}
                 <a
-                  className={styles.termsLink}
-                  href={`mailto: ${props.restaurantDetails.email}`}
+                  className={classes.termsLink}
+                  href={`mailto: ${data.restaurantDetails.email}`}
                 >
-                  {props.restaurantDetails.email}
+                  {data.restaurantDetails.email}
                 </a>
-                , or by mail to {props.restaurantDetails.address}
+                , or by mail to {data.restaurantDetails.address}
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 These Legal Terms constitute a legally binding agreement made
                 between you, whether personally or on behalf of an entity{' '}
-                <strong>("you")</strong>, and {props.restaurantDetails.name},
+                <strong>("you")</strong>, and {data.restaurantDetails.name},
                 concerning your access to and use of the Services. You agree
                 that by accessing the Services, you have read, understood, and
                 agreed to be bound by all of these Legal Terms. IF YOU DO NOT
@@ -98,7 +171,7 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE
                 IMMEDIATELY.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 Supplemental terms and conditions or documents that may be
                 posted on the Services from time to time are hereby expressly
                 incorporated herein by reference. We reserve the right, in our
@@ -113,20 +186,20 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 continued use of the Services after the date such revised Legal
                 Terms are posted.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 The Services are intended for users who are at least 18 years
                 old. Persons under the age of 18 are not permitted to use or
                 register for the Services.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 We recommend that you print a copy of these Legal Terms for your
                 records.
               </div>
             </div>
 
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>1. OUR SERVICES</h2>
-              <div className={styles.termsSubSection}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>1. OUR SERVICES</h2>
+              <div className={classes.termsSubSection}>
                 The information provided when using the Services is not intended
                 for distribution to or use by any person or entity in any
                 jurisdiction or country where such distribution or use would be
@@ -137,7 +210,7 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 solely responsible for compliance with local laws, if and to the
                 extent local laws are applicable.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 The Services are not tailored to comply with industry-specific
                 regulations (Health Insurance Portability and Accountability Act
                 (HIPAA), Federal Information Security Management Act (FISMA),
@@ -147,14 +220,14 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
               </div>
             </div>
 
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 2. INTELLECTUAL PROPERTY RIGHTS
               </h2>
-              <h3 className={styles.termsSubTitle}>
+              <h3 className={classes.termsSubTitle}>
                 Our intellectual property
               </h3>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 We are the owner or the licensee of all intellectual property
                 rights in our Services, including all source code, databases,
                 functionality, software, website designs, audio, video, text,
@@ -162,24 +235,26 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 "Content"), as well as the trademarks, service marks, and logos
                 contained therein (the "Marks").
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 Our Content and Marks are protected by copyright and trademark
                 laws (and various other intellectual property rights and unfair
                 competition laws) and treaties in the United States and around
                 the world.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 The Content and Marks are provided in or through the Services
                 "AS IS" for your personal, non-commercial use or internal
                 business purpose only.
               </div>
-              <h3 className={styles.termsSubTitle}>Your use of our Services</h3>
+              <h3 className={classes.termsSubTitle}>
+                Your use of our Services
+              </h3>
 
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 Subject to your compliance with these Legal Terms, including the
                 "PROHIBITED ACTIVITIES" section below, we grant you a
                 non-exclusive, non-transferable, revocable license to:
-                <ul className={styles.termsList}>
+                <ul className={classes.termsList}>
                   <li>access the Services; and</li>
                   <li>
                     download or print a copy of any portion of the Content to
@@ -190,7 +265,7 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 business purpose.
               </div>
 
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 Except as set out in this section or elsewhere in our Legal
                 Terms, no part of the Services and no Content or Marks may be
                 copied, reproduced, aggregated, republished, uploaded, posted,
@@ -200,15 +275,15 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 permission.
               </div>
 
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 If you wish to make any use of the Services, Content, or Marks
                 other than as set out in this section or elsewhere in our Legal
                 Terms, please address your request to:{' '}
                 <a
-                  className={styles.termsLink}
-                  href={`mailto: ${props.restaurantDetails.email}`}
+                  className={classes.termsLink}
+                  href={`mailto: ${data.restaurantDetails.email}`}
                 >
-                  {props.restaurantDetails.email}
+                  {data.restaurantDetails.email}
                 </a>
                 . If we ever grant you the permission to post, reproduce, or
                 publicly display any part of our Services or Content, you must
@@ -218,26 +293,26 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 Content.
               </div>
 
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 We reserve all rights not expressly granted to you in and to the
                 Services, Content, and Marks.
               </div>
 
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 Any breach of these Intellectual Property Rights will constitute
                 a material breach of our Legal Terms and your right to use our
                 Services will terminate immediately.
               </div>
 
-              <h3 className={styles.termsSubTitle}>Your submissions</h3>
+              <h3 className={classes.termsSubTitle}>Your submissions</h3>
 
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 Please review this section and the "PROHIBITED ACTIVITIES"
                 section carefully prior to using our Services to understand the
                 (a) rights you give us and (b) obligations you have when you
                 post or upload any content through the Services.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 <strong>Submissions</strong>: By directly sending us any
                 question, comment, suggestion, idea, feedback, or other
                 information about the Services ("Submissions"), you agree to
@@ -247,11 +322,11 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 lawful purpose, commercial or otherwise, without acknowledgment
                 or compensation to you.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 <strong>You are responsible for what you post or upload</strong>
                 : By sending us Submissions through any part of the Services
                 you:
-                <ul className={styles.termsList}>
+                <ul className={classes.termsList}>
                   <li>
                     confirm that you have read and agree with our "PROHIBITED
                     ACTIVITIES" and will not post, send, publish, upload, or
@@ -284,11 +359,11 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
               </div>
             </div>
 
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 3. USER REPRESENTATIONS
               </h2>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 By using the Services, you represent and warrant that: (1) you
                 have the legal capacity and you agree to comply with these Legal
                 Terms; (2) you are not a minor in the jurisdiction in which you
@@ -298,16 +373,16 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 unauthorized purpose; and (5) your use of the Services will not
                 violate any applicable law or regulation.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 If you provide any information that is untrue, inaccurate, not
                 current, or incomplete, we have the right to suspend or
                 terminate your account and refuse any and all current or future
                 use of the Services (or any portion thereof).
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>4. PRODUCTS</h2>
-              <div className={styles.termsSubSection}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>4. PRODUCTS</h2>
+              <div className={classes.termsSubSection}>
                 We make every effort to display as accurately as possible the
                 colors, features, specifications, and details of the products
                 available on the Services. However, we do not guarantee that the
@@ -321,13 +396,13 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 change.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 5. PURCHASES AND PAYMENT
               </h2>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 We accept the following forms of payment:
-                <ul className={styles.termsList}>
+                <ul className={classes.termsList}>
                   <li>Stripe</li>
                 </ul>
                 You agree to provide current, complete, and accurate purchase
@@ -339,7 +414,7 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 to the price of purchases as deemed required by us. We may
                 change prices at any time. All payments shall be in US dollars.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 You agree to pay all charges at the prices then in effect for
                 your purchases and any applicable shipping fees, and you
                 authorize us to charge your chosen payment provider for any such
@@ -347,7 +422,7 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 any errors or mistakes in pricing, even if we have already
                 requested or received payment.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 We reserve the right to refuse any order placed through the
                 Services. We may, in our sole discretion, limit or cancel
                 quantities purchased per person, per household, or per order.
@@ -358,25 +433,25 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 appear to be placed by dealers, resellers, or distributors.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>6. RETURN POLICY</h2>
-              <div className={styles.termsSubSection}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>6. RETURN POLICY</h2>
+              <div className={classes.termsSubSection}>
                 All sales are final and no refund will be issued.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 7. PROHIBITED ACTIVITIES
               </h2>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 You may not access or use the Services for any purpose other
                 than that for which we make the Services available. The Services
                 may not be used in connection with any commercial endeavors
                 except those that are specifically endorsed or approved by us.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 As a user of the Services, you agree not to:
-                <ul className={styles.termsList}>
+                <ul className={classes.termsList}>
                   <li>
                     Systematically retrieve data or other content from the
                     Services to create or compile, directly or indirectly, a
@@ -499,11 +574,11 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 </ul>
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 8. USER GENERATED CONTRIBUTIONS
               </h2>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 The Services does not offer users to submit or post content. We
                 may provide you with the opportunity to create, submit, post,
                 display, transmit, perform, publish, distribute, or broadcast
@@ -514,7 +589,7 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 may be viewable by other users of the Services and through
                 third-party websites. When you create or make available any
                 Contributions, you thereby represent and warrant that:
-                <ul className={styles.termsList}>
+                <ul className={classes.termsList}>
                   <li>
                     The creation, distribution, transmission, public display, or
                     performance, and the accessing, downloading, or copying of
@@ -591,21 +666,21 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 termination or suspension of your rights to use the Services.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 9. CONTRIBUTION LICENSE
               </h2>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 You and Services agree that we may access, store, process, and
                 use any information and personal data that you provide and your
                 choices (including settings).
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 By submitting suggestions or other feedback regarding the
                 Services, you agree that we can use and share such feedback for
                 any purpose without compensation to you.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 We do not assert any ownership over your Contributions. You
                 retain full ownership of all of your Contributions and any
                 intellectual property rights or other proprietary rights
@@ -617,11 +692,11 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 any legal action against us regarding your Contributions.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 10. THIRD-PARTY WEBSITES AND CONTENT
               </h2>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 The Services may contain (or you may be sent via the Site) links
                 to other websites ("Third-Party Websites") as well as articles,
                 photographs, text, graphics, pictures, designs, music, sound,
@@ -658,9 +733,9 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 Third-Party Content or any contact with Third-Party Websites.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>11. ADVERTISERS</h2>
-              <div className={styles.termsSubSection}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>11. ADVERTISERS</h2>
+              <div className={classes.termsSubSection}>
                 We allow advertisers to display their advertisements and other
                 information in certain areas of the Services, such as sidebar
                 advertisements or banner advertisements. We simply provide the
@@ -668,11 +743,11 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 relationship with advertisers.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 12. SERVICES MANAGEMENT
               </h2>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 We reserve the right, but not the obligation, to: (1) monitor
                 the Services for violations of these Legal Terms; (2) take
                 appropriate legal action against anyone who, in our sole
@@ -690,9 +765,9 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 functioning of the Services.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>13. PRIVACY POLICY</h2>
-              <div className={styles.termsSubSection}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>13. PRIVACY POLICY</h2>
+              <div className={classes.termsSubSection}>
                 We care about data privacy and security. By using the Services,
                 you agree to be bound by our Privacy Policy posted on the
                 Services, which is incorporated into these Legal Terms. Please
@@ -707,11 +782,11 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
               </div>
             </div>
 
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 14. TERM AND TERMINATION
               </h2>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 These Legal Terms shall remain in full force and effect while
                 you use the Services. WITHOUT LIMITING ANY OTHER PROVISION OF
                 THESE LEGAL TERMS, WE RESERVE THE RIGHT TO, IN OUR SOLE
@@ -724,7 +799,7 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 SERVICES OR DELETE ANY CONTENT OR INFORMATION THAT YOU POSTED AT
                 ANY TIME, WITHOUT WARNING, IN OUR SOLE DISCRETION.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 If we terminate or suspend your account for any reason, you are
                 prohibited from registering and creating a new account under
                 your name, a fake or borrowed name, or the name of any third
@@ -735,11 +810,11 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 redress.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 15. MODIFICATIONS AND INTERRUPTIONS
               </h2>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 We reserve the right to change, modify, or remove the contents
                 of the Services at any time or for any reason at our sole
                 discretion without notice. However, we have no obligation to
@@ -749,7 +824,7 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 third party for any modification, price change, suspension, or
                 discontinuance of the Services.
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 We cannot guarantee the Services will be available at all times.
                 We may experience hardware, software, or other problems or need
                 to perform maintenance related to the Services, resulting in
@@ -764,9 +839,9 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 any corrections, updates, or releases in connection therewith.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>16. GOVERNING LAW</h2>
-              <div className={styles.termsSubSection}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>16. GOVERNING LAW</h2>
+              <div className={classes.termsSubSection}>
                 These Legal Terms and your use of the Services are governed by
                 and construed in accordance with the laws of the State of New
                 York applicable to agreements made and to be entirely performed
@@ -774,12 +849,12 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 law principles.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 17. DISPUTE RESOLUTION
               </h2>
-              <h3 className={styles.termsSubTitle}>Informal Negotiations</h3>
-              <div className={styles.termsSubSection}>
+              <h3 className={classes.termsSubTitle}>Informal Negotiations</h3>
+              <div className={classes.termsSubSection}>
                 To expedite resolution and control the cost of any dispute,
                 controversy, or claim related to these Legal Terms (each a
                 "Dispute" and collectively, the "Disputes") brought by either
@@ -790,8 +865,8 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 arbitration. Such informal negotiations commence upon written
                 notice from one Party to the other Party.
               </div>
-              <h3 className={styles.termsSubTitle}>Binding Arbitration</h3>
-              <div className={styles.termsSubSection}>
+              <h3 className={classes.termsSubTitle}>Binding Arbitration</h3>
+              <div className={classes.termsSubSection}>
                 If the Parties are unable to resolve a Dispute through informal
                 negotiations, the Dispute (except those Disputes expressly
                 excluded below) will be finally and exclusively resolved by
@@ -832,7 +907,7 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 Legal Terms.
               </div>
 
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 If this provision is found to be illegal or unenforceable, then
                 neither Party will elect to arbitrate any Dispute falling within
                 that portion of this provision found to be illegal or
@@ -841,8 +916,8 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 above, and the Parties agree to submit to the personal
                 jurisdiction of that court.
               </div>
-              <h3 className={styles.termsSubTitle}>Restrictions</h3>
-              <div className={styles.termsSubSection}>
+              <h3 className={classes.termsSubTitle}>Restrictions</h3>
+              <div className={classes.termsSubSection}>
                 The Parties agree that any arbitration shall be limited to the
                 Dispute between the Parties individually. To the full extent
                 permitted by law, (a) no arbitration shall be joined with any
@@ -853,10 +928,10 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 capacity on behalf of the general public or any other persons.
               </div>
 
-              <h3 className={styles.termsSubTitle}>
+              <h3 className={classes.termsSubTitle}>
                 Exceptions to Informal Negotiations and Arbitration
               </h3>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 The Parties agree that the following Disputes are not subject to
                 the above provisions concerning informal negotiations binding
                 arbitration: (a) any Disputes seeking to enforce or protect, or
@@ -873,9 +948,9 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 jurisdiction of that court.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>18. CORRECTIONS</h2>
-              <div className={styles.termsSubSection}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>18. CORRECTIONS</h2>
+              <div className={classes.termsSubSection}>
                 There may be information on the Services that contains
                 typographical errors, inaccuracies, or omissions, including
                 descriptions, pricing, availability, and various other
@@ -884,9 +959,9 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 information on the Services at any time, without prior notice.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>19. DISCLAIMER</h2>
-              <div className={styles.termsSubSection}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>19. DISCLAIMER</h2>
+              <div className={classes.termsSubSection}>
                 THE SERVICES ARE PROVIDED ON AN AS-IS AND AS-AVAILABLE BASIS.
                 YOU AGREE THAT YOUR USE OF THE SERVICES WILL BE AT YOUR SOLE
                 RISK. TO THE FULLEST EXTENT PERMITTED BY LAW, WE DISCLAIM ALL
@@ -921,11 +996,11 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 CAUTION WHERE APPROPRIATE.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 20. LIMITATIONS OF LIABILITY
               </h2>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 IN NO EVENT WILL WE OR OUR DIRECTORS, EMPLOYEES, OR AGENTS BE
                 LIABLE TO YOU OR ANY THIRD PARTY FOR ANY DIRECT, INDIRECT,
                 CONSEQUENTIAL, EXEMPLARY, INCIDENTAL, SPECIAL, OR PUNITIVE
@@ -944,9 +1019,9 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 RIGHTS.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>21. INDEMNIFICATION</h2>
-              <div className={styles.termsSubSection}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>21. INDEMNIFICATION</h2>
+              <div className={classes.termsSubSection}>
                 You agree to defend, indemnify, and hold us harmless, including
                 our subsidiaries, affiliates, and all of our respective
                 officers, agents, partners, and employees, from and against any
@@ -967,9 +1042,9 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 this indemnification upon becoming aware of it.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>22. USER DATA</h2>
-              <div className={styles.termsSubSection}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>22. USER DATA</h2>
+              <div className={classes.termsSubSection}>
                 We will maintain certain data that you transmit to the Services
                 for the purpose of managing the performance of the Services, as
                 well as data relating to your use of the Services. Although we
@@ -982,11 +1057,11 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 such data.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 23. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES
               </h2>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 Visiting the Services, sending us emails, and completing online
                 forms constitute electronic communications. You consent to
                 receive electronic communications, and you agree that all
@@ -1004,11 +1079,11 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 other than electronic means.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>
                 24. CALIFORNIA USERS AND RESIDENTS
               </h2>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 If any complaint with us is not satisfactorily resolved, you can
                 contact the Complaint Assistance Unit of the Division of
                 Consumer Services of the California Department of Consumer
@@ -1017,9 +1092,9 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
                 or (916) 445-1254.
               </div>
             </div>
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>25. MISCELLANEOUS</h2>
-              <div className={styles.termsSubSection}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>25. MISCELLANEOUS</h2>
+              <div className={classes.termsSubSection}>
                 These Legal Terms and any policies or operating rules posted by
                 us on the Services or in respect to the Services constitute the
                 entire agreement and understanding between you and us. Our
@@ -1044,35 +1119,35 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
               </div>
             </div>
 
-            <div className={styles.termsSection}>
-              <h2 className={styles.termsSectionTitle}>26. CONTACT US</h2>
-              <div className={styles.termsSubSection}>
+            <div className={classes.termsSection}>
+              <h2 className={classes.termsSectionTitle}>26. CONTACT US</h2>
+              <div className={classes.termsSubSection}>
                 In order to resolve a complaint regarding the Services or to
                 receive further information regarding use of the Services,
                 please contact us at:
               </div>
-              <div className={styles.termsSubSection}>
-                {props.restaurantDetails.name}
+              <div className={classes.termsSubSection}>
+                {data.restaurantDetails.name}
               </div>
-              <div className={styles.termsSubSection}>
-                {props.restaurantDetails.address}
+              <div className={classes.termsSubSection}>
+                {data.restaurantDetails.address}
               </div>
-              <div className={styles.termsSubSection}>
+              <div className={classes.termsSubSection}>
                 <strong>Phone:</strong>{' '}
                 <a
-                  className={styles.termsLink}
-                  href={`tel: ${props.restaurantDetails.phoneNumbers[0].number}`}
+                  className={classes.termsLink}
+                  href={`tel: ${data.restaurantDetails.phoneNumbers[0].number}`}
                 >
-                  {props.restaurantDetails.phoneNumbers[0].number}
+                  {data.restaurantDetails.phoneNumbers[0].number}
                 </a>
               </div>
               <div>
                 <strong>Email:</strong>{' '}
                 <a
-                  className={styles.termsLink}
-                  href={`mailto: ${props.restaurantDetails.email}`}
+                  className={classes.termsLink}
+                  href={`mailto: ${data.restaurantDetails.email}`}
                 >
-                  {props.restaurantDetails.email}
+                  {data.restaurantDetails.email}
                 </a>
               </div>
             </div>
@@ -1080,11 +1155,11 @@ const TermsAndConditions = (props: RestaurantDetailsQuery) => {
         </Container>
       </main>
       <Footer
-        openingHours={props.restaurantDetails.openingHours}
-        phoneNumbers={props.restaurantDetails.phoneNumbers}
-        restaurantName={props.restaurantDetails.name}
-        theme={props.restaurantDetails.theme}
-        email={props.restaurantDetails.email}
+        openingHours={data.restaurantDetails.openingHours}
+        phoneNumbers={data.restaurantDetails.phoneNumbers}
+        restaurantName={data.restaurantDetails.name}
+        theme={data.restaurantDetails.theme}
+        email={data.restaurantDetails.email}
       />
     </div>
   );

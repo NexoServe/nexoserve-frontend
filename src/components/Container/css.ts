@@ -1,9 +1,9 @@
-import { createUseStyles } from 'react-jss';
+import { tss } from 'tss-react';
 
 import { base } from '../../../css/base';
 import queries from '../../../css/queries';
 
-const useStyles = createUseStyles({
+const useStyles = tss.create({
   container: {
     padding: base(1),
     paddingBottom: base(10),
