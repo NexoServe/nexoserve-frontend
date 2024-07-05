@@ -30,18 +30,15 @@ const FoodOptionSizeToppingStyle = ({
               fill={theme.primary}
               backgroundColor={theme.neutral}
             />
-
-            {optionSize?.price > 0 && (
-              <span
-                className={
-                  isChecked
-                    ? classes.foodOptionToppingStyleSizePriceActive
-                    : classes.foodOptionToppingStyleSizePrice
-                }
-              >
-                ${optionSize?.price?.toFixed(2)}
-              </span>
-            )}
+            <span
+              className={
+                isChecked
+                  ? classes.foodOptionToppingStyleSizePriceActive
+                  : classes.foodOptionToppingStyleSizePrice
+              }
+            >
+              ${optionSize?.price?.toFixed(2)}
+            </span>
           </div>
         ) : optionSize?.name === 'Whole' ? (
           <div
@@ -52,18 +49,15 @@ const FoodOptionSizeToppingStyle = ({
               fill={theme.primary}
               backgroundColor={theme.neutral}
             />
-
-            {optionSize?.price > 0 && (
-              <span
-                className={
-                  isChecked
-                    ? classes.foodOptionToppingStyleSizePriceActive
-                    : classes.foodOptionToppingStyleSizePrice
-                }
-              >
-                ${optionSize?.price?.toFixed(2)}
-              </span>
-            )}
+            <span
+              className={
+                isChecked
+                  ? classes.foodOptionToppingStyleSizePriceActive
+                  : classes.foodOptionToppingStyleSizePrice
+              }
+            >
+              ${optionSize?.price?.toFixed(2)}
+            </span>
           </div>
         ) : (
           <div
@@ -74,18 +68,15 @@ const FoodOptionSizeToppingStyle = ({
               fill={theme.primary}
               backgroundColor={theme.neutral}
             />
-
-            {optionSize?.price > 0 && (
-              <span
-                className={
-                  isChecked
-                    ? classes.foodOptionToppingStyleSizePriceActive
-                    : classes.foodOptionToppingStyleSizePrice
-                }
-              >
-                ${optionSize?.price?.toFixed(2)}
-              </span>
-            )}
+            <span
+              className={
+                isChecked
+                  ? classes.foodOptionToppingStyleSizePriceActive
+                  : classes.foodOptionToppingStyleSizePrice
+              }
+            >
+              ${optionSize?.price?.toFixed(2)}
+            </span>
           </div>
         )}
 

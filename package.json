@@ -35,11 +35,7 @@
   },
   "dependencies": {
     "@analytics/google-analytics": "1.0.7",
-    "@apollo/client": "^3.10.5",
-    "@apollo/experimental-nextjs-app-support": "^0.11.2",
-    "@emotion/react": "11.11.4",
-    "@griffel/react": "1.5.23",
-    "@griffel/webpack-loader": "2.2.12",
+    "@apollo/client": "3.8.8",
     "@prisma/client": "4.8.0",
     "@reach/combobox": "0.18.0",
     "@sentry/nextjs": "7.86.0",
@@ -83,7 +79,6 @@
     "rifm": "0.12.1",
     "stripe": "10.12.0",
     "tiny-skeleton-loader-react": "1.2.1",
-    "tss-react": "4.9.10",
     "use-places-autocomplete": "4.0.0",
     "uuid": "8.3.2",
     "webfontloader": "1.6.28"
@@ -95,7 +90,6 @@
     "@graphql-codegen/typescript": "4.0.1",
     "@graphql-codegen/typescript-operations": "4.0.1",
     "@graphql-codegen/typescript-react-apollo": "4.1.0",
-    "@griffel/next-extraction-plugin": "0.1.4",
     "@types/lodash": "4.14.182",
     "@types/luxon": "3.3.0",
     "@types/micro-cors": "0.1.2",

@@ -1,5 +1,3 @@
-'use client';
-
 // import { ShoppingCartAtom } from '../../state/ShoppingCartState';
 
 import classNames from 'classnames';
@@ -12,25 +10,25 @@ import { IMenu } from '../Menu/types';
 import useStyles from './css';
 
 const MenuTypeOne = ({ styleClass, theme, gallery }: IMenu) => {
-  const { classes } = useStyles({ theme });
+  const styles = useStyles({ theme });
 
   return (
-    <menu className={classNames(classes.menu, styleClass)}>
-      <div className={classes.menuLinkWrapper}>
-        <Link className={classes.menuLink} href="/">
+    <menu className={classNames(styles.menu, styleClass)}>
+      <div className={styles.menuLinkWrapper}>
+        <Link className={styles.menuLink} href="/">
           Home
         </Link>
       </div>
       {gallery && gallery.length > 0 && (
-        <div className={classes.menuLinkWrapper}>
-          <Link className={classes.menuLink} href="/gallery">
+        <div className={styles.menuLinkWrapper}>
+          <Link className={styles.menuLink} href="/gallery">
             Gallery
           </Link>
         </div>
       )}
 
       <div>
-        <Link className={classes.menuLink} href="/order">
+        <Link className={styles.menuLink} href="/order">
           <Button
             style={{
               padding: base(1),

@@ -11,13 +11,13 @@ const Button = ({
   theme,
   ...rest
 }: ButtonType) => {
-  const { classes } = useStyles({
+  const styles = useStyles({
     theme,
   });
 
   return (
     <button
-      className={classNames(styleClass, classes.button)}
+      className={classNames(styleClass, styles.button)}
       onClick={onClick}
       {...rest}
       disabled={disabled}

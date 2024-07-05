@@ -1,5 +1,3 @@
-'use client';
-
 // import { ShoppingCartAtom } from '../../state/ShoppingCartState';
 
 import { useEffect, useState } from 'react';
@@ -18,10 +16,9 @@ import { INavbar } from '../Navbar/types';
 import useStyles from './css';
 
 const NavbarTypeOne = ({ logo, restaurantName, theme, gallery }: INavbar) => {
-  const { classes } = useStyles({
+  const classes = useStyles({
     theme,
   });
-
   const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
@@ -57,7 +54,7 @@ const NavbarTypeOne = ({ logo, restaurantName, theme, gallery }: INavbar) => {
         <div className={classes.navbarHamburger}>
           <Hamburger
             direction="right"
-            color={theme?.primary}
+            color={theme.primary}
             size={22}
             rounded
             label="hey"
