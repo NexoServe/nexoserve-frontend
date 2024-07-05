@@ -36,48 +36,20 @@ const FoodOptionSize = ({
   }, [selectedOptions, option, optionSize]);
 
   const addOptionSize = () => {
-    const optionSizeParent = selectedOptions.find(
-      (selectedOption) =>
-        `${selectedOption.addOnName}-${selectedOption.name}` ===
-        `${addOn?.name}-${option?.name}`,
-    );
-
-    if (
-      optionSizeParent &&
-      optionSizeParent?.optionSize?.name === optionSize?.name
-    ) {
-      const filteredOptions = selectedOptions.filter(
-        (selectOption) =>
-          `${selectOption.addOnName}-${selectOption.name}` !==
-          `${addOn?.name}-${option?.name}`,
+    // Check if maxOptionsSelected is defined and equals 1
+    if (addOn?.maxOptionsSelected && addOn?.maxOptionsSelected === 1) {
+      const findAddOnOption = addOn.options?.find((option1) =>
+        selectedOptions.some((option2) => option2?.id === option1?.id),
       );
 
-      setSelectedOptions(filteredOptions);
-    } else if (optionSizeParent) {
-      const arr: OptionWithSizeType[] = selectedOptions.map((selectOption) => {
-        if (
-          `${selectOption.addOnName}-${selectOption.name}` ===
-          `${addOn?.name}-${option?.name}`
-        ) {
-          return {
-            id: option.id as string,
-            name: option?.name,
-            price: option?.price,
-            addOnName: addOn?.name as string,
-            optionSize: {
-              id: optionSize?.id,
-              name: optionSize?.name,
-              price: optionSize?.price,
-            },
-          };
-        }
+      // Filter out the existing option
+      const arr = selectedOptions.filter(
+        (selectOption) => selectOption?.id !== findAddOnOption?.id,
+      );
 
-        return selectOption;
-      });
-      setSelectedOptions(arr);
-    } else {
+      // Add the new option with the selected option size
       setSelectedOptions([
-        ...selectedOptions,
+        ...arr,
         {
           id: option?.id,
           name: option?.name,
@@ -90,6 +62,68 @@ const FoodOptionSize = ({
           },
         },
       ]);
+    } else {
+      // Check if the selected option already exists
+      const optionSizeParent = selectedOptions.find(
+        (selectedOption) =>
+          `${selectedOption.addOnName}-${selectedOption.name}` ===
+          `${addOn?.name}-${option?.name}`,
+      );
+
+      if (
+        optionSizeParent &&
+        optionSizeParent?.optionSize?.name === optionSize?.name
+      ) {
+        // If the same option size is selected again, remove it
+        const filteredOptions = selectedOptions.filter(
+          (selectOption) =>
+            `${selectOption.addOnName}-${selectOption.name}` !==
+            `${addOn?.name}-${option?.name}`,
+        );
+
+        setSelectedOptions(filteredOptions);
+      } else if (optionSizeParent) {
+        // If the option exists but with a different size, update the size
+        const arr: OptionWithSizeType[] = selectedOptions.map(
+          (selectOption) => {
+            if (
+              `${selectOption.addOnName}-${selectOption.name}` ===
+              `${addOn?.name}-${option?.name}`
+            ) {
+              return {
+                id: option.id as string,
+                name: option?.name,
+                price: option?.price,
+                addOnName: addOn?.name as string,
+                optionSize: {
+                  id: optionSize?.id,
+                  name: optionSize?.name,
+                  price: optionSize?.price,
+                },
+              };
+            }
+
+            return selectOption;
+          },
+        );
+        setSelectedOptions(arr);
+      } else {
+        // If the option does not exist, add it with the selected option size
+        setSelectedOptions([
+          ...selectedOptions,
+          {
+            id: option?.id,
+            name: option?.name,
+            price: option?.price,
+            addOnName: addOn?.name as string,
+            optionSize: {
+              id: optionSize?.id,
+              name: optionSize?.name,
+              price: optionSize?.price,
+            },
+          },
+        ]);
+      }
     }
   };
 
