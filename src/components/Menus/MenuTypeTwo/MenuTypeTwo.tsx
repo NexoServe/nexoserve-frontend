@@ -1,8 +1,9 @@
+'use client';
 // import { ShoppingCartAtom } from '../../state/ShoppingCartState';
 
 import classNames from 'classnames';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 import { base } from '../../../../css/base';
 import Button from '../../Button/Button';
@@ -13,7 +14,7 @@ import useStyles from './css';
 const MenuTypeTwo = ({ styleClass, theme, showMenu, gallery }: IMenu) => {
   const styles = useStyles({ theme });
 
-  const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <menu
@@ -21,7 +22,7 @@ const MenuTypeTwo = ({ styleClass, theme, showMenu, gallery }: IMenu) => {
       style={{
         background: showMenu
           ? theme.neutral
-          : router.pathname === '/'
+          : pathname === '/'
           ? 'transparent'
           : theme.neutral,
       }}
@@ -33,7 +34,7 @@ const MenuTypeTwo = ({ styleClass, theme, showMenu, gallery }: IMenu) => {
           style={{
             color: showMenu
               ? theme.primary
-              : router.pathname === '/'
+              : pathname === '/'
               ? theme.neutral
               : theme.primary,
           }}
@@ -50,7 +51,7 @@ const MenuTypeTwo = ({ styleClass, theme, showMenu, gallery }: IMenu) => {
             style={{
               color: showMenu
                 ? theme.primary
-                : router.pathname === '/'
+                : pathname === '/'
                 ? theme.neutral
                 : theme.primary,
             }}

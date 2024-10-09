@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import { cn } from '@/lib/utils';
+
 import Container from '../../Container/Container';
 import { IFeatures } from '../Feature/types';
 
@@ -26,7 +28,9 @@ const FeaturesTypeThree = ({ theme, features }: IFeatures) => {
               />
             </div>
             <h2 className={styles.featureTitle}>{featureItem?.title}</h2>
-            <p className={styles.featureMessage}>{featureItem?.description}</p>
+            <p className={cn(styles.featureMessage, 'pt-4')}>
+              {featureItem?.description}
+            </p>
           </div>
         ))}
       </div>

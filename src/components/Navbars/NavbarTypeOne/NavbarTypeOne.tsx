@@ -1,3 +1,5 @@
+'use client';
+
 // import { ShoppingCartAtom } from '../../state/ShoppingCartState';
 
 import { useEffect, useState } from 'react';

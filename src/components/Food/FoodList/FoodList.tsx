@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useRecoilValue } from 'recoil';
 
 import { FoodWithSizesType } from '../../../../generated/graphql';
@@ -13,8 +13,10 @@ import { IFoodList } from './types';
 
 const FoodList = ({ theme }: IFoodList) => {
   const menu = useRecoilValue(FoodMenuAtom);
-  const router = useRouter(); // Use useRouter to access the query
-  const { id: foodId } = router.query; // Destructure to get 'id' parameter
+
+  const searchParams = useSearchParams();
+
+  const foodId = searchParams?.get('id');
 
   const sortedMenu = useMemo(() => {
     if (menu.length > 0) {

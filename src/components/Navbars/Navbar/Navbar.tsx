@@ -1,3 +1,5 @@
+'use client';
+
 import NavbarTypeOne from '../NavbarTypeOne/NavbarTypeOne';
 import NavbarTypeTwo from '../NavbarTypeTwo/NavbarTypeTwo';
 

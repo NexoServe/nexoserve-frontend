@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px; /* htmlFontSize */
+  line-height: 18px; /* Assuming this line-height is correct */
+}
+
+body {
+  font-family: 'Montserrat';
+  padding: 0;
+}
+
+h1 {
+  font-weight: normal;
+  font-size: 3.125rem; /* base(5) */
+  line-height: 3.125rem; /* base(5) */
+  margin: 0 0 1.25rem; /* base(2) */
+}
+
+h2 {
+  font-weight: normal;
+  font-size: 2.5rem; /* base(4) */
+  line-height: 3.125rem; /* base(5) */
+  margin: 1.25rem 0; /* base(2) */
+}
+
+h3 {
+  font-weight: normal;
+  font-size: 1.875rem; /* base(3) */
+  line-height: 2.5rem; /* base(4) */
+  margin: 1.25rem 0 0.9375rem; /* base(2) 0 base(1.5) */
+}
+
+h4 {
+  font-weight: normal;
+  font-size: 1.25rem; /* base(2) */
+  line-height: 1.5625rem; /* base(2.5) */
+  margin: 0.9375rem 0 0.625rem; /* base(1.5) 0 base() */
+}
+
+h5 {
+  font-weight: normal;
+  font-size: 0.9375rem; /* base(1.5) */
+  line-height: 1.25rem; /* base(2) */
+  margin: 0.625rem 0 0.3125rem; /* base(1) 0 base(0.5) */
+}
+
+p {
+  font-size: 16px; /* htmlFontSize */
+  line-height: 1.5625rem; /* base(1.5) */
+}
+
+ol {
+  padding: 0 0 0 0.625rem; /* base(1) */
+  margin: 0 0 0.625rem 0; /* base(1) */
+}
+
+ul {
+  padding: 0 0 0 0.625rem; /* base(1) */
+  margin: 0 0 0.625rem 0; /* base(1) */
+}
+
+li {
+  font-size: 16px; /* htmlFontSize */
+  line-height: 1.5625rem; /* base(1.5) */
+}
+
+a {
+  cursor: pointer;
+}
+
+button {
+  font-family: 'Montserrat';
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+input {
+  font-family: 'Montserrat, sans-serif';
+}
+
+.Label {
+  font-size: 160px;
+}
+
+span {
+  line-height: 16px;
+}
+
+select {
+  -webkit-appearance: none;
+}
+
+.css-eip71p-DropDown {
+  /* Add styles if any */
+}
+
+/* 
+.css-1aarvou-DropdownHandleComponent {
+  width: 100% !important;
+  position: absolute !important;
+  height: 100% !important;
+  text-align: right !important;
+}
+*/
+
+.app {
+  height: 100%;
+}

@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import Button from '../../Button/Button';
 import SvgIcons from '../../SvgIcons';
@@ -16,7 +19,7 @@ const HeroTypeTwo = ({ theme, hero, socialMedia }: IHero) => {
 
   return (
     <div className={styles.heroTypeTwoContainer}>
-      <Image alt="1" fill src={hero?.background as string} objectFit="cover" />
+      <Image alt="1" fill src={hero?.background as string} />
       <div className={styles.heroTypeTwoForeground}></div>
       <div className={styles.heroTypeTwo}>
         <h1 className={styles.heroTypeTwoTitle}>{hero?.title}</h1>
@@ -26,13 +29,11 @@ const HeroTypeTwo = ({ theme, hero, socialMedia }: IHero) => {
             * Order directly through our website for original prices and no
             extra fees. No 3rd parties.
           </div>
-          <Button
-            onClick={() => router.push('/order')}
-            styleClass={styles.heroTypeTwoButton}
-            theme={theme}
-          >
-            Order Now
-          </Button>
+          <Link href="/order" prefetch>
+            <Button styleClass={styles.heroTypeTwoButton} theme={theme}>
+              Order Now
+            </Button>
+          </Link>
         </div>
         <div className={styles.heroTypeOneSocials}>
           {socialMedia?.xTwitterUrl && (

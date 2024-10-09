@@ -1,7 +1,9 @@
+'use client';
+
 import { useEffect, useMemo } from 'react';
 
 import { DateTime } from 'luxon';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useRecoilState } from 'recoil';
 
 import {
@@ -113,6 +115,17 @@ const PageContainer = ({ children, theme }: IPageContainer) => {
   }, [orderDetails?.isOrderTimeValid, setShowInvalidTimeModal]);
 
   useEffect(() => {
+    console.log('inputinputinputinput', {
+      input: {
+        restaurantId: process.env.NEXT_PUBLIC_RESTAURANT_ID as string,
+        orderTime: orderTimeParsed ? orderTimeParsed?.value : 'ASAP',
+        isPickUp: orderIsPickUpStorage === 'true' ? true : false,
+        deliveryAddress: orderDeliveryAddressParsed,
+        deliveryAddressAdditionalInfo: orderDeliveryAddressAdditionalInfoParsed,
+        deliveryDetails: orderDeliveryDetailsParsed,
+      },
+    });
+
     restaurantQuery({
       variables: {
         input: {

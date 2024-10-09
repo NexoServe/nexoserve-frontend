@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import Button from '../../Button/Button';
 import SvgIcons from '../../SvgIcons';
@@ -27,25 +30,20 @@ const HeroTypeThree = ({ theme, hero, socialMedia }: IHero) => {
               * Order directly through our website for original prices and no
               extra fees. No 3rd parties.
             </div>
-            <Button
-              onClick={() => router.push('/order')}
-              styleClass={styles.heroTypeThreeButton}
-              theme={theme}
-            >
-              Order Now
-            </Button>
+            <Link href="/order" className="w-80" prefetch>
+              <Button styleClass={styles.heroTypeThreeButton} theme={theme}>
+                Order Now
+              </Button>
+            </Link>
           </div>
         </div>
         <div className={styles.heroTypeThreeBackgroundContainer}>
           <div className={styles.heroTypeThreeBackgroundImage}>
             <Image
               alt="1"
-              fill
-              style={{
-                objectFit: 'cover',
-              }}
+              width={500}
+              height={500}
               src={hero?.background as string}
-              objectFit="cover"
             />
           </div>
         </div>
