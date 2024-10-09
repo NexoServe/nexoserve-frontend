@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
@@ -70,7 +72,7 @@ export const ModalPopUp = ({
 
   useEffect(() => {
     // This code runs after component mounts, hence on the client side
-    const element = document.getElementById('__next');
+    const element = document.getElementById('Root');
     setModalRoot(element);
   }, []);
 

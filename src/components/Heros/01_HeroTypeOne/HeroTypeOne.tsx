@@ -1,5 +1,7 @@
+'use client';
+
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import Lottie from 'react-lottie';
 
 import scrollLottie from '../../../lottie/scroll.json';
@@ -19,13 +21,13 @@ const HeroTypeOne = ({ theme, hero, socialMedia }: IHero) => {
   return (
     <div className={styles.heroTypeOneContainer}>
       <Image alt="1" fill src={hero?.background as string} objectFit="cover" />
-      <Image
+      {/* <Image
         alt="1"
         src={hero?.foreground as string}
         objectFit="cover"
         fill
         className={styles.heroTypeOneForeground}
-      />
+      /> */}
       <div className={styles.heroTypeOne}>
         <h1 className={styles.heroTypeOneTitle}>{hero?.title}</h1>
         <div className={styles.heroTypeOneDescription}>{hero?.description}</div>

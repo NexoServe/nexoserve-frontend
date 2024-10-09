@@ -1,11 +1,11 @@
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 import { RestaurantDetailsQuery } from '../../../generated/graphql';
 
 const Seo = ({ restaurantDetails }: RestaurantDetailsQuery) => {
-  const router = useRouter();
-  const fullUrl = `${restaurantDetails.domainUrl}${router.asPath}`;
+  const pathname = usePathname();
+  const fullUrl = `${restaurantDetails.domainUrl}${pathname}`;
 
   return (
     <Head>

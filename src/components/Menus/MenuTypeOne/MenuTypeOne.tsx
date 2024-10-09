@@ -1,3 +1,5 @@
+'use client';
+
 // import { ShoppingCartAtom } from '../../state/ShoppingCartState';
 
 import classNames from 'classnames';
@@ -11,6 +13,8 @@ import useStyles from './css';
 
 const MenuTypeOne = ({ styleClass, theme, gallery }: IMenu) => {
   const styles = useStyles({ theme });
+
+  console.log('styleClass', styleClass);
 
   return (
     <menu className={classNames(styles.menu, styleClass)}>
@@ -28,7 +32,7 @@ const MenuTypeOne = ({ styleClass, theme, gallery }: IMenu) => {
       )}
 
       <div>
-        <Link className={styles.menuLink} href="/order">
+        <Link className={styles.menuLink} href="/order" prefetch>
           <Button
             style={{
               padding: base(1),

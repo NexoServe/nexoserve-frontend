@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "target": "es2015",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -14,14 +17,20 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "noUnusedLocals": true,
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "exclude": ["node_modules"],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "generate-codegen-config.js"
+    "generate-codegen-config.js",
+    ".next/types/**/*.ts"
   ],
   "ts-node": {
     "compilerOptions": {

@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 
+import { RestaurantDetailsOutput } from '../../generated/graphql';
 import { initializeApollo } from '../../lib/apolloClient';
 
 const GET_RESTAURANT_DETAILS_QUERY = gql`
@@ -77,7 +78,9 @@ const GET_RESTAURANT_DETAILS_QUERY = gql`
   }
 `;
 
-const getRestaurantDetails = async () => {
+const getRestaurantDetails = async (): Promise<{
+  restaurantDetails: RestaurantDetailsOutput;
+}> => {
   const apolloClient = initializeApollo();
 
   const { data } = await apolloClient.query({

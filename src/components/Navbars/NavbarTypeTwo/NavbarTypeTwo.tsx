@@ -1,3 +1,5 @@
+'use client';
+
 // import { ShoppingCartAtom } from '../../state/ShoppingCartState';
 
 import { useEffect, useState } from 'react';
@@ -5,7 +7,7 @@ import { useEffect, useState } from 'react';
 import Hamburger from 'hamburger-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 import breakpoints from '../../../../css/breakpoints';
 import Container from '../../Container/Container';
@@ -38,7 +40,7 @@ const NavbarTypeTwo = ({ logo, restaurantName, theme, gallery }: INavbar) => {
     };
   }, [setShowMenu]);
 
-  const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <nav className={classes.navbar}>
@@ -62,7 +64,7 @@ const NavbarTypeTwo = ({ logo, restaurantName, theme, gallery }: INavbar) => {
             color={
               showMenu
                 ? theme.primary
-                : router.pathname === '/'
+                : pathname === '/'
                 ? theme.neutral
                 : theme.primary
             }
